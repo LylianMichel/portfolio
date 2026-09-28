@@ -1,58 +1,60 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import type { Project } from "../../types";
 import { ProjectVisual } from "./ProjectVisual";
 
 interface ProjectCardProps {
   project: Project;
+  index: number;
+  featured?: boolean;
 }
 
-export const ProjectCard = ({ project }: ProjectCardProps) => (
+export const ProjectCard = ({ project, index, featured = false }: ProjectCardProps) => (
   <motion.article
     layout
-    whileHover={{ y: -4 }}
-    transition={{ duration: 0.2 }}
-    className="group flex h-full flex-col rounded-3xl border border-slate-200 bg-white/80 p-4 shadow-[0_20px_70px_-50px_rgba(15,23,42,0.35)] backdrop-blur dark:border-white/8 dark:bg-white/[0.035] dark:shadow-none"
+    whileHover={{ y: -3 }}
+    transition={{ duration: 0.18 }}
+    className={`group grid h-full overflow-hidden border-t border-[var(--border)] py-5 ${
+      featured ? "gap-6 md:grid-cols-[1.15fr_.85fr] md:col-span-2" : "gap-5"
+    }`}
   >
-    <ProjectVisual project={project} />
+    <ProjectVisual project={project} index={index} />
 
-    <div className="flex flex-1 flex-col px-2 pb-2 pt-5">
-      <h3 className="text-xl font-semibold tracking-tight text-slate-950 dark:text-white">
-        {project.title}
-      </h3>
-      <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
-        {project.shortDescription}
-      </p>
-
-      <div className="mt-5 flex flex-wrap gap-2">
-        {project.technologies.map((technology) => (
-          <span
-            key={technology}
-            className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 font-mono text-[11px] text-slate-600 dark:border-white/8 dark:bg-white/[0.035] dark:text-slate-400"
-          >
-            {technology}
-          </span>
-        ))}
+    <div className="flex flex-col">
+      <div className="flex items-start justify-between gap-5">
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--accent)]">
+            Projet {String(index + 1).padStart(2, "0")}
+          </p>
+          <h3 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[var(--text)]">
+            {project.title}
+          </h3>
+        </div>
+        <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-[var(--muted)] transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[var(--accent)]" />
       </div>
 
-      <ul className="mt-5 space-y-2 text-sm text-slate-600 dark:text-slate-400">
-        {project.features.slice(0, 3).map((feature) => (
-          <li key={feature} className="flex gap-2">
-            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-cyan-500 dark:bg-cyan-300" />
-            <span>{feature}</span>
+      <p className="mt-4 max-w-xl text-sm leading-6 text-[var(--muted)]">
+        {featured ? project.description : project.shortDescription}
+      </p>
+
+      <ul className="mt-5 grid gap-2 text-xs text-[var(--muted)]">
+        {project.features.slice(0, featured ? 4 : 2).map((feature) => (
+          <li key={feature} className="flex items-start gap-2">
+            <span className="mt-1.5 h-1 w-1 shrink-0 bg-[var(--accent)]" />
+            {feature}
           </li>
         ))}
       </ul>
 
-      <div className="mt-auto flex items-center gap-2 pt-6">
+      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-6">
         <a
           href={project.githubUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/6"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--text)] underline decoration-[var(--border-strong)] underline-offset-4 transition hover:decoration-[var(--accent)]"
         >
           <Github className="h-4 w-4" />
-          GitHub
+          Code source
         </a>
 
         {project.demoUrl ? (
@@ -60,10 +62,9 @@ export const ProjectCard = ({ project }: ProjectCardProps) => (
             href={project.demoUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-950 px-3 py-2 text-sm font-medium text-white transition hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+            className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--accent)]"
           >
-            Démo
-            <ExternalLink className="h-4 w-4" />
+            Voir la démo <ArrowUpRight className="h-4 w-4" />
           </a>
         ) : null}
       </div>

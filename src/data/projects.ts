@@ -2,11 +2,28 @@ import type { Project } from "../types";
 
 export const projects: Project[] = [
   {
+    id: "anivault",
+    title: "AniVault",
+    shortDescription: "Une application full-stack pour explorer, organiser et suivre des animés.",
+    description:
+      "Mon projet web le plus complet : une interface React connectée à une API Node.js, avec persistance via Prisma et PostgreSQL. Le projet évolue progressivement autour du catalogue, des favoris et de l'expérience utilisateur.",
+    technologies: ["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL"],
+    features: [
+      "Catalogue synchronisé et recherche",
+      "Gestion de favoris et de contenus",
+      "Architecture client / serveur",
+      "Base PostgreSQL pilotée avec Prisma"
+    ],
+    githubUrl: "https://github.com/LylianMichel",
+    tone: "mixed",
+    icon: "LibraryBig"
+  },
+  {
     id: "tower-defense",
     title: "Tower Defense",
-    shortDescription: "Un jeu de stratégie construit autour de vagues, de tours évolutives et d'une direction artistique pixel art.",
+    shortDescription: "Un jeu Godot construit autour de vagues, de tours évolutives et d'une direction artistique pixel art.",
     description:
-      "Projet de jeu développé avec Godot, pensé comme un système modulaire : ennemis, vagues, tours, améliorations et progression peuvent évoluer indépendamment.",
+      "Projet personnel de jeu développé avec Godot, pensé comme un système modulaire : ennemis, vagues, tours, améliorations et progression évoluent indépendamment.",
     technologies: ["Godot", "GDScript", "Pixel art", "Game design"],
     features: [
       "Gestion des vagues d'ennemis",
@@ -21,7 +38,7 @@ export const projects: Project[] = [
   {
     id: "applications-java",
     title: "Applications Java",
-    shortDescription: "Une sélection de projets universitaires orientés objet réalisés en BUT Informatique.",
+    shortDescription: "Des projets universitaires pour travailler la POO, les structures de données et les tests.",
     description:
       "Des exercices et applications centrés sur la programmation orientée objet, les structures de données, les tests et l'organisation d'un code lisible.",
     technologies: ["Java", "POO", "JUnit", "Git"],
@@ -38,7 +55,7 @@ export const projects: Project[] = [
   {
     id: "sites-web",
     title: "Sites web",
-    shortDescription: "Interfaces responsive avec une attention particulière portée à l'ergonomie et à la clarté.",
+    shortDescription: "Des interfaces responsive réalisées dans le cadre de mes études et de projets personnels.",
     description:
       "Création d'interfaces web adaptées au mobile et au desktop, avec formulaires, interactions utilisateur et composants réutilisables.",
     technologies: ["HTML", "CSS", "JavaScript", "React"],
@@ -51,24 +68,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/LylianMichel",
     tone: "cyan",
     icon: "MonitorSmartphone"
-  },
-  {
-    id: "anivault",
-    title: "AniVault",
-    shortDescription: "Une application moderne pour organiser, explorer et suivre ses animés.",
-    description:
-      "Projet évolutif full-stack avec catalogue, gestion de contenu et favoris. L'objectif est de proposer une expérience claire autour d'une collection d'animés.",
-    technologies: ["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL"],
-    features: [
-      "Catalogue d'animés",
-      "Gestion de favoris",
-      "Interface moderne",
-      "Architecture client / serveur évolutive"
-    ],
-    githubUrl: "https://github.com/LylianMichel",
-    tone: "mixed",
-    icon: "LibraryBig"
   }
 ];
 
-export const projectFilters = ["Tous", "Godot", "Java", "React", "TypeScript"] as const;
+export const projectFilters = ["Tous", "React", "TypeScript", "Godot", "Java"] as const;

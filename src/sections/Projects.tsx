@@ -20,25 +20,27 @@ export const Projects = () => {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="03 / Projets"
-            title="Des projets pour apprendre, expérimenter et construire."
-            description="Universitaire ou personnel, chaque projet me permet de travailler un problème concret et d'améliorer ma manière de développer."
+            eyebrow="04 / Projets"
+            title="Le code est plus parlant quand il résout quelque chose."
+            description="Une sélection de projets personnels et universitaires. Je montre ce que j'ai construit, les choix techniques et ce que chaque projet m'a appris."
           />
         </Reveal>
 
-        <Reveal className="mb-7 flex flex-wrap gap-2">
+        <Reveal className="mb-9 flex flex-wrap items-center gap-x-1 gap-y-2 border-y border-[var(--border)] py-3">
+          <span className="mr-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)]">Filtrer :</span>
           {projectFilters.map((filter) => {
             const active = activeFilter === filter;
+
             return (
               <button
                 type="button"
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
                 aria-pressed={active}
-                className={`rounded-full px-3.5 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
+                className={`px-3 py-1.5 text-xs font-semibold transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
                   active
-                    ? "bg-slate-950 text-white dark:bg-white dark:text-slate-950"
-                    : "border border-slate-200 bg-white/70 text-slate-600 hover:bg-slate-50 dark:border-white/10 dark:bg-white/[0.035] dark:text-slate-300 dark:hover:bg-white/8"
+                    ? "bg-[var(--text)] text-[var(--page-bg)]"
+                    : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
                 }`}
               >
                 {filter}
@@ -47,18 +49,23 @@ export const Projects = () => {
           })}
         </Reveal>
 
-        <motion.div layout className="grid gap-5 md:grid-cols-2">
+        <motion.div layout className="grid gap-x-8 md:grid-cols-2">
           <AnimatePresence mode="popLayout">
-            {visibleProjects.map((project) => (
+            {visibleProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
+                className={activeFilter === "Tous" && index === 0 ? "md:col-span-2" : ""}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 8 }}
                 transition={{ duration: 0.2 }}
               >
-                <ProjectCard project={project} />
+                <ProjectCard
+                  project={project}
+                  index={index}
+                  featured={activeFilter === "Tous" && index === 0}
+                />
               </motion.div>
             ))}
           </AnimatePresence>

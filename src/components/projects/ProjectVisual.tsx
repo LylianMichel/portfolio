@@ -8,34 +8,34 @@ const iconMap = {
   LibraryBig,
 } satisfies Record<Project["icon"], typeof Gamepad2>;
 
-const toneClasses: Record<Project["tone"], string> = {
-  cyan: "from-cyan-500/25 via-cyan-500/5 to-transparent text-cyan-600 dark:text-cyan-300",
-  violet: "from-violet-500/25 via-violet-500/5 to-transparent text-violet-600 dark:text-violet-300",
-  blue: "from-blue-500/25 via-blue-500/5 to-transparent text-blue-600 dark:text-blue-300",
-  mixed: "from-cyan-500/20 via-violet-500/10 to-blue-500/5 text-violet-600 dark:text-violet-300",
-};
-
 interface ProjectVisualProps {
   project: Project;
+  index: number;
 }
 
-export const ProjectVisual = ({ project }: ProjectVisualProps) => {
+export const ProjectVisual = ({ project, index }: ProjectVisualProps) => {
   const Icon = iconMap[project.icon];
+  const number = String(index + 1).padStart(2, "0");
 
   return (
-    <div
-      className={`relative h-44 overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-br ${toneClasses[project.tone]} dark:border-white/8`}
-      aria-hidden="true"
-    >
-      <div className="absolute inset-0 project-grid opacity-45" />
-      <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full border border-current/15" />
-      <div className="absolute -right-2 top-8 h-24 w-24 rounded-full border border-current/10" />
-      <div className="absolute bottom-5 left-5 flex items-center gap-3">
-        <div className="grid h-12 w-12 place-items-center rounded-2xl border border-current/20 bg-white/65 shadow-sm backdrop-blur dark:bg-[#0b1022]/70">
-          <Icon className="h-6 w-6" strokeWidth={1.7} />
+    <div className="relative min-h-52 overflow-hidden border border-[var(--border)] bg-[var(--surface-strong)] p-5" aria-hidden="true">
+      <div className="absolute inset-0 project-grid text-[var(--border-strong)] opacity-30" />
+
+      <div className="relative flex h-full min-h-44 flex-col justify-between">
+        <div className="flex items-start justify-between">
+          <div className="grid h-11 w-11 place-items-center border border-[var(--border)] bg-[var(--page-bg)] text-[var(--accent)]">
+            <Icon className="h-5 w-5" strokeWidth={1.7} />
+          </div>
+          <span className="font-mono text-5xl font-semibold tracking-[-0.08em] text-[var(--border-strong)]">{number}</span>
         </div>
-        <div className="font-mono text-[11px] uppercase tracking-[0.2em] opacity-70">
-          project://{project.id}
+
+        <div>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--accent)]">/projects/{project.id}</p>
+          <div className="mt-3 flex gap-2 text-[10px] text-[var(--muted)]">
+            {project.technologies.slice(0, 3).map((technology) => (
+              <span key={technology}>[{technology}]</span>
+            ))}
+          </div>
         </div>
       </div>
     </div>
