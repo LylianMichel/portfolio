@@ -1,34 +1,33 @@
-import { Github, Linkedin } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { profile } from "../../data/profile";
 
 export const Footer = () => (
-  <footer className="border-t border-slate-200 py-8 dark:border-white/8">
-    <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 text-sm text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8 dark:text-slate-500">
+  <footer className="border-t border-[var(--border)] py-8">
+    <div className="mx-auto grid max-w-7xl gap-6 px-5 sm:px-6 md:grid-cols-[1fr_auto] md:items-end lg:px-8">
       <div>
-        <p className="font-semibold text-slate-800 dark:text-slate-200">
-          {profile.name} · {new Date().getFullYear()}
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--accent)]">Portfolio / BUT2</p>
+        <p className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[var(--text)]">{profile.name}</p>
+        <p className="mt-1 text-sm text-[var(--muted)]">
+          {new Date().getFullYear()} · React + TypeScript · IUT de Lens
         </p>
-        <p className="mt-1">Conçu et développé avec React et TypeScript.</p>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex gap-5 text-sm">
         <a
           href={profile.github}
           target="_blank"
           rel="noreferrer"
-          aria-label="Profil GitHub de Lylian Michel"
-          className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 transition hover:text-slate-950 dark:border-white/10 dark:hover:text-white"
+          className="inline-flex items-center gap-1.5 text-[var(--muted)] transition hover:text-[var(--text)]"
         >
-          <Github className="h-4 w-4" />
+          <Github className="h-4 w-4" /> GitHub <ArrowUpRight className="h-3 w-3" />
         </a>
         <a
           href={profile.linkedin}
           target="_blank"
           rel="noreferrer"
-          aria-label="Profil LinkedIn de Lylian Michel"
-          className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 transition hover:text-slate-950 dark:border-white/10 dark:hover:text-white"
+          className="inline-flex items-center gap-1.5 text-[var(--muted)] transition hover:text-[var(--text)]"
         >
-          <Linkedin className="h-4 w-4" />
+          <Linkedin className="h-4 w-4" /> LinkedIn <ArrowUpRight className="h-3 w-3" />
         </a>
       </div>
     </div>
