@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
-import { Github, Linkedin, Mail, Send } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, Send } from "lucide-react";
 import { profile } from "../data/profile";
 import { Reveal } from "../components/ui/Reveal";
 import { SectionHeading } from "../components/ui/SectionHeading";
@@ -13,11 +13,7 @@ interface ContactFields {
 
 type ContactErrors = Partial<Record<keyof ContactFields, string>>;
 
-const initialFields: ContactFields = {
-  name: "",
-  email: "",
-  message: "",
-};
+const initialFields: ContactFields = { name: "", email: "", message: "" };
 
 const validate = (fields: ContactFields): ContactErrors => {
   const errors: ContactErrors = {};
@@ -69,10 +65,7 @@ export const Contact = () => {
     try {
       const response = await fetch(endpoint, {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
         body: JSON.stringify(fields),
       });
 
@@ -92,49 +85,50 @@ export const Contact = () => {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="05 / Contact"
-            title="Un projet, un stage ou simplement envie d'échanger ?"
-            description="Tu peux me contacter directement ou connecter ce formulaire à Formspree en ajoutant une seule variable d'environnement."
+            eyebrow="06 / Contact"
+            title="Une question, un stage, un projet ? Écrivez-moi."
+            description="Le formulaire peut être relié à Formspree. Sans endpoint configuré, le site l'indique clairement au lieu de simuler un envoi."
           />
         </Reveal>
 
-        <div className="grid gap-6 lg:grid-cols-[.78fr_1.22fr]">
-          <Reveal className="glass-card p-6 sm:p-7">
-            <h3 className="text-lg font-semibold text-slate-950 dark:text-white">Mes coordonnées</h3>
-            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
-              Les liens ci-dessous sont centralisés dans <code className="font-mono text-xs">src/data/profile.ts</code>.
-            </p>
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+          <Reveal className="lg:col-span-5">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--muted)]">Contact direct</p>
+            <a
+              href={`mailto:${profile.email}`}
+              className="mt-4 inline-flex max-w-full items-center gap-2 break-all text-2xl font-semibold tracking-[-0.03em] text-[var(--text)] underline decoration-[var(--accent)] decoration-1 underline-offset-8 sm:text-3xl"
+            >
+              {profile.email}
+              <ArrowUpRight className="h-5 w-5 shrink-0 text-[var(--accent)]" />
+            </a>
 
-            <div className="mt-6 space-y-3">
-              <a
-                href={`mailto:${profile.email}`}
-                className="contact-link"
-              >
-                <Mail className="h-4 w-4" />
-                <span className="truncate">{profile.email}</span>
-              </a>
+            <div className="mt-10 border-t border-[var(--border)]">
               <a href={profile.github} target="_blank" rel="noreferrer" className="contact-link">
-                <Github className="h-4 w-4" />
-                <span>GitHub</span>
+                <span className="inline-flex items-center gap-3"><Github className="h-4 w-4" /> GitHub</span>
+                <ArrowUpRight className="h-4 w-4" />
               </a>
               <a href={profile.linkedin} target="_blank" rel="noreferrer" className="contact-link">
-                <Linkedin className="h-4 w-4" />
-                <span>LinkedIn</span>
+                <span className="inline-flex items-center gap-3"><Linkedin className="h-4 w-4" /> LinkedIn</span>
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a href={`mailto:${profile.email}`} className="contact-link">
+                <span className="inline-flex items-center gap-3"><Mail className="h-4 w-4" /> E-mail</span>
+                <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-cyan-500/20 bg-cyan-500/6 p-4">
-              <p className="font-mono text-xs text-cyan-800 dark:text-cyan-300">
-                contact.status = "open"
-              </p>
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                Le formulaire n'affiche jamais un faux succès : il confirme uniquement après une vraie réponse du service configuré.
-              </p>
-            </div>
+            <p className="mt-7 max-w-sm text-sm leading-6 text-[var(--muted)]">
+              Je recherche notamment un stage de 8 semaines à partir du 12 avril 2027 dans le développement informatique.
+            </p>
           </Reveal>
 
-          <Reveal className="glass-card p-6 sm:p-7" delay={0.06}>
-            <form onSubmit={handleSubmit} noValidate>
+          <Reveal className="lg:col-span-7" delay={0.05}>
+            <form onSubmit={handleSubmit} noValidate className="editorial-card p-5 sm:p-7">
+              <div className="mb-7 flex items-center justify-between border-b border-[var(--border)] pb-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent)]">message.new</p>
+                <span className="font-mono text-[10px] text-[var(--muted)]">01 / 01</span>
+              </div>
+
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="form-field">
                   <span>Nom</span>
@@ -182,16 +176,16 @@ export const Contact = () => {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                  className="inline-flex items-center justify-center gap-2 bg-[var(--text)] px-5 py-3 text-sm font-semibold text-[var(--page-bg)] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
                 >
                   <Send className="h-4 w-4" />
                   {status === "sending" ? "Envoi..." : "Envoyer le message"}
                 </button>
 
-                <div className="min-h-6 text-sm" aria-live="polite">
-                  {status === "success" ? <span className="text-emerald-600 dark:text-emerald-300">Message envoyé.</span> : null}
-                  {status === "config" ? <span className="text-amber-600 dark:text-amber-300">Formulaire non connecté : configure VITE_FORMSPREE_ENDPOINT.</span> : null}
-                  {status === "error" ? <span className="text-rose-600 dark:text-rose-300">Échec de l'envoi. Réessaie ou utilise l'e-mail direct.</span> : null}
+                <div className="min-h-6 text-xs text-[var(--muted)]" aria-live="polite">
+                  {status === "success" ? <span>Message envoyé.</span> : null}
+                  {status === "config" ? <span>Formulaire non connecté : configure VITE_FORMSPREE_ENDPOINT.</span> : null}
+                  {status === "error" ? <span>Échec de l'envoi. Utilise l'e-mail direct.</span> : null}
                 </div>
               </div>
             </form>

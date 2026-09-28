@@ -4,12 +4,12 @@ import { Reveal } from "../components/ui/Reveal";
 import { SectionHeading } from "../components/ui/SectionHeading";
 
 const interests = [
-  { icon: Globe2, label: "Développement web" },
-  { icon: SquareTerminal, label: "Java & Python" },
-  { icon: SquareTerminal, label: "Bases de données" },
-  { icon: Gamepad2, label: "Développement de jeux" },
-  { icon: GitBranch, label: "Git & collaboration" },
-  { icon: Palette, label: "Création numérique" },
+  { icon: Globe2, label: "Développement web", detail: "Interfaces, React, TypeScript" },
+  { icon: SquareTerminal, label: "Programmation", detail: "Java, Python, algorithmique" },
+  { icon: SquareTerminal, label: "Données", detail: "SQL, modélisation, PostgreSQL" },
+  { icon: Gamepad2, label: "Jeu vidéo", detail: "Godot, gameplay, pixel art" },
+  { icon: GitBranch, label: "Travail en équipe", detail: "Git, branches, projets de groupe" },
+  { icon: Palette, label: "Création numérique", detail: "UI, expérimentation, prototypage" },
 ] as const;
 
 export const About = () => (
@@ -17,42 +17,55 @@ export const About = () => (
     <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
       <Reveal>
         <SectionHeading
-          eyebrow="01 / À propos"
-          title="Un profil technique avec une vraie place pour la création."
-          description="Mon parcours en BUT Informatique me permet de développer des bases solides tout en construisant des projets personnels qui me ressemblent."
+          eyebrow="02 / À propos"
+          title="J'apprends l'informatique en construisant des choses concrètes."
+          description="Le portfolio montre mon niveau actuel : un étudiant de BUT2 qui sait déjà mener des projets, mais qui continue d'apprendre à chaque réalisation."
         />
       </Reveal>
 
-      <div className="grid gap-6 lg:grid-cols-[1.1fr_.9fr]">
-        <Reveal className="glass-card p-6 sm:p-8">
-          <p className="text-lg leading-8 text-slate-700 dark:text-slate-300">
-            Je suis étudiant en <strong className="font-semibold text-slate-950 dark:text-white">BUT Informatique à l'IUT de Lens</strong>.
-            J'apprends principalement en pratiquant : développement web, programmation orientée objet, bases de données, algorithmique et travail en équipe.
+      <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
+        <Reveal className="lg:col-span-7">
+          <p className="max-w-3xl text-balance text-2xl font-medium leading-[1.35] tracking-[-0.025em] text-[var(--text)] sm:text-3xl">
+            Je suis en deuxième année de BUT Informatique à l'IUT de Lens. Ce qui m'intéresse surtout, c'est le moment où une idée devient un programme utilisable.
           </p>
-          <p className="mt-5 leading-7 text-slate-600 dark:text-slate-400">
-            En dehors des projets universitaires, je développe aussi des idées plus personnelles autour des jeux vidéo et des applications web. Cette double approche me permet de travailler autant la qualité technique que l'expérience proposée à l'utilisateur.
-          </p>
+
+          <div className="mt-8 grid gap-6 border-t border-[var(--border)] pt-6 sm:grid-cols-2">
+            <p className="text-sm leading-7 text-[var(--muted)]">
+              Pendant ma formation, je travaille le développement web, la programmation orientée objet, les bases de données, les réseaux et l'algorithmique.
+            </p>
+            <p className="text-sm leading-7 text-[var(--muted)]">
+              À côté, je développe AniVault et un Tower Defense. Ces projets me permettent d'aller plus loin que les exercices de cours et de tester mes propres choix techniques.
+            </p>
+          </div>
 
           <a
             href={profile.cvUrl}
             download
-            className="mt-7 inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-slate-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+            className="mt-8 inline-flex items-center gap-2 bg-[var(--text)] px-4 py-3 text-sm font-semibold text-[var(--page-bg)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           >
             <Download className="h-4 w-4" />
             Télécharger mon CV
           </a>
-          <p className="mt-3 text-xs text-slate-400">
-            Remplace simplement <code className="font-mono">public/CV-Lylian-Michel.pdf</code> par ton CV.
-          </p>
         </Reveal>
 
-        <Reveal className="grid gap-3 sm:grid-cols-2" delay={0.08}>
-          {interests.map(({ icon: Icon, label }) => (
-            <div key={label} className="glass-card flex min-h-28 flex-col justify-between p-5">
-              <Icon className="h-5 w-5 text-cyan-600 dark:text-cyan-300" strokeWidth={1.8} />
-              <span className="mt-5 text-sm font-semibold text-slate-900 dark:text-slate-100">{label}</span>
-            </div>
-          ))}
+        <Reveal className="lg:col-span-5" delay={0.06}>
+          <div className="border-t border-[var(--border)]">
+            {interests.map(({ icon: Icon, label, detail }, index) => (
+              <div
+                key={label}
+                className="grid grid-cols-[2.5rem_2.5rem_1fr] items-center gap-3 border-b border-[var(--border)] py-4"
+              >
+                <span className="font-mono text-[10px] text-[var(--accent)]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <Icon className="h-4 w-4 text-[var(--muted)]" strokeWidth={1.8} />
+                <div>
+                  <p className="text-sm font-semibold text-[var(--text)]">{label}</p>
+                  <p className="mt-0.5 text-xs text-[var(--muted)]">{detail}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </Reveal>
       </div>
     </div>

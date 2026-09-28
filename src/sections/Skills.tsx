@@ -1,55 +1,48 @@
-import { skillGroups } from "../data/skills";
 import { Reveal } from "../components/ui/Reveal";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { SkillIcon } from "../components/ui/SkillIcon";
-
-const levelWidth = {
-  Débutant: "w-1/3",
-  Intermédiaire: "w-2/3",
-  "En progression": "w-1/2",
-} as const;
+import { skillGroups } from "../data/skills";
 
 export const Skills = () => (
   <section id="competences" className="section-shell section-tint">
     <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
       <Reveal>
         <SectionHeading
-          eyebrow="02 / Compétences"
-          title="Des compétences que je développe par la pratique."
-          description="Les niveaux restent volontairement simples : ils indiquent où j'en suis sans transformer mon portfolio en faux tableau de statistiques."
+          eyebrow="03 / Compétences"
+          title="Pas de pourcentages inventés : seulement ce que j'utilise vraiment."
+          description="Les niveaux indiquent simplement mon degré d'autonomie actuel. Ils évolueront avec les projets et la suite de ma formation."
         />
       </Reveal>
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="border-t border-[var(--border)]">
         {skillGroups.map((group, groupIndex) => (
-          <Reveal key={group.title} delay={groupIndex * 0.04}>
-            <article className="glass-card h-full p-5 sm:p-6">
-              <div className="mb-5">
-                <h3 className="text-lg font-semibold text-slate-950 dark:text-white">{group.title}</h3>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{group.description}</p>
+          <Reveal key={group.title} delay={groupIndex * 0.03}>
+            <article className="grid gap-5 border-b border-[var(--border)] py-7 md:grid-cols-[3rem_12rem_1fr] md:gap-6">
+              <span className="font-mono text-[10px] text-[var(--accent)]">
+                {String(groupIndex + 1).padStart(2, "0")}
+              </span>
+
+              <div>
+                <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--text)]">{group.title}</h3>
+                <p className="mt-2 text-xs leading-5 text-[var(--muted)]">{group.description}</p>
               </div>
 
-              <div className="space-y-3">
+              <div className="grid gap-x-6 sm:grid-cols-2">
                 {group.skills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="rounded-2xl border border-slate-200/80 bg-white/60 p-4 dark:border-white/7 dark:bg-white/[0.025]"
+                    className="grid grid-cols-[2rem_1fr_auto] items-start gap-3 border-t border-[var(--border)] py-4 first:border-t-0 sm:[&:nth-child(-n+2)]:border-t-0"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-cyan-500/10 text-cyan-700 dark:text-cyan-300">
-                        <SkillIcon name={skill.icon} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex flex-wrap items-center justify-between gap-2">
-                          <p className="font-semibold text-slate-900 dark:text-slate-100">{skill.name}</p>
-                          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">{skill.level}</span>
-                        </div>
-                        <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">{skill.description}</p>
-                        <div className="mt-3 h-1 overflow-hidden rounded-full bg-slate-200 dark:bg-white/8" aria-hidden="true">
-                          <div className={`h-full rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 ${levelWidth[skill.level]}`} />
-                        </div>
-                      </div>
+                    <div className="mt-0.5 text-[var(--accent)]">
+                      <SkillIcon name={skill.icon} />
                     </div>
+                    <div>
+                      <p className="text-sm font-semibold text-[var(--text)]">{skill.name}</p>
+                      <p className="mt-1 text-xs leading-5 text-[var(--muted)]">{skill.description}</p>
+                    </div>
+                    <span className="whitespace-nowrap font-mono text-[9px] uppercase tracking-[0.1em] text-[var(--muted)]">
+                      {skill.level}
+                    </span>
                   </div>
                 ))}
               </div>
