@@ -1,13 +1,12 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import type { Project } from "../../types";
+import { ProjectCarousel } from "./ProjectCarousel";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
   featured?: boolean;
 }
-
-const fallbackImage = `${import.meta.env.BASE_URL}project-fallback.svg`;
 
 export const ProjectCard = ({ project, index, featured = false }: ProjectCardProps) => (
   <article
@@ -16,19 +15,12 @@ export const ProjectCard = ({ project, index, featured = false }: ProjectCardPro
     aria-labelledby={`${project.id}-title`}
   >
     <div className="project-image-wrap">
-      <img
-        src={project.image}
-        alt={`Aperçu du projet ${project.title}`}
-        className="project-image"
-        loading={index === 1 ? "eager" : "lazy"}
-        decoding="async"
-        fetchPriority={index === 1 ? "high" : "auto"}
-        onError={(event) => {
-          event.currentTarget.onerror = null;
-          event.currentTarget.src = fallbackImage;
-          event.currentTarget.classList.add("project-image-fallback");
-        }}
+      <ProjectCarousel
+        images={project.images}
+        projectTitle={project.title}
+        eager={index === 1}
       />
+
       <div className="project-image-overlay">
         <span>{project.type}</span>
         <span>{project.year}</span>
