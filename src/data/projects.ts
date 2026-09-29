@@ -8,43 +8,23 @@ export const projects: Project[] = [
     id: "anivault",
     title: "AniVault",
     shortDescription:
-      "Une application de découverte et de suivi d'anime avec catalogue, recherche, bibliothèque personnelle, statistiques et synchronisation AniList.",
+      "Application web pour découvrir des animes et gérer une bibliothèque personnelle synchronisée avec AniList.",
     description:
-      "Projet full-stack conçu comme un vrai produit : frontend React, API Express, persistance Prisma et logique de synchronisation.",
-    technologies: ["React", "Node.js", "Express", "Prisma", "SQLite"],
+      "AniVault est le projet web sur lequel j'ai le plus travaillé. J'y ai construit un frontend React, une API Express et une couche de données avec Prisma.",
+    technologies: ["React", "TypeScript", "Vite", "Node.js", "Express", "Prisma", "PostgreSQL", "AniList"],
     features: [
-      "Catalogue AniList synchronisé et paginé",
-      "Recherche avancée et recommandations",
-      "Bibliothèque avec progression, favoris et notes",
-      "Tests backend, Playwright et PWA"
+      "Catalogue synchronisé avec AniList",
+      "Recherche avancée et filtres",
+      "Bibliothèque, favoris et progression",
+      "Architecture frontend / backend séparée"
     ],
     githubUrl: "https://github.com/LylianMichel/anivault",
     images: [
-      {
-        src: projectAsset("anivault.png"),
-        alt: "Accueil desktop d'AniVault",
-        label: "Accueil"
-      },
-      {
-        src: projectAsset("anivault-discovery.png"),
-        alt: "Page découverte d'AniVault",
-        label: "Découverte"
-      },
-      {
-        src: projectAsset("anivault-list.png"),
-        alt: "Bibliothèque personnelle dans AniVault",
-        label: "Ma liste"
-      },
-      {
-        src: projectAsset("anivault-title.png"),
-        alt: "Fiche d'un anime dans AniVault",
-        label: "Fiche anime"
-      },
-      {
-        src: projectAsset("anivault-search.png"),
-        alt: "Recherche avancée dans AniVault",
-        label: "Recherche"
-      }
+      { src: projectAsset("anivault.png"), alt: "Accueil desktop d'AniVault", label: "Accueil" },
+      { src: projectAsset("anivault-discovery.png"), alt: "Page découverte d'AniVault", label: "Découverte" },
+      { src: projectAsset("anivault-list.png"), alt: "Bibliothèque personnelle dans AniVault", label: "Ma liste" },
+      { src: projectAsset("anivault-title.png"), alt: "Fiche d'un anime dans AniVault", label: "Fiche anime" },
+      { src: projectAsset("anivault-search.png"), alt: "Recherche avancée dans AniVault", label: "Recherche" }
     ],
     year: "2026",
     type: "Application full-stack",
@@ -55,43 +35,23 @@ export const projects: Project[] = [
     id: "towerdefence",
     title: "THE WORLD DEFENCE",
     shortDescription:
-      "Un tower defense sous Godot avec campagne, héros, tours, spécialisations, progression, sauvegardes et plusieurs modes de jeu.",
+      "Tower defense développé avec Godot autour d'une campagne par âges, de tours évolutives, de héros et de plusieurs modes de jeu.",
     description:
-      "Un projet de jeu long terme qui m'a amené à travailler la structure des données, l'équilibrage, les tests et les outils de validation.",
-    technologies: ["Godot", "GDScript", "Game design", "Pixel art"],
+      "THE WORLD DEFENCE est mon projet de jeu personnel. J'y travaille les systèmes de gameplay, les interfaces, la progression et les outils de validation.",
+    technologies: ["Godot", "GDScript", "Game design", "UI", "Pixel art"],
     features: [
-      "Campagne de 35 chapitres sur 10 âges",
-      "23 tours et plusieurs systèmes d'amélioration",
-      "Modes Histoire, Infini, Challenges et Boss Rush",
-      "Smoke tests et benchmarks automatisés"
+      "Tours et spécialisations",
+      "Héros, boss et progression",
+      "Campagne organisée en plusieurs âges",
+      "Modes Histoire, Infini, Challenges et Boss Rush"
     ],
     githubUrl: "https://github.com/LylianMichel/towerdefence",
     images: [
-      {
-        src: projectAsset("towerdefence.png"),
-        alt: "Accueil du hub de THE WORLD DEFENCE",
-        label: "Hub"
-      },
-      {
-        src: projectAsset("towerdefence-play.png"),
-        alt: "Menu de jeu de THE WORLD DEFENCE",
-        label: "Jouer"
-      },
-      {
-        src: projectAsset("towerdefence-heroes.png"),
-        alt: "Écran des héros de THE WORLD DEFENCE",
-        label: "Héros"
-      },
-      {
-        src: projectAsset("towerdefence-progression.png"),
-        alt: "Écran de progression de THE WORLD DEFENCE",
-        label: "Progression"
-      },
-      {
-        src: projectAsset("towerdefence-tree.png"),
-        alt: "Arbre de progression solaire de THE WORLD DEFENCE",
-        label: "Arbre solaire"
-      }
+      { src: projectAsset("towerdefence.png"), alt: "Accueil du hub de THE WORLD DEFENCE", label: "Hub" },
+      { src: projectAsset("towerdefence-play.png"), alt: "Menu de jeu de THE WORLD DEFENCE", label: "Jouer" },
+      { src: projectAsset("towerdefence-heroes.png"), alt: "Écran des héros de THE WORLD DEFENCE", label: "Héros" },
+      { src: projectAsset("towerdefence-progression.png"), alt: "Écran de progression de THE WORLD DEFENCE", label: "Progression" },
+      { src: projectAsset("towerdefence-tree.png"), alt: "Arbre de progression solaire de THE WORLD DEFENCE", label: "Arbre solaire" }
     ],
     year: "2026",
     type: "Jeu vidéo",
@@ -102,28 +62,20 @@ export const projects: Project[] = [
     id: "le-temple",
     title: "Le Temple",
     shortDescription:
-      "Une application Laravel pour un institut avec réservation, comptes utilisateurs, catalogue de soins et gestion métier en SQLite.",
+      "Application Laravel conçue autour des besoins d'un institut : comptes, réservations, catalogue et logique métier.",
     description:
-      "Projet web complet autour d'un besoin concret : réservations, rôles, sessions, catalogue, stocks, notifications et tests.",
+      "Ce projet m'a permis de travailler une application web côté serveur avec des besoins métier plus concrets qu'une simple page vitrine.",
     technologies: ["Laravel", "PHP", "SQLite", "PHPUnit"],
     features: [
-      "Réservations avec contrôle de capacité",
-      "Comptes, rôles et sessions persistantes",
-      "Catalogue, stocks et notifications",
-      "Suite de tests PHPUnit"
+      "Réservations",
+      "Comptes et rôles",
+      "Catalogue et stocks",
+      "Tests PHPUnit"
     ],
     githubUrl: "https://github.com/LylianMichel/Le_temple",
     images: [
-      {
-        src: projectAsset("le-temple.webp"),
-        alt: "Concept de page d'accueil du projet Le Temple",
-        label: "Accueil"
-      },
-      {
-        src: projectAsset("le-temple-spa.webp"),
-        alt: "Visuel principal du projet Le Temple",
-        label: "Univers visuel"
-      }
+      { src: projectAsset("le-temple.webp"), alt: "Concept de page d'accueil du projet Le Temple", label: "Accueil" },
+      { src: projectAsset("le-temple-spa.webp"), alt: "Visuel principal du projet Le Temple", label: "Univers visuel" }
     ],
     year: "2026",
     type: "Application web",
@@ -134,23 +86,19 @@ export const projects: Project[] = [
     id: "eco-repare",
     title: "Eco'Répare",
     shortDescription:
-      "Une vitrine responsive dédiée au reconditionnement informatique, avec une direction visuelle claire et des interactions légères.",
+      "Site vitrine responsive autour du reconditionnement informatique, réalisé en HTML, CSS et JavaScript.",
     description:
-      "Site statique réalisé en HTML, CSS et JavaScript avec une attention particulière portée à la lisibilité et au responsive.",
+      "Un projet plus compact qui m'a permis de travailler la mise en page responsive, la navigation mobile et la cohérence visuelle.",
     technologies: ["HTML", "CSS", "JavaScript", "Responsive"],
     features: [
       "Mise en page responsive",
-      "Navigation mobile accessible",
-      "Formulaire avec validation côté navigateur",
-      "Direction artistique cohérente"
+      "Navigation mobile",
+      "Validation côté navigateur",
+      "Direction visuelle cohérente"
     ],
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
     images: [
-      {
-        src: projectAsset("eco-repare-preview.svg"),
-        alt: "Aperçu du projet Eco'Répare",
-        label: "Présentation"
-      }
+      { src: projectAsset("eco-repare-preview.svg"), alt: "Aperçu du projet Eco'Répare", label: "Présentation" }
     ],
     year: "2026",
     type: "Site vitrine",

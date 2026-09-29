@@ -16,16 +16,16 @@ export const Hero = () => (
       <div className="hero-grid mt-5">
         <div className="hero-copy">
           <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
-            <span className="status-pill"><span className="status-dot" />BUT Informatique</span>
-            <span className="inline-flex items-center gap-1.5 px-1"><MapPin className="h-3.5 w-3.5" />{profile.location}</span>
+            <span className="status-pill"><span className="status-dot" />2e année de BUT Informatique</span>
+            <span className="inline-flex items-center gap-1.5 px-1"><MapPin className="h-3.5 w-3.5" />IUT de Lens</span>
           </div>
 
           <h1 className="hero-title mt-7 max-w-3xl text-balance font-semibold text-[var(--text)]">
-            Je développe des applications web et des jeux.
+            Étudiant en BUT Informatique, je développe des applications web et des projets logiciels.
           </h1>
 
           <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
-            Je m'appelle <strong className="font-semibold text-[var(--text)]">{profile.name}</strong> et je suis en BUT Informatique à l'IUT de Lens. Ici, je présente les projets sur lesquels j'ai le plus travaillé.
+            Je m'appelle <strong className="font-semibold text-[var(--text)]">{profile.name}</strong>. Je travaille principalement avec React, TypeScript et Node.js, et je développe aussi THE WORLD DEFENCE avec Godot.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-2">
@@ -50,7 +50,7 @@ export const Hero = () => (
           <div className="flex items-center justify-between gap-4"><p className="text-xs font-semibold text-[var(--text)]">En ce moment</p><span className="live-dot" aria-hidden="true" /></div>
           <dl className="mt-5 space-y-4">
             <div><dt className="text-[11px] text-[var(--muted)]">Formation</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">BUT Informatique · IUT de Lens</dd></div>
-            <div><dt className="text-[11px] text-[var(--muted)]">Projet principal</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">AniVault · React / Node.js</dd></div>
+            <div><dt className="text-[11px] text-[var(--muted)]">Projet web</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">AniVault · React / Node.js</dd></div>
             <div><dt className="text-[11px] text-[var(--muted)]">Stage</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">8 semaines · dès le 12 avril 2027</dd></div>
           </dl>
           <div className="mt-5 border-t border-[var(--border)] pt-4">
