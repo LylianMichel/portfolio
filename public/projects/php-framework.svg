@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Mini-framework PHP</title>
+  <desc id="desc">Illustration d'un projet universitaire PHP.</desc>
+  <rect width="1200" height="675" fill="#12151b"/>
+  <rect x="60" y="54" width="1080" height="567" rx="26" fill="#181d26" stroke="#303847"/>
+  <circle cx="103" cy="96" r="8" fill="#77a7ff"/>
+  <circle cx="132" cy="96" r="8" fill="#aa8cff"/>
+  <circle cx="161" cy="96" r="8" fill="#69d7a3"/>
+  <text x="94" y="192" fill="#8892a6" font-family="ui-monospace, monospace" font-size="24">Projet BUT · PHP</text>
+  <text x="94" y="282" fill="#f2f2f2" font-family="Arial, sans-serif" font-size="64" font-weight="700">Mini-framework web</text>
+  <text x="94" y="346" fill="#a8b0bf" font-family="Arial, sans-serif" font-size="28">Routing · BladeOne · PHPStan · PHPUnit</text>
+  <rect x="94" y="420" width="1012" height="1" fill="#303847"/>
+  <text x="94" y="485" fill="#77a7ff" font-family="ui-monospace, monospace" font-size="26">GET /personnes  →  Controller  →  View</text>
+  <text x="94" y="535" fill="#69d7a3" font-family="ui-monospace, monospace" font-size="24">8 tests · 21 assertions</text>
+</svg>

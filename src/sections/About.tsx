@@ -1,21 +1,21 @@
-import { Code2, Gamepad2, GitBranch } from "lucide-react";
+import { Code2, Gamepad2, Layers3 } from "lucide-react";
 import { SectionHeading } from "../components/ui/SectionHeading";
 
-const principles = [
+const interests = [
   {
     icon: Code2,
-    title: "Construire",
-    text: "J'aime partir d'une idée simple et arriver à quelque chose que je peux vraiment utiliser."
+    title: "Développement web",
+    text: "J'aime travailler sur des applications complètes, de l'interface jusqu'aux données."
   },
   {
-    icon: GitBranch,
-    title: "Reprendre mon code",
-    text: "Je reviens souvent sur mes projets pour corriger, simplifier ou mieux organiser ce que j'ai fait."
+    icon: Layers3,
+    title: "Développement logiciel",
+    text: "Le BUT me fait aussi travailler Java, les structures de données, les tests et la conception."
   },
   {
     icon: Gamepad2,
-    title: "Tester autre chose",
-    text: "Le jeu vidéo me permet de travailler des problèmes très différents du développement web."
+    title: "Développement de jeux",
+    text: "THE WORLD DEFENCE me permet d'aborder des problèmes très différents du web."
   }
 ] as const;
 
@@ -24,21 +24,21 @@ export const About = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="03 / À propos"
-        title="Ce que j'aime dans le développement."
+        title="Quelques mots sur moi."
       />
 
       <div className="grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
         <article className="info-card p-6 sm:p-7">
           <p className="text-base leading-7 text-[var(--text)]">
-            Le BUT me donne les bases en développement, algorithmique, bases de données, réseaux et travail en équipe.
+            Je suis Lylian Michel, étudiant en deuxième année de BUT Informatique à l'IUT de Lens.
           </p>
           <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-            Mes projets personnels me servent surtout à aller plus loin : je peux tester une idée, me tromper, revenir sur le code et voir comment le projet tient quand il commence à grossir.
+            Je m'intéresse surtout au développement web, aux applications frontend/backend et au développement logiciel. Mes projets personnels me servent à aller plus loin que les exercices de cours et à voir comment une application évolue quand elle commence à prendre de l'ampleur.
           </p>
         </article>
 
         <div className="grid gap-3">
-          {principles.map(({ icon: Icon, title, text }) => (
+          {interests.map(({ icon: Icon, title, text }) => (
             <article key={title} className="info-card flex gap-4">
               <div className="icon-soft">
                 <Icon className="h-4 w-4" />

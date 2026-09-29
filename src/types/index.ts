@@ -25,11 +25,21 @@ export interface SkillGroup {
 }
 
 export type ProjectTone = "cyan" | "violet" | "blue" | "mixed";
+export type ProjectVariant = "large" | "medium" | "compact";
+export type RepositoryVisibility = "public" | "private";
 
 export interface ProjectImage {
   src: string;
   alt: string;
   label: string;
+}
+
+export interface ProjectCaseStudy {
+  why: string;
+  built: string[];
+  challenge?: string;
+  solution?: string;
+  learned: string;
 }
 
 export interface Project {
@@ -39,13 +49,16 @@ export interface Project {
   description: string;
   technologies: string[];
   features: string[];
-  githubUrl: string;
+  githubUrl?: string;
+  repositoryVisibility?: RepositoryVisibility;
   demoUrl?: string;
   images: ProjectImage[];
   year: string;
   type: string;
   tone: ProjectTone;
-  icon: "Gamepad2" | "Coffee" | "MonitorSmartphone" | "LibraryBig";
+  variant: ProjectVariant;
+  caseStudy?: ProjectCaseStudy;
+  icon: "Gamepad2" | "Coffee" | "MonitorSmartphone" | "LibraryBig" | "Code2";
 }
 
 export interface TimelineItem {
@@ -64,3 +77,4 @@ export interface SocialLink {
 
 export type PortfolioMode = "work" | "chat";
 export type AccentTheme = "green" | "blue" | "violet" | "orange";
+export type ColorMode = "light" | "dark" | "system";

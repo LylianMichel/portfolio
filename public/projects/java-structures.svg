@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Structures de données en Java</title>
+  <desc id="desc">Illustration d'un projet universitaire Java sur les listes et les arbres.</desc>
+  <rect width="1200" height="675" fill="#121512"/>
+  <rect x="60" y="54" width="1080" height="567" rx="26" fill="#191f19" stroke="#304033"/>
+  <text x="94" y="150" fill="#69d7a3" font-family="ui-monospace, monospace" font-size="24">Projet BUT · Java</text>
+  <text x="94" y="238" fill="#f2f2f2" font-family="Arial, sans-serif" font-size="62" font-weight="700">Listes & arbres</text>
+  <circle cx="190" cy="410" r="42" fill="#252d25" stroke="#69d7a3" stroke-width="4"/>
+  <circle cx="430" cy="410" r="42" fill="#252d25" stroke="#69d7a3" stroke-width="4"/>
+  <circle cx="670" cy="410" r="42" fill="#252d25" stroke="#69d7a3" stroke-width="4"/>
+  <line x1="232" y1="410" x2="388" y2="410" stroke="#89958b" stroke-width="5"/>
+  <line x1="472" y1="410" x2="628" y2="410" stroke="#89958b" stroke-width="5"/>
+  <text x="850" y="390" fill="#f2f2f2" font-family="ui-monospace, monospace" font-size="24">insert()</text>
+  <text x="850" y="435" fill="#f2f2f2" font-family="ui-monospace, monospace" font-size="24">search()</text>
+  <text x="850" y="480" fill="#f2f2f2" font-family="ui-monospace, monospace" font-size="24">remove()</text>
+</svg>
