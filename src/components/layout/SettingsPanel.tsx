@@ -1,11 +1,13 @@
-import { Check, Moon, Palette, X } from "lucide-react";
+import { Check, Laptop, Moon, Palette, Sun, X } from "lucide-react";
 import { useEffect } from "react";
-import type { AccentTheme } from "../../types";
+import type { AccentTheme, ThemeMode } from "../../types";
 
 interface SettingsPanelProps {
   open: boolean;
   accent: AccentTheme;
+  theme: ThemeMode;
   onAccentChange: (accent: AccentTheme) => void;
+  onThemeChange: (theme: ThemeMode) => void;
   onClose: () => void;
 }
 
@@ -16,7 +18,20 @@ const accents: { value: AccentTheme; label: string; className: string }[] = [
   { value: "orange", label: "Orange", className: "accent-orange" },
 ];
 
-export const SettingsPanel = ({ open, accent, onAccentChange, onClose }: SettingsPanelProps) => {
+const themes: { value: ThemeMode; label: string; description: string; icon: typeof Sun }[] = [
+  { value: "light", label: "Clair", description: "Palette claire en conservant la DA", icon: Sun },
+  { value: "dark", label: "Sombre", description: "Thème sombre actuel", icon: Moon },
+  { value: "system", label: "Système", description: "Suit le réglage de l'appareil", icon: Laptop },
+];
+
+export const SettingsPanel = ({
+  open,
+  accent,
+  theme,
+  onAccentChange,
+  onThemeChange,
+  onClose,
+}: SettingsPanelProps) => {
   useEffect(() => {
     if (!open) return;
     const handleEscape = (event: KeyboardEvent) => {
@@ -39,26 +54,47 @@ export const SettingsPanel = ({ open, accent, onAccentChange, onClose }: Setting
       >
         <div className="settings-panel-header">
           <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
-              Apparence
-            </p>
-            <h2 id="settings-title" className="mt-1 text-lg font-semibold text-[var(--text)]">
-              Paramètres
-            </h2>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">Apparence</p>
+            <h2 id="settings-title" className="mt-1 text-lg font-semibold text-[var(--text)]">Paramètres</h2>
           </div>
           <button type="button" onClick={onClose} className="settings-close" aria-label="Fermer les paramètres">
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mt-7">
+        <div className="settings-group mt-7">
+          <h3 className="text-sm font-semibold text-[var(--text)]">Thème</h3>
+          <p className="mt-1.5 text-xs leading-5 text-[var(--muted)]">Le choix est sauvegardé dans ton navigateur.</p>
+          <div className="mt-4 grid gap-2">
+            {themes.map((item) => {
+              const selected = theme === item.value;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.value}
+                  type="button"
+                  onClick={() => onThemeChange(item.value)}
+                  className={`settings-option ${selected ? "settings-option-active" : ""}`}
+                  aria-pressed={selected}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="text-left">
+                    <span className="block text-sm text-[var(--text)]">{item.label}</span>
+                    <span className="mt-0.5 block text-[11px] text-[var(--muted)]">{item.description}</span>
+                  </span>
+                  {selected ? <Check className="ml-auto h-4 w-4 text-[var(--accent)]" /> : null}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="settings-group mt-7 border-t border-[var(--border)] pt-6">
           <div className="flex items-center gap-2">
             <Palette className="h-4 w-4 text-[var(--muted)]" />
             <h3 className="text-sm font-semibold text-[var(--text)]">Couleur d'accent</h3>
           </div>
-          <p className="mt-1.5 text-xs leading-5 text-[var(--muted)]">
-            Ton choix est enregistré automatiquement sur cet appareil.
-          </p>
+          <p className="mt-1.5 text-xs leading-5 text-[var(--muted)]">Les quatre accents existants restent disponibles.</p>
 
           <div className="mt-4 grid grid-cols-2 gap-2">
             {accents.map((item) => {
@@ -78,17 +114,6 @@ export const SettingsPanel = ({ open, accent, onAccentChange, onClose }: Setting
               );
             })}
           </div>
-        </div>
-
-        <div className="settings-static-row mt-6">
-          <div className="flex items-center gap-3">
-            <div className="icon-soft"><Moon className="h-4 w-4" /></div>
-            <div>
-              <p className="text-sm font-medium text-[var(--text)]">Interface sombre</p>
-              <p className="mt-0.5 text-xs text-[var(--muted)]">Thème principal du portfolio</p>
-            </div>
-          </div>
-          <span className="settings-badge">Actif</span>
         </div>
       </section>
     </div>

@@ -9,17 +9,26 @@ import {
 import { useState } from "react";
 import { projects } from "../../data/projects";
 import { profile } from "../../data/profile";
-import type { AccentTheme, PortfolioMode } from "../../types";
+import type { AccentTheme, PortfolioMode, ThemeMode } from "../../types";
 import { SettingsPanel } from "./SettingsPanel";
 
 interface NavbarProps {
   mode: PortfolioMode;
   accent: AccentTheme;
+  theme: ThemeMode;
   onModeChange: (mode: PortfolioMode) => void;
   onAccentChange: (accent: AccentTheme) => void;
+  onThemeChange: (theme: ThemeMode) => void;
 }
 
-export const Navbar = ({ mode, accent, onModeChange, onAccentChange }: NavbarProps) => {
+export const Navbar = ({
+  mode,
+  accent,
+  theme,
+  onModeChange,
+  onAccentChange,
+  onThemeChange,
+}: NavbarProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
@@ -28,8 +37,8 @@ export const Navbar = ({ mode, accent, onModeChange, onAccentChange }: NavbarPro
         <div className="sidebar-profile">
           <div className="avatar-mark" aria-hidden="true">LM</div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-white">{profile.name}</p>
-            <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique</p>
+            <p className="truncate text-sm font-semibold text-[var(--text)]">{profile.name}</p>
+            <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique · IUT de Lens</p>
           </div>
         </div>
 
@@ -43,9 +52,9 @@ export const Navbar = ({ mode, accent, onModeChange, onAccentChange }: NavbarPro
         </div>
 
         <div className="mt-7">
-          <p className="sidebar-label">Projets</p>
+          <p className="sidebar-label">Projets principaux</p>
           <div className="mt-2 grid gap-0.5">
-            {projects.map((project) => (
+            {projects.slice(0, 4).map((project) => (
               <button
                 key={project.id}
                 type="button"
@@ -105,7 +114,14 @@ export const Navbar = ({ mode, accent, onModeChange, onAccentChange }: NavbarPro
         </button>
       </header>
 
-      <SettingsPanel open={settingsOpen} accent={accent} onAccentChange={onAccentChange} onClose={() => setSettingsOpen(false)} />
+      <SettingsPanel
+        open={settingsOpen}
+        accent={accent}
+        theme={theme}
+        onAccentChange={onAccentChange}
+        onThemeChange={onThemeChange}
+        onClose={() => setSettingsOpen(false)}
+      />
     </>
   );
 };
