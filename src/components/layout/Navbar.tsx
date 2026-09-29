@@ -1,117 +1,143 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Menu, Moon, Sun, X } from "lucide-react";
-import { useMemo, useState } from "react";
-import { useActiveSection } from "../../hooks/useActiveSection";
-import type { Theme } from "../../hooks/useTheme";
+import {
+  BriefcaseBusiness,
+  Github,
+  MessageCircle,
+  Palette,
+  UserRound,
+} from "lucide-react";
+import { projects } from "../../data/projects";
+import { profile } from "../../data/profile";
+import type { AccentTheme, PortfolioMode } from "../../types";
 
 interface NavbarProps {
-  theme: Theme;
-  onToggleTheme: () => void;
+  mode: PortfolioMode;
+  accent: AccentTheme;
+  onModeChange: (mode: PortfolioMode) => void;
+  onAccentChange: (accent: AccentTheme) => void;
 }
 
-const links = [
-  { id: "accueil", label: "Accueil" },
-  { id: "projets", label: "Projets" },
-  { id: "competences", label: "Compétences" },
-  { id: "a-propos", label: "À propos" },
-  { id: "parcours", label: "Parcours" },
-  { id: "contact", label: "Contact" },
-] as const;
+const accents: { value: AccentTheme; label: string }[] = [
+  { value: "green", label: "Vert" },
+  { value: "blue", label: "Bleu" },
+  { value: "violet", label: "Violet" },
+  { value: "orange", label: "Orange" },
+];
 
-export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const sectionIds = useMemo(() => links.map((link) => link.id), []);
-  const activeSection = useActiveSection(sectionIds);
+export const Navbar = ({
+  mode,
+  accent,
+  onModeChange,
+  onAccentChange,
+}: NavbarProps) => (
+  <>
+    <aside className="sidebar hidden lg:flex">
+      <div className="flex items-center gap-3 px-3 py-2">
+        <div className="avatar-mark">LM</div>
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-white">{profile.name}</p>
+          <p className="truncate text-xs text-[var(--muted)]">Portfolio</p>
+        </div>
+      </div>
 
-  const closeMenu = () => setMenuOpen(false);
-
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
-      <nav
-        className="panel mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl px-3 backdrop-blur-xl sm:px-4"
-        aria-label="Navigation principale"
-      >
-        <a
-          href="#accueil"
-          className="flex items-center gap-3 rounded-xl px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          onClick={closeMenu}
+      <div className="mt-5 grid gap-1">
+        <button
+          type="button"
+          onClick={() => onModeChange("work")}
+          className={`sidebar-nav ${mode === "work" ? "sidebar-nav-active" : ""}`}
         >
-          <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-raised)] text-xs font-bold tracking-[0.18em] text-[var(--accent)]">
-            LM
-          </span>
-          <span className="hidden sm:block">
-            <span className="block text-sm font-semibold leading-none">Lylian Michel</span>
-            <span className="mt-1 block text-[11px] text-[var(--muted)]">BUT Informatique</span>
-          </span>
+          <BriefcaseBusiness className="h-4 w-4" />
+          <span>Work</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => onModeChange("chat")}
+          className={`sidebar-nav ${mode === "chat" ? "sidebar-nav-active" : ""}`}
+        >
+          <MessageCircle className="h-4 w-4" />
+          <span>Chat</span>
+        </button>
+      </div>
+
+      <div className="mt-7">
+        <p className="sidebar-label">Projets</p>
+        <div className="mt-2 grid gap-0.5">
+          {projects.map((project) => (
+            <button
+              key={project.id}
+              type="button"
+              onClick={() => {
+                onModeChange("work");
+                window.setTimeout(() => {
+                  document.getElementById(project.id)?.scrollIntoView({ behavior: "smooth" });
+                }, 80);
+              }}
+              className="sidebar-project"
+            >
+              <span className="sidebar-dot" />
+              <span className="truncate">{project.title}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-auto space-y-4">
+        <div>
+          <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
+            <Palette className="h-3.5 w-3.5" />
+            Couleur
+          </div>
+          <div className="mt-2 flex gap-2">
+            {accents.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                onClick={() => onAccentChange(item.value)}
+                className={`accent-dot accent-${item.value} ${accent === item.value ? "accent-dot-active" : ""}`}
+                aria-label={`Utiliser l'accent ${item.label}`}
+                title={item.label}
+              />
+            ))}
+          </div>
+        </div>
+
+        <a
+          href={profile.github}
+          target="_blank"
+          rel="noreferrer"
+          className="sidebar-bottom-link"
+        >
+          <Github className="h-4 w-4" />
+          GitHub
         </a>
+      </div>
+    </aside>
 
-        <div className="hidden items-center gap-1 xl:flex">
-          {links.map((link) => {
-            const active = activeSection === link.id;
+    <header className="mobile-header lg:hidden">
+      <div className="flex items-center gap-2">
+        <div className="avatar-mark h-8 w-8 text-[10px]">LM</div>
+        <span className="text-sm font-semibold">{profile.name}</span>
+      </div>
 
-            return (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className={`rounded-full px-4 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
-                  active
-                    ? "bg-[var(--text)] text-[var(--page-bg)]"
-                    : "text-[var(--muted)] hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
-                }`}
-              >
-                {link.label}
-              </a>
-            );
-          })}
-        </div>
+      <div className="mobile-mode-switch">
+        <button
+          type="button"
+          onClick={() => onModeChange("work")}
+          className={mode === "work" ? "mobile-mode-active" : ""}
+          aria-label="Ouvrir Work"
+        >
+          <BriefcaseBusiness className="h-4 w-4" />
+        </button>
+        <button
+          type="button"
+          onClick={() => onModeChange("chat")}
+          className={mode === "chat" ? "mobile-mode-active" : ""}
+          aria-label="Ouvrir Chat"
+        >
+          <MessageCircle className="h-4 w-4" />
+        </button>
+      </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onToggleTheme}
-            aria-label={theme === "dark" ? "Activer le thème clair" : "Activer le thème sombre"}
-            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
-          >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-
-          <button
-            type="button"
-            aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((open) => !open)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] xl:hidden"
-          >
-            {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
-      </nav>
-
-      <AnimatePresence initial={false}>
-        {menuOpen ? (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="panel mx-auto mt-2 max-w-7xl rounded-2xl p-2 backdrop-blur-xl xl:hidden"
-          >
-            <div className="grid gap-1">
-              {links.map((link) => (
-                <a
-                  key={link.id}
-                  href={`#${link.id}`}
-                  onClick={closeMenu}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      <UserRound className="h-4 w-4 text-[var(--muted)]" />
     </header>
-  );
-};
+  </>
+);

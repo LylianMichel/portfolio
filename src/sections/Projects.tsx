@@ -1,24 +1,19 @@
 import { ProjectCard } from "../components/projects/ProjectCard";
-import { Reveal } from "../components/ui/Reveal";
 import { SectionHeading } from "../components/ui/SectionHeading";
 import { projects } from "../data/projects";
 
 export const Projects = () => (
-  <section id="projets" className="section-shell px-3 sm:px-5">
-    <div className="mx-auto max-w-7xl">
-      <Reveal>
-        <SectionHeading
-          eyebrow="01 / Projets"
-          title="Des projets assez complets pour raconter autre chose qu'une liste de technologies."
-          description="Web, application full-stack ou jeu vidéo : chaque projet montre une partie différente de ma manière de concevoir, structurer et faire évoluer un produit."
-        />
-      </Reveal>
+  <section id="projets" className="content-shell section-block">
+    <div className="mx-auto max-w-5xl">
+      <SectionHeading
+        eyebrow="Work / Projets sélectionnés"
+        title="Quatre projets qui montrent des compétences différentes."
+        description="Je mets les projets avant le reste : ils montrent mieux mon niveau réel qu'une liste de technologies."
+      />
 
       <div className="grid gap-5 lg:grid-cols-2">
         {projects.map((project, index) => (
-          <Reveal key={project.id} delay={index * 0.04}>
-            <ProjectCard project={project} index={index + 1} />
-          </Reveal>
+          <ProjectCard key={project.id} project={project} index={index + 1} />
         ))}
       </div>
     </div>

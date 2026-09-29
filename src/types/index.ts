@@ -35,6 +35,9 @@ export interface Project {
   features: string[];
   githubUrl: string;
   demoUrl?: string;
+  image: string;
+  year: string;
+  type: string;
   tone: ProjectTone;
   icon: "Gamepad2" | "Coffee" | "MonitorSmartphone" | "LibraryBig";
 }
@@ -52,3 +55,6 @@ export interface SocialLink {
   label: string;
   href: string;
 }
+
+export type PortfolioMode = "work" | "chat";
+export type AccentTheme = "green" | "blue" | "violet" | "orange";

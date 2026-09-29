@@ -5,13 +5,13 @@ interface SectionHeadingProps {
 }
 
 export const SectionHeading = ({ eyebrow, title, description }: SectionHeadingProps) => (
-  <div className="mb-10 max-w-4xl md:mb-14">
-    <p className="kicker mb-4 text-[11px] font-semibold text-[var(--accent)]">{eyebrow}</p>
-    <h2 className="editorial-serif text-balance text-4xl leading-[0.98] font-semibold tracking-[-0.045em] text-[var(--text)] sm:text-5xl lg:text-6xl">
+  <div className="mb-7 max-w-3xl">
+    <p className="text-xs font-medium text-[var(--muted)]">{eyebrow}</p>
+    <h2 className="mt-2 text-2xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-3xl">
       {title}
     </h2>
     {description ? (
-      <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
+      <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--muted)] sm:text-base">
         {description}
       </p>
     ) : null}
