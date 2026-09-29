@@ -14,13 +14,13 @@ const App = () => {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-[var(--page-bg)] text-[var(--text)] transition-colors">
+      <div className="site-shell min-h-screen text-[var(--text)]">
         <Navbar theme={theme} onToggleTheme={toggleTheme} />
         <main>
           <Hero />
           <Projects />
-          <About />
           <Skills />
+          <About />
           <Timeline />
           <Contact />
         </main>

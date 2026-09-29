@@ -12,8 +12,8 @@ interface NavbarProps {
 const links = [
   { id: "accueil", label: "Accueil" },
   { id: "projets", label: "Projets" },
-  { id: "a-propos", label: "À propos" },
   { id: "competences", label: "Compétences" },
+  { id: "a-propos", label: "À propos" },
   { id: "parcours", label: "Parcours" },
   { id: "contact", label: "Contact" },
 ] as const;
@@ -26,33 +26,37 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[var(--page-bg)]">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-5">
       <nav
-        className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-6 lg:px-8"
+        className="panel mx-auto flex h-16 max-w-7xl items-center justify-between rounded-2xl px-3 backdrop-blur-xl sm:px-4"
         aria-label="Navigation principale"
       >
         <a
           href="#accueil"
-          className="flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+          className="flex items-center gap-3 rounded-xl px-2 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           onClick={closeMenu}
         >
-          <span className="grid h-9 w-9 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-sm font-bold text-[var(--text)]">
+          <span className="grid h-9 w-9 place-items-center rounded-full border border-[var(--border-strong)] bg-[var(--surface-raised)] text-xs font-bold tracking-[0.18em] text-[var(--accent)]">
             LM
           </span>
-          <span className="hidden text-sm font-semibold text-[var(--text)] sm:inline">Lylian Michel</span>
+          <span className="hidden sm:block">
+            <span className="block text-sm font-semibold leading-none">Lylian Michel</span>
+            <span className="mt-1 block text-[11px] text-[var(--muted)]">BUT Informatique</span>
+          </span>
         </a>
 
-        <div className="hidden items-center gap-1 lg:flex">
+        <div className="hidden items-center gap-1 xl:flex">
           {links.map((link) => {
             const active = activeSection === link.id;
+
             return (
               <a
                 key={link.id}
                 href={`#${link.id}`}
-                className={`rounded-md px-3 py-2 text-sm transition ${
+                className={`rounded-full px-4 py-2 text-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
                   active
-                    ? "bg-[var(--surface)] text-[var(--text)]"
-                    : "text-[var(--muted)] hover:text-[var(--text)]"
+                    ? "bg-[var(--text)] text-[var(--page-bg)]"
+                    : "text-[var(--muted)] hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
                 }`}
               >
                 {link.label}
@@ -66,7 +70,7 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
             type="button"
             onClick={onToggleTheme}
             aria-label={theme === "dark" ? "Activer le thème clair" : "Activer le thème sombre"}
-            className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] transition hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--muted)] transition hover:border-[var(--border-strong)] hover:text-[var(--text)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           >
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
@@ -77,7 +81,7 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((open) => !open)}
-            className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] text-[var(--muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-[var(--surface-raised)] text-[var(--muted)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] xl:hidden"
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -88,18 +92,18 @@ export const Navbar = ({ theme, onToggleTheme }: NavbarProps) => {
         {menuOpen ? (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-t border-[var(--border)] bg-[var(--page-bg)] lg:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="panel mx-auto mt-2 max-w-7xl rounded-2xl p-2 backdrop-blur-xl xl:hidden"
           >
-            <div className="mx-auto grid max-w-6xl gap-1 px-5 py-4 sm:px-6">
+            <div className="grid gap-1">
               {links.map((link) => (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={closeMenu}
-                  className="rounded-lg px-4 py-3 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface)] hover:text-[var(--text)]"
+                  className="rounded-xl px-4 py-3 text-sm font-medium text-[var(--muted)] transition hover:bg-[var(--surface-raised)] hover:text-[var(--text)]"
                 >
                   {link.label}
                 </a>
