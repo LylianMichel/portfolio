@@ -6,45 +6,39 @@ export const skillGroups: SkillGroup[] = [
     description: "Interfaces web lisibles, responsive et maintenables.",
     skills: [
       { name: "HTML", description: "Structure sémantique et accessible.", level: "Intermédiaire", icon: "Globe2" },
-      { name: "CSS", description: "Responsive, layouts modernes et animations sobres.", level: "Intermédiaire", icon: "WandSparkles" },
-      { name: "JavaScript", description: "Interactions, DOM et logique côté client.", level: "Intermédiaire", icon: "Code2" },
+      { name: "CSS / Tailwind", description: "Responsive, layouts modernes et styles cohérents.", level: "Intermédiaire", icon: "WandSparkles" },
+      { name: "JavaScript", description: "Interactions, logique côté client et composants.", level: "Intermédiaire", icon: "Code2" },
       { name: "TypeScript", description: "Typage et composants plus robustes.", level: "En progression", icon: "Code2" },
       { name: "React", description: "Composants, hooks et interfaces dynamiques.", level: "En progression", icon: "Laptop" }
     ]
   },
   {
-    title: "Backend",
-    description: "Logique métier, programmation objet et bases serveur.",
+    title: "Backend & applications",
+    description: "Logique métier, API, programmation objet et applications serveur.",
     skills: [
       { name: "Java", description: "POO, structures de données et projets universitaires.", level: "Intermédiaire", icon: "TerminalSquare" },
-      { name: "Python", description: "Algorithmique, scripts et traitement de données.", level: "Intermédiaire", icon: "TerminalSquare" },
-      { name: "API", description: "Consommation et conception de services simples.", level: "En progression", icon: "ServerCog" }
+      { name: "Node.js / Express", description: "API et logique serveur pour des applications web.", level: "En progression", icon: "ServerCog" },
+      { name: "PHP / Laravel", description: "Applications web, routes, contrôleurs et logique métier.", level: "En progression", icon: "ServerCog" },
+      { name: "Python", description: "Algorithmique, scripts et traitement de données.", level: "Intermédiaire", icon: "TerminalSquare" }
     ]
   },
   {
-    title: "Bases de données",
-    description: "Modélisation, requêtes et persistance des données.",
+    title: "Données & qualité",
+    description: "Modélisation, persistance, requêtes et validation du code.",
     skills: [
       { name: "SQL", description: "Requêtes, jointures, sous-requêtes et mises à jour.", level: "Intermédiaire", icon: "Database" },
-      { name: "Conception BDD", description: "Schémas relationnels et organisation cohérente des données.", level: "En progression", icon: "Database" }
+      { name: "SQLite", description: "Persistance locale et schémas relationnels.", level: "Intermédiaire", icon: "Database" },
+      { name: "Prisma", description: "Accès aux données et modélisation côté Node.js.", level: "En progression", icon: "Database" },
+      { name: "Tests", description: "JUnit, PHPUnit, tests backend et tests end-to-end.", level: "En progression", icon: "Code2" }
     ]
   },
   {
-    title: "Outils",
-    description: "Environnement de travail et collaboration.",
+    title: "Outils & création",
+    description: "Environnement de développement, versionnement et création de jeux.",
     skills: [
-      { name: "Git", description: "Branches, commits, fusion et travail en équipe.", level: "Intermédiaire", icon: "GitBranch" },
-      { name: "GitHub", description: "Dépôts, issues, pull requests et partage de projets.", level: "Intermédiaire", icon: "GitBranch" },
-      { name: "VS Code", description: "Environnement principal pour le développement web.", level: "Intermédiaire", icon: "Laptop" },
-      { name: "IntelliJ IDEA", description: "Développement et débogage de projets Java.", level: "Intermédiaire", icon: "Laptop" }
-    ]
-  },
-  {
-    title: "Création",
-    description: "Jeux vidéo, prototypage et création visuelle.",
-    skills: [
-      { name: "Godot", description: "Gameplay, logique de vagues et systèmes de jeu.", level: "En progression", icon: "Gamepad2" },
-      { name: "Pixel art", description: "Direction artistique et assets adaptés au jeu.", level: "En progression", icon: "WandSparkles" },
+      { name: "Git / GitHub", description: "Branches, commits, fusion et partage de projets.", level: "Intermédiaire", icon: "GitBranch" },
+      { name: "Vite", description: "Outil de développement et de build pour le web moderne.", level: "Intermédiaire", icon: "Laptop" },
+      { name: "Godot", description: "Gameplay, systèmes de jeu et outils de validation.", level: "En progression", icon: "Gamepad2" },
       { name: "Game design", description: "Boucles de gameplay, progression et lisibilité.", level: "En progression", icon: "Gamepad2" }
     ]
   }

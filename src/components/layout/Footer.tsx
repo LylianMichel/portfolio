@@ -1,14 +1,14 @@
 import { Github, Linkedin } from "lucide-react";
 import { profile } from "../../data/profile";
 
+const hasLinkedIn = Boolean(profile.linkedin && !profile.linkedin.includes("ton-profil"));
+
 export const Footer = () => (
-  <footer className="border-t border-slate-200 py-8 dark:border-white/8">
-    <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 text-sm text-slate-500 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8 dark:text-slate-500">
+  <footer className="border-t border-[var(--border)] py-8">
+    <div className="mx-auto flex max-w-6xl flex-col gap-5 px-5 text-sm text-[var(--muted)] sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
       <div>
-        <p className="font-semibold text-slate-800 dark:text-slate-200">
-          {profile.name} · {new Date().getFullYear()}
-        </p>
-        <p className="mt-1">Conçu et développé avec React et TypeScript.</p>
+        <p className="font-semibold text-[var(--text)]">{profile.name} · {new Date().getFullYear()}</p>
+        <p className="mt-1">Portfolio développé avec React, TypeScript, Vite et Tailwind CSS.</p>
       </div>
 
       <div className="flex items-center gap-2">
@@ -17,19 +17,22 @@ export const Footer = () => (
           target="_blank"
           rel="noreferrer"
           aria-label="Profil GitHub de Lylian Michel"
-          className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 transition hover:text-slate-950 dark:border-white/10 dark:hover:text-white"
+          className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] transition hover:text-[var(--text)]"
         >
           <Github className="h-4 w-4" />
         </a>
-        <a
-          href={profile.linkedin}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Profil LinkedIn de Lylian Michel"
-          className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 transition hover:text-slate-950 dark:border-white/10 dark:hover:text-white"
-        >
-          <Linkedin className="h-4 w-4" />
-        </a>
+
+        {hasLinkedIn ? (
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Profil LinkedIn de Lylian Michel"
+            className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--surface)] transition hover:text-[var(--text)]"
+          >
+            <Linkedin className="h-4 w-4" />
+          </a>
+        ) : null}
       </div>
     </div>
   </footer>

@@ -2,73 +2,75 @@ import type { Project } from "../types";
 
 export const projects: Project[] = [
   {
-    id: "tower-defense",
-    title: "Tower Defense",
-    shortDescription: "Un jeu de stratégie construit autour de vagues, de tours évolutives et d'une direction artistique pixel art.",
+    id: "anivault",
+    title: "AniVault",
+    shortDescription:
+      "Une application locale de découverte et de suivi d'anime, pensée comme un vrai produit avec catalogue, recherche, bibliothèque personnelle et statistiques.",
     description:
-      "Projet de jeu développé avec Godot, pensé comme un système modulaire : ennemis, vagues, tours, améliorations et progression peuvent évoluer indépendamment.",
-    technologies: ["Godot", "GDScript", "Pixel art", "Game design"],
+      "Projet full-stack autour d'un catalogue AniList synchronisé, avec une API Express, une persistance Prisma et une interface React responsive.",
+    technologies: ["React", "Node.js", "Express", "Prisma", "SQLite"],
     features: [
-      "Gestion des vagues d'ennemis",
-      "Système de tours et d'améliorations",
-      "Progression et équilibrage",
-      "Direction artistique pixel art"
+      "Catalogue AniList synchronisé et paginé",
+      "Recherche avancée et recommandations",
+      "Bibliothèque avec progression, favoris et notes",
+      "Tests backend, Playwright et PWA"
     ],
-    githubUrl: "https://github.com/LylianMichel",
+    githubUrl: "https://github.com/LylianMichel/anivault",
+    tone: "mixed",
+    icon: "LibraryBig"
+  },
+  {
+    id: "towerdefence",
+    title: "THE WORLD DEFENCE",
+    shortDescription:
+      "Un tower defense développé avec Godot autour d'une campagne temporelle, de systèmes de progression et d'un contenu fortement piloté par les données.",
+    description:
+      "Projet de jeu structuré autour des vagues, tours, héros, sauvegardes, modes de jeu, tests techniques et outils de validation.",
+    technologies: ["Godot", "GDScript", "Game design", "Pixel art"],
+    features: [
+      "Campagne de 35 chapitres sur 10 âges",
+      "23 tours, héros et systèmes d'amélioration",
+      "Plusieurs modes de jeu et sauvegarde versionnée",
+      "Smoke tests et benchmarks automatisés"
+    ],
+    githubUrl: "https://github.com/LylianMichel/towerdefence",
     tone: "violet",
     icon: "Gamepad2"
   },
   {
-    id: "applications-java",
-    title: "Applications Java",
-    shortDescription: "Une sélection de projets universitaires orientés objet réalisés en BUT Informatique.",
+    id: "le-temple",
+    title: "Le Temple",
+    shortDescription:
+      "Un site et une API Laravel pour un institut, avec réservation, comptes utilisateurs, catalogue de soins et logique métier persistée en SQLite.",
     description:
-      "Des exercices et applications centrés sur la programmation orientée objet, les structures de données, les tests et l'organisation d'un code lisible.",
-    technologies: ["Java", "POO", "JUnit", "Git"],
+      "Application web PHP/Laravel avec gestion des réservations, sessions, rôles, catalogue, stocks et tests automatisés.",
+    technologies: ["Laravel", "PHP", "SQLite", "PHPUnit"],
     features: [
-      "Programmation orientée objet",
-      "Structures de données",
-      "Tests et débogage",
-      "Travail en équipe avec Git"
+      "Réservations avec contrôle de capacité",
+      "Comptes, rôles et sessions persistantes",
+      "Catalogue, stocks et notifications",
+      "Suite de tests PHPUnit"
     ],
-    githubUrl: "https://github.com/LylianMichel",
+    githubUrl: "https://github.com/LylianMichel/Le_temple",
     tone: "blue",
-    icon: "Coffee"
-  },
-  {
-    id: "sites-web",
-    title: "Sites web",
-    shortDescription: "Interfaces responsive avec une attention particulière portée à l'ergonomie et à la clarté.",
-    description:
-      "Création d'interfaces web adaptées au mobile et au desktop, avec formulaires, interactions utilisateur et composants réutilisables.",
-    technologies: ["HTML", "CSS", "JavaScript", "React"],
-    features: [
-      "Interfaces responsive",
-      "Formulaires et validations",
-      "Interactions utilisateur",
-      "Composants réutilisables"
-    ],
-    githubUrl: "https://github.com/LylianMichel",
-    tone: "cyan",
     icon: "MonitorSmartphone"
   },
   {
-    id: "anivault",
-    title: "AniVault",
-    shortDescription: "Une application moderne pour organiser, explorer et suivre ses animés.",
+    id: "eco-repare",
+    title: "Eco'Répare",
+    shortDescription:
+      "Une vitrine responsive consacrée au reconditionnement informatique, avec une direction visuelle sobre et une attention portée à la lisibilité.",
     description:
-      "Projet évolutif full-stack avec catalogue, gestion de contenu et favoris. L'objectif est de proposer une expérience claire autour d'une collection d'animés.",
-    technologies: ["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL"],
+      "Site statique construit en HTML, CSS et JavaScript avec navigation mobile, formulaire côté navigateur et micro-interactions légères.",
+    technologies: ["HTML", "CSS", "JavaScript", "Responsive"],
     features: [
-      "Catalogue d'animés",
-      "Gestion de favoris",
-      "Interface moderne",
-      "Architecture client / serveur évolutive"
+      "Mise en page responsive",
+      "Navigation mobile accessible",
+      "Formulaire avec validation côté navigateur",
+      "Direction artistique cohérente et légère"
     ],
-    githubUrl: "https://github.com/LylianMichel",
-    tone: "mixed",
-    icon: "LibraryBig"
+    githubUrl: "https://github.com/LylianMichel/Eco-repare",
+    tone: "cyan",
+    icon: "MonitorSmartphone"
   }
 ];
-
-export const projectFilters = ["Tous", "Godot", "Java", "React", "TypeScript"] as const;
