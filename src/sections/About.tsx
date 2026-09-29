@@ -23,7 +23,7 @@ export const About = () => (
   <section id="a-propos" className="content-shell section-block">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
-        eyebrow="Work / À propos"
+        eyebrow="03 / À propos"
         title="Ce que j'aime dans le développement."
       />
 
