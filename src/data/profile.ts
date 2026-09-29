@@ -7,11 +7,12 @@ export const profile = {
   location: "Hauts-de-France, France",
   email: "lylianmichel@gmail.com",
   github: "https://github.com/LylianMichel",
-  linkedin: "",
+  linkedin: "https://www.linkedin.com/in/lylian-michel-bb960a3ab/",
   cvUrl: "",
 };
 
 export const socials: SocialLink[] = [
   { label: "GitHub", href: profile.github },
+  { label: "LinkedIn", href: profile.linkedin },
   { label: "E-mail", href: `mailto:${profile.email}` },
 ];

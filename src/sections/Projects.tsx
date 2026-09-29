@@ -4,16 +4,21 @@ import { projects } from "../data/projects";
 
 export const Projects = () => (
   <section id="projets" className="content-shell section-block">
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-6xl">
       <SectionHeading
-        eyebrow="Work / Projets sélectionnés"
-        title="Quatre projets qui montrent des compétences différentes."
-        description="Je mets les projets avant le reste : ils montrent mieux mon niveau réel qu'une liste de technologies."
+        eyebrow="Work / Projets"
+        title="Les projets sur lesquels j'ai le plus travaillé."
+        description="Ils ne sont pas tous terminés, mais chacun m'a permis de travailler des choses différentes : interface, backend, données, tests ou game design."
       />
 
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="project-layout">
         {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index + 1} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index + 1}
+            featured={index === 0}
+          />
         ))}
       </div>
     </div>
