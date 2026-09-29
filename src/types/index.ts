@@ -26,6 +26,12 @@ export interface SkillGroup {
 
 export type ProjectTone = "cyan" | "violet" | "blue" | "mixed";
 
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  label: string;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -35,7 +41,7 @@ export interface Project {
   features: string[];
   githubUrl: string;
   demoUrl?: string;
-  image: string;
+  images: ProjectImage[];
   year: string;
   type: string;
   tone: ProjectTone;

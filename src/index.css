@@ -480,6 +480,113 @@ section[id] {
   transform: translateY(-2px);
 }
 
+
+.project-carousel {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: #0e0e0e;
+}
+
+.project-carousel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.project-carousel .project-image {
+  display: block;
+  height: 100%;
+  min-height: inherit;
+  width: 100%;
+  object-fit: cover;
+}
+
+.project-carousel-top {
+  position: absolute;
+  z-index: 4;
+  inset: 10px 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.project-carousel-label,
+.project-carousel-count {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(13, 13, 13, 0.78);
+  padding: 5px 8px;
+  color: #dedede;
+  font-size: 10px;
+  line-height: 1;
+  backdrop-filter: blur(8px);
+}
+
+.project-carousel-arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  display: grid;
+  height: 38px;
+  width: 38px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(15, 15, 15, 0.78);
+  color: #f2f2f2;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.project-carousel-arrow:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(28, 28, 28, 0.92);
+}
+
+.project-carousel-arrow-left {
+  left: 12px;
+}
+
+.project-carousel-arrow-right {
+  right: 12px;
+}
+
+.project-carousel-dots {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  bottom: 47px;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(13, 13, 13, 0.68);
+  padding: 6px 8px;
+  backdrop-filter: blur(8px);
+}
+
+.project-carousel-dot {
+  height: 6px;
+  width: 6px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.32);
+  padding: 0;
+  cursor: pointer;
+  transition: width 150ms ease, background 150ms ease;
+}
+
+.project-carousel-dot-active {
+  width: 18px;
+  background: var(--accent);
+}
+
 .project-image-wrap {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -887,6 +994,23 @@ a.contact-card:hover {
 }
 
 @media (max-width: 640px) {
+  .project-carousel-arrow {
+    height: 34px;
+    width: 34px;
+  }
+
+  .project-carousel-arrow-left {
+    left: 8px;
+  }
+
+  .project-carousel-arrow-right {
+    right: 8px;
+  }
+
+  .project-carousel-dots {
+    bottom: 43px;
+  }
+
   .settings-overlay {
     align-items: flex-end;
   }

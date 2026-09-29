@@ -19,7 +19,33 @@ export const projects: Project[] = [
       "Tests backend, Playwright et PWA"
     ],
     githubUrl: "https://github.com/LylianMichel/anivault",
-    image: projectAsset("anivault.png"),
+    images: [
+      {
+        src: projectAsset("anivault.png"),
+        alt: "Accueil desktop d'AniVault",
+        label: "Accueil"
+      },
+      {
+        src: projectAsset("anivault-discovery.png"),
+        alt: "Page découverte d'AniVault",
+        label: "Découverte"
+      },
+      {
+        src: projectAsset("anivault-list.png"),
+        alt: "Bibliothèque personnelle dans AniVault",
+        label: "Ma liste"
+      },
+      {
+        src: projectAsset("anivault-title.png"),
+        alt: "Fiche d'un anime dans AniVault",
+        label: "Fiche anime"
+      },
+      {
+        src: projectAsset("anivault-search.png"),
+        alt: "Recherche avancée dans AniVault",
+        label: "Recherche"
+      }
+    ],
     year: "2026",
     type: "Application full-stack",
     tone: "mixed",
@@ -40,7 +66,33 @@ export const projects: Project[] = [
       "Smoke tests et benchmarks automatisés"
     ],
     githubUrl: "https://github.com/LylianMichel/towerdefence",
-    image: projectAsset("towerdefence.png"),
+    images: [
+      {
+        src: projectAsset("towerdefence.png"),
+        alt: "Accueil du hub de THE WORLD DEFENCE",
+        label: "Hub"
+      },
+      {
+        src: projectAsset("towerdefence-play.png"),
+        alt: "Menu de jeu de THE WORLD DEFENCE",
+        label: "Jouer"
+      },
+      {
+        src: projectAsset("towerdefence-heroes.png"),
+        alt: "Écran des héros de THE WORLD DEFENCE",
+        label: "Héros"
+      },
+      {
+        src: projectAsset("towerdefence-progression.png"),
+        alt: "Écran de progression de THE WORLD DEFENCE",
+        label: "Progression"
+      },
+      {
+        src: projectAsset("towerdefence-tree.png"),
+        alt: "Arbre de progression solaire de THE WORLD DEFENCE",
+        label: "Arbre solaire"
+      }
+    ],
     year: "2026",
     type: "Jeu vidéo",
     tone: "violet",
@@ -61,7 +113,18 @@ export const projects: Project[] = [
       "Suite de tests PHPUnit"
     ],
     githubUrl: "https://github.com/LylianMichel/Le_temple",
-    image: projectAsset("le-temple.webp"),
+    images: [
+      {
+        src: projectAsset("le-temple.webp"),
+        alt: "Concept de page d'accueil du projet Le Temple",
+        label: "Accueil"
+      },
+      {
+        src: projectAsset("le-temple-spa.webp"),
+        alt: "Visuel principal du projet Le Temple",
+        label: "Univers visuel"
+      }
+    ],
     year: "2026",
     type: "Application web",
     tone: "blue",
@@ -82,7 +145,13 @@ export const projects: Project[] = [
       "Direction artistique cohérente"
     ],
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
-    image: "https://raw.githubusercontent.com/LylianMichel/Eco-repare/main/assets/img/hero-atelier-v28.png",
+    images: [
+      {
+        src: projectAsset("eco-repare-preview.svg"),
+        alt: "Aperçu du projet Eco'Répare",
+        label: "Présentation"
+      }
+    ],
     year: "2026",
     type: "Site vitrine",
     tone: "cyan",
