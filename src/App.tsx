@@ -18,9 +18,9 @@ const App = () => {
         <Navbar theme={theme} onToggleTheme={toggleTheme} />
         <main>
           <Hero />
+          <Projects />
           <About />
           <Skills />
-          <Projects />
           <Timeline />
           <Contact />
         </main>

@@ -1,68 +1,24 @@
 # Portfolio — Lylian Michel
 
-Portfolio professionnel réalisé avec React, TypeScript, Vite, Tailwind CSS, Lucide React et Framer Motion.
+Portfolio personnel réalisé dans le cadre de mon BUT Informatique.
 
-## Direction artistique
+Il présente une sélection de mes projets, les technologies que j'utilise et mon parcours.
 
-Le site utilise une interface sombre par défaut inspirée des environnements de développement :
-- fond bleu-noir ;
-- accents cyan, violet et bleu ;
-- cartes translucides très légères ;
-- grilles techniques statiques ;
-- fenêtres de code et micro-références au développement ;
-- animations courtes avec respect de `prefers-reduced-motion`.
+## Stack
 
-Un thème clair est également disponible.
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- Lucide React
 
-## Structure
+## Projets présentés
 
-```text
-portfolio-lylian-michel/
-├─ public/
-│  ├─ favicon.svg
-│  └─ CV-Lylian-Michel-README.txt
-├─ src/
-│  ├─ components/
-│  │  ├─ layout/
-│  │  │  ├─ Footer.tsx
-│  │  │  └─ Navbar.tsx
-│  │  ├─ projects/
-│  │  │  ├─ ProjectCard.tsx
-│  │  │  └─ ProjectVisual.tsx
-│  │  └─ ui/
-│  │     ├─ Reveal.tsx
-│  │     ├─ SectionHeading.tsx
-│  │     └─ SkillIcon.tsx
-│  ├─ data/
-│  │  ├─ profile.ts
-│  │  ├─ projects.ts
-│  │  ├─ skills.ts
-│  │  └─ timeline.ts
-│  ├─ hooks/
-│  │  ├─ useActiveSection.ts
-│  │  └─ useTheme.ts
-│  ├─ sections/
-│  │  ├─ About.tsx
-│  │  ├─ Contact.tsx
-│  │  ├─ Hero.tsx
-│  │  ├─ Projects.tsx
-│  │  ├─ Skills.tsx
-│  │  └─ Timeline.tsx
-│  ├─ types/
-│  │  └─ index.ts
-│  ├─ App.tsx
-│  ├─ index.css
-│  ├─ main.tsx
-│  └─ vite-env.d.ts
-├─ .env.example
-├─ .gitignore
-├─ index.html
-├─ package.json
-├─ tsconfig.app.json
-├─ tsconfig.json
-├─ tsconfig.node.json
-└─ vite.config.ts
-```
+- AniVault — application React / Node.js autour d'un catalogue d'anime
+- THE WORLD DEFENCE — tower defense développé avec Godot
+- Le Temple — application Laravel pour un institut
+- Eco'Répare — site vitrine responsive
 
 ## Installation
 
@@ -73,8 +29,6 @@ npm install
 npm run dev
 ```
 
-Puis ouvrir l'adresse indiquée par Vite.
-
 Build de production :
 
 ```bash
@@ -82,93 +36,63 @@ npm run build
 npm run preview
 ```
 
-## Données à personnaliser
+Les fichiers générés sont placés dans `dist/`.
 
-### Profil et liens
-
-Modifier `src/data/profile.ts` :
-- e-mail ;
-- GitHub ;
-- LinkedIn ;
-- localisation si nécessaire ;
-- URL du CV.
-
-### CV
-
-Ajouter le vrai fichier ici :
+## Structure
 
 ```text
-public/CV-Lylian-Michel.pdf
+src/
+├─ components/
+├─ data/
+├─ hooks/
+├─ sections/
+├─ types/
+├─ App.tsx
+├─ index.css
+└─ main.tsx
 ```
 
-Le bouton « Télécharger mon CV » fonctionnera automatiquement.
+Les informations principales du portfolio sont centralisées dans `src/data/`.
 
-### Projets
+## Configuration
 
-Modifier `src/data/projects.ts`.
+Ce projet ne nécessite actuellement aucune variable d'environnement pour fonctionner.
 
-Chaque projet accepte :
-- titre ;
-- descriptions ;
-- technologies ;
-- fonctionnalités ;
-- lien GitHub ;
-- lien de démo optionnel ;
-- couleur visuelle.
+Les fichiers `.env` et variantes locales sont ignorés par Git afin d'éviter de publier accidentellement des données privées.
 
-### Compétences
-
-Modifier `src/data/skills.ts`.
-
-Les niveaux disponibles sont :
-- `Débutant`
-- `Intermédiaire`
-- `En progression`
-
-### Parcours
-
-Modifier `src/data/timeline.ts`.
-
-## Formulaire de contact
-
-Le formulaire valide les champs côté client.
-
-Il ne simule jamais l'envoi. Sans service configuré, il affiche clairement que le formulaire n'est pas connecté.
-
-Pour Formspree :
-
-1. Copier `.env.example` vers `.env`.
-2. Ajouter votre endpoint :
-
-```env
-VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/xxxxxxxx
-```
-
-3. Relancer Vite.
-
-La structure peut être adaptée à EmailJS ou à votre propre API.
-
-## Dépôt GitHub
-
-Dépôt prévu :
+Les liens de profil sont définis dans :
 
 ```text
-https://github.com/LylianMichel/portfolio.git
+src/data/profile.ts
 ```
 
-Pour publier le projet dans un dépôt vide :
+Les liens vides ne sont pas affichés sur le site.
+
+## CV
+
+Pour afficher le bouton de téléchargement du CV :
+
+1. ajouter le PDF dans `public/` ;
+2. définir son chemin dans `src/data/profile.ts`.
+
+Exemple :
+
+```ts
+cvUrl: "/CV-Lylian-Michel.pdf"
+```
+
+## Déploiement
+
+Le projet est une application Vite statique. Après :
 
 ```bash
-git init
-git branch -M main
-git remote add origin https://github.com/LylianMichel/portfolio.git
-git add .
-git commit -m "feat: create professional portfolio"
-git push -u origin main
+npm run build
 ```
 
-Si le dépôt local possède déjà un remote `origin` :
+le dossier `dist/` peut être déployé sur Vercel, Netlify ou tout hébergeur de fichiers statiques.
 
-```bash
-git remote set-url origin https://github.com/LylianMichel/portfolio.git
-```
+Aucune clé privée ni aucun fichier `.env` n'est nécessaire pour la version actuelle.
+
+## Licence
+
+Projet personnel de portfolio.
