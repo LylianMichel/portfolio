@@ -7,17 +7,27 @@ interface ProjectCardProps {
   featured?: boolean;
 }
 
+const fallbackImage = `${import.meta.env.BASE_URL}project-fallback.svg`;
+
 export const ProjectCard = ({ project, index, featured = false }: ProjectCardProps) => (
   <article
     id={project.id}
     className={`project-card ${featured ? "project-card-featured" : ""}`}
+    aria-labelledby={`${project.id}-title`}
   >
     <div className="project-image-wrap">
       <img
         src={project.image}
-        alt={`Capture du projet ${project.title}`}
+        alt={`Aperçu du projet ${project.title}`}
         className="project-image"
         loading={index === 1 ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={index === 1 ? "high" : "auto"}
+        onError={(event) => {
+          event.currentTarget.onerror = null;
+          event.currentTarget.src = fallbackImage;
+          event.currentTarget.classList.add("project-image-fallback");
+        }}
       />
       <div className="project-image-overlay">
         <span>{project.type}</span>
@@ -29,7 +39,10 @@ export const ProjectCard = ({ project, index, featured = false }: ProjectCardPro
       <div className="flex items-start justify-between gap-5">
         <div>
           <p className="project-index">0{index}</p>
-          <h3 className="mt-1 text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl">
+          <h3
+            id={`${project.id}-title`}
+            className="mt-1 text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl"
+          >
             {project.title}
           </h3>
         </div>
@@ -37,7 +50,7 @@ export const ProjectCard = ({ project, index, featured = false }: ProjectCardPro
         <a
           href={project.githubUrl}
           target="_blank"
-          rel="noreferrer"
+          rel="noopener noreferrer"
           className="icon-button"
           aria-label={`Voir ${project.title} sur GitHub`}
         >
@@ -74,7 +87,7 @@ export const ProjectCard = ({ project, index, featured = false }: ProjectCardPro
       <a
         href={project.githubUrl}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[var(--text)] transition hover:text-[var(--accent)]"
       >
         <Github className="h-4 w-4" />
