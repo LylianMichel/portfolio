@@ -5,7 +5,7 @@ export const Skills = () => (
   <section id="competences" className="content-shell section-block">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
-        eyebrow="Work / Compétences"
+        eyebrow="02 / Compétences"
         title="Ce que j'utilise dans mes projets."
         description="Je préfère montrer les outils que j'ai réellement utilisés plutôt que leur donner une note ou un pourcentage."
       />

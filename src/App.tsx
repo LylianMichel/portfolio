@@ -15,7 +15,6 @@ const readModeFromLocation = (): PortfolioMode =>
 const getInitialAccent = (): AccentTheme => {
   if (typeof window === "undefined") return "green";
   const saved = window.localStorage.getItem("portfolio-accent");
-
   return saved === "blue" || saved === "violet" || saved === "orange" || saved === "green"
     ? saved
     : "green";
@@ -32,10 +31,8 @@ const App = () => {
 
   useEffect(() => {
     const syncMode = () => setMode(readModeFromLocation());
-
     window.addEventListener("hashchange", syncMode);
     window.addEventListener("popstate", syncMode);
-
     return () => {
       window.removeEventListener("hashchange", syncMode);
       window.removeEventListener("popstate", syncMode);
@@ -43,26 +40,19 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    document.title =
-      mode === "chat" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
+    document.title = mode === "chat" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
   }, [mode]);
 
   const changeMode = (nextMode: PortfolioMode) => {
     setMode(nextMode);
-
     const nextHash = nextMode === "chat" ? "#chat" : "#work";
-    if (window.location.hash !== nextHash) {
-      window.history.pushState(null, "", nextHash);
-    }
-
+    if (window.location.hash !== nextHash) window.history.pushState(null, "", nextHash);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="portfolio-app min-h-screen">
-      <a href="#main-content" className="skip-link">
-        Aller au contenu
-      </a>
+      <a href="#main-content" className="skip-link">Aller au contenu</a>
 
       <Navbar
         mode={mode}
@@ -71,7 +61,7 @@ const App = () => {
         onAccentChange={setAccent}
       />
 
-      <main id="main-content" className="min-h-screen lg:pl-[276px]">
+      <main id="main-content" className="min-h-screen lg:pl-[252px]">
         {mode === "work" ? (
           <div className="work-view">
             <Hero />
