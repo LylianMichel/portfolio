@@ -5,35 +5,35 @@ const principles = [
   {
     icon: Code2,
     title: "Construire",
-    text: "Faire fonctionner une idée, puis la rendre plus propre et plus fiable."
+    text: "J'aime partir d'une idée simple et arriver à quelque chose que je peux vraiment utiliser."
   },
   {
     icon: GitBranch,
-    title: "Structurer",
-    text: "Garder un projet compréhensible quand il commence à grossir."
+    title: "Reprendre mon code",
+    text: "Je reviens souvent sur mes projets pour corriger, simplifier ou mieux organiser ce que j'ai fait."
   },
   {
     icon: Gamepad2,
-    title: "Explorer",
-    text: "Utiliser mes projets personnels pour apprendre au-delà des cours."
+    title: "Tester autre chose",
+    text: "Le jeu vidéo me permet de travailler des problèmes très différents du développement web."
   }
 ] as const;
 
 export const About = () => (
   <section id="a-propos" className="content-shell section-block">
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="Work / À propos"
-        title="J'apprends surtout en construisant."
+        title="Ce que j'aime dans le développement."
       />
 
       <div className="grid gap-4 lg:grid-cols-[1.15fr_.85fr]">
         <article className="info-card p-6 sm:p-7">
           <p className="text-base leading-7 text-[var(--text)]">
-            Mon BUT Informatique me donne les bases en développement, algorithmique, bases de données, réseaux et travail en équipe.
+            Le BUT me donne les bases en développement, algorithmique, bases de données, réseaux et travail en équipe.
           </p>
           <p className="mt-4 text-sm leading-7 text-[var(--muted)]">
-            En parallèle, je développe des projets personnels plus longs comme AniVault et THE WORLD DEFENCE. Ils m'obligent à gérer l'architecture, les tests, les données, l'UX et la maintenance dans le temps.
+            Mes projets personnels me servent surtout à aller plus loin : je peux tester une idée, me tromper, revenir sur le code et voir comment le projet tient quand il commence à grossir.
           </p>
         </article>
 

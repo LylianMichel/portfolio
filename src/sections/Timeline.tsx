@@ -3,10 +3,10 @@ import { timeline } from "../data/timeline";
 
 export const Timeline = () => (
   <section id="parcours" className="content-shell section-block pb-20">
-    <div className="mx-auto max-w-5xl">
+    <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="Work / Parcours"
-        title="Une progression simple à lire."
+        title="Mon parcours jusqu'ici."
       />
 
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">

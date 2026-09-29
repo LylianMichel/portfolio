@@ -55,7 +55,7 @@ const App = () => {
               <Timeline />
             </div>
           ) : (
-            <Contact />
+            <Contact onOpenWork={() => changeMode("work")} />
           )}
         </main>
       </div>

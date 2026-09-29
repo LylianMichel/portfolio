@@ -4,10 +4,14 @@ import type { Project } from "../../types";
 interface ProjectCardProps {
   project: Project;
   index: number;
+  featured?: boolean;
 }
 
-export const ProjectCard = ({ project, index }: ProjectCardProps) => (
-  <article id={project.id} className="project-card scroll-mt-8">
+export const ProjectCard = ({ project, index, featured = false }: ProjectCardProps) => (
+  <article
+    id={project.id}
+    className={`project-card ${featured ? "project-card-featured" : ""}`}
+  >
     <div className="project-image-wrap">
       <img
         src={project.image}
@@ -15,17 +19,17 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => (
         className="project-image"
         loading={index === 1 ? "eager" : "lazy"}
       />
+      <div className="project-image-overlay">
+        <span>{project.type}</span>
+        <span>{project.year}</span>
+      </div>
     </div>
 
-    <div className="p-5 sm:p-6">
+    <div className="project-content">
       <div className="flex items-start justify-between gap-5">
         <div>
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
-            <span>{project.type}</span>
-            <span aria-hidden="true">·</span>
-            <span>{project.year}</span>
-          </div>
-          <h3 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-[var(--text)] sm:text-2xl">
+          <p className="project-index">0{index}</p>
+          <h3 className="mt-1 text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl">
             {project.title}
           </h3>
         </div>
@@ -51,17 +55,21 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => (
         ))}
       </div>
 
-      <div className="mt-5 border-t border-[var(--border)] pt-5">
-        <p className="text-xs font-medium text-[var(--muted)]">Ce que j'ai travaillé</p>
-        <ul className="mt-3 grid gap-2 text-sm leading-6 text-[var(--muted)]">
-          {project.features.slice(0, 3).map((feature) => (
-            <li key={feature} className="flex gap-2.5">
-              <span className="mt-[0.65rem] h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {featured ? (
+        <div className="mt-6 border-t border-[var(--border)] pt-5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.08em] text-[var(--muted)]">
+            Points clés
+          </p>
+          <ul className="mt-3 grid gap-2 text-sm leading-6 text-[var(--muted)] sm:grid-cols-2">
+            {project.features.slice(0, 4).map((feature) => (
+              <li key={feature} className="flex gap-2.5">
+                <span className="mt-[0.65rem] h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       <a
         href={project.githubUrl}
@@ -70,7 +78,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => (
         className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-[var(--text)] transition hover:text-[var(--accent)]"
       >
         <Github className="h-4 w-4" />
-        Ouvrir le dépôt
+        Voir le projet
       </a>
     </div>
   </article>

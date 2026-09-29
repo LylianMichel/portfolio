@@ -1,9 +1,10 @@
 import {
   BriefcaseBusiness,
   Github,
+  Linkedin,
+  Mail,
   MessageCircle,
   Palette,
-  UserRound,
 } from "lucide-react";
 import { projects } from "../../data/projects";
 import { profile } from "../../data/profile";
@@ -31,11 +32,11 @@ export const Navbar = ({
 }: NavbarProps) => (
   <>
     <aside className="sidebar hidden lg:flex">
-      <div className="flex items-center gap-3 px-3 py-2">
+      <div className="sidebar-profile">
         <div className="avatar-mark">LM</div>
         <div className="min-w-0">
           <p className="truncate text-sm font-semibold text-white">{profile.name}</p>
-          <p className="truncate text-xs text-[var(--muted)]">Portfolio</p>
+          <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique · Portfolio</p>
         </div>
       </div>
 
@@ -47,7 +48,9 @@ export const Navbar = ({
         >
           <BriefcaseBusiness className="h-4 w-4" />
           <span>Work</span>
+          <span className="ml-auto text-[10px] text-[var(--muted)]">01</span>
         </button>
+
         <button
           type="button"
           onClick={() => onModeChange("chat")}
@@ -55,6 +58,7 @@ export const Navbar = ({
         >
           <MessageCircle className="h-4 w-4" />
           <span>Chat</span>
+          <span className="ml-auto text-[10px] text-[var(--muted)]">02</span>
         </button>
       </div>
 
@@ -80,12 +84,20 @@ export const Navbar = ({
         </div>
       </div>
 
-      <div className="mt-auto space-y-4">
-        <div>
+      <div className="sidebar-stage-card mt-7">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">Stage 2027</p>
+        <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
+          Je recherche un stage de 8 semaines à partir d'avril 2027 en développement informatique.
+        </p>
+      </div>
+
+      <div className="mt-auto">
+        <div className="border-t border-[var(--border)] pt-4">
           <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
             <Palette className="h-3.5 w-3.5" />
-            Couleur
+            Accent
           </div>
+
           <div className="mt-2 flex gap-2">
             {accents.map((item) => (
               <button
@@ -100,22 +112,27 @@ export const Navbar = ({
           </div>
         </div>
 
-        <a
-          href={profile.github}
-          target="_blank"
-          rel="noreferrer"
-          className="sidebar-bottom-link"
-        >
-          <Github className="h-4 w-4" />
-          GitHub
-        </a>
+        <div className="mt-4 grid grid-cols-3 gap-1">
+          <a href={profile.github} target="_blank" rel="noreferrer" className="sidebar-social" aria-label="GitHub">
+            <Github className="h-4 w-4" />
+          </a>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer" className="sidebar-social" aria-label="LinkedIn">
+            <Linkedin className="h-4 w-4" />
+          </a>
+          <a href={`mailto:${profile.email}`} className="sidebar-social" aria-label="E-mail">
+            <Mail className="h-4 w-4" />
+          </a>
+        </div>
       </div>
     </aside>
 
     <header className="mobile-header lg:hidden">
       <div className="flex items-center gap-2">
         <div className="avatar-mark h-8 w-8 text-[10px]">LM</div>
-        <span className="text-sm font-semibold">{profile.name}</span>
+        <div>
+          <span className="block text-sm font-semibold leading-none">{profile.name}</span>
+          <span className="mt-1 block text-[10px] text-[var(--muted)]">{mode === "work" ? "Work" : "Chat"}</span>
+        </div>
       </div>
 
       <div className="mobile-mode-switch">
@@ -137,7 +154,9 @@ export const Navbar = ({
         </button>
       </div>
 
-      <UserRound className="h-4 w-4 text-[var(--muted)]" />
+      <a href={profile.linkedin} target="_blank" rel="noreferrer" className="mobile-social" aria-label="LinkedIn">
+        <Linkedin className="h-4 w-4" />
+      </a>
     </header>
   </>
 );
