@@ -6,7 +6,8 @@ export const Timeline = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="04 / Parcours"
-        title="Mon parcours jusqu'ici."
+        title="Mon parcours."
+        description="Les étapes utiles pour comprendre ma formation et les projets que je développe en parallèle."
       />
 
       <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
@@ -26,9 +27,7 @@ export const Timeline = () => (
               <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{item.description}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {item.tags.map((tag) => (
-                  <span key={tag} className="tech-chip">
-                    {tag}
-                  </span>
+                  <span key={tag} className="tech-chip">{tag}</span>
                 ))}
               </div>
             </div>

@@ -6,8 +6,8 @@ export const Skills = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="02 / Compétences"
-        title="Ce que j'utilise dans mes projets."
-        description="Je préfère montrer les outils que j'ai réellement utilisés plutôt que leur donner une note ou un pourcentage."
+        title="Les technologies que j'utilise réellement."
+        description="Je préfère montrer où j'utilise les technologies dans mes projets plutôt que leur attribuer un pourcentage."
       />
 
       <div className="skills-grid">

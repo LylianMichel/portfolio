@@ -7,8 +7,8 @@ export const Projects = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="01 / Projets"
-        title="Les projets sur lesquels j'ai le plus travaillé."
-        description="Ils ne sont pas tous terminés, mais chacun m'a permis de travailler des choses différentes : interface, backend, données, tests ou game design."
+        title="Mes projets principaux."
+        description="AniVault et THE WORLD DEFENCE sont les deux projets sur lesquels je passe le plus de temps. Les autres me permettent de travailler dans des contextes et avec des technologies différentes."
       />
       <div className="project-layout">
         {projects.map((project, index) => (
