@@ -1,4 +1,3 @@
-import { MotionConfig } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Navbar } from "./components/layout/Navbar";
 import { About } from "./sections/About";
@@ -7,21 +6,23 @@ import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Timeline } from "./sections/Timeline";
+import { WorkContact } from "./sections/WorkContact";
 import type { AccentTheme, PortfolioMode } from "./types";
 
-const getInitialMode = (): PortfolioMode =>
+const readModeFromLocation = (): PortfolioMode =>
   typeof window !== "undefined" && window.location.hash === "#chat" ? "chat" : "work";
 
 const getInitialAccent = (): AccentTheme => {
   if (typeof window === "undefined") return "green";
   const saved = window.localStorage.getItem("portfolio-accent");
+
   return saved === "blue" || saved === "violet" || saved === "orange" || saved === "green"
     ? saved
     : "green";
 };
 
 const App = () => {
-  const [mode, setMode] = useState<PortfolioMode>(getInitialMode);
+  const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
   const [accent, setAccent] = useState<AccentTheme>(getInitialAccent);
 
   useEffect(() => {
@@ -29,37 +30,62 @@ const App = () => {
     window.localStorage.setItem("portfolio-accent", accent);
   }, [accent]);
 
+  useEffect(() => {
+    const syncMode = () => setMode(readModeFromLocation());
+
+    window.addEventListener("hashchange", syncMode);
+    window.addEventListener("popstate", syncMode);
+
+    return () => {
+      window.removeEventListener("hashchange", syncMode);
+      window.removeEventListener("popstate", syncMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.title =
+      mode === "chat" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
+  }, [mode]);
+
   const changeMode = (nextMode: PortfolioMode) => {
     setMode(nextMode);
-    window.history.replaceState(null, "", nextMode === "chat" ? "#chat" : "#work");
+
+    const nextHash = nextMode === "chat" ? "#chat" : "#work";
+    if (window.location.hash !== nextHash) {
+      window.history.pushState(null, "", nextHash);
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <div className="portfolio-app min-h-screen">
-        <Navbar
-          mode={mode}
-          accent={accent}
-          onModeChange={changeMode}
-          onAccentChange={setAccent}
-        />
+    <div className="portfolio-app min-h-screen">
+      <a href="#main-content" className="skip-link">
+        Aller au contenu
+      </a>
 
-        <main className="min-h-screen lg:pl-[276px]">
-          {mode === "work" ? (
-            <div className="work-view">
-              <Hero />
-              <Projects />
-              <Skills />
-              <About />
-              <Timeline />
-            </div>
-          ) : (
-            <Contact onOpenWork={() => changeMode("work")} />
-          )}
-        </main>
-      </div>
-    </MotionConfig>
+      <Navbar
+        mode={mode}
+        accent={accent}
+        onModeChange={changeMode}
+        onAccentChange={setAccent}
+      />
+
+      <main id="main-content" className="min-h-screen lg:pl-[276px]">
+        {mode === "work" ? (
+          <div className="work-view">
+            <Hero />
+            <Projects />
+            <Skills />
+            <About />
+            <Timeline />
+            <WorkContact onOpenChat={() => changeMode("chat")} />
+          </div>
+        ) : (
+          <Contact onOpenWork={() => changeMode("work")} />
+        )}
+      </main>
+    </div>
   );
 };
 

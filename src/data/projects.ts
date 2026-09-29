@@ -1,5 +1,8 @@
 import type { Project } from "../types";
 
+const projectAsset = (fileName: string) =>
+  `${import.meta.env.BASE_URL}projects/${fileName}`;
+
 export const projects: Project[] = [
   {
     id: "anivault",
@@ -16,7 +19,7 @@ export const projects: Project[] = [
       "Tests backend, Playwright et PWA"
     ],
     githubUrl: "https://github.com/LylianMichel/anivault",
-    image: "https://raw.githubusercontent.com/LylianMichel/anivault/main/audit-captures/01-accueil-desktop.png",
+    image: projectAsset("anivault.png"),
     year: "2026",
     type: "Application full-stack",
     tone: "mixed",
@@ -37,7 +40,7 @@ export const projects: Project[] = [
       "Smoke tests et benchmarks automatisés"
     ],
     githubUrl: "https://github.com/LylianMichel/towerdefence",
-    image: "https://raw.githubusercontent.com/LylianMichel/towerdefence/main/docs/screenshots/hub-home-1600x900.png",
+    image: projectAsset("towerdefence.png"),
     year: "2026",
     type: "Jeu vidéo",
     tone: "violet",
@@ -58,7 +61,7 @@ export const projects: Project[] = [
       "Suite de tests PHPUnit"
     ],
     githubUrl: "https://github.com/LylianMichel/Le_temple",
-    image: "https://raw.githubusercontent.com/LylianMichel/Le_temple/master/public/assets/images/concept-homepage.webp",
+    image: projectAsset("le-temple.webp"),
     year: "2026",
     type: "Application web",
     tone: "blue",

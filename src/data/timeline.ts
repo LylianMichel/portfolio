@@ -20,14 +20,14 @@ export const timeline: TimelineItem[] = [
     period: "Projets personnels",
     title: "Web & jeu vidéo",
     description:
-      "Développement d'AniVault et d'un Tower Defense pour approfondir React, TypeScript, les architectures web et la conception de jeux.",
+      "Développement d'AniVault et de THE WORLD DEFENCE pour approfondir React, TypeScript, les architectures web et la conception de jeux.",
     tags: ["React", "TypeScript", "Godot", "Création"]
   },
   {
-    period: "2027",
-    title: "Prochaine étape : expérience professionnelle",
+    period: "À partir du 12 avril 2027",
+    title: "Stage informatique",
     description:
-      "Une entrée prévue dans un contexte professionnel afin de consolider les compétences acquises et participer à des projets réels.",
+      "Je recherche un stage de 8 semaines pour travailler sur un projet de développement dans un environnement professionnel.",
     tags: ["Stage", "Développement", "Équipe"],
     future: true
   }
