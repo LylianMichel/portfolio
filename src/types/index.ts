@@ -63,4 +63,3 @@ export interface SocialLink {
 }
 
 export type PortfolioMode = "work" | "chat";
-export type AccentTheme = "green" | "blue" | "violet" | "orange";
