@@ -10,7 +10,7 @@
     />
     <meta name="theme-color" content="#191919" />
     <meta name="robots" content="index, follow" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="color-scheme" content="light dark" />
 
     <meta property="og:title" content="Lylian Michel — Développeur & étudiant en BUT Informatique" />
     <meta
@@ -32,6 +32,15 @@
     <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
 
     <title>Lylian Michel — Développeur & étudiant en BUT Informatique</title>
+
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("portfolio-theme");
+        const theme = savedTheme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
 
     <script type="application/ld+json">
       {
