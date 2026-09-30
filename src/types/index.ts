@@ -44,6 +44,10 @@ export interface Project {
   images: ProjectImage[];
   year: string;
   type: string;
+  context?: string;
+  contribution?: string;
+  challenge?: string;
+  result?: string;
   tone: ProjectTone;
   icon: "Gamepad2" | "Coffee" | "MonitorSmartphone" | "LibraryBig";
 }
