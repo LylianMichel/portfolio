@@ -1,28 +1,30 @@
-import { SectionHeading } from "../components/ui/SectionHeading";
 import { skillGroups } from "../data/skills";
 
 export const Skills = () => (
   <section id="competences" className="content-shell section-block">
-    <div className="mx-auto max-w-6xl">
-      <SectionHeading
-        eyebrow="02 / Compétences"
-        title="Les technologies que j'utilise réellement."
-        description="Je préfère montrer où j'utilise les technologies dans mes projets plutôt que leur attribuer un pourcentage."
-      />
+    <div className="skills-section mx-auto max-w-6xl">
+      <div className="skills-intro">
+        <p className="section-eyebrow">02 / Compétences</p>
+        <h2>Ce que j'utilise vraiment dans mes projets.</h2>
+        <p>
+          Pas de pourcentages de maîtrise : je préfère montrer les technologies que j'utilise en cours et dans mes projets personnels.
+        </p>
+      </div>
 
-      <div className="skills-grid">
+      <div className="skills-list">
         {skillGroups.map((group, index) => (
-          <article key={group.title} className="skill-card">
-            <div className="flex items-start justify-between gap-4">
-              <h3 className="text-sm font-semibold text-[var(--text)]">{group.title}</h3>
-              <span className="text-[10px] font-medium text-[var(--muted)]">0{index + 1}</span>
+          <article key={group.title} className="skill-group-row">
+            <div className="skill-group-heading">
+              <span>0{index + 1}</span>
+              <div>
+                <h3>{group.title}</h3>
+                <p>{group.description}</p>
+              </div>
             </div>
 
-            <p className="mt-2 text-sm leading-6 text-[var(--muted)]">{group.description}</p>
-
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="skill-group-items">
               {group.skills.map((skill) => (
-                <span key={skill.name} className="tech-chip" title={skill.description}>
+                <span key={skill.name} className="skill-inline" title={skill.description}>
                   {skill.name}
                 </span>
               ))}
