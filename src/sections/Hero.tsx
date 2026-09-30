@@ -11,21 +11,20 @@ const quickLinks = [
 export const Hero = () => (
   <section className="content-shell pt-24 sm:pt-28 lg:pt-12" id="accueil">
     <div className="mx-auto max-w-6xl">
-      <div className="workspace-kicker"><span>Work</span><span>/</span><span>Portfolio 2026</span></div>
+      <div className="workspace-kicker"><span>Portfolio</span><span>/</span><span>2026</span></div>
 
       <div className="hero-grid mt-5">
         <div className="hero-copy">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
-            <span className="status-pill"><span className="status-dot" />2e année de BUT Informatique</span>
-            <span className="inline-flex items-center gap-1.5 px-1"><MapPin className="h-3.5 w-3.5" />IUT de Lens</span>
+          <div className="hero-meta">
+            <span><span className="status-dot" aria-hidden="true" />2e année de BUT Informatique</span>
+            <span><MapPin className="h-3.5 w-3.5" />IUT de Lens</span>
           </div>
 
-          <h1 className="hero-title mt-7 max-w-3xl text-balance font-semibold text-[var(--text)]">
-            Étudiant en BUT Informatique, je développe des applications web et des projets logiciels.
-          </h1>
+          <h1 className="hero-name mt-7 text-[var(--text)]">{profile.name}</h1>
+          <p className="hero-role mt-2">Étudiant en BUT Informatique · Développeur</p>
 
-          <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
-            Je m'appelle <strong className="font-semibold text-[var(--text)]">{profile.name}</strong>. Je travaille principalement avec React, TypeScript et Node.js, et je développe aussi THE WORLD DEFENCE avec Godot.
+          <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
+            Je développe surtout des applications web avec React, TypeScript et Node.js. À côté des cours, je travaille aussi sur AniVault et sur mon tower defense développé avec Godot.
           </p>
 
           <div className="mt-7 flex flex-wrap gap-2">
@@ -37,16 +36,16 @@ export const Hero = () => (
             </a>
           </div>
 
-          <div className="mt-7 flex flex-wrap gap-2">
+          <nav className="hero-quick-links mt-7" aria-label="Accès rapides">
             {quickLinks.map((item) => (
-              <button key={item.target} type="button" onClick={() => document.getElementById(item.target)?.scrollIntoView({ behavior: "smooth" })} className="prompt-chip">
+              <button key={item.target} type="button" onClick={() => document.getElementById(item.target)?.scrollIntoView({ behavior: "smooth" })}>
                 {item.label}
               </button>
             ))}
-          </div>
+          </nav>
         </div>
 
-        <aside className="now-card">
+        <aside className="now-card" aria-label="Informations actuelles">
           <div className="flex items-center justify-between gap-4"><p className="text-xs font-semibold text-[var(--text)]">En ce moment</p><span className="live-dot" aria-hidden="true" /></div>
           <dl className="mt-5 space-y-4">
             <div><dt className="text-[11px] text-[var(--muted)]">Formation</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">BUT Informatique · IUT de Lens</dd></div>
