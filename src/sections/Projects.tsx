@@ -7,12 +7,17 @@ export const Projects = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="01 / Projets"
-        title="Mes projets principaux."
-        description="AniVault et THE WORLD DEFENCE sont les deux projets sur lesquels je passe le plus de temps. Les autres me permettent de travailler dans des contextes et avec des technologies différentes."
+        title="Des projets que je fais réellement évoluer."
+        description="AniVault est mon projet web principal. THE WORLD DEFENCE me sert de terrain d'expérimentation côté jeu et UI. Les projets plus courts restent présents, mais prennent volontairement moins de place."
       />
       <div className="project-layout">
         {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index + 1} featured={index === 0} />
+          <ProjectCard
+            key={project.id}
+            project={project}
+            index={index + 1}
+            variant={index === 0 ? "featured" : index === projects.length - 1 ? "compact" : "standard"}
+          />
         ))}
       </div>
     </div>
