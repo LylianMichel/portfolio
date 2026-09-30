@@ -7,32 +7,34 @@ import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Timeline } from "./sections/Timeline";
 import { WorkContact } from "./sections/WorkContact";
-import type { AccentTheme, PortfolioMode } from "./types";
+import type { PortfolioMode } from "./types";
 
 const readModeFromLocation = (): PortfolioMode =>
   typeof window !== "undefined" && window.location.hash === "#chat" ? "chat" : "work";
 
-const getInitialAccent = (): AccentTheme => {
-  if (typeof window === "undefined") return "green";
-  const saved = window.localStorage.getItem("portfolio-accent");
-  return saved === "blue" || saved === "violet" || saved === "orange" || saved === "green"
-    ? saved
-    : "green";
+const getInitialBrightness = () => {
+  if (typeof window === "undefined") return 100;
+
+  const saved = Number(window.localStorage.getItem("portfolio-brightness"));
+  const allowed = [80, 90, 100, 110, 120];
+
+  return allowed.includes(saved) ? saved : 100;
 };
 
 const App = () => {
   const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
-  const [accent, setAccent] = useState<AccentTheme>(getInitialAccent);
+  const [brightness, setBrightness] = useState(getInitialBrightness);
 
   useEffect(() => {
-    document.documentElement.dataset.accent = accent;
-    window.localStorage.setItem("portfolio-accent", accent);
-  }, [accent]);
+    document.documentElement.dataset.brightness = String(brightness);
+    window.localStorage.setItem("portfolio-brightness", String(brightness));
+  }, [brightness]);
 
   useEffect(() => {
     const syncMode = () => setMode(readModeFromLocation());
     window.addEventListener("hashchange", syncMode);
     window.addEventListener("popstate", syncMode);
+
     return () => {
       window.removeEventListener("hashchange", syncMode);
       window.removeEventListener("popstate", syncMode);
@@ -46,7 +48,11 @@ const App = () => {
   const changeMode = (nextMode: PortfolioMode) => {
     setMode(nextMode);
     const nextHash = nextMode === "chat" ? "#chat" : "#work";
-    if (window.location.hash !== nextHash) window.history.pushState(null, "", nextHash);
+
+    if (window.location.hash !== nextHash) {
+      window.history.pushState(null, "", nextHash);
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -56,9 +62,9 @@ const App = () => {
 
       <Navbar
         mode={mode}
-        accent={accent}
+        brightness={brightness}
         onModeChange={changeMode}
-        onAccentChange={setAccent}
+        onBrightnessChange={setBrightness}
       />
 
       <main id="main-content" className="min-h-screen lg:pl-[252px]">
