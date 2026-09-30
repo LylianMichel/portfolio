@@ -9,21 +9,21 @@ import {
 import { useState } from "react";
 import { projects } from "../../data/projects";
 import { profile } from "../../data/profile";
-import type { PortfolioMode } from "../../types";
+import type { PortfolioMode, ThemeMode } from "../../types";
 import { SettingsPanel } from "./SettingsPanel";
 
 interface NavbarProps {
   mode: PortfolioMode;
-  brightness: number;
+  theme: ThemeMode;
   onModeChange: (mode: PortfolioMode) => void;
-  onBrightnessChange: (brightness: number) => void;
+  onThemeChange: (theme: ThemeMode) => void;
 }
 
 export const Navbar = ({
   mode,
-  brightness,
+  theme,
   onModeChange,
-  onBrightnessChange,
+  onThemeChange,
 }: NavbarProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
@@ -33,7 +33,7 @@ export const Navbar = ({
         <div className="sidebar-profile">
           <div className="avatar-mark" aria-hidden="true">LM</div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-white">{profile.name}</p>
+            <p className="truncate text-sm font-semibold text-[var(--text)]">{profile.name}</p>
             <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique</p>
           </div>
         </div>
@@ -166,8 +166,8 @@ export const Navbar = ({
 
       <SettingsPanel
         open={settingsOpen}
-        brightness={brightness}
-        onBrightnessChange={onBrightnessChange}
+        theme={theme}
+        onThemeChange={onThemeChange}
         onClose={() => setSettingsOpen(false)}
       />
     </>

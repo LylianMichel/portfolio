@@ -18,64 +18,23 @@
   --mobile-header-bg: rgba(25, 25, 25, 0.92);
 }
 
-:root[data-brightness="80"] {
-  --page-bg: #101010;
-  --sidebar-bg: #080808;
-  --surface: #181818;
-  --surface-hover: #202020;
-  --surface-raised: #1c1c1c;
-  --surface-soft: #141414;
-  --text: #ededed;
-  --muted: #909090;
-  --muted-strong: #a6a6a6;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --mobile-header-bg: rgba(16, 16, 16, 0.94);
-}
 
-:root[data-brightness="90"] {
-  --page-bg: #151515;
-  --sidebar-bg: #0c0c0c;
-  --surface: #1d1d1d;
-  --surface-hover: #252525;
-  --surface-raised: #212121;
-  --surface-soft: #191919;
-  --text: #f0f0f0;
-  --muted: #989898;
-  --muted-strong: #aeaeae;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.13);
-  --mobile-header-bg: rgba(21, 21, 21, 0.93);
-}
-
-:root[data-brightness="110"] {
-  --page-bg: #202020;
-  --sidebar-bg: #151515;
-  --surface: #292929;
-  --surface-hover: #323232;
-  --surface-raised: #2d2d2d;
-  --surface-soft: #242424;
-  --text: #f5f5f5;
-  --muted: #aaaaaa;
-  --muted-strong: #c0c0c0;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --mobile-header-bg: rgba(32, 32, 32, 0.92);
-}
-
-:root[data-brightness="120"] {
-  --page-bg: #282828;
-  --sidebar-bg: #1b1b1b;
-  --surface: #323232;
-  --surface-hover: #3b3b3b;
-  --surface-raised: #363636;
-  --surface-soft: #2d2d2d;
-  --text: #fafafa;
-  --muted: #b4b4b4;
-  --muted-strong: #cccccc;
-  --border: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(255, 255, 255, 0.19);
-  --mobile-header-bg: rgba(40, 40, 40, 0.92);
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page-bg: #f2f1ed;
+  --sidebar-bg: #e9e8e3;
+  --surface: #faf9f6;
+  --surface-hover: #f0efea;
+  --surface-raised: #f5f4ef;
+  --surface-soft: #ecebe6;
+  --text: #1d1e20;
+  --muted: #6b6d73;
+  --muted-strong: #55575d;
+  --border: rgba(29, 30, 32, 0.1);
+  --border-strong: rgba(29, 30, 32, 0.18);
+  --accent: #3f9f72;
+  --accent-soft: rgba(63, 159, 114, 0.12);
+  --mobile-header-bg: rgba(242, 241, 237, 0.92);
 }
 
 html {
@@ -203,7 +162,7 @@ a:focus-visible {
 }
 
 .sidebar-nav:hover {
-  background: rgba(255, 255, 255, 0.045);
+  background: color-mix(in srgb, var(--text) 4.5%, transparent);
   color: var(--text);
 }
 
@@ -239,7 +198,7 @@ a:focus-visible {
 }
 
 .sidebar-project:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--text) 4%, transparent);
   color: var(--text);
 }
 
@@ -256,7 +215,7 @@ a:focus-visible {
   margin-inline: 4px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: linear-gradient(145deg, var(--surface-soft), rgba(255, 255, 255, 0.025));
+  background: linear-gradient(145deg, var(--surface-soft), color-mix(in srgb, var(--text) 2.5%, transparent));
   padding: 13px;
 }
 
@@ -451,7 +410,7 @@ a:focus-visible {
   align-items: center;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in srgb, var(--text) 2.5%, transparent);
   padding: 7px 10px;
   color: var(--muted);
   font-size: 12px;
@@ -471,7 +430,7 @@ a:focus-visible {
   gap: 7px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in srgb, var(--text) 2.5%, transparent);
   padding: 9px 10px;
   color: var(--muted);
   font-size: 12px;
@@ -692,7 +651,7 @@ section[id] {
   align-items: center;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in srgb, var(--text) 2.5%, transparent);
   padding: 5px 9px;
   color: var(--muted);
   font-size: 11px;
@@ -787,68 +746,41 @@ section[id] {
   color: var(--text);
 }
 
-.brightness-control {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-  padding: 16px;
-}
-
-.brightness-scale,
-.brightness-labels {
+.theme-option {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--muted);
-}
-
-.brightness-scale span {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.brightness-labels {
-  margin-top: 8px;
-  font-size: 10px;
-}
-
-.brightness-range {
   width: 100%;
-  margin-top: 14px;
-  accent-color: var(--accent);
-  cursor: pointer;
-}
-
-.brightness-range:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 5px;
-}
-
-.settings-reset {
-  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--surface);
-  padding: 9px 11px;
+  padding: 12px;
   color: var(--muted);
-  font-size: 12px;
   cursor: pointer;
-  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
 }
 
-.settings-reset:hover:not(:disabled) {
+.theme-option:hover {
   border-color: var(--border-strong);
   background: var(--surface-hover);
-  color: var(--text);
+  transform: translateY(-1px);
 }
 
-.settings-reset:disabled {
-  cursor: default;
-  opacity: 0.45;
+.theme-option-active {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+  box-shadow: inset 2px 0 var(--accent);
+}
+
+.theme-option-icon {
+  display: grid;
+  height: 34px;
+  width: 34px;
+  flex: none;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--accent);
 }
 
 .chat-view {
@@ -1106,4 +1038,29 @@ a.contact-card:hover {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+
+:root[data-theme="light"] .sidebar-label {
+  color: #74767b;
+}
+
+:root[data-theme="light"] .project-card {
+  box-shadow: 0 18px 65px -54px rgba(27, 29, 31, 0.35);
+}
+
+:root[data-theme="light"] .now-card,
+:root[data-theme="light"] .chat-shortcuts,
+:root[data-theme="light"] .settings-panel {
+  box-shadow: 0 18px 54px -46px rgba(27, 29, 31, 0.35);
+}
+
+:root[data-theme="light"] .settings-overlay {
+  background: rgba(24, 25, 27, 0.26);
+}
+
+:root[data-theme="light"] .project-carousel-label,
+:root[data-theme="light"] .project-carousel-count,
+:root[data-theme="light"] .project-image-overlay span {
+  color: #f3f3f3;
 }

@@ -7,28 +7,32 @@ import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Timeline } from "./sections/Timeline";
 import { WorkContact } from "./sections/WorkContact";
-import type { PortfolioMode } from "./types";
+import type { PortfolioMode, ThemeMode } from "./types";
 
 const readModeFromLocation = (): PortfolioMode =>
   typeof window !== "undefined" && window.location.hash === "#chat" ? "chat" : "work";
 
-const getInitialBrightness = () => {
-  if (typeof window === "undefined") return 100;
+const getInitialTheme = (): ThemeMode => {
+  if (typeof window === "undefined") return "dark";
 
-  const saved = Number(window.localStorage.getItem("portfolio-brightness"));
-  const allowed = [80, 90, 100, 110, 120];
-
-  return allowed.includes(saved) ? saved : 100;
+  const saved = window.localStorage.getItem("portfolio-theme");
+  return saved === "light" ? "light" : "dark";
 };
 
 const App = () => {
   const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
-  const [brightness, setBrightness] = useState(getInitialBrightness);
+  const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
 
   useEffect(() => {
-    document.documentElement.dataset.brightness = String(brightness);
-    window.localStorage.setItem("portfolio-brightness", String(brightness));
-  }, [brightness]);
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem("portfolio-theme", theme);
+
+    const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (themeColor) {
+      themeColor.content = theme === "light" ? "#f2f1ed" : "#191919";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const syncMode = () => setMode(readModeFromLocation());
@@ -62,9 +66,9 @@ const App = () => {
 
       <Navbar
         mode={mode}
-        brightness={brightness}
+        theme={theme}
         onModeChange={changeMode}
-        onBrightnessChange={setBrightness}
+        onThemeChange={setTheme}
       />
 
       <main id="main-content" className="min-h-screen lg:pl-[252px]">
