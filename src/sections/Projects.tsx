@@ -3,9 +3,10 @@ import { SectionHeading } from "../components/ui/SectionHeading";
 import { projects } from "../data/projects";
 
 export const Projects = () => (
-  <section id="projets" className="content-shell section-block">
+  <section aria-labelledby="projects-title" id="projets" className="content-shell section-block">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
+        id="projects-title"
         eyebrow="Réalisations"
         title="Projets sélectionnés."
         description="Quatre projets développés en cours et sur mon temps libre."

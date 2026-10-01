@@ -26,3 +26,6 @@ Thumbs.db
 # Hosting / local caches
 .vercel/
 .netlify/
+
+# Temporary server bundle for static rendering
+.prerender/

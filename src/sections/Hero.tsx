@@ -2,10 +2,10 @@ import { ArrowDown, Download } from "lucide-react";
 import { profile } from "../data/profile";
 
 export const Hero = () => (
-  <section className="content-shell hero-section" id="accueil">
+  <section aria-labelledby="intro-title" className="content-shell hero-section" id="accueil">
     <div className="mx-auto max-w-6xl">
       <p className="hero-intro">Étudiant en BUT Informatique · IUT de Lens</p>
-      <h1 className="hero-name">{profile.name}</h1>
+      <h1 id="intro-title" className="hero-name">{profile.name}</h1>
       <div className="hero-grid">
         <div className="hero-copy">
           <p className="hero-description">

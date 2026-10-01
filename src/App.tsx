@@ -21,7 +21,7 @@ const getInitialTheme = (): ThemeMode => {
 
 const App = () => {
   const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
-  const [hash, setHash] = useState(() => window.location.hash);
+  const [hash, setHash] = useState(() => typeof window !== "undefined" ? window.location.hash : "");
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    document.title = mode === "contact" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
+    document.title = mode === "contact" ? "Lylian Michel — Contact" : "Lylian Michel — Développeur & étudiant en BUT Informatique";
   }, [mode]);
 
   useEffect(() => {

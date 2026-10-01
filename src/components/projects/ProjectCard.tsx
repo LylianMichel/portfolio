@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import type { Project } from "../../types";
 import { ProjectCarousel } from "./ProjectCarousel";
 
@@ -9,21 +9,18 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCardProps) => {
-
-
   return (
     <article
       id={project.id}
       className={`project-card project-card-${variant}`}
       aria-labelledby={`${project.id}-title`}
     >
-      <div className="project-image-wrap">
+      <div className="project-media">
         <ProjectCarousel
           images={project.images}
           projectTitle={project.title}
           eager={index === 1}
         />
-
       </div>
 
       <div className="project-content">
@@ -37,26 +34,17 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
             </h3>
             {project.context ? <p className="project-context mt-1.5">{project.context}</p> : null}
           </div>
-
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="icon-button"
-            aria-label={`Voir ${project.title} sur GitHub`}
-          >
-            <ArrowUpRight className="h-4 w-4" />
-          </a>
         </div>
 
         <p className="project-summary mt-3 text-sm leading-6 text-[var(--muted)]">{project.shortDescription}</p>
 
         <div className="project-technologies mt-5 flex flex-wrap">
-          {project.technologies.map((technology) => (
+          {project.technologies.slice(0, 4).map((technology) => (
             <span key={technology} className="tech-chip">
               {technology}
             </span>
           ))}
+          {project.technologies.length > 4 ? <span className="project-extra-tools">Également : {project.technologies.slice(4).join(", ")}</span> : null}
         </div>
 
         {project.contribution ? (
@@ -82,8 +70,8 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           rel="noopener noreferrer"
           className="project-link mt-5 inline-flex items-center gap-2 text-sm font-medium text-[var(--text)]"
         >
-          <Github className="h-4 w-4" />
-          Voir le code
+          <Github className="h-4 w-4" aria-hidden="true" />
+          Code sur GitHub · {project.title}
         </a>
       </div>
     </article>

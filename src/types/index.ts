@@ -28,6 +28,9 @@ export type ProjectTone = "cyan" | "violet" | "blue" | "mixed";
 
 export interface ProjectImage {
   src: string;
+  srcSet?: string;
+  width?: number;
+  height?: number;
   alt: string;
   label: string;
 }

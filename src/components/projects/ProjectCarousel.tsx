@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useState, type KeyboardEvent } from "react";
 import type { ProjectImage } from "../../types";
 import { Modal } from "../ui/Modal";
 
@@ -11,127 +11,73 @@ interface ProjectCarouselProps {
 
 const fallbackImage = `${import.meta.env.BASE_URL}project-fallback.svg`;
 
-export const ProjectCarousel = ({
-  images,
-  projectTitle,
-  eager = false,
-}: ProjectCarouselProps) => {
+export const ProjectCarousel = ({ images, projectTitle, eager = false }: ProjectCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const titleId = useId();
   const hasMultipleImages = images.length > 1;
   const activeImage = images[activeIndex] ?? images[0];
+  if (!activeImage) return null;
 
-  if (!activeImage) {
-    return null;
-  }
-
-  const previous = () => {
-    setActiveIndex((current) => (current - 1 + images.length) % images.length);
-  };
-
-  const next = () => {
-    setActiveIndex((current) => (current + 1) % images.length);
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const previous = () => setActiveIndex((current) => (current - 1 + images.length) % images.length);
+  const next = () => setActiveIndex((current) => (current + 1) % images.length);
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (!hasMultipleImages) return;
-
-    if (event.key === "ArrowLeft") {
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
-      previous();
-    }
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      next();
+      event.key === "ArrowLeft" ? previous() : next();
     }
   };
 
   return (
-    <div
-      className="project-carousel"
-      tabIndex={hasMultipleImages ? 0 : -1}
-      onKeyDown={handleKeyDown}
-      aria-label={`Galerie du projet ${projectTitle}`}
-    >
-      <img
-        key={activeImage.src}
-        src={activeImage.src}
-        alt={activeImage.alt}
-        className="project-image"
-        loading={eager ? "eager" : "lazy"}
-        decoding="async"
-        fetchPriority={eager ? "high" : "auto"}
-        onError={(event) => {
-          event.currentTarget.onerror = null;
-          event.currentTarget.src = fallbackImage;
-          event.currentTarget.classList.add("project-image-fallback");
-        }}
-      />
-
-      <div className="project-carousel-top">
-        <span className="project-carousel-label">{activeImage.label}</span>
-        <span className="project-carousel-count" aria-live="polite">
-          {activeIndex + 1} / {images.length}
-        </span>
+    <figure className="project-gallery" tabIndex={hasMultipleImages ? 0 : undefined}
+      onKeyDown={handleKeyDown} aria-label={`Captures du projet ${projectTitle}`}>
+      <div className="project-image-wrap">
+        <img key={activeImage.src} src={activeImage.src} srcSet={activeImage.srcSet}
+          sizes="(min-width: 1024px) calc((100vw - 396px) * 0.55), (min-width: 768px) 50vw, 100vw"
+          width={activeImage.width} height={activeImage.height} alt={activeImage.alt}
+          className="project-image" loading={eager ? "eager" : "lazy"} decoding="async"
+          fetchPriority={eager ? "high" : "auto"}
+          onError={(event) => {
+            const image = event.currentTarget;
+            if (image.src.endsWith("project-fallback.svg")) return;
+            image.removeAttribute("srcset");
+            image.src = fallbackImage;
+          }} />
       </div>
-
-      <button type="button" className="project-expand" onClick={() => setExpanded(true)} aria-label={`Agrandir la capture de ${projectTitle}`}>
-        <Expand size={16} />Agrandir
-      </button>
-
+      <figcaption className="gallery-caption">
+        <span className="gallery-label" aria-live="polite">{activeImage.label}</span>
+        {hasMultipleImages ? (
+          <div className="gallery-paging">
+            <button type="button" className="gallery-button" onClick={previous}
+              aria-label={`Image précédente de ${projectTitle}`}><ChevronLeft size={18} aria-hidden="true" /></button>
+            <span className="gallery-count" aria-live="polite" aria-atomic="true">{activeIndex + 1} / {images.length}</span>
+            <button type="button" className="gallery-button" onClick={next}
+              aria-label={`Image suivante de ${projectTitle}`}><ChevronRight size={18} aria-hidden="true" /></button>
+          </div>
+        ) : null}
+        <button type="button" className="gallery-expand" onClick={() => setExpanded(true)}
+          aria-label={`Agrandir la capture de ${projectTitle}`}><Expand size={15} aria-hidden="true" />Agrandir</button>
+      </figcaption>
       {expanded ? (
         <Modal titleId={titleId} className="image-modal" onClose={() => setExpanded(false)}>
           <div className="image-modal-content">
             <div className="image-modal-header">
               <h2 id={titleId}>{projectTitle} · {activeImage.label}</h2>
-              <button type="button" className="icon-button" onClick={() => setExpanded(false)} aria-label="Fermer la capture"><X size={20} /></button>
+              <button type="button" className="icon-button" onClick={() => setExpanded(false)}
+                aria-label="Fermer la capture"><X size={20} aria-hidden="true" /></button>
             </div>
-            <img src={activeImage.src} alt={activeImage.alt} />
-            {hasMultipleImages ? <div className="image-modal-navigation">
-              <button type="button" className="secondary-action" onClick={previous}><ChevronLeft size={18} />Précédente</button>
-              <span aria-live="polite">{activeIndex + 1} / {images.length}</span>
-              <button type="button" className="secondary-action" onClick={next}>Suivante<ChevronRight size={18} /></button>
-            </div> : null}
+            <img src={activeImage.src} width={activeImage.width} height={activeImage.height} alt={activeImage.alt} />
+            {hasMultipleImages ? (
+              <div className="image-modal-navigation">
+                <button type="button" className="secondary-action" onClick={previous}><ChevronLeft size={18} aria-hidden="true" />Précédente</button>
+                <span aria-live="polite">{activeIndex + 1} / {images.length}</span>
+                <button type="button" className="secondary-action" onClick={next}>Suivante<ChevronRight size={18} aria-hidden="true" /></button>
+              </div>
+            ) : null}
           </div>
         </Modal>
       ) : null}
-
-      {hasMultipleImages ? (
-        <>
-          <button
-            type="button"
-            className="project-carousel-arrow project-carousel-arrow-left"
-            onClick={previous}
-            aria-label={`Image précédente de ${projectTitle}`}
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-
-          <button
-            type="button"
-            className="project-carousel-arrow project-carousel-arrow-right"
-            onClick={next}
-            aria-label={`Image suivante de ${projectTitle}`}
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
-
-          <div className="project-carousel-dots" aria-label="Choisir une image">
-            {images.map((image, index) => (
-              <button
-                key={image.src}
-                type="button"
-                className={`project-carousel-dot ${index === activeIndex ? "project-carousel-dot-active" : ""}`}
-                onClick={() => setActiveIndex(index)}
-                aria-label={`Afficher l'image ${index + 1} : ${image.label}`}
-                aria-pressed={index === activeIndex}
-              />
-            ))}
-          </div>
-        </>
-      ) : null}
-    </div>
+    </figure>
   );
 };

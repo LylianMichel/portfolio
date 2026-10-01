@@ -8,3 +8,5 @@ Les images WebP sont des captures des applications exécutées localement ou des
 - THE WORLD DEFENCE : captures 1600 × 900 de docs/screenshots du dépôt local towerdefence : hub-home, hub-play, hub-heroes et hub-progression. La capture existante de l'arbre solaire est conservée.
 
 Les captures web conservent toute leur largeur. Le haut de page est recadré pour les cartes, puis compressé en WebP (qualité 90). Les fichiers peuvent être consultés en grand via la galerie du portfolio.
+
+Les variantes `-640.webp` servent les cartes sur les petits écrans (qualité 85). Les fichiers originaux restent disponibles dans la galerie agrandie. `og-portfolio.jpg` assemble ces captures pour l’aperçu des partages, sans image générée.

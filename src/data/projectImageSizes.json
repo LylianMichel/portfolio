@@ -1,0 +1,47 @@
+{
+  "anivault-home.webp": {
+    "width": 1424,
+    "height": 730,
+    "small": "anivault-home-640.webp"
+  },
+  "eco-repare-home.webp": {
+    "width": 1272,
+    "height": 900,
+    "small": "eco-repare-home-640.webp"
+  },
+  "le-temple-home.webp": {
+    "width": 1264,
+    "height": 900,
+    "small": "le-temple-home-640.webp"
+  },
+  "le-temple-soins.webp": {
+    "width": 1264,
+    "height": 900,
+    "small": "le-temple-soins-640.webp"
+  },
+  "towerdefence-evolution.webp": {
+    "width": 1600,
+    "height": 900,
+    "small": "towerdefence-evolution-640.webp"
+  },
+  "towerdefence-hub.webp": {
+    "width": 1600,
+    "height": 900,
+    "small": "towerdefence-hub-640.webp"
+  },
+  "towerdefence-menu.webp": {
+    "width": 1600,
+    "height": 900,
+    "small": "towerdefence-menu-640.webp"
+  },
+  "towerdefence-personnages.webp": {
+    "width": 1600,
+    "height": 900,
+    "small": "towerdefence-personnages-640.webp"
+  },
+  "towerdefence-tree.png": {
+    "width": 1600,
+    "height": 900,
+    "small": "towerdefence-tree-640.webp"
+  }
+}

@@ -2,9 +2,10 @@ import { SectionHeading } from "../components/ui/SectionHeading";
 import { timeline } from "../data/timeline";
 
 export const Timeline = () => (
-  <section id="parcours" className="content-shell section-block pb-20">
+  <section aria-labelledby="timeline-title" id="parcours" className="content-shell section-block pb-20">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
+        id="timeline-title"
         eyebrow="Parcours"
         title="De la formation aux projets."
 

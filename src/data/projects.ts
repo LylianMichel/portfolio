@@ -1,9 +1,10 @@
 import type { Project } from "../types";
+import imageSizes from "./projectImageSizes.json";
 
 const projectAsset = (fileName: string) =>
   `${import.meta.env.BASE_URL}projects/${fileName}`;
 
-export const projects: Project[] = [
+const projectList: Project[] = [
   {
     id: "anivault",
     title: "AniVault",
@@ -11,7 +12,7 @@ export const projects: Project[] = [
       "Application web pour découvrir des animes et gérer une bibliothèque personnelle synchronisée avec AniList.",
     description:
       "AniVault est le projet web sur lequel j'ai le plus travaillé. J'y ai construit le frontend React, l'API Express et la couche de données avec Prisma.",
-    technologies: ["React", "TypeScript", "Vite", "Node.js", "Express", "Prisma", "PostgreSQL", "AniList"],
+    technologies: ["React", "TypeScript", "Node.js", "Express", "Prisma", "PostgreSQL", "AniList", "Vite"],
     features: [
       "Catalogue synchronisé avec AniList",
       "Recherche avancée et filtres",
@@ -126,3 +127,18 @@ export const projects: Project[] = [
     icon: "MonitorSmartphone"
   }
 ];
+
+
+export const projects: Project[] = projectList.map((project) => ({
+  ...project,
+  images: project.images.map((image) => {
+    const fileName = image.src.split("/").at(-1) as keyof typeof imageSizes;
+    const size = imageSizes[fileName];
+    return size ? {
+      ...image,
+      width: size.width,
+      height: size.height,
+      srcSet: `${projectAsset(size.small)} 640w, ${image.src} ${size.width}w`,
+    } : image;
+  }),
+}));

@@ -77,7 +77,7 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--text);
   outline-offset: 3px;
 }
 
@@ -475,7 +475,7 @@ section[id] {
 }
 
 .project-carousel:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--text);
   outline-offset: -2px;
 }
 
@@ -950,7 +950,7 @@ a.contact-card:hover {
 
 /* Humanisation pass: preserve the existing visual identity while reducing repeated template patterns. */
 :where(a, button, [tabindex]):focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--text);
   outline-offset: 3px;
 }
 
@@ -1628,3 +1628,63 @@ a.contact-card:hover {
   .hero-description { font-size: 15px; }
   .hero-quick-links { margin-top: 12px; }
 }
+
+/* Section rhythm and readable content, without changing the navigation. */
+:root { --space-sm: 8px; --space-md: 16px; --space-lg: 24px; --space-xl: 32px; --space-section: 64px; }
+.section-block { padding-top: var(--space-section); }
+.section-block > div { padding-top: var(--space-xl); }
+.section-heading { margin-bottom: var(--space-xl); }
+.section-heading h2, .skills-intro h2, .about-copy h2, .work-contact-card h2, .conversation-header h1 { font-size: clamp(1.625rem, 2.5vw, 2rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.25; }
+.section-heading > p:last-child, .skills-intro > p:last-child, .about-copy > p:last-child { font-size: 15px; line-height: 1.75; margin-top: var(--space-md); }
+.hero-grid { gap: 32px; }
+.project-layout > .project-card { padding-block: var(--space-xl); gap: var(--space-xl); }
+.project-context { font-size: 14px; line-height: 1.6; }
+.project-summary, .project-contribution, .project-details dd { font-size: 15px; line-height: 1.7; }
+.project-title-row h3 { font-size: 24px; line-height: 1.25; }
+.project-technologies { gap: 4px 16px; }
+.tech-chip { font-size: 14px; font-weight: 500; }
+.project-extra-tools { flex-basis: 100%; font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.7; }
+.project-contribution span, .project-details dt { font-size: 14px; margin-bottom: 6px; font-weight: 600; }
+.project-notes summary { font-size: 14px; min-height: 44px; display: list-item; align-content: center; }
+.project-link { min-height: 44px; font-size: 14px; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 5px; }
+.project-link:hover, .project-link:focus-visible { text-decoration-color: currentColor; }
+.project-media { min-width: 0; }
+.project-gallery { margin: 0; min-width: 0; }
+.project-gallery:focus-visible { outline: 2px solid var(--text); outline-offset: 5px; }
+.project-gallery .project-image { display: block; }
+.gallery-caption { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding-top: 8px; color: var(--muted-strong); font-size: 14px; }
+.gallery-label { flex: 1; min-width: 80px; }
+.gallery-paging { display: flex; align-items: center; gap: 2px; }
+.gallery-count { min-width: 42px; text-align: center; font-size: 13px; font-variant-numeric: tabular-nums; }
+.gallery-button, .gallery-expand { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid transparent; border-radius: 4px; min-height: 44px; background: transparent; color: var(--text); cursor: pointer; }
+.gallery-button { min-width: 44px; }
+.gallery-expand { padding-inline: 10px; font-size: 13px; }
+.gallery-button:hover, .gallery-expand:hover { background: var(--surface-hover); border-color: var(--border); }
+.skill-group-heading h3, .about-note h3, .timeline-content h3 { font-size: 16px; line-height: 1.5; }
+.skill-group-heading p, .skill-inline, .about-note p, .timeline-content > p:not(.timeline-tags) { font-size: 14px; line-height: 1.75; }
+.timeline-meta p { font-size: 14px; font-weight: 600; color: var(--text); }
+.timeline-meta span, .timeline-tags { font-size: 13px; }
+.skill-group-row, .timeline-row, .about-note { padding-block: var(--space-lg); }
+.about-lead { margin-top: var(--space-lg); font-size: 16px; }
+.contact-email { font-size: 16px; font-weight: 600; color: var(--text); }
+.conversation-message, .conversation-question { font-size: 15px; }
+.conversation-author { font-size: 13px; }
+.conversation-header, .contact-conversation { gap: var(--space-lg); }
+:where(.primary-action, .secondary-action, .icon-button, .gallery-button, .gallery-expand, .project-notes summary):focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.theme-option-active { border-color: var(--border-strong); }
+@media (min-width: 1100px) { .hero-grid { gap: 40px; } }
+@media (max-width: 767px) {
+  .section-block { padding-top: 48px; }
+  .section-block > div { padding-top: 24px; }
+  .project-layout > .project-card { padding-block: 28px; }
+  .project-layout > .project-card .project-content { padding-top: 24px; }
+  .gallery-caption:has(.gallery-paging) .gallery-label { flex-basis: 100%; }
+  .gallery-caption:has(.gallery-paging) .gallery-expand { margin-left: auto; }
+}
+
+.conversation-links .contact-email { display: block; text-decoration: none; }
+.image-modal-content > img { height: auto; }
+
+.hero-stage { font-size: 14px; }
+.hero-stage-date { font-size: 17px; }
+.work-contact-card > div > p:last-child { font-size: 15px; line-height: 1.7; }
