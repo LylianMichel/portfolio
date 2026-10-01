@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, MapPin } from "lucide-react";
 import { profile } from "../data/profile";
 
 const quickLinks = [
@@ -24,23 +24,24 @@ export const Hero = () => (
           <p className="hero-role mt-2">Étudiant en BUT Informatique · Développeur</p>
 
           <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
-            Je développe surtout des applications web avec React, TypeScript et Node.js. À côté des cours, je travaille aussi sur AniVault et sur mon tower defense développé avec Godot.
+            Je construis AniVault, une application pour suivre ses animes, avec React, TypeScript et Node.js. Je développe aussi THE WORLD DEFENCE avec Godot.
           </p>
 
+          <p className="hero-availability mt-5">Stage de 8 semaines · dès le 12 avril 2027</p>
+
           <div className="mt-7 flex flex-wrap gap-2">
-            <button type="button" onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })} className="primary-action">
+            <a href="#projets" className="primary-action">
               Voir mes projets <ArrowDown className="h-4 w-4" />
-            </button>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="secondary-action">
-              LinkedIn <Linkedin className="h-4 w-4" />
             </a>
+            <a href="#contact" className="secondary-action">Me contacter</a>
+            {profile.cvUrl ? <a href={profile.cvUrl} download className="secondary-action">Mon CV <Download className="h-4 w-4" /></a> : null}
           </div>
 
           <nav className="hero-quick-links mt-7" aria-label="Accès rapides">
             {quickLinks.map((item) => (
-              <button key={item.target} type="button" onClick={() => document.getElementById(item.target)?.scrollIntoView({ behavior: "smooth" })}>
+              <a key={item.target} href={`#${item.target}`}>
                 {item.label}
-              </button>
+              </a>
             ))}
           </nav>
         </div>

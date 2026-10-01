@@ -9,7 +9,7 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCardProps) => {
-  const featured = variant === "featured";
+  const featured = variant === "featured" || index === 2;
 
   return (
     <article
@@ -99,7 +99,7 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           className="project-link mt-5 inline-flex items-center gap-2 text-sm font-medium text-[var(--text)]"
         >
           <Github className="h-4 w-4" />
-          Voir le dépôt
+          Voir le code
         </a>
       </div>
     </article>

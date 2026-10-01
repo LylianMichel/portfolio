@@ -1,5 +1,5 @@
 import { Check, Moon, Sun, X } from "lucide-react";
-import { useEffect } from "react";
+import { Modal } from "../ui/Modal";
 import type { ThemeMode } from "../../types";
 
 interface SettingsPanelProps {
@@ -35,27 +35,13 @@ export const SettingsPanel = ({
   onThemeChange,
   onClose,
 }: SettingsPanelProps) => {
-  useEffect(() => {
-    if (!open) return;
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [open, onClose]);
 
   if (!open) return null;
 
   return (
-    <div className="settings-overlay" onMouseDown={onClose}>
+    <Modal titleId="settings-title" className="settings-dialog" onClose={onClose}>
       <section
         className="settings-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="settings-title"
-        onMouseDown={(event) => event.stopPropagation()}
       >
         <div className="settings-panel-header">
           <div>
@@ -112,6 +98,6 @@ export const SettingsPanel = ({
           </div>
         </div>
       </section>
-    </div>
+    </Modal>
   );
 };

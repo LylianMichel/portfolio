@@ -27,11 +27,7 @@ export const projects: Project[] = [
       "Une application utilisable avec catalogue, recherche, fiches anime et gestion d'une liste personnelle.",
     githubUrl: "https://github.com/LylianMichel/anivault",
     images: [
-      { src: projectAsset("anivault.png"), alt: "Accueil desktop d'AniVault", label: "Accueil" },
-      { src: projectAsset("anivault-discovery.png"), alt: "Page découverte d'AniVault", label: "Découverte" },
-      { src: projectAsset("anivault-list.png"), alt: "Bibliothèque personnelle dans AniVault", label: "Ma liste" },
-      { src: projectAsset("anivault-title.png"), alt: "Fiche d'un anime dans AniVault", label: "Fiche anime" },
-      { src: projectAsset("anivault-search.png"), alt: "Recherche avancée dans AniVault", label: "Recherche" }
+      { src: projectAsset("anivault-home.webp"), alt: "Accueil de la version actuelle d'AniVault", label: "Accueil" }
     ],
     year: "2026",
     type: "Application full-stack",
@@ -61,10 +57,10 @@ export const projects: Project[] = [
       "Un projet jouable qui sert aussi de terrain d'expérimentation pour l'UI, les systèmes et le game design.",
     githubUrl: "https://github.com/LylianMichel/towerdefence",
     images: [
-      { src: projectAsset("towerdefence.png"), alt: "Accueil du hub de THE WORLD DEFENCE", label: "Hub" },
-      { src: projectAsset("towerdefence-play.png"), alt: "Menu de jeu de THE WORLD DEFENCE", label: "Jouer" },
-      { src: projectAsset("towerdefence-heroes.png"), alt: "Écran des héros de THE WORLD DEFENCE", label: "Héros" },
-      { src: projectAsset("towerdefence-progression.png"), alt: "Écran de progression de THE WORLD DEFENCE", label: "Progression" },
+      { src: projectAsset("towerdefence-hub.webp"), alt: "Accueil du hub de THE WORLD DEFENCE", label: "Hub" },
+      { src: projectAsset("towerdefence-menu.webp"), alt: "Menu de jeu de THE WORLD DEFENCE", label: "Jouer" },
+      { src: projectAsset("towerdefence-personnages.webp"), alt: "Écran des héros de THE WORLD DEFENCE", label: "Héros" },
+      { src: projectAsset("towerdefence-evolution.webp"), alt: "Écran de progression de THE WORLD DEFENCE", label: "Progression" },
       { src: projectAsset("towerdefence-tree.png"), alt: "Arbre de progression solaire de THE WORLD DEFENCE", label: "Arbre solaire" }
     ],
     year: "2026",
@@ -93,8 +89,8 @@ export const projects: Project[] = [
       "Une base d'application métier structurée autour de cas d'usage concrets.",
     githubUrl: "https://github.com/LylianMichel/Le_temple",
     images: [
-      { src: projectAsset("le-temple.webp"), alt: "Concept de page d'accueil du projet Le Temple", label: "Accueil" },
-      { src: projectAsset("le-temple-spa.webp"), alt: "Visuel principal du projet Le Temple", label: "Univers visuel" }
+      { src: projectAsset("le-temple-home.webp"), alt: "Page d'accueil réelle du projet Le Temple", label: "Accueil" },
+      { src: projectAsset("le-temple-soins.webp"), alt: "Catalogue de soins du projet Le Temple", label: "Soins" }
     ],
     year: "2026",
     type: "Application web",
@@ -122,7 +118,7 @@ export const projects: Project[] = [
       "Un site vitrine léger, lisible et adapté aux principaux formats d'écran.",
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
     images: [
-      { src: projectAsset("eco-repare-preview.svg"), alt: "Aperçu du projet Eco'Répare", label: "Présentation" }
+      { src: projectAsset("eco-repare-home.webp"), alt: "Page d'accueil réelle d'Eco’Répare", label: "Accueil" }
     ],
     year: "2026",
     type: "Site vitrine",

@@ -7,8 +7,8 @@ export const Projects = () => (
     <div className="mx-auto max-w-6xl">
       <SectionHeading
         eyebrow="01 / Projets"
-        title="Des projets que je fais réellement évoluer."
-        description="AniVault est mon projet web principal. THE WORLD DEFENCE me sert de terrain d'expérimentation côté jeu et UI. Les projets plus courts restent présents, mais prennent volontairement moins de place."
+        title="Mes projets."
+        description="Du développement web au jeu vidéo : voici les projets sur lesquels je travaille, avec mes contributions et des captures de leurs interfaces."
       />
       <div className="project-layout">
         {projects.map((project, index) => (

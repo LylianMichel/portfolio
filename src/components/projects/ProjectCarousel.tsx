@@ -1,6 +1,7 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { useId, useState } from "react";
 import type { ProjectImage } from "../../types";
+import { Modal } from "../ui/Modal";
 
 interface ProjectCarouselProps {
   images: ProjectImage[];
@@ -16,6 +17,8 @@ export const ProjectCarousel = ({
   eager = false,
 }: ProjectCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const titleId = useId();
   const hasMultipleImages = images.length > 1;
   const activeImage = images[activeIndex] ?? images[0];
 
@@ -73,6 +76,27 @@ export const ProjectCarousel = ({
           {activeIndex + 1} / {images.length}
         </span>
       </div>
+
+      <button type="button" className="project-expand" onClick={() => setExpanded(true)} aria-label={`Agrandir la capture de ${projectTitle}`}>
+        <Expand size={16} />Agrandir
+      </button>
+
+      {expanded ? (
+        <Modal titleId={titleId} className="image-modal" onClose={() => setExpanded(false)}>
+          <div className="image-modal-content">
+            <div className="image-modal-header">
+              <h2 id={titleId}>{projectTitle} · {activeImage.label}</h2>
+              <button type="button" className="icon-button" onClick={() => setExpanded(false)} aria-label="Fermer la capture"><X size={20} /></button>
+            </div>
+            <img src={activeImage.src} alt={activeImage.alt} />
+            {hasMultipleImages ? <div className="image-modal-navigation">
+              <button type="button" className="secondary-action" onClick={previous}><ChevronLeft size={18} />Précédente</button>
+              <span aria-live="polite">{activeIndex + 1} / {images.length}</span>
+              <button type="button" className="secondary-action" onClick={next}>Suivante<ChevronRight size={18} /></button>
+            </div> : null}
+          </div>
+        </Modal>
+      ) : null}
 
       {hasMultipleImages ? (
         <>

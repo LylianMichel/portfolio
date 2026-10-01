@@ -66,5 +66,5 @@ export interface SocialLink {
   href: string;
 }
 
-export type PortfolioMode = "work" | "chat";
+export type PortfolioMode = "work" | "contact";
 export type ThemeMode = "dark" | "light";
