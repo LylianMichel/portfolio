@@ -45,7 +45,7 @@ export const Navbar = ({
             aria-current={mode === "work" ? "page" : undefined}
           >
             <BriefcaseBusiness className="h-4 w-4" />
-            <span>Portfolio</span>
+            <span>Portfolio</span>
           </button>
 
           <button
@@ -55,7 +55,7 @@ export const Navbar = ({
             aria-current={mode === "contact" ? "page" : undefined}
           >
             <Mail className="h-4 w-4" />
-            <span>Contact</span>
+            <span>Contact</span>
           </button>
         </div>
 

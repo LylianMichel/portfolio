@@ -7,7 +7,7 @@ export const Timeline = () => (
       <SectionHeading
         eyebrow="Parcours"
         title="De la formation aux projets."
-        
+
       />
 
       <div className="timeline-list">
