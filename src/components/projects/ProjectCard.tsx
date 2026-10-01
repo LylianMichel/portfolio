@@ -9,7 +9,7 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCardProps) => {
-  const featured = variant === "featured" || index === 2;
+
 
   return (
     <article
@@ -59,32 +59,21 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           ))}
         </div>
 
-        {featured ? (
-          <dl className="project-details mt-6">
-            {project.contribution ? (
-              <div>
-                <dt>Mon travail</dt>
-                <dd>{project.contribution}</dd>
-              </div>
-            ) : null}
-            {project.challenge ? (
-              <div>
-                <dt>Difficulté</dt>
-                <dd>{project.challenge}</dd>
-              </div>
-            ) : null}
-            {project.result ? (
-              <div>
-                <dt>Résultat</dt>
-                <dd>{project.result}</dd>
-              </div>
-            ) : null}
-          </dl>
-        ) : project.contribution ? (
+        {project.contribution ? (
           <p className="project-contribution mt-5">
             <span>Mon travail</span>
             {project.contribution}
           </p>
+        ) : null}
+
+        {project.challenge || project.result ? (
+          <details className="project-notes">
+            <summary>Notes de développement</summary>
+            <dl className="project-details">
+              {project.challenge ? <div><dt>Difficulté</dt><dd>{project.challenge}</dd></div> : null}
+              {project.result ? <div><dt>Résultat</dt><dd>{project.result}</dd></div> : null}
+            </dl>
+          </details>
         ) : null}
 
         <a

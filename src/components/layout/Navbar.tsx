@@ -76,18 +76,6 @@ export const Navbar = ({
           </div>
         </div>
 
-        <div className="sidebar-stage-card mt-6">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--accent)]">
-              Stage 2027
-            </p>
-            <span className="text-[10px] text-[var(--muted)]">8 semaines</span>
-          </div>
-          <p className="mt-2 text-xs leading-5 text-[var(--muted)]">
-            Dès le 12 avril · développement informatique
-          </p>
-        </div>
-
         <div className="mt-auto">
           <button
             type="button"
