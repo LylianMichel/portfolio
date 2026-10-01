@@ -8,7 +8,7 @@ export const profile = {
   email: "lylianmichel@gmail.com",
   github: "https://github.com/LylianMichel",
   linkedin: "https://www.linkedin.com/in/lylian-michel-bb960a3ab/",
-  cvUrl: "",
+  cvUrl: `${import.meta.env.BASE_URL}CV-Lylian-Michel.pdf`,
 };
 
 export const socials: SocialLink[] = [

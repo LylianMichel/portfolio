@@ -44,6 +44,10 @@ export interface Project {
   images: ProjectImage[];
   year: string;
   type: string;
+  context?: string;
+  contribution?: string;
+  challenge?: string;
+  result?: string;
   tone: ProjectTone;
   icon: "Gamepad2" | "Coffee" | "MonitorSmartphone" | "LibraryBig";
 }
@@ -62,5 +66,5 @@ export interface SocialLink {
   href: string;
 }
 
-export type PortfolioMode = "work" | "chat";
+export type PortfolioMode = "work" | "contact";
 export type ThemeMode = "dark" | "light";

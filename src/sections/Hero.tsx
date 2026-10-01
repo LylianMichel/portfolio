@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Github, Linkedin, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, MapPin } from "lucide-react";
 import { profile } from "../data/profile";
 
 const quickLinks = [
@@ -11,42 +11,42 @@ const quickLinks = [
 export const Hero = () => (
   <section className="content-shell pt-24 sm:pt-28 lg:pt-12" id="accueil">
     <div className="mx-auto max-w-6xl">
-      <div className="workspace-kicker"><span>Work</span><span>/</span><span>Portfolio 2026</span></div>
+      <div className="workspace-kicker"><span>Portfolio</span><span>/</span><span>2026</span></div>
 
       <div className="hero-grid mt-5">
         <div className="hero-copy">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
-            <span className="status-pill"><span className="status-dot" />2e année de BUT Informatique</span>
-            <span className="inline-flex items-center gap-1.5 px-1"><MapPin className="h-3.5 w-3.5" />IUT de Lens</span>
+          <div className="hero-meta">
+            <span><span className="status-dot" aria-hidden="true" />2e année de BUT Informatique</span>
+            <span><MapPin className="h-3.5 w-3.5" />IUT de Lens</span>
           </div>
 
-          <h1 className="hero-title mt-7 max-w-3xl text-balance font-semibold text-[var(--text)]">
-            Étudiant en BUT Informatique, je développe des applications web et des projets logiciels.
-          </h1>
+          <h1 className="hero-name mt-7 text-[var(--text)]">{profile.name}</h1>
+          <p className="hero-role mt-2">Étudiant en BUT Informatique · Développeur</p>
 
-          <p className="mt-5 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
-            Je m'appelle <strong className="font-semibold text-[var(--text)]">{profile.name}</strong>. Je travaille principalement avec React, TypeScript et Node.js, et je développe aussi THE WORLD DEFENCE avec Godot.
+          <p className="mt-6 max-w-2xl text-pretty text-base leading-7 text-[var(--muted)] sm:text-lg">
+            Je construis AniVault, une application pour suivre ses animes, avec React, TypeScript et Node.js. Je développe aussi THE WORLD DEFENCE avec Godot.
           </p>
 
-          <div className="mt-7 flex flex-wrap gap-2">
-            <button type="button" onClick={() => document.getElementById("projets")?.scrollIntoView({ behavior: "smooth" })} className="primary-action">
-              Voir mes projets <ArrowDown className="h-4 w-4" />
-            </button>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="secondary-action">
-              LinkedIn <Linkedin className="h-4 w-4" />
-            </a>
-          </div>
+          <p className="hero-availability mt-5">Stage de 8 semaines · dès le 12 avril 2027</p>
 
           <div className="mt-7 flex flex-wrap gap-2">
-            {quickLinks.map((item) => (
-              <button key={item.target} type="button" onClick={() => document.getElementById(item.target)?.scrollIntoView({ behavior: "smooth" })} className="prompt-chip">
-                {item.label}
-              </button>
-            ))}
+            <a href="#projets" className="primary-action">
+              Voir mes projets <ArrowDown className="h-4 w-4" />
+            </a>
+            <a href="#contact" className="secondary-action">Me contacter</a>
+            {profile.cvUrl ? <a href={profile.cvUrl} download className="secondary-action">Mon CV <Download className="h-4 w-4" /></a> : null}
           </div>
+
+          <nav className="hero-quick-links mt-7" aria-label="Accès rapides">
+            {quickLinks.map((item) => (
+              <a key={item.target} href={`#${item.target}`}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
 
-        <aside className="now-card">
+        <aside className="now-card" aria-label="Informations actuelles">
           <div className="flex items-center justify-between gap-4"><p className="text-xs font-semibold text-[var(--text)]">En ce moment</p><span className="live-dot" aria-hidden="true" /></div>
           <dl className="mt-5 space-y-4">
             <div><dt className="text-[11px] text-[var(--muted)]">Formation</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">BUT Informatique · IUT de Lens</dd></div>

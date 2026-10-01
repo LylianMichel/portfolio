@@ -3,7 +3,6 @@ import {
   Github,
   Linkedin,
   Mail,
-  MessageCircle,
   Settings2,
 } from "lucide-react";
 import { useState } from "react";
@@ -46,18 +45,18 @@ export const Navbar = ({
             aria-current={mode === "work" ? "page" : undefined}
           >
             <BriefcaseBusiness className="h-4 w-4" />
-            <span>Work</span>
+            <span>Portfolio</span>
             <span className="ml-auto text-[10px] text-[var(--muted)]">01</span>
           </button>
 
           <button
             type="button"
-            onClick={() => onModeChange("chat")}
-            className={`sidebar-nav ${mode === "chat" ? "sidebar-nav-active" : ""}`}
-            aria-current={mode === "chat" ? "page" : undefined}
+            onClick={() => onModeChange("contact")}
+            className={`sidebar-nav ${mode === "contact" ? "sidebar-nav-active" : ""}`}
+            aria-current={mode === "contact" ? "page" : undefined}
           >
-            <MessageCircle className="h-4 w-4" />
-            <span>Chat</span>
+            <Mail className="h-4 w-4" />
+            <span>Contact</span>
             <span className="ml-auto text-[10px] text-[var(--muted)]">02</span>
           </button>
         </div>
@@ -66,22 +65,15 @@ export const Navbar = ({
           <p className="sidebar-label">Projets</p>
           <div className="mt-2 grid gap-0.5">
             {projects.map((project) => (
-              <button
+              <a
                 key={project.id}
-                type="button"
-                onClick={() => {
-                  onModeChange("work");
-                  window.setTimeout(
-                    () => document.getElementById(project.id)?.scrollIntoView({ behavior: "smooth" }),
-                    80,
-                  );
-                }}
+                href={`#${project.id}`}
                 className="sidebar-project"
                 aria-label={`Aller au projet ${project.title}`}
               >
                 <span className="sidebar-dot" aria-hidden="true" />
                 <span className="truncate">{project.title}</span>
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -128,7 +120,7 @@ export const Navbar = ({
           <div>
             <span className="block text-sm font-semibold leading-none">{profile.name}</span>
             <span className="mt-1 block text-[10px] text-[var(--muted)]">
-              {mode === "work" ? "Work" : "Chat"}
+              {mode === "work" ? "Portfolio" : "Contact"}
             </span>
           </div>
         </div>
@@ -138,19 +130,19 @@ export const Navbar = ({
             type="button"
             onClick={() => onModeChange("work")}
             className={mode === "work" ? "mobile-mode-active" : ""}
-            aria-label="Ouvrir Work"
+            aria-label="Ouvrir le portfolio"
             aria-pressed={mode === "work"}
           >
-            <BriefcaseBusiness className="h-4 w-4" />
+            <BriefcaseBusiness className="h-4 w-4" /><span>Projets</span>
           </button>
           <button
             type="button"
-            onClick={() => onModeChange("chat")}
-            className={mode === "chat" ? "mobile-mode-active" : ""}
-            aria-label="Ouvrir Chat"
-            aria-pressed={mode === "chat"}
+            onClick={() => onModeChange("contact")}
+            className={mode === "contact" ? "mobile-mode-active" : ""}
+            aria-label="Ouvrir les coordonnées"
+            aria-pressed={mode === "contact"}
           >
-            <MessageCircle className="h-4 w-4" />
+            <Mail className="h-4 w-4" /><span>Contact</span>
           </button>
         </div>
 

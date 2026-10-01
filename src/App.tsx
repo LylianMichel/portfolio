@@ -10,7 +10,7 @@ import { WorkContact } from "./sections/WorkContact";
 import type { PortfolioMode, ThemeMode } from "./types";
 
 const readModeFromLocation = (): PortfolioMode =>
-  typeof window !== "undefined" && window.location.hash === "#chat" ? "chat" : "work";
+  typeof window !== "undefined" && ["#contact", "#chat"].includes(window.location.hash) ? "contact" : "work";
 
 const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "dark";
@@ -21,6 +21,7 @@ const getInitialTheme = (): ThemeMode => {
 
 const App = () => {
   const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
+  const [hash, setHash] = useState(() => window.location.hash);
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
 
   useEffect(() => {
@@ -35,7 +36,7 @@ const App = () => {
   }, [theme]);
 
   useEffect(() => {
-    const syncMode = () => setMode(readModeFromLocation());
+    const syncMode = () => { setMode(readModeFromLocation()); setHash(window.location.hash); };
     window.addEventListener("hashchange", syncMode);
     window.addEventListener("popstate", syncMode);
 
@@ -46,23 +47,32 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    document.title = mode === "chat" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
+    document.title = mode === "contact" ? "Lylian Michel — Contact" : "Lylian Michel — Portfolio";
   }, [mode]);
+
+  useEffect(() => {
+    const targetId = hash.slice(1);
+    const frame = requestAnimationFrame(() => {
+      if (["contact", "chat", "work", ""].includes(targetId)) window.scrollTo({ top: 0, behavior: "instant" });
+      else document.getElementById(targetId)?.scrollIntoView();
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash, mode]);
 
   const changeMode = (nextMode: PortfolioMode) => {
     setMode(nextMode);
-    const nextHash = nextMode === "chat" ? "#chat" : "#work";
+    const nextHash = nextMode === "contact" ? "#contact" : "#work";
 
     if (window.location.hash !== nextHash) {
       window.history.pushState(null, "", nextHash);
     }
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setHash(nextHash);
   };
 
   return (
     <div className="portfolio-app min-h-screen">
-      <a href="#main-content" className="skip-link">Aller au contenu</a>
+      <a href="#main-content" className="skip-link" onClick={(event) => { event.preventDefault(); document.getElementById("main-content")?.focus(); }}>Aller au contenu</a>
 
       <Navbar
         mode={mode}
@@ -71,7 +81,7 @@ const App = () => {
         onThemeChange={setTheme}
       />
 
-      <main id="main-content" className="min-h-screen lg:pl-[252px]">
+      <main id="main-content" tabIndex={-1} className="min-h-screen lg:pl-[252px]">
         {mode === "work" ? (
           <div className="work-view">
             <Hero />
@@ -79,10 +89,10 @@ const App = () => {
             <Skills />
             <About />
             <Timeline />
-            <WorkContact onOpenChat={() => changeMode("chat")} />
+            <WorkContact />
           </div>
         ) : (
-          <Contact onOpenWork={() => changeMode("work")} />
+          <Contact />
         )}
       </main>
     </div>
