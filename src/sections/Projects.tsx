@@ -6,9 +6,9 @@ export const Projects = () => (
   <section id="projets" className="content-shell section-block">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
-        eyebrow="01 / Projets"
-        title="Mes projets."
-        description="Du développement web au jeu vidéo : voici les projets sur lesquels je travaille, avec mes contributions et des captures de leurs interfaces."
+        eyebrow="Réalisations"
+        title="Projets sélectionnés."
+        description="Quatre projets développés en cours et sur mon temps libre."
       />
       <div className="project-layout">
         {projects.map((project, index) => (

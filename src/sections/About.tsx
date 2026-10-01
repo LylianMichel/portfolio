@@ -22,8 +22,8 @@ export const About = () => (
   <section id="a-propos" className="content-shell section-block">
     <div className="about-section mx-auto max-w-6xl">
       <div className="about-copy">
-        <p className="section-eyebrow">03 / À propos</p>
-        <h2>Je construis surtout pour apprendre en faisant.</h2>
+        <p className="section-eyebrow">À propos</p>
+        <h2>Du web au jeu vidéo.</h2>
         <p className="about-lead">
           Je suis Lylian Michel, étudiant en deuxième année de BUT Informatique à l'IUT de Lens.
         </p>

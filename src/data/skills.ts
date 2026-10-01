@@ -3,7 +3,7 @@ import type { SkillGroup } from "../types";
 export const skillGroups: SkillGroup[] = [
   {
     title: "Frontend",
-    description: "Technologies utilisées pour construire les interfaces de mes projets.",
+    description: "AniVault, Eco’Répare et ce portfolio.",
     skills: [
       { name: "React", description: "Utilisé sur AniVault et ce portfolio.", level: "En progression", icon: "Laptop" },
       { name: "TypeScript", description: "Utilisé sur AniVault et ce portfolio pour mieux typer les composants et les données.", level: "En progression", icon: "Code2" },
@@ -14,7 +14,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend & applications",
-    description: "Technologies utilisées côté serveur et pour la logique métier.",
+    description: "API d’AniVault, application Le Temple et travaux de BUT.",
     skills: [
       { name: "Node.js / Express", description: "API et logique serveur d'AniVault.", level: "En progression", icon: "ServerCog" },
       { name: "PHP / Laravel", description: "Utilisé sur Le Temple et mes travaux web en BUT.", level: "En progression", icon: "ServerCog" },
@@ -24,7 +24,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Données & qualité",
-    description: "Technologies utilisées pour stocker, interroger et valider les données.",
+    description: "Modèles Prisma, requêtes SQL et tests des applications.",
     skills: [
       { name: "PostgreSQL", description: "Base de données utilisée sur AniVault.", level: "En progression", icon: "Database" },
       { name: "SQLite", description: "Utilisé sur des projets locaux et sur Le Temple.", level: "Intermédiaire", icon: "Database" },
@@ -35,7 +35,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Outils & création",
-    description: "Outils qui accompagnent mon développement au quotidien.",
+    description: "Versionner le code, lancer les projets et développer le jeu.",
     skills: [
       { name: "Git / GitHub", description: "Branches, commits et organisation de mes dépôts.", level: "Intermédiaire", icon: "GitBranch" },
       { name: "Linux", description: "Utilisé en cours et dans mon environnement de développement.", level: "En progression", icon: "TerminalSquare" },

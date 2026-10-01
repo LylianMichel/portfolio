@@ -32,7 +32,7 @@
   --muted-strong: #55575d;
   --border: rgba(29, 30, 32, 0.1);
   --border-strong: rgba(29, 30, 32, 0.18);
-  --accent: #3f9f72;
+  --accent: #267a53;
   --accent-soft: rgba(63, 159, 114, 0.12);
   --mobile-header-bg: rgba(242, 241, 237, 0.92);
 }
@@ -1517,3 +1517,59 @@ a.contact-card:hover {
 .conversation-links .contact-card > svg { flex: none; }
 @media (max-width: 640px) { .conversation-header { flex-direction: column; align-items: flex-start; } }
 .project-carousel .project-image { object-fit: contain; }
+
+/* A quieter presentation, retaining the charcoal and mint palette. */
+.avatar-mark { border-radius: 6px; box-shadow: none; }
+.sidebar-stage-card { border: 0; border-top: 1px solid var(--border); border-radius: 0; background: transparent; margin-inline: 10px; padding: 16px 0; }
+.sidebar-nav, .sidebar-project { border-radius: 5px; }
+.workspace-kicker { color: var(--muted); }
+.hero-note { align-self: end; border-top: 1px solid var(--border-strong); padding-top: 18px; max-width: 300px; }
+.hero-note-label { color: var(--muted); font-size: 12px; }
+.hero-note-title { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; font-size: 24px; letter-spacing: -.03em; font-weight: 550; }
+.hero-note > p:not(.hero-note-label) { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.hero-note-link { display: inline-block; margin-top: 16px; color: var(--accent); font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.hero-meta .status-dot { display: none; }
+.hero-name { font-weight: 550; letter-spacing: -.055em; }
+.primary-action, .secondary-action { border-radius: 5px; box-shadow: none; }
+.primary-action:hover { transform: none; }
+.section-eyebrow { text-transform: none; letter-spacing: 0; font-size: 12px; }
+.project-layout { row-gap: 52px; column-gap: 32px; }
+.project-card, .project-card-featured, .project-card-compact { border: 0; border-radius: 0; background: transparent; overflow: visible; }
+.project-card:hover, .project-card-featured:hover, .project-card-compact:hover { background: transparent; }
+.project-image-wrap { border: 1px solid var(--border-strong); border-radius: 5px; }
+.project-card:hover .project-image { transform: none; filter: none; }
+.project-card .project-image { filter: none; }
+.project-content { padding: 22px 0 0; }
+.project-context { font-size: 12px; }
+.project-technologies { gap: 5px 14px; }
+.tech-chip { padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--muted-strong); font-size: 12px; line-height: 1.8; }
+.project-details dt, .project-contribution span { text-transform: none; letter-spacing: 0; font-size: 12px; color: var(--text); font-weight: 500; }
+.project-details { border-top: 0; }
+.project-details > div { border-bottom: 0; padding: 0 0 16px; }
+.project-details dd { margin-top: 4px; }
+.project-title-row .icon-button { border: 0; background: transparent; }
+.project-carousel-label, .project-carousel-count { border-radius: 4px; backdrop-filter: none; }
+.project-image-overlay span { border: 0; border-radius: 4px; backdrop-filter: none; }
+.project-expand { border-radius: 4px; }
+.about-note { grid-template-columns: 1fr; }
+.about-note > svg { display: none; }
+@media (min-width: 768px) {
+  .project-card-featured { display: block; }
+  .project-card-featured .project-image-wrap { aspect-ratio: 1.95; min-height: 0; border: 1px solid var(--border-strong); }
+  .project-card-featured .project-content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 48px; padding: 24px 0 0; align-items: start; }
+  .project-card-featured .project-title-row, .project-card-featured .project-summary, .project-card-featured .project-technologies, .project-card-featured .project-link { grid-column: 1; }
+  .project-card-featured .project-details { grid-column: 2; grid-row: 1 / span 4; margin-top: 0; }
+  .project-card-featured .project-summary { margin-top: 12px; }
+  .project-card-compact .project-image-wrap { aspect-ratio: 1.42; min-height: 0; border: 1px solid var(--border-strong); }
+  .project-card-compact .project-content { padding: 0 0 0 30px; }
+}
+@media (max-width: 1023px) {
+  .hero-note { margin-top: 10px; max-width: 420px; }
+}
+@media (max-width: 767px) {
+  .project-card-compact .project-content { padding: 22px 0 0; }
+  .project-layout { row-gap: 38px; }
+  .hero-note { display: none; }
+}
+
+.project-expand { bottom: 12px; }

@@ -1,9 +1,7 @@
-import { ArrowDown, ArrowUpRight, Download, Github, Linkedin, MapPin } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download, MapPin } from "lucide-react";
 import { profile } from "../data/profile";
 
 const quickLinks = [
-  { label: "AniVault", target: "anivault" },
-  { label: "THE WORLD DEFENCE", target: "towerdefence" },
   { label: "Compétences", target: "competences" },
   { label: "Parcours", target: "parcours" },
 ] as const;
@@ -46,19 +44,11 @@ export const Hero = () => (
           </nav>
         </div>
 
-        <aside className="now-card" aria-label="Informations actuelles">
-          <div className="flex items-center justify-between gap-4"><p className="text-xs font-semibold text-[var(--text)]">En ce moment</p><span className="live-dot" aria-hidden="true" /></div>
-          <dl className="mt-5 space-y-4">
-            <div><dt className="text-[11px] text-[var(--muted)]">Formation</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">BUT Informatique · IUT de Lens</dd></div>
-            <div><dt className="text-[11px] text-[var(--muted)]">Projet web</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">AniVault · React / Node.js</dd></div>
-            <div><dt className="text-[11px] text-[var(--muted)]">Stage</dt><dd className="mt-1 text-sm font-medium text-[var(--text)]">8 semaines · dès le 12 avril 2027</dd></div>
-          </dl>
-          <div className="mt-5 border-t border-[var(--border)] pt-4">
-            <div className="grid grid-cols-2 gap-2">
-              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="mini-link-card"><Github className="h-4 w-4" />GitHub<ArrowUpRight className="ml-auto h-3.5 w-3.5" /></a>
-              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="mini-link-card"><Linkedin className="h-4 w-4" />LinkedIn<ArrowUpRight className="ml-auto h-3.5 w-3.5" /></a>
-            </div>
-          </div>
+        <aside className="hero-note" aria-label="Projet en cours">
+          <p className="hero-note-label">Projet en cours</p>
+          <a href="#anivault" className="hero-note-title">AniVault <ArrowUpRight size={18} /></a>
+          <p>Du frontend React à l’API Express, je travaille sur une bibliothèque pour suivre ses animes.</p>
+          <a href="#anivault" className="hero-note-link">Découvrir le projet</a>
         </aside>
       </div>
     </div>

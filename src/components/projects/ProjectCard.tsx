@@ -24,19 +24,14 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           eager={index === 1}
         />
 
-        <div className="project-image-overlay">
-          <span>{project.type}</span>
-          <span>{project.year}</span>
-        </div>
       </div>
 
       <div className="project-content">
-        <div className="flex items-start justify-between gap-5">
+        <div className="project-title-row flex items-start justify-between gap-5">
           <div>
-            <p className="project-index">0{index}</p>
             <h3
               id={`${project.id}-title`}
-              className="mt-1 text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl"
+              className="text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl"
             >
               {project.title}
             </h3>
@@ -54,9 +49,9 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           </a>
         </div>
 
-        <p className="mt-3 text-sm leading-6 text-[var(--muted)]">{project.shortDescription}</p>
+        <p className="project-summary mt-3 text-sm leading-6 text-[var(--muted)]">{project.shortDescription}</p>
 
-        <div className="mt-5 flex flex-wrap gap-2">
+        <div className="project-technologies mt-5 flex flex-wrap">
           {project.technologies.map((technology) => (
             <span key={technology} className="tech-chip">
               {technology}

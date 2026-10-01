@@ -5,9 +5,9 @@ export const Timeline = () => (
   <section id="parcours" className="content-shell section-block pb-20">
     <div className="mx-auto max-w-6xl">
       <SectionHeading
-        eyebrow="04 / Parcours"
-        title="Mon parcours."
-        description="Une vue simple de ma formation, de mes projets et de ce que je prépare pour 2027."
+        eyebrow="Parcours"
+        title="De la formation aux projets."
+        
       />
 
       <div className="timeline-list">
