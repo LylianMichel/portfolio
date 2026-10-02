@@ -1,0 +1,112 @@
+/* Circuit identity. Shared tokens and presentation for both portfolio views. */
+:root {
+  --pattern-veil: rgba(21, 21, 22, 0.68);
+  --panel-bg: #191d1b;
+  --panel-border: #303b35;
+  --accent: #8cdbad;
+  --accent-soft: rgba(140, 219, 173, 0.1);
+  --accent-ink: #102319;
+  --accent-hover: #b1e9c7;
+  --font-display: "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  --font-utility: "Cascadia Code", Consolas, ui-monospace, monospace;
+  --radius-panel: 14px;
+  --radius-control: 8px;
+  --scroll-thumb: #56635b;
+  --scroll-hover: #8b9c92;
+  --scroll-active: var(--accent);
+}
+
+:root[data-theme="light"] {
+  --pattern-veil: transparent;
+  --panel-bg: #fafbf8;
+  --panel-border: #d4ddd4;
+  --accent: #267a53;
+  --accent-soft: rgba(38, 122, 83, 0.08);
+  --accent-ink: #ffffff;
+  --accent-hover: #1b6140;
+  --scroll-thumb: #85938a;
+  --scroll-hover: #5d7165;
+}
+
+* { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) var(--page-bg); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: var(--page-bg); }
+*::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border: 2px solid var(--page-bg); border-radius: 8px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--scroll-hover); }
+*::-webkit-scrollbar-thumb:active { background: var(--scroll-active); }
+html { scrollbar-gutter: stable; }
+a, button, summary { cursor: pointer; }
+:where(a, button, summary, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.avatar-mark { color: var(--accent); border-color: var(--panel-border); background: var(--accent-soft); }
+.sidebar-nav-active { background: var(--accent-soft); color: var(--accent); box-shadow: inset 2px 0 var(--accent); }
+.sidebar-dot { background: var(--accent); width: 4px; height: 4px; }
+.sidebar-label, .hero-intro, .section-eyebrow { font-family: var(--font-utility); }
+.hero-intro { color: var(--accent); font-size: 12px; letter-spacing: 0.035em; line-height: 1.8; }
+.hero-section { padding-top: 64px; }
+.hero-section .hero-name { font-family: var(--font-display); font-size: clamp(3rem, 6.4vw, 6rem); font-weight: 600; letter-spacing: -0.055em; }
+.hero-specialty { margin-top: 12px; color: var(--muted-strong); font-size: clamp(1.1rem, 2vw, 1.65rem); letter-spacing: -0.02em; }
+.hero-specialty span { color: var(--accent); }
+.hero-grid { margin-top: 28px; align-items: start; }
+.hero-description { max-width: 590px; }
+.hero-stage { border: 1px solid var(--panel-border); border-top: 2px solid var(--accent); border-radius: var(--radius-panel); background: var(--panel-bg); padding: 22px; font-size: 13px; }
+.hero-stage > p:first-child { color: var(--accent); font-family: var(--font-utility); font-size: 12px; }
+.hero-stage-date { margin-block: 12px 8px; font-size: 19px; line-height: 1.45; }
+.hero-cv { text-decoration-color: var(--panel-border); }
+.hero-cv:hover { color: var(--accent); }
+.primary-action, .secondary-action { min-height: 46px; border-radius: var(--radius-control); }
+.primary-action { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.primary-action:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.primary-action:active, .secondary-action:active { transform: translateY(1px); }
+.secondary-action { background: var(--panel-bg); border-color: var(--panel-border); }
+.secondary-action:hover { border-color: var(--accent); background: var(--surface-hover); }
+.hero-quick-links a:hover, .project-link:hover { color: var(--accent); }
+.section-eyebrow { color: var(--accent); font-size: 11px; letter-spacing: 0.04em; }
+.section-heading h2, .portrait-copy h2, .work-contact-card h2 { font-family: var(--font-display); }
+.section-block { padding-top: 52px; }
+.project-layout { gap: 20px; }
+.project-layout > .project-card,
+.project-layout > .project-card:first-child {
+  padding: 24px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-panel);
+  background: var(--panel-bg);
+  gap: 28px;
+}
+.project-layout > .project-card-featured { border-top: 2px solid var(--accent); }
+.project-layout > .project-card:hover { background: var(--panel-bg); border-color: color-mix(in srgb, var(--accent) 50%, var(--panel-border)); }
+.project-layout > .project-card .project-image-wrap { border-radius: var(--radius-control); }
+.tech-chip { padding: 3px 9px; border: 1px solid var(--panel-border); border-radius: 5px; background: var(--accent-soft); color: var(--accent); font-family: var(--font-utility); font-size: 11px; font-weight: 400; }
+.project-technologies { gap: 7px; }
+.project-title-row h3 { font-family: var(--font-display); }
+.project-link { color: var(--accent); }
+.portrait-section { padding-top: 60px; padding-bottom: 0; }
+.portrait-layout { grid-template-columns: minmax(0, 1fr) 240px; gap: 40px; }
+.portfolio-portrait { width: min(100%, 240px); }
+.portfolio-portrait img { border-radius: var(--radius-panel); border-color: var(--panel-border); }
+.work-contact-card { border: 1px solid var(--panel-border); border-left: 3px solid var(--accent); border-radius: var(--radius-panel); padding: 30px; background: var(--panel-bg); }
+.conversation-question, .contact-card { border-color: var(--panel-border); }
+.theme-option-active { border-color: var(--accent); background: var(--accent-soft); }
+
+@media (min-width: 1100px) { .hero-grid { grid-template-columns: minmax(0, 1fr) 280px; gap: 40px; } }
+@media (max-width: 1023px) { .hero-section { padding-top: 116px; } }
+@media (max-width: 767px) {
+  .hero-section { padding-top: 112px; }
+  .hero-section .hero-name { font-size: clamp(2.8rem, 12vw, 4.5rem); }
+  .hero-specialty { max-width: 290px; }
+  .hero-stage { padding: 18px; }
+  .project-layout > .project-card, .project-layout > .project-card:first-child { padding: 16px; }
+  .portrait-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .portfolio-portrait { justify-self: start; }
+  .work-contact-card { padding: 24px 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+@media (forced-colors: active) {
+  * { scrollbar-color: auto; }
+  .portfolio-app { background-image: none; }
+  :where(a, button, summary, [tabindex]):focus-visible { outline-color: Highlight; }
+  .sidebar-nav-active, .theme-option-active { outline: 1px solid Highlight; }
+}

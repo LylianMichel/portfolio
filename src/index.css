@@ -2,7 +2,8 @@
 
 :root {
   color-scheme: dark;
-  --page-bg: #191919;
+  --page-bg: #151516;
+  --page-pattern: url("./assets/circuit-pattern.svg");
   --sidebar-bg: #101010;
   --surface: #212121;
   --surface-hover: #2a2a2a;
@@ -22,6 +23,7 @@
 :root[data-theme="light"] {
   color-scheme: light;
   --page-bg: #f2f1ed;
+  --page-pattern: none;
   --sidebar-bg: #e9e8e3;
   --surface: #faf9f6;
   --surface-hover: #f0efea;
@@ -106,7 +108,10 @@ a:focus-visible {
 
 .portfolio-app {
   min-height: 100vh;
-  background: var(--page-bg);
+  background-color: var(--page-bg);
+  background-image: linear-gradient(var(--pattern-veil), var(--pattern-veil)), var(--page-pattern);
+  background-repeat: repeat;
+  background-size: 304px 304px;
   color: var(--text);
 }
 

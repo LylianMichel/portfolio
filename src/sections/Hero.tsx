@@ -6,6 +6,7 @@ export const Hero = () => (
     <div className="mx-auto max-w-6xl">
       <p className="hero-intro">Étudiant en BUT Informatique · IUT de Lens</p>
       <h1 id="intro-title" className="hero-name">{profile.name}</h1>
+      <p className="hero-specialty">Développement web <span>&</span> jeux vidéo.</p>
       <div className="hero-grid">
         <div className="hero-copy">
           <p className="hero-description">

@@ -32,7 +32,7 @@ const App = () => {
 
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (themeColor) {
-      themeColor.content = theme === "light" ? "#f2f1ed" : "#191919";
+      themeColor.content = theme === "light" ? "#f2f1ed" : "#151516";
     }
   }, [theme]);
 
@@ -90,8 +90,8 @@ const App = () => {
             <Skills />
             <About />
             <Timeline />
-            <WorkContact />
             <Portrait />
+            <WorkContact />
           </div>
         ) : (
           <Contact />
