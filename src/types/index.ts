@@ -70,4 +70,4 @@ export interface SocialLink {
 }
 
 export type PortfolioMode = "work" | "contact";
-export type ThemeMode = "dark" | "light";
+export type ThemeMode = "dark" | "medium" | "light";

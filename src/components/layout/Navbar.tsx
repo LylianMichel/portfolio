@@ -30,7 +30,6 @@ export const Navbar = ({
     <>
       <aside className="sidebar hidden lg:flex" aria-label="Navigation du portfolio">
         <div className="sidebar-profile">
-          <div className="avatar-mark" aria-hidden="true">LM</div>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-[var(--text)]">{profile.name}</p>
             <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique</p>
@@ -102,7 +101,6 @@ export const Navbar = ({
 
       <header className="mobile-header lg:hidden">
         <div className="flex items-center gap-2">
-          <div className="avatar-mark h-8 w-8 text-[10px]" aria-hidden="true">LM</div>
           <div>
             <span className="block text-sm font-semibold leading-none">{profile.name}</span>
             <span className="mt-1 block text-[10px] text-[var(--muted)]">

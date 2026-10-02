@@ -1,4 +1,4 @@
-import { Check, Moon, Sun, X } from "lucide-react";
+import { Check, Contrast, Moon, Sun, X } from "lucide-react";
 import { Modal } from "../ui/Modal";
 import type { ThemeMode } from "../../types";
 
@@ -20,6 +20,12 @@ const themes: {
     label: "Sombre",
     description: "Fond sombre et contrastes doux",
     icon: Moon,
+  },
+  {
+    value: "medium",
+    label: "Intermédiaire",
+    description: "Fond gris, entre clair et sombre",
+    icon: Contrast,
   },
   {
     value: "light",

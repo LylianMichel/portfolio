@@ -17,7 +17,7 @@ const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "dark";
 
   const saved = window.localStorage.getItem("portfolio-theme");
-  return saved === "light" ? "light" : "dark";
+  return saved === "light" || saved === "medium" ? saved : "dark";
 };
 
 const App = () => {
@@ -27,12 +27,12 @@ const App = () => {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
+    document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
     window.localStorage.setItem("portfolio-theme", theme);
 
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (themeColor) {
-      themeColor.content = theme === "light" ? "#f2f1ed" : "#151516";
+      themeColor.content = theme === "light" ? "#f2f1ed" : theme === "medium" ? "#555c58" : "#151516";
     }
   }, [theme]);
 

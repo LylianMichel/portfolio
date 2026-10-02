@@ -28,6 +28,31 @@
   --scroll-hover: #5d7165;
 }
 
+:root[data-theme="medium"] {
+  color-scheme: dark;
+  --page-bg: #555c58;
+  --sidebar-bg: #454c48;
+  --surface: #484f4b;
+  --surface-hover: #59625c;
+  --surface-raised: #505853;
+  --surface-soft: #454c48;
+  --text: #fafbf8;
+  --muted: #d5dcd6;
+  --muted-strong: #e3e8e3;
+  --border: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(255, 255, 255, 0.25);
+  --mobile-header-bg: rgba(69, 76, 72, 0.96);
+  --pattern-veil: rgba(85, 92, 88, 0.88);
+  --panel-bg: #484f4b;
+  --panel-border: #727e76;
+  --accent: #b1e9c7;
+  --accent-soft: rgba(177, 233, 199, 0.12);
+  --accent-ink: #102319;
+  --accent-hover: #d0f3dc;
+  --scroll-thumb: #a4b1a8;
+  --scroll-hover: #cad6ce;
+}
+
 * { scrollbar-width: thin; scrollbar-color: var(--scroll-thumb) var(--page-bg); }
 *::-webkit-scrollbar { width: 10px; height: 10px; }
 *::-webkit-scrollbar-track { background: var(--page-bg); }
