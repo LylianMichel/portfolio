@@ -5,7 +5,6 @@ export const skillGroups: SkillGroup[] = [
     title: "Frontend",
     description: "AniVault, Eco’Répare et ce portfolio.",
     skills: [
-      { name: "React", description: "Utilisé sur AniVault et ce portfolio.", level: "En progression", icon: "Laptop" },
       { name: "TypeScript", description: "Utilisé sur AniVault et ce portfolio pour mieux typer les composants et les données.", level: "En progression", icon: "Code2" },
       { name: "JavaScript", description: "Utilisé sur plusieurs projets web, notamment Eco'Répare.", level: "Intermédiaire", icon: "Code2" },
       { name: "HTML / CSS", description: "Base de mes projets web et de leur responsive.", level: "Intermédiaire", icon: "Globe2" },
@@ -16,7 +15,6 @@ export const skillGroups: SkillGroup[] = [
     title: "Backend & applications",
     description: "API d’AniVault, application Le Temple et travaux de BUT.",
     skills: [
-      { name: "Node.js / Express", description: "API et logique serveur d'AniVault.", level: "En progression", icon: "ServerCog" },
       { name: "PHP / Laravel", description: "Utilisé sur Le Temple et mes travaux web en BUT.", level: "En progression", icon: "ServerCog" },
       { name: "Java", description: "Utilisé en BUT pour la POO, les structures de données et les tests.", level: "Intermédiaire", icon: "TerminalSquare" },
       { name: "Python", description: "Utilisé en BUT pour l'algorithmique et les scripts.", level: "Intermédiaire", icon: "TerminalSquare" }
@@ -28,7 +26,7 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       { name: "PostgreSQL", description: "Base de données utilisée sur AniVault.", level: "En progression", icon: "Database" },
       { name: "SQLite", description: "Utilisé sur des projets locaux et sur Le Temple.", level: "Intermédiaire", icon: "Database" },
-      { name: "Prisma", description: "Accès aux données et modèles côté Node.js sur AniVault.", level: "En progression", icon: "Database" },
+      { name: "Prisma", description: "Accès aux données et modèles sur AniVault.", level: "En progression", icon: "Database" },
       { name: "SQL", description: "Requêtes, jointures, fonctions et travail relationnel en BUT.", level: "Intermédiaire", icon: "Database" },
       { name: "Tests", description: "JUnit, PHPUnit, tests backend et tests end-to-end.", level: "En progression", icon: "Code2" }
     ]

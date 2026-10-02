@@ -7,7 +7,7 @@ export const Skills = () => (
         <p className="section-eyebrow">Compétences</p>
         <h2 id="skills-title">Mes outils de travail.</h2>
         <p>
-          React et Node.js pour AniVault, Laravel pour Le Temple, Godot pour le jeu. J’utilise aussi Java, Python et SQL en BUT.
+          Laravel pour Le Temple, Godot pour le jeu. J’utilise aussi Java, Python et SQL en BUT.
         </p>
       </div>
 
