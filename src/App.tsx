@@ -7,6 +7,7 @@ import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Timeline } from "./sections/Timeline";
 import { WorkContact } from "./sections/WorkContact";
+import { Portrait } from "./sections/Portrait";
 import type { PortfolioMode, ThemeMode } from "./types";
 
 const readModeFromLocation = (): PortfolioMode =>
@@ -90,6 +91,7 @@ const App = () => {
             <About />
             <Timeline />
             <WorkContact />
+            <Portrait />
           </div>
         ) : (
           <Contact />

@@ -1688,3 +1688,8 @@ a.contact-card:hover {
 .hero-stage { font-size: 14px; }
 .hero-stage-date { font-size: 17px; }
 .work-contact-card > div > p:last-child { font-size: 15px; line-height: 1.7; }
+
+.portrait-section { padding-bottom: 64px; }
+.portfolio-portrait { width: min(100%, 320px); margin: 0 auto; }
+.portfolio-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center bottom; border: 1px solid var(--border); border-radius: 8px; }
+.portfolio-portrait figcaption { margin-top: 16px; text-align: center; font-size: 14px; color: var(--muted); }
