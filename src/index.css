@@ -1690,6 +1690,15 @@ a.contact-card:hover {
 .work-contact-card > div > p:last-child { font-size: 15px; line-height: 1.7; }
 
 .portrait-section { padding-bottom: 64px; }
-.portfolio-portrait { width: min(100%, 320px); margin: 0 auto; }
+.portrait-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; align-items: center; gap: 48px; border-top: 1px solid var(--border); padding-top: 40px; }
+.portrait-copy h2 { margin-top: 8px; font-size: clamp(1.625rem, 2.5vw, 2rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.25; }
+.portrait-copy > p:not(.section-eyebrow) { margin-top: 20px; max-width: 640px; color: var(--muted-strong); font-size: 15px; line-height: 1.8; }
+.portrait-details { display: flex; flex-wrap: wrap; gap: 20px 32px; margin-top: 24px; font-size: 14px; line-height: 1.7; }
+.portrait-details dt { font-weight: 600; }
+.portrait-details dd { margin: 4px 0 0; color: var(--muted); }
+.portfolio-portrait { width: min(100%, 320px); margin: 0; justify-self: end; }
 .portfolio-portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: center bottom; border: 1px solid var(--border); border-radius: 8px; }
-.portfolio-portrait figcaption { margin-top: 16px; text-align: center; font-size: 14px; color: var(--muted); }
+@media (max-width: 767px) {
+  .portrait-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 32px; }
+  .portfolio-portrait { justify-self: center; }
+}
