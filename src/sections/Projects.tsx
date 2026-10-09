@@ -9,7 +9,7 @@ export const Projects = () => (
         id="projects-title"
         eyebrow="Réalisations"
         title="Projets sélectionnés."
-        description="Quatre projets développés en cours et sur mon temps libre."
+        description="Du web au jeu vidéo : quatre projets, avec des contraintes et des approches différentes."
       />
       <div className="project-layout">
         {projects.map((project, index) => (
@@ -17,7 +17,7 @@ export const Projects = () => (
             key={project.id}
             project={project}
             index={index + 1}
-            variant={index === 0 ? "featured" : index === projects.length - 1 ? "compact" : "standard"}
+            variant={index === 0 ? "featured" : index === 1 ? "spotlight" : index === projects.length - 1 ? "compact" : "standard"}
           />
         ))}
       </div>
