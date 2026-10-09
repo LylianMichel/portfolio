@@ -1707,3 +1707,330 @@ a.contact-card:hover {
   .portrait-layout { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 32px; }
   .portfolio-portrait { justify-self: center; }
 }
+
+/* October 2026: editorial project layout. Preserve all existing theme tokens. */
+.hero-current {
+  display: grid;
+  gap: 14px;
+  margin-top: clamp(44px, 6vw, 76px);
+  border-top: 1px solid var(--border-strong);
+  padding-top: 18px;
+}
+
+.hero-current-label {
+  margin: 0;
+  color: var(--muted-strong);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+}
+
+.hero-current-grid {
+  display: grid;
+  gap: 0 28px;
+}
+
+.hero-current-link {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) 18px;
+  align-items: start;
+  gap: 14px;
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0 20px;
+  transition: border-color 160ms ease;
+}
+
+.hero-current-link:hover,
+.hero-current-link:focus-visible {
+  border-color: var(--border-strong);
+}
+
+.hero-current-index {
+  padding-top: 3px;
+  color: var(--accent);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+.hero-current-text {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.hero-current-text strong {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hero-current-text > span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hero-current-link > svg {
+  margin-top: 2px;
+  color: var(--muted);
+  transition: transform 160ms ease, color 160ms ease;
+}
+
+.hero-current-link:hover > svg {
+  color: var(--text);
+  transform: translate(2px, -2px);
+}
+
+/* Smaller metadata, more distinct rhythm: no new panels, gradients or glows. */
+.project-layout > .project-card {
+  border-color: var(--border);
+  padding-block: 38px;
+}
+
+.project-overline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.project-sequence {
+  color: var(--accent);
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.project-title-row .project-title {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.project-title-row .project-context {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.project-content .project-summary {
+  margin-top: 18px;
+  max-width: 57ch;
+  color: var(--muted-strong);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.project-content .project-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  margin-top: 16px;
+}
+
+.project-content .tech-chip,
+.project-content .project-extra-tools {
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.project-content .project-extra-tools {
+  flex: 1 1 100%;
+  color: var(--muted);
+  margin: 0;
+}
+
+.project-contribution-prominent {
+  max-width: 53ch;
+  margin-top: 24px;
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+}
+
+.project-contribution-prominent > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.project-contribution-prominent > p {
+  color: var(--muted-strong);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.project-content .project-notes {
+  margin-top: 14px;
+}
+
+.project-content .project-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin-top: 18px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.project-content .project-link svg:last-child {
+  opacity: 0.7;
+}
+
+.project-layout > .project-card .project-image-wrap {
+  overflow: hidden;
+  background: var(--surface-soft);
+}
+
+.project-layout > .project-card .project-image {
+  object-fit: contain;
+}
+
+@media (min-width: 700px) {
+  .hero-current {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .hero-current-label {
+    padding-top: 17px;
+  }
+
+  .hero-current-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Hero / game / complementary work: intentional variation at wide widths. */
+@media (min-width: 1100px) {
+  .project-layout > .project-card-featured,
+  .project-layout > .project-card-spotlight {
+    grid-column: 1 / -1;
+    display: grid;
+    align-items: start;
+    grid-template-columns: minmax(0, 1.13fr) minmax(0, 0.87fr);
+    column-gap: clamp(32px, 4vw, 60px);
+  }
+
+  .project-layout > .project-card-featured {
+    padding-top: 6px;
+  }
+
+  .project-layout > .project-card-spotlight {
+    grid-template-columns: minmax(0, 0.87fr) minmax(0, 1.13fr);
+  }
+
+  .project-layout > .project-card-featured .project-content,
+  .project-layout > .project-card-spotlight .project-content {
+    padding: 4px 0 0;
+    grid-row: 1;
+  }
+
+  .project-layout > .project-card-featured .project-media {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .project-layout > .project-card-featured .project-content {
+    grid-column: 2;
+  }
+
+  .project-layout > .project-card-spotlight .project-content {
+    grid-column: 1;
+  }
+
+  .project-layout > .project-card-spotlight .project-media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .project-layout > .project-card-featured .project-image-wrap,
+  .project-layout > .project-card-spotlight .project-image-wrap {
+    aspect-ratio: 1.52;
+  }
+}
+
+@media (min-width: 1280px) {
+  .project-layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  .project-layout > .project-card-standard,
+  .project-layout > .project-card-compact {
+    grid-column: span 6;
+    display: block;
+    min-width: 0;
+  }
+
+  .project-layout > .project-card-standard .project-content,
+  .project-layout > .project-card-compact .project-content {
+    display: block;
+    padding: 22px 0 0;
+  }
+
+  .project-layout > .project-card-standard .project-image-wrap,
+  .project-layout > .project-card-compact .project-image-wrap {
+    aspect-ratio: 1.72;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1099px) {
+  .project-layout > .project-card {
+    display: block;
+    grid-column: 1 / -1;
+  }
+
+  .project-layout > .project-card .project-content {
+    padding: 22px 0 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-current {
+    margin-top: 38px;
+  }
+
+  .hero-current-link {
+    padding-block: 14px;
+  }
+
+  .project-layout > .project-card {
+    padding-block: 30px;
+  }
+
+  .project-layout > .project-card .project-content {
+    padding-top: 19px;
+  }
+
+  .project-overline {
+    margin-bottom: 10px;
+  }
+
+  .project-content .project-summary {
+    margin-top: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-current-link > svg {
+    transition: none;
+  }
+}
