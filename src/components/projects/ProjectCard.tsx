@@ -50,7 +50,7 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
             <span key={technology} className="tech-chip">{technology}</span>
           ))}
           {project.technologies.length > (prominent ? 4 : 3) ? (
-            <span className="project-extra-tools">+ {project.technologies.length - (prominent ? 4 : 3)} autres</span>
+            <span className="project-extra-tools">Également : {project.technologies.slice(prominent ? 4 : 3).join(", ")}</span>
           ) : null}
         </div>
 
