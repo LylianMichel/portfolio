@@ -6,7 +6,7 @@ export const Portrait = () => (
       <div className="portrait-copy">
         <p className="section-eyebrow">Présentation</p>
         <h2 id="presentation-title">{profile.name}</h2>
-        <p>Étudiant en deuxième année de BUT Informatique à l’IUT de Lens, je vis à Barlin, dans le Pas-de-Calais. Je recherche un stage de 8 semaines à partir du 12 avril 2027 pour progresser en développement informatique, en maintenance et en assistance aux utilisateurs.</p>
+        <p>Je suis en deuxième année de BUT Informatique à l’IUT de Lens et je vis à Barlin, dans le Pas-de-Calais. Je construis mes projets en parallèle des cours, avec l’envie de progresser en développement web et logiciel.</p>
         <p>Sérieux, autonome et rigoureux, j’apprécie le travail en équipe. En dehors de mes études, je pratique le volley et m’intéresse à la veille technologique, à l’intelligence artificielle que je suis régulièrement, ainsi qu’à la création de sites web et de jeux vidéo.</p>
         <dl className="portrait-details">
           <div><dt>Mobilité</dt><dd>Permis B</dd></div>

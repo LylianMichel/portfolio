@@ -22,7 +22,11 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
   const previous = () => setActiveIndex((current) => (current - 1 + images.length) % images.length);
   const next = () => setActiveIndex((current) => (current + 1) % images.length);
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if (!hasMultipleImages) return;
+    if (!hasMultipleImages || event.target !== event.currentTarget) return;
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      setActiveIndex(event.key === "Home" ? 0 : images.length - 1);
+    }
     if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
       event.preventDefault();
       event.key === "ArrowLeft" ? previous() : next();
@@ -59,6 +63,21 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
         <button type="button" className="gallery-expand" onClick={() => setExpanded(true)}
           aria-label={`Agrandir la capture de ${projectTitle}`}><Expand size={15} aria-hidden="true" />Agrandir</button>
       </figcaption>
+      {hasMultipleImages ? (
+        <div className="gallery-select" role="group" aria-label={`Choisir une capture de ${projectTitle}`}>
+          {images.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              className={`gallery-select-button ${activeIndex === index ? "gallery-select-active" : ""}`}
+              aria-pressed={activeIndex === index}
+              onClick={() => setActiveIndex(index)}
+            >
+              {image.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
       {expanded ? (
         <Modal titleId={titleId} className="image-modal" onClose={() => setExpanded(false)}>
           <div className="image-modal-content">
@@ -67,7 +86,9 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
               <button type="button" className="icon-button" onClick={() => setExpanded(false)}
                 aria-label="Fermer la capture"><X size={20} aria-hidden="true" /></button>
             </div>
-            <img src={activeImage.src} width={activeImage.width} height={activeImage.height} alt={activeImage.alt} />
+            <img key={activeImage.src} src={activeImage.src} srcSet={activeImage.srcSet}
+              sizes="90vw" width={activeImage.width} height={activeImage.height} alt={activeImage.alt}
+              decoding="async" onError={(event) => { const image = event.currentTarget; if (!image.src.endsWith("project-fallback.svg")) { image.removeAttribute("srcset"); image.src = fallbackImage; } }} />
             {hasMultipleImages ? (
               <div className="image-modal-navigation">
                 <button type="button" className="secondary-action" onClick={previous}><ChevronLeft size={18} aria-hidden="true" />Précédente</button>

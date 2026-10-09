@@ -35,7 +35,7 @@ export const Hero = () => (
         <p className="hero-current-label">En ce moment</p>
         <div className="hero-current-grid">
           <a href="#anivault" className="hero-current-link">
-            <span className="hero-current-index">01 / WEB</span>
+            <span className="hero-current-index">WEB</span>
             <span className="hero-current-text">
               <strong>AniVault</strong>
               <span>Une bibliothèque d'animes, du frontend aux données.</span>
@@ -43,7 +43,7 @@ export const Hero = () => (
             <ArrowUpRight size={18} aria-hidden="true" />
           </a>
           <a href="#towerdefence" className="hero-current-link">
-            <span className="hero-current-index">02 / JEU</span>
+            <span className="hero-current-index">JEU</span>
             <span className="hero-current-text">
               <strong>THE WORLD DEFENCE</strong>
               <span>Un tower defense où je développe gameplay et interfaces.</span>

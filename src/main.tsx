@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { hydrateRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "./design.css";
@@ -10,7 +10,7 @@ if (!root) {
   throw new Error("Élément #root introuvable.");
 }
 
-createRoot(root).render(
+hydrateRoot(root,
   <StrictMode>
     <App />
   </StrictMode>,

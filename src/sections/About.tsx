@@ -4,8 +4,8 @@ export const About = () => (
       <div className="about-copy">
         <p className="section-eyebrow">À propos</p>
         <h2 id="about-title">Du web au jeu vidéo.</h2>
-        <p className="about-lead">Je suis Lylian Michel, étudiant en deuxième année de BUT Informatique à l’IUT de Lens. Je développe des applications en cours et sur mon temps libre, notamment AniVault et THE WORLD DEFENCE.</p>
-        <p>Pour mon stage, je souhaite contribuer à une application web ou logicielle, travailler avec une équipe et progresser sur la qualité du code et les tests.</p>
+        <p className="about-lead">J’aime comprendre ce qui se passe derrière une interface : les données, les interactions et les choix qui rendent un outil agréable à utiliser. C’est ce que j’explore avec AniVault et THE WORLD DEFENCE.</p>
+        <p>Pour mon prochain stage, je souhaite participer à un vrai projet d’équipe, apprendre des retours sur mon code et prendre part aux tests comme aux améliorations de l’expérience utilisateur.</p>
       </div>
       <div className="about-notes">
         <article className="about-note"><div><h3>De l’interface aux données</h3><p>Sur AniVault, je travaille sur le frontend React, l’API Express et les modèles Prisma.</p></div></article>

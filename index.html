@@ -41,7 +41,8 @@
 
     <script>
       (() => {
-        const savedTheme = localStorage.getItem("portfolio-theme");
+        let savedTheme = null;
+        try { savedTheme = localStorage.getItem("portfolio-theme"); } catch { /* Private browsing fallback. */ }
         const theme = savedTheme === "light" || savedTheme === "medium" ? savedTheme : "dark";
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
-export const useActiveSection = (sectionIds: string[]) => {
+export const useActiveSection = (sectionIds: string[], enabled = true) => {
   const [activeSection, setActiveSection] = useState(sectionIds[0] ?? "");
 
   useEffect(() => {
+    if (!enabled) return undefined;
+
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => section !== null);
@@ -31,7 +33,7 @@ export const useActiveSection = (sectionIds: string[]) => {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [sectionIds, enabled]);
 
   return activeSection;
 };
