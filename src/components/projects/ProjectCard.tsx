@@ -4,7 +4,6 @@ import { ProjectCarousel } from "./ProjectCarousel";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
   variant?: "featured" | "spotlight" | "standard" | "compact";
 }
 
@@ -12,10 +11,10 @@ const notesLabels = {
   featured: "Architecture et difficultés",
   spotlight: "Les défis du jeu",
   standard: "Détails de réalisation",
-  compact: "En savoir plus"
+  compact: "En savoir plus",
 } as const;
 
-export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCardProps) => {
+export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps) => {
   const prominent = variant === "featured" || variant === "spotlight";
 
   return (
@@ -25,17 +24,13 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
       aria-labelledby={`${project.id}-title`}
     >
       <div className="project-media">
-        <ProjectCarousel
-          images={project.images}
-          projectTitle={project.title}
-          eager={index === 1}
-        />
+        <ProjectCarousel images={project.images} projectTitle={project.title} />
       </div>
 
       <div className="project-content">
         <div className="project-overline">
-          <span className="project-sequence">{String(index).padStart(2, "0")} / 04</span>
-          <span>{project.type} · {project.year}</span>
+          <span className="project-category">{project.type}</span>
+          <span>{project.year}</span>
         </div>
 
         <div className="project-title-row">
@@ -44,6 +39,17 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
         </div>
 
         <p className="project-summary">{project.shortDescription}</p>
+
+        {prominent ? (
+          <div className="project-feature-block">
+            <p className="project-feature-heading">Dans ce projet</p>
+            <ul className="project-feature-list">
+              {project.features.slice(0, 3).map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
 
         <div className="project-technologies" aria-label="Technologies utilisées">
           {project.technologies.slice(0, prominent ? 4 : 3).map((technology) => (
@@ -61,7 +67,7 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           </div>
         ) : null}
 
-        {(project.contribution || project.challenge || project.result) ? (
+        {project.contribution || project.challenge || project.result ? (
           <details className="project-notes">
             <summary>{notesLabels[variant]}</summary>
             <dl className="project-details">
