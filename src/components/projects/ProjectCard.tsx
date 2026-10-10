@@ -7,15 +7,8 @@ interface ProjectCardProps {
   variant?: "featured" | "spotlight" | "standard" | "compact";
 }
 
-const notesLabels = {
-  featured: "Architecture et difficultés",
-  spotlight: "Les défis du jeu",
-  standard: "Détails de réalisation",
-  compact: "En savoir plus",
-} as const;
-
 export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps) => {
-  const prominent = variant === "featured" || variant === "spotlight";
+  const isPrimary = variant === "featured" || variant === "spotlight";
 
   return (
     <article
@@ -33,60 +26,38 @@ export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps)
           <span>{project.year}</span>
         </div>
 
-        <div className="project-title-row">
-          <h3 id={`${project.id}-title`} className="project-title">{project.title}</h3>
-          {project.context ? <p className="project-context">{project.context}</p> : null}
-        </div>
-
+        <h3 id={`${project.id}-title`} className="project-title">{project.title}</h3>
         <p className="project-summary">{project.shortDescription}</p>
 
-        {prominent ? (
-          <div className="project-feature-block">
-            <p className="project-feature-heading">Dans ce projet</p>
-            <ul className="project-feature-list">
-              {project.features.slice(0, 3).map((feature) => (
-                <li key={feature}>{feature}</li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-
-        <div className="project-technologies" aria-label="Technologies utilisées">
-          {project.technologies.slice(0, prominent ? 4 : 3).map((technology) => (
-            <span key={technology} className="tech-chip">{technology}</span>
-          ))}
-          {project.technologies.length > (prominent ? 4 : 3) ? (
-            <span className="project-extra-tools">Également : {project.technologies.slice(prominent ? 4 : 3).join(", ")}</span>
-          ) : null}
-        </div>
-
-        {prominent && project.contribution ? (
-          <div className="project-contribution project-contribution-prominent">
-            <span>{variant === "featured" ? "Ce que j'ai construit" : "Mon rôle sur le jeu"}</span>
+        {isPrimary && project.contribution ? (
+          <div className="project-work">
+            <p>Mon travail</p>
             <p>{project.contribution}</p>
           </div>
         ) : null}
 
-        {project.contribution || project.challenge || project.result ? (
+        <ul className="project-tech-list" aria-label="Technologies utilisées">
+          {project.technologies.slice(0, isPrimary ? 5 : 4).map((technology) => (
+            <li key={technology}>{technology}</li>
+          ))}
+        </ul>
+
+        {(project.challenge || project.result || (!isPrimary && project.contribution)) ? (
           <details className="project-notes">
-            <summary>{notesLabels[variant]}</summary>
+            <summary>En savoir plus sur le projet</summary>
             <dl className="project-details">
-              {!prominent && project.contribution ? <div><dt>Ma contribution</dt><dd>{project.contribution}</dd></div> : null}
-              {project.challenge ? <div><dt>Difficulté</dt><dd>{project.challenge}</dd></div> : null}
+              {!isPrimary && project.contribution ? <div><dt>Mon travail</dt><dd>{project.contribution}</dd></div> : null}
+              {project.challenge ? <div><dt>Une difficulté</dt><dd>{project.challenge}</dd></div> : null}
               {project.result ? <div><dt>Résultat</dt><dd>{project.result}</dd></div> : null}
             </dl>
           </details>
         ) : null}
 
-        <a
-          href={project.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="project-link"
-        >
-          <Github className="h-4 w-4" aria-hidden="true" />
-          Voir le code <span className="sr-only">de {project.title} sur GitHub</span>
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
+          <Github size={16} aria-hidden="true" />
+          Voir le code sur GitHub
+          <span className="sr-only">— {project.title}</span>
+          <ArrowUpRight size={16} aria-hidden="true" />
         </a>
       </div>
     </article>
