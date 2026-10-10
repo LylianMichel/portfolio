@@ -1,0 +1,592 @@
+
+/*
+  Visual impact pass — keep the original visual identity.
+  Uses existing theme variables; no color, font or light/dark mode replacements.
+*/
+
+/* A recognisable signature in the existing sidebar */
+.impact-sidebar-brand {
+  display: grid;
+  place-items: center;
+  grid-template-columns: auto auto;
+  height: 44px;
+  width: 44px;
+  flex: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: -0.07em;
+}
+.impact-sidebar-brand span { color: var(--accent-ink); }
+
+/* HERO — expressive type and an unmistakable green project canvas */
+.impact-hero.hero-section {
+  padding-top: clamp(24px, 4vw, 52px);
+}
+.impact-hero-topline,
+.impact-art-caption,
+.impact-projects-overline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-family: var(--font-utility);
+  font-size: 11px;
+  letter-spacing: .005em;
+}
+.impact-hero-topline {
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--muted-strong);
+}
+.impact-hero-location {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--muted);
+}
+.impact-status-dot {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.impact-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(28px, 4.5vw, 62px);
+  align-items: center;
+  padding-top: clamp(26px, 4vw, 50px);
+}
+.impact-intro { min-width: 0; }
+.impact-kicker {
+  color: var(--accent);
+  font-family: var(--font-utility);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.impact-hero .impact-name {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  margin: 23px 0 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(4.6rem, 7.2vw, 7.5rem);
+  font-weight: 700;
+  letter-spacing: -.075em;
+  line-height: .87;
+}
+.impact-name-accent { color: var(--accent); }
+.impact-name-dot { color: var(--text); }
+.impact-statement {
+  max-width: 600px;
+  margin: 30px 0 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.15vw, 2rem);
+  font-weight: 500;
+  line-height: 1.26;
+  letter-spacing: -.035em;
+}
+.impact-statement em { color: var(--accent); font-style: normal; }
+.impact-description {
+  max-width: 52ch;
+  margin-top: 17px;
+  color: var(--muted-strong);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.impact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 27px;
+}
+.impact-actions .primary-action,
+.impact-actions .secondary-action {
+  min-height: 50px;
+  padding-inline: 18px;
+  font-size: 13px;
+}
+.impact-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 20px;
+  margin-top: 27px;
+}
+.impact-jump a {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 38px;
+  border-bottom: 1px solid var(--border-strong);
+  color: var(--muted);
+  font-size: 12px;
+  transition: color 150ms ease, border-color 150ms ease;
+}
+.impact-jump a span { color: var(--accent); }
+.impact-jump a:hover { color: var(--text); border-color: var(--accent); }
+
+.impact-hero-art {
+  position: relative;
+  min-width: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--radius-panel);
+  padding: clamp(14px, 2.1vw, 26px);
+  padding-bottom: clamp(70px, 7.6vw, 122px);
+}
+.impact-art-caption {
+  color: var(--accent-ink);
+  padding-bottom: 17px;
+  font-size: 11px;
+}
+.impact-art-caption span:last-child { opacity: .73; }
+.impact-main-project {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--sidebar-bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  transition: transform 180ms ease;
+}
+.impact-main-project:hover { transform: translateY(-3px); }
+.impact-art-browser {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 29px;
+  padding-inline: 12px;
+  background: var(--sidebar-bg);
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.impact-art-browser i {
+  display: block;
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--muted);
+  border-radius: 50%;
+  opacity: .65;
+}
+.impact-art-browser > span {
+  margin-left: 9px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-utility);
+  font-size: 10px;
+  letter-spacing: -.02em;
+}
+.impact-main-project img {
+  display: block;
+  aspect-ratio: 1.78;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: top center;
+  background: var(--surface-soft);
+}
+.impact-art-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2vw, 1.85rem);
+  font-weight: 600;
+}
+.impact-art-name svg { color: var(--accent); flex: none; }
+.impact-art-subtitle {
+  display: block;
+  padding: 0 16px 17px;
+  color: var(--muted-strong);
+  font-size: 12px;
+}
+.impact-mini-project {
+  position: absolute;
+  right: clamp(12px, 2vw, 24px);
+  bottom: -21px;
+  display: grid;
+  grid-template-columns: 95px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: 13px;
+  width: min(88%, 390px);
+  min-width: 0;
+  padding: 9px;
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px -22px #000a;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+.impact-mini-project:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.impact-mini-project img {
+  width: 95px;
+  height: 61px;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 3px;
+  background: var(--surface-soft);
+}
+.impact-mini-project > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+.impact-mini-project strong {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 13px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.impact-mini-project small { color: var(--muted); font-size: 11px; }
+.impact-mini-project > svg { color: var(--accent); }
+.impact-stage-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: clamp(58px, 6vw, 96px);
+  border-block: 1px solid var(--border-strong);
+  padding: 18px 0;
+}
+.impact-stage-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 20px;
+}
+.impact-stage-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--accent);
+  font-family: var(--font-utility);
+  font-size: 12px;
+}
+.impact-stage-label::before {
+  content: "";
+  height: 7px;
+  width: 7px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.impact-stage-left strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.impact-stage-download {
+  display: inline-flex;
+  gap: 8px;
+  min-height: 38px;
+  align-items: center;
+  border-bottom: 1px solid var(--accent);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+}
+.impact-stage-download:hover { color: var(--accent); }
+
+/* Project section headline makes the portfolio more editorial and legible */
+.impact-projects.section-block { padding-top: clamp(60px, 8vw, 120px); }
+.impact-projects.section-block > div { padding-top: 0; border-top: 0; }
+.impact-projects-intro {
+  border-top: 1px solid var(--border-strong);
+  padding-top: 18px;
+  margin-bottom: 38px;
+}
+.impact-projects-overline {
+  color: var(--muted);
+}
+.impact-projects-overline .section-eyebrow {
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+.impact-projects-intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: 16px 40px;
+  margin-top: 29px;
+}
+.impact-projects-intro h2 {
+  display: grid;
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(3.4rem, 7.1vw, 6.8rem);
+  font-weight: 700;
+  line-height: .95;
+  letter-spacing: -.066em;
+}
+.impact-projects-intro h2 span { color: var(--accent); }
+.impact-projects-intro-grid > div {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 6px;
+}
+.impact-projects-intro-grid p {
+  max-width: 330px;
+  color: var(--muted-strong);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.impact-projects-intro-grid svg { flex: none; color: var(--accent); }
+
+/* Feature rows no longer resemble four identical templated cards */
+.project-layout.impact-project-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+}
+.impact-project-list > .project-card,
+.impact-project-list > .project-card:first-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  min-width: 0;
+  gap: 23px;
+  padding: 0 0 34px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+  box-shadow: none;
+}
+.impact-project-list > .project-card:hover,
+.impact-project-list > .project-card:first-child:hover {
+  transform: none;
+  background: transparent;
+  border-color: var(--border-strong);
+}
+.impact-project-list > .project-card .project-media {
+  min-width: 0;
+  padding: 17px;
+  border-radius: 10px;
+  background: var(--panel-bg);
+}
+.impact-project-list > .project-card-featured .project-media {
+  background: var(--accent);
+}
+.impact-project-list > .project-card-spotlight .project-media {
+  background: var(--surface-raised);
+}
+.impact-project-list > .project-card .project-gallery {
+  min-width: 0;
+  margin: 0;
+}
+.impact-project-list > .project-card .project-image-wrap {
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  height: auto;
+  background: var(--surface-soft);
+  border: 1px solid var(--panel-border);
+  border-radius: 5px;
+}
+.impact-project-list > .project-card .project-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.impact-project-list > .project-card .gallery-caption {
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  gap: 4px 6px;
+  padding-top: 11px;
+}
+.impact-project-list > .project-card-featured .gallery-caption,
+.impact-project-list > .project-card-featured .gallery-caption button {
+  color: var(--accent-ink);
+}
+.impact-project-list > .project-card-featured .gallery-caption button:hover,
+.impact-project-list > .project-card-featured .gallery-select-button:hover {
+  color: var(--text);
+}
+.impact-project-list > .project-card-featured .gallery-select-button {
+  color: var(--accent-ink);
+}
+.impact-project-list > .project-card-featured .gallery-select-active,
+.impact-project-list > .project-card-featured .gallery-select-active:hover {
+  color: var(--text);
+  background: var(--panel-bg);
+}
+.impact-project-list > .project-card .project-content {
+  min-width: 0;
+  display: block;
+  padding: 10px 0 0;
+}
+.impact-project-list > .project-card .project-overline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-family: var(--font-utility);
+  font-size: 11px;
+}
+.impact-project-list > .project-card .project-title {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -.045em;
+  line-height: 1.04;
+}
+.impact-project-list > .project-card .project-context {
+  margin-top: 12px;
+  color: var(--accent);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.impact-project-list > .project-card .project-summary {
+  margin-top: 18px;
+  color: var(--muted-strong);
+  font-size: 15px;
+  line-height: 1.75;
+}
+.impact-project-list > .project-card .project-feature-block {
+  margin-top: 22px;
+}
+.impact-project-list > .project-card .project-feature-heading {
+  color: var(--text);
+  font-size: 12px;
+}
+.impact-project-list > .project-card .project-contribution-prominent {
+  border-left: 2px solid var(--accent);
+  margin-top: 23px;
+}
+.impact-project-list > .project-card .project-notes { margin-top: 16px; }
+.impact-project-list > .project-card .project-link { margin-top: 17px; }
+.impact-project-list > .project-card .project-technologies { margin-top: 19px; }
+
+@media (min-width: 1200px) {
+  .impact-hero-layout {
+    grid-template-columns: minmax(0, .98fr) minmax(0, 1.02fr);
+  }
+  .impact-projects-intro-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .5fr);
+  }
+  .impact-project-list {
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    column-gap: 34px !important;
+    row-gap: 0 !important;
+  }
+  .impact-project-list > .project-card-featured,
+  .impact-project-list > .project-card-spotlight {
+    grid-column: 1 / -1;
+    display: grid;
+    align-items: start;
+    column-gap: clamp(26px, 4vw, 54px);
+    grid-template-columns: minmax(0, 1.13fr) minmax(0, .87fr);
+    padding: 42px 0 70px;
+  }
+  .impact-project-list > .project-card-featured .project-media,
+  .impact-project-list > .project-card-featured .project-content {
+    grid-row: 1;
+  }
+  .impact-project-list > .project-card-featured .project-media { grid-column: 1; }
+  .impact-project-list > .project-card-featured .project-content { grid-column: 2; }
+  .impact-project-list > .project-card-spotlight {
+    grid-template-columns: minmax(0, .87fr) minmax(0, 1.13fr);
+  }
+  .impact-project-list > .project-card-spotlight .project-media,
+  .impact-project-list > .project-card-spotlight .project-content { grid-row: 1; }
+  .impact-project-list > .project-card-spotlight .project-content { grid-column: 1; }
+  .impact-project-list > .project-card-spotlight .project-media { grid-column: 2; }
+  .impact-project-list > .project-card-standard,
+  .impact-project-list > .project-card-compact {
+    grid-column: span 6;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 20px;
+    padding: 32px 0 0;
+  }
+  .impact-project-list > .project-card-standard .project-content,
+  .impact-project-list > .project-card-compact .project-content {
+    display: block;
+    padding: 0;
+  }
+  .impact-project-list > .project-card-standard .project-title,
+  .impact-project-list > .project-card-compact .project-title {
+    font-size: clamp(1.8rem, 2.6vw, 2.6rem);
+  }
+  .impact-project-list > .project-card-standard .project-media {
+    background: var(--surface-raised);
+  }
+  .impact-project-list > .project-card-compact .project-media {
+    background: var(--panel-bg);
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .impact-project-list > .project-card-featured,
+  .impact-project-list > .project-card-spotlight {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 767px) {
+  .impact-hero.hero-section { padding-top: 88px; }
+  .impact-hero-topline { font-size: 10px; }
+  .impact-hero-location { display: none; }
+  .impact-hero .impact-name {
+    margin-top: 17px;
+    font-size: clamp(4.15rem, 17vw, 6rem);
+  }
+  .impact-statement { margin-top: 22px; }
+  .impact-description { font-size: 14px; }
+  .impact-actions { gap: 9px; }
+  .impact-actions .primary-action,
+  .impact-actions .secondary-action { width: 100%; }
+  .impact-hero-art { padding-bottom: 76px; }
+  .impact-mini-project {
+    grid-template-columns: 76px minmax(0, 1fr) 15px;
+    width: 89%;
+  }
+  .impact-mini-project img { width: 76px; height: 54px; }
+  .impact-stage-line { margin-top: 58px; }
+  .impact-projects.section-block { padding-top: 75px; }
+  .impact-projects-intro-grid h2 { font-size: clamp(3rem, 14vw, 5rem); }
+  .impact-projects-overline { font-size: 10px; }
+  .impact-projects-intro-grid p { font-size: 14px; }
+  .impact-project-list > .project-card,
+  .impact-project-list > .project-card:first-child {
+    gap: 18px;
+    padding-bottom: 37px;
+  }
+  .impact-project-list > .project-card .project-media { padding: 12px; }
+  .impact-project-list > .project-card .project-content { padding: 0; }
+  .impact-project-list > .project-card .project-title {
+    font-size: clamp(1.85rem, 7.8vw, 2.6rem);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .impact-main-project,
+  .impact-mini-project,
+  .impact-jump a { transition: none; }
+  .impact-main-project:hover,
+  .impact-mini-project:hover { transform: none; }
+}
