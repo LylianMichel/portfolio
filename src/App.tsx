@@ -16,19 +16,20 @@ const readModeFromLocation = (): PortfolioMode =>
 const getInitialTheme = (): ThemeMode => {
   if (typeof window === "undefined") return "dark";
 
-  const saved = window.localStorage.getItem("portfolio-theme");
+  let saved: string | null = null;
+  try { saved = window.localStorage.getItem("portfolio-theme"); } catch { /* Storage may be disabled. */ }
   return saved === "light" || saved === "medium" ? saved : "dark";
 };
 
 const App = () => {
-  const [mode, setMode] = useState<PortfolioMode>(readModeFromLocation);
-  const [hash, setHash] = useState(() => typeof window !== "undefined" ? window.location.hash : "");
+  const [mode, setMode] = useState<PortfolioMode>("work");
+  const [hash, setHash] = useState("");
   const [theme, setTheme] = useState<ThemeMode>(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
-    window.localStorage.setItem("portfolio-theme", theme);
+    try { window.localStorage.setItem("portfolio-theme", theme); } catch { /* The theme still works without persistence. */ }
 
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
     if (themeColor) {
@@ -38,6 +39,7 @@ const App = () => {
 
   useEffect(() => {
     const syncMode = () => { setMode(readModeFromLocation()); setHash(window.location.hash); };
+    syncMode();
     window.addEventListener("hashchange", syncMode);
     window.addEventListener("popstate", syncMode);
 
@@ -52,6 +54,7 @@ const App = () => {
   }, [mode]);
 
   useEffect(() => {
+    if (!hash && window.location.hash) return;
     const targetId = hash.slice(1);
     const frame = requestAnimationFrame(() => {
       if (["contact", "chat", "work", ""].includes(targetId)) window.scrollTo({ top: 0, behavior: "instant" });

@@ -1,14 +1,23 @@
-import { Github } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import type { Project } from "../../types";
 import { ProjectCarousel } from "./ProjectCarousel";
 
 interface ProjectCardProps {
   project: Project;
   index: number;
-  variant?: "featured" | "standard" | "compact";
+  variant?: "featured" | "spotlight" | "standard" | "compact";
 }
 
+const notesLabels = {
+  featured: "Architecture et difficultés",
+  spotlight: "Les défis du jeu",
+  standard: "Détails de réalisation",
+  compact: "En savoir plus"
+} as const;
+
 export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCardProps) => {
+  const prominent = variant === "featured" || variant === "spotlight";
+
   return (
     <article
       id={project.id}
@@ -24,40 +33,39 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
       </div>
 
       <div className="project-content">
-        <div className="project-title-row flex items-start justify-between gap-5">
-          <div>
-            <h3
-              id={`${project.id}-title`}
-              className="text-xl font-semibold tracking-[-0.025em] text-[var(--text)] sm:text-2xl"
-            >
-              {project.title}
-            </h3>
-            {project.context ? <p className="project-context mt-1.5">{project.context}</p> : null}
-          </div>
+        <div className="project-overline">
+          <span className="project-sequence">{String(index).padStart(2, "0")} / 04</span>
+          <span>{project.type} · {project.year}</span>
         </div>
 
-        <p className="project-summary mt-3 text-sm leading-6 text-[var(--muted)]">{project.shortDescription}</p>
+        <div className="project-title-row">
+          <h3 id={`${project.id}-title`} className="project-title">{project.title}</h3>
+          {project.context ? <p className="project-context">{project.context}</p> : null}
+        </div>
 
-        <div className="project-technologies mt-5 flex flex-wrap">
-          {project.technologies.slice(0, 4).map((technology) => (
-            <span key={technology} className="tech-chip">
-              {technology}
-            </span>
+        <p className="project-summary">{project.shortDescription}</p>
+
+        <div className="project-technologies" aria-label="Technologies utilisées">
+          {project.technologies.slice(0, prominent ? 4 : 3).map((technology) => (
+            <span key={technology} className="tech-chip">{technology}</span>
           ))}
-          {project.technologies.length > 4 ? <span className="project-extra-tools">Également : {project.technologies.slice(4).join(", ")}</span> : null}
+          {project.technologies.length > (prominent ? 4 : 3) ? (
+            <span className="project-extra-tools">Également : {project.technologies.slice(prominent ? 4 : 3).join(", ")}</span>
+          ) : null}
         </div>
 
-        {project.contribution ? (
-          <p className="project-contribution mt-5">
-            <span>Mon travail</span>
-            {project.contribution}
-          </p>
+        {prominent && project.contribution ? (
+          <div className="project-contribution project-contribution-prominent">
+            <span>{variant === "featured" ? "Ce que j'ai construit" : "Mon rôle sur le jeu"}</span>
+            <p>{project.contribution}</p>
+          </div>
         ) : null}
 
-        {project.challenge || project.result ? (
+        {(project.contribution || project.challenge || project.result) ? (
           <details className="project-notes">
-            <summary>Notes de développement</summary>
+            <summary>{notesLabels[variant]}</summary>
             <dl className="project-details">
+              {!prominent && project.contribution ? <div><dt>Ma contribution</dt><dd>{project.contribution}</dd></div> : null}
               {project.challenge ? <div><dt>Difficulté</dt><dd>{project.challenge}</dd></div> : null}
               {project.result ? <div><dt>Résultat</dt><dd>{project.result}</dd></div> : null}
             </dl>
@@ -68,10 +76,11 @@ export const ProjectCard = ({ project, index, variant = "standard" }: ProjectCar
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="project-link mt-5 inline-flex items-center gap-2 text-sm font-medium text-[var(--text)]"
+          className="project-link"
         >
           <Github className="h-4 w-4" aria-hidden="true" />
-          Code sur GitHub · {project.title}
+          Voir le code <span className="sr-only">de {project.title} sur GitHub</span>
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>
     </article>

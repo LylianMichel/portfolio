@@ -10,6 +10,9 @@ import { projects } from "../../data/projects";
 import { profile } from "../../data/profile";
 import type { PortfolioMode, ThemeMode } from "../../types";
 import { SettingsPanel } from "./SettingsPanel";
+import { useActiveSection } from "../../hooks/useActiveSection";
+
+const projectIds = projects.map((project) => project.id);
 
 interface NavbarProps {
   mode: PortfolioMode;
@@ -25,6 +28,7 @@ export const Navbar = ({
   onThemeChange,
 }: NavbarProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const activeProject = useActiveSection(projectIds, mode === "work");
 
   return (
     <>
@@ -60,19 +64,20 @@ export const Navbar = ({
 
         <div className="mt-7">
           <p className="sidebar-label">Projets</p>
-          <div className="mt-2 grid gap-0.5">
+          <nav className="mt-2 grid gap-0.5" aria-label="Naviguer entre les projets">
             {projects.map((project) => (
               <a
                 key={project.id}
                 href={`#${project.id}`}
-                className="sidebar-project"
+                className={`sidebar-project ${mode === "work" && activeProject === project.id ? "sidebar-project-active" : ""}`}
+                aria-current={mode === "work" && activeProject === project.id ? "location" : undefined}
                 aria-label={`Aller au projet ${project.title}`}
               >
                 <span className="sidebar-dot" aria-hidden="true" />
                 <span className="truncate">{project.title}</span>
               </a>
             ))}
-          </div>
+          </nav>
         </div>
 
         <div className="mt-auto">
