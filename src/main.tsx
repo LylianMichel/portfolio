@@ -3,6 +3,7 @@ import { hydrateRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "./design.css";
+import "./visual-impact.css";
 
 const root = document.getElementById("root");
 
