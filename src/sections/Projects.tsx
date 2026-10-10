@@ -1,25 +1,18 @@
-import { ArrowDownRight } from "lucide-react";
 import { ProjectCard } from "../components/projects/ProjectCard";
 import { projects } from "../data/projects";
 
 export const Projects = () => (
-  <section id="projets" aria-labelledby="projects-title" className="content-shell section-block impact-projects">
+  <section id="projets" aria-labelledby="projects-title" className="content-shell section-block editorial-projects">
     <div className="mx-auto max-w-6xl">
-      <div className="impact-projects-intro">
-        <div className="impact-projects-overline">
-          <p className="section-eyebrow">Mes réalisations</p>
-          <span>Applications web / Jeu vidéo</span>
+      <div className="editorial-projects-heading">
+        <div>
+          <p className="section-eyebrow">Réalisations</p>
+          <h2 id="projects-title">Mes projets</h2>
         </div>
-        <div className="impact-projects-intro-grid">
-          <h2 id="projects-title">Du code.<span>Du concret.</span></h2>
-          <div>
-            <p>Quatre projets pour découvrir ce que je sais construire, du frontend aux systèmes de jeu.</p>
-            <ArrowDownRight size={36} aria-hidden="true" />
-          </div>
-        </div>
+        <p>Des applications web, un jeu vidéo et les problèmes que j'ai appris à résoudre en les développant.</p>
       </div>
 
-      <div className="project-layout impact-project-list">
+      <div className="project-layout editorial-project-list">
         {projects.map((project, index) => (
           <ProjectCard
             key={project.id}

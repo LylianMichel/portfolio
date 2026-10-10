@@ -34,7 +34,6 @@ export const Navbar = ({
     <>
       <aside className="sidebar hidden lg:flex" aria-label="Navigation du portfolio">
         <div className="sidebar-profile">
-          <span className="impact-sidebar-brand" aria-hidden="true">LM<span>.</span></span>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-[var(--text)]">{profile.name}</p>
             <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique</p>
