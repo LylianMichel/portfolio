@@ -462,3 +462,10 @@
 @media (prefers-reduced-motion: reduce) {
   .editorial-text-action, .editorial-preview-main, .editorial-preview-next { transition: none; }
 }
+
+/* On 320px viewports the fixed scrollbar gutter plus the old 320px body minimum
+   caused a 10px horizontal overflow. Keep the stable gutter on wider screens. */
+@media (max-width: 480px) {
+  html { scrollbar-gutter: auto; }
+  body { min-width: 0; }
+}
