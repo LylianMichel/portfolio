@@ -118,3 +118,17 @@ npm run preview
 ```
 
 Puis tester Work, Chat, GitHub, LinkedIn, e-mail et les quatre couleurs d'accent.
+
+## Liens et visibilité des projets
+
+La démo d'AniVault pointe vers `https://anivault-blush.vercel.app/`, vérifiée le 11 octobre 2026.
+
+Les quatre dépôts présentés dans `src/data/projects.ts` sont actuellement privés. Les
+cartes n'affichent donc pas de liens « Voir le code » inaccessibles aux recruteurs.
+L'interface indique simplement que le code peut être présenté sur demande.
+
+Pour rendre publiquement consultable le code d'un projet, choisir d'abord ce qui
+peut être publié dans GitHub (licence, secrets, droits des collaborateurs), puis
+passer `codeAccess: "public"` pour le projet concerné après vérification de
+l'accès anonyme à son dépôt. Ne jamais changer automatiquement la confidentialité
+d'un dépôt pour ajouter un lien sur le portfolio.
