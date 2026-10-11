@@ -1,4 +1,4 @@
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight, Github, LockKeyhole } from "lucide-react";
 import type { Project } from "../../types";
 import { ProjectCarousel } from "./ProjectCarousel";
 
@@ -36,6 +36,13 @@ export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps)
           </div>
         ) : null}
 
+        {project.technicalApproach ? (
+          <div className="project-proof">
+            <p className="project-proof-label">Un choix technique</p>
+            <p>{project.technicalApproach}</p>
+          </div>
+        ) : null}
+
         <ul className="project-tech-list" aria-label="Technologies utilisées">
           {project.technologies.slice(0, isPrimary ? 5 : 4).map((technology) => (
             <li key={technology}>{technology}</li>
@@ -44,7 +51,7 @@ export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps)
 
         {(project.challenge || project.result || (!isPrimary && project.contribution)) ? (
           <details className="project-notes">
-            <summary>En savoir plus sur le projet</summary>
+            <summary>Difficultés et résultats</summary>
             <dl className="project-details">
               {!isPrimary && project.contribution ? <div><dt>Mon travail</dt><dd>{project.contribution}</dd></div> : null}
               {project.challenge ? <div><dt>Une difficulté</dt><dd>{project.challenge}</dd></div> : null}
@@ -53,12 +60,34 @@ export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps)
           </details>
         ) : null}
 
-        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-          <Github size={16} aria-hidden="true" />
-          Voir le code sur GitHub
-          <span className="sr-only">— {project.title}</span>
-          <ArrowUpRight size={16} aria-hidden="true" />
-        </a>
+        <div className="project-actions">
+          {project.demoUrl ? (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-link project-demo-link"
+              aria-label={`Tester ${project.title} en ligne (nouvel onglet)`}
+            >
+              Tester l'application
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          ) : null}
+
+          {project.codeAccess === "public" ? (
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
+              <Github size={16} aria-hidden="true" />
+              Voir le code sur GitHub
+              <span className="sr-only">— {project.title}</span>
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          ) : (
+            <span className="project-repo-note">
+              <LockKeyhole size={14} aria-hidden="true" />
+              Code privé · présentation sur demande
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );

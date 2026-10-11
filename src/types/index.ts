@@ -43,7 +43,9 @@ export interface Project {
   technologies: string[];
   features: string[];
   githubUrl: string;
+  codeAccess?: "public" | "private";
   demoUrl?: string;
+  technicalApproach?: string;
   images: ProjectImage[];
   year: string;
   type: string;

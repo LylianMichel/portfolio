@@ -469,3 +469,45 @@
   html { scrollbar-gutter: auto; }
   body { min-width: 0; }
 }
+
+/* Recruiter-friendly project evidence: information before decoration. */
+.editorial-project-list > .project-card .project-proof {
+  margin-top: 18px;
+  padding-top: 13px;
+  max-width: 55ch;
+  border-top: 1px solid var(--panel-border);
+}
+.editorial-project-list > .project-card .project-proof-label {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.editorial-project-list > .project-card .project-proof > p:last-child {
+  color: var(--muted-strong);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.editorial-project-list > .project-card .project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 20px;
+  margin-top: 17px;
+}
+.editorial-project-list > .project-card .project-actions .project-link {
+  margin-top: 0;
+}
+.editorial-project-list > .project-card .project-demo-link {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+.editorial-project-list > .project-card .project-repo-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}

@@ -27,6 +27,10 @@ const projectList: Project[] = [
     result:
       "Une application utilisable avec catalogue, recherche, fiches anime et gestion d'une liste personnelle.",
     githubUrl: "https://github.com/LylianMichel/anivault",
+    codeAccess: "private",
+    demoUrl: "https://anivault-blush.vercel.app/",
+    technicalApproach:
+      "J'ai séparé l'interface React/TypeScript de l'API Express et utilisé Prisma pour accéder aux données PostgreSQL.",
     images: [
       { src: projectAsset("anivault-home.webp"), alt: "Accueil de la version actuelle d'AniVault", label: "Accueil" }
     ],
@@ -57,6 +61,9 @@ const projectList: Project[] = [
     result:
       "Un projet jouable qui sert aussi de terrain d'expérimentation pour l'UI, les systèmes et le game design.",
     githubUrl: "https://github.com/LylianMichel/towerdefence",
+    codeAccess: "private",
+    technicalApproach:
+      "J'organise les données des tours, des héros et des ennemis pour faire évoluer les systèmes de gameplay et de progression.",
     images: [
       { src: projectAsset("towerdefence-hub.webp"), alt: "Accueil du hub de THE WORLD DEFENCE", label: "Hub" },
       { src: projectAsset("towerdefence-menu.webp"), alt: "Menu de jeu de THE WORLD DEFENCE", label: "Jouer" },
@@ -89,6 +96,9 @@ const projectList: Project[] = [
     result:
       "Une base d'application métier structurée autour de cas d'usage concrets.",
     githubUrl: "https://github.com/LylianMichel/Le_temple",
+    codeAccess: "private",
+    technicalApproach:
+      "J'ai travaillé avec Laravel sur les comptes, les réservations et le catalogue, en utilisant PHPUnit pour les tests.",
     images: [
       { src: projectAsset("le-temple-home.webp"), alt: "Page d'accueil réelle du projet Le Temple", label: "Accueil" },
       { src: projectAsset("le-temple-soins.webp"), alt: "Catalogue de soins du projet Le Temple", label: "Soins" }
@@ -118,6 +128,9 @@ const projectList: Project[] = [
     result:
       "Un site vitrine léger, lisible et adapté aux principaux formats d'écran.",
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
+    codeAccess: "private",
+    technicalApproach:
+      "J'ai adapté les mises en page et la navigation mobile en HTML, CSS et JavaScript, sans framework frontend.",
     images: [
       { src: projectAsset("eco-repare-home.webp"), alt: "Page d'accueil réelle d'Eco’Répare", label: "Accueil" }
     ],

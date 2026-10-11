@@ -9,7 +9,7 @@ export const Projects = () => (
           <p className="section-eyebrow">Réalisations</p>
           <h2 id="projects-title">Mes projets</h2>
         </div>
-        <p>Des applications web, un jeu vidéo et les problèmes que j'ai appris à résoudre en les développant.</p>
+        <p>Des projets concrets, mes choix techniques et les difficultés rencontrées. AniVault est aussi disponible en démonstration.</p>
       </div>
 
       <div className="project-layout editorial-project-list">
