@@ -61,6 +61,11 @@ export const Hero = () => (
               </span>
             </a>
           ) : null}
+          {anivault?.demoUrl ? (
+            <a href={anivault.demoUrl} className="editorial-preview-demo" target="_blank" rel="noopener noreferrer">
+              Tester AniVault en ligne <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          ) : null}
           {worldDefence ? (
             <a href="#towerdefence" className="editorial-preview-next">
               <span><small>Également en développement</small><strong>THE WORLD DEFENCE</strong></span>
