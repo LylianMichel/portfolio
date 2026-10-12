@@ -511,3 +511,29 @@
   font-size: 12px;
   line-height: 1.5;
 }
+
+/* Clear access to AniVault without changing the existing visual identity. */
+.editorial-preview-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 7px 2px 2px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.editorial-preview-demo:hover {
+  color: var(--text);
+}
+.editorial-project-list > .project-card .project-private-code {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 14px;
+}
+.editorial-project-list > .project-card .project-private-code .project-link {
+  margin-top: 0;
+}
