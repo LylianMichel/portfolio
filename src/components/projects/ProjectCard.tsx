@@ -81,6 +81,18 @@ export const ProjectCard = ({ project, variant = "standard" }: ProjectCardProps)
               <span className="sr-only">— {project.title}</span>
               <ArrowUpRight size={16} aria-hidden="true" />
             </a>
+          ) : project.id === "anivault" ? (
+            <div className="project-private-code">
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link" aria-label="Dépôt GitHub privé d'AniVault (accès réservé)">
+                <Github size={16} aria-hidden="true" />
+                GitHub d'AniVault (privé)
+                <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+              <span className="project-repo-note">
+                <LockKeyhole size={14} aria-hidden="true" />
+                Accès réservé aux collaborateurs
+              </span>
+            </div>
           ) : (
             <span className="project-repo-note">
               <LockKeyhole size={14} aria-hidden="true" />
