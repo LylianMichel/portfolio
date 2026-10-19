@@ -5,7 +5,6 @@ import { Projects } from "./sections/Projects";
 import { Skills } from "./sections/Skills";
 import { Timeline } from "./sections/Timeline";
 import { About } from "./sections/About";
-import { Portrait } from "./sections/Portrait";
 import { Contact } from "./sections/Contact";
 import { WorkContact } from "./sections/WorkContact";
 import { Footer } from "./components/layout/Footer";
@@ -40,7 +39,7 @@ const App=()=>{
  return <div className="portfolio-app">
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main">{mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><Portrait/><WorkContact/></div>:<Contact/>}</main>
+  <main id="main-content" tabIndex={-1} className="lm-main">{mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</main>
   <Footer/>
  </div>;
 };

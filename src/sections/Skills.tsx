@@ -1,36 +1,12 @@
 import { skillGroups } from "../data/skills";
-
-export const Skills = () => (
-  <section aria-labelledby="skills-title" id="competences" className="content-shell section-block">
-    <div className="skills-section mx-auto max-w-6xl">
-      <div className="skills-intro">
-        <p className="section-eyebrow">Compétences</p>
-        <h2 id="skills-title">Mes outils de travail.</h2>
-        <p>
-          React et TypeScript pour les interfaces, Express et Laravel côté serveur, Prisma et SQL pour les données. Java et Python complètent mon travail en BUT.
-        </p>
-      </div>
-
-      <div className="skills-list">
-        {skillGroups.map((group) => (
-          <article key={group.title} className="skill-group-row">
-            <div className="skill-group-heading">
-              <div>
-                <h3>{group.title}</h3>
-                <p>{group.description}</p>
-              </div>
-            </div>
-
-            <div className="skill-group-items">
-              {group.skills.map((skill) => (
-                <span key={skill.name} className="skill-inline" title={skill.description}>
-                  {skill.name}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+import { projects } from "../data/projects";
+import { Tag } from "../components/ui/Tag";
+const count=new Set(projects.flatMap(project=>project.technologies)).size;
+export const Skills=()=><section id="competences" aria-labelledby="skills-title" className="lm-section lm-shell lm-skills">
+ <div className="lm-section-head"><div><span className="lm-kicker">02 / SAVOIR-FAIRE</span><h2 id="skills-title" className="lm-section-title">Des outils.<br/>Des usages.</h2></div><p className="lm-section-summary">React et TypeScript pour les interfaces, Express et Laravel côté serveur, Prisma et SQL pour les données. Java et Python complètent mon travail en BUT.</p></div>
+ <div className="lm-skills-overview"><div><strong>{projects.length.toString().padStart(2,"0")}</strong><span>Projets présentés</span></div><div><strong>{count.toString().padStart(2,"0")}</strong><span>Technologies sur ces projets</span></div><div><strong>02</strong><span>Année de BUT Informatique</span></div></div>
+ <div className="lm-skill-matrix">{skillGroups.map((group,index)=><article key={group.title} className="lm-skill-row">
+  <div className="lm-skill-label"><span className="lm-kicker">{String(index+1).padStart(2,"0")}</span><h3>{group.title}</h3><p>{group.description}</p></div>
+  <ul className="lm-skill-items">{group.skills.map(skill=><li key={skill.name}><Tag>{skill.name}</Tag><span className="sr-only">{skill.description}</span></li>)}</ul>
+ </article>)}</div>
+ </section>;
