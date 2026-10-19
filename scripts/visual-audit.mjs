@@ -19,7 +19,8 @@ async function task(label, name, fn) {
 }
 for (const width of [390,1440]) {
   const label=String(width);
-  const page=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
+  const context=await browser.newContext({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
+  const page=await context.newPage();
   page.setDefaultTimeout(12000);
   await task(label,"home",async()=>{await page.goto(root,{waitUntil:"networkidle"}); await page.locator("#intro-title").waitFor();});
   await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
@@ -50,10 +51,14 @@ for (const width of [390,1440]) {
   });
   await task(label,"filters",async()=>{
     await page.getByRole("button",{name:"Jeu vidéo",exact:true}).click();
-    if(await page.locator("#towerdefence").count()!==1||await page.locator("#anivault").count()!==0)throw new Error("Game filter mismatch");
+    await page.locator("#anivault").waitFor({state:"hidden"});
+    if(await page.locator("#towerdefence:visible").count()!==1)throw new Error("Game filter mismatch");
     await page.getByRole("button",{name:"Web",exact:true}).click();
-    if(await page.locator("#anivault").count()!==1||await page.locator("#towerdefence").count()!==0)throw new Error("Web filter mismatch");
+    await page.locator("#towerdefence").waitFor({state:"hidden"});
+    if(await page.locator("#anivault:visible").count()!==1)throw new Error("Web filter mismatch");
     await page.getByRole("button",{name:"Tous",exact:true}).click();
+    await page.locator("#anivault").waitFor({state:"visible"});
+    await page.waitForTimeout(500);
   });
   await task(label,"project capture",async()=>await record(page,label,"project",page.locator("#anivault")));
   await task(label,"gallery Escape closes lightbox",async()=>{
@@ -64,6 +69,8 @@ for (const width of [390,1440]) {
     await dialog.waitFor({state:"hidden"});
   });
   await task(label,"contact view",async()=>{
+    await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+    await page.waitForTimeout(420);
     await page.getByRole("button",{name:/Chat/}).click();
     await page.locator(".lm-chat-page").waitFor();
     await record(page,label,"contact",page.locator(".lm-chat-page"));
@@ -79,7 +86,7 @@ for (const width of [390,1440]) {
     await page.goto(new URL("/cette-page-nexiste-pas",root).href,{waitUntil:"networkidle"});
     await page.getByRole("heading",{name:/404/}).waitFor();
   });
-  await page.close();
+  await context.close();
   const before=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1});
   before.setDefaultTimeout(10000);
   try {

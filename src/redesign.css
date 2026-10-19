@@ -41,7 +41,7 @@ body, .portfolio-app{background-image:none}
 *::-webkit-scrollbar-thumb{background:var(--lm-accent);border:3px solid var(--lm-page);border-radius:0}
 a,button{transition:color var(--lm-fast),border-color var(--lm-fast),background-color var(--lm-fast),transform var(--lm-fast)}
 button{cursor:pointer}
-.lm-shell{width:min(100% - var(--lm-gutter)*2,var(--lm-measure));margin-inline:auto}
+.lm-shell{width:min(calc(100% - var(--lm-gutter) - var(--lm-gutter)),var(--lm-measure));margin-inline:auto}
 .lm-kicker{font:500 .7rem/1.5 var(--lm-font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lm-accent)}
 .lm-mono{font-family:var(--lm-font-mono);font-size:.76rem}
 .lm-muted{color:var(--lm-sub)}
@@ -273,3 +273,13 @@ button{cursor:pointer}
 :root[data-theme="contrast"] .lm-tag{color:var(--lm-ink)}
 .lm-mode-content{width:100%}
 @media (forced-colors:active){.lm-nav,.lm-button,.lm-tag{forced-color-adjust:auto}}
+
+/* Visual audit corrections: give the editorial content breathing room and keep internship status in the first viewport. */
+.lm-nav-wrap:focus-within{transform:translateX(-50%);opacity:1;pointer-events:auto}
+@media(min-width:851px){
+ .lm-hero{padding-top:clamp(112px,10vw,155px)}
+ .lm-hero-layout{padding-top:clamp(32px,4vw,58px);padding-bottom:30px}
+ .lm-name{margin-top:clamp(20px,2.5vw,35px);margin-bottom:31px}
+ .lm-availability{margin-top:clamp(20px,3vw,42px)}
+}
+@media(max-width:850px){.lm-hero{padding-top:115px}.lm-hero-layout{padding-top:43px}}
