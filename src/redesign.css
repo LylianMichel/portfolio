@@ -41,7 +41,7 @@ body, .portfolio-app{background-image:none}
 *::-webkit-scrollbar-thumb{background:var(--lm-accent);border:3px solid var(--lm-page);border-radius:0}
 a,button{transition:color var(--lm-fast),border-color var(--lm-fast),background-color var(--lm-fast),transform var(--lm-fast)}
 button{cursor:pointer}
-.lm-shell{width:min(calc(100% - var(--lm-gutter) - var(--lm-gutter)),var(--lm-measure));margin-inline:auto}
+.lm-shell{width:100%;max-width:1472px;padding-inline:var(--lm-gutter);margin-inline:auto}
 .lm-kicker{font:500 .7rem/1.5 var(--lm-font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lm-accent)}
 .lm-mono{font-family:var(--lm-font-mono);font-size:.76rem}
 .lm-muted{color:var(--lm-sub)}
