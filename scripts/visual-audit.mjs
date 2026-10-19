@@ -1,0 +1,98 @@
+import { mkdir, writeFile } from "node:fs/promises";
+import { chromium } from "playwright";
+import AxeBuilder from "@axe-core/playwright";
+
+const root = process.env.AUDIT_URL ?? "http://127.0.0.1:4173/";
+const output = "artifacts/visual";
+await mkdir(output, {recursive:true});
+const browser = await chromium.launch({headless:true,args:process.env.CI?["--no-sandbox"]:[]});
+const all = [];
+let failures = 0;
+async function record(page, label, name, target) {
+  try {
+    await target.screenshot({path:`${output}/${label}-${name}.png`,animations:"disabled",timeout:20000});
+  } catch (error) {all.push({view:label,task:`capture ${name}`,error:String(error)});failures++;}
+}
+async function task(label, name, fn) {
+  try {const result = await fn();all.push({view:label,task:name,status:"ok",result:result??null});}
+  catch(error){all.push({view:label,task:name,status:"failed",error:String(error)});failures++;}
+}
+for (const width of [390,1440]) {
+  const label=String(width);
+  const page=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
+  page.setDefaultTimeout(12000);
+  await task(label,"home",async()=>{await page.goto(root,{waitUntil:"networkidle"}); await page.locator("#intro-title").waitFor();});
+  await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
+  await task(label,"horizontal overflow",async()=>{
+    const dimensions=await page.evaluate(()=>({page:document.documentElement.scrollWidth,screen:window.innerWidth}));
+    if(dimensions.page>dimensions.screen+1)throw new Error(JSON.stringify(dimensions));
+    return dimensions;
+  });
+  await task(label,"navigation contrast themes",async()=>{
+    await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+    await page.getByRole("button",{name:"Clair",exact:true}).click();
+    const light=await page.evaluate(()=>document.documentElement.dataset.theme);
+    await page.getByRole("button",{name:"Contraste +"}).click();
+    const contrast=await page.evaluate(()=>document.documentElement.dataset.theme);
+    await page.getByRole("button",{name:"Menthe",exact:true}).click();
+    await page.getByRole("button",{name:"Azur",exact:true}).click();
+    const accent=await page.evaluate(()=>document.documentElement.dataset.accent);
+    if(light!=="light"||contrast!=="contrast"||accent!=="blue")throw new Error(`Theme ${light}/${contrast}, accent ${accent}`);
+    await page.getByRole("button",{name:"Sombre",exact:true}).click();
+    await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+  });
+  await task(label,"axe WCAG A/AA home",async()=>{
+    const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+    const violations=results.violations.map(v=>({id:v.id,impact:v.impact,count:v.nodes.length,help:v.help}));
+    await writeFile(`${output}/${label}-axe-home.json`,JSON.stringify({violations},null,2));
+    if(violations.some(v=>v.impact==="critical"||v.impact==="serious"))throw new Error(JSON.stringify(violations));
+    return {violations};
+  });
+  await task(label,"filters",async()=>{
+    await page.getByRole("button",{name:"Jeu vidéo",exact:true}).click();
+    if(await page.locator("#towerdefence").count()!==1||await page.locator("#anivault").count()!==0)throw new Error("Game filter mismatch");
+    await page.getByRole("button",{name:"Web",exact:true}).click();
+    if(await page.locator("#anivault").count()!==1||await page.locator("#towerdefence").count()!==0)throw new Error("Web filter mismatch");
+    await page.getByRole("button",{name:"Tous",exact:true}).click();
+  });
+  await task(label,"project capture",async()=>await record(page,label,"project",page.locator("#anivault")));
+  await task(label,"gallery Escape closes lightbox",async()=>{
+    await page.locator("#towerdefence .gallery-expand").click();
+    const dialog=page.locator("dialog[open]");
+    await dialog.waitFor();
+    await page.keyboard.press("Escape");
+    await dialog.waitFor({state:"hidden"});
+  });
+  await task(label,"contact view",async()=>{
+    await page.getByRole("button",{name:/Chat/}).click();
+    await page.locator(".lm-chat-page").waitFor();
+    await record(page,label,"contact",page.locator(".lm-chat-page"));
+  });
+  await task(label,"axe WCAG A/AA contact",async()=>{
+    const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+    const violations=results.violations.map(v=>({id:v.id,impact:v.impact,count:v.nodes.length,help:v.help}));
+    await writeFile(`${output}/${label}-axe-contact.json`,JSON.stringify({violations},null,2));
+    if(violations.some(v=>v.impact==="critical"||v.impact==="serious"))throw new Error(JSON.stringify(violations));
+    return {violations};
+  });
+  await task(label,"404 view",async()=>{
+    await page.goto(new URL("/cette-page-nexiste-pas",root).href,{waitUntil:"networkidle"});
+    await page.getByRole("heading",{name:/404/}).waitFor();
+  });
+  await page.close();
+  const before=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1});
+  before.setDefaultTimeout(10000);
+  try {
+    await before.goto("https://portfolio-lylian-michel.vercel.app/",{waitUntil:"domcontentloaded",timeout:20000});
+    await record(before,label,"before-hero",before.locator(".editorial-hero"));
+    await record(before,label,"before-project",before.locator("#anivault"));
+    await before.goto("https://portfolio-lylian-michel.vercel.app/#contact",{waitUntil:"domcontentloaded",timeout:20000});
+    await record(before,label,"before-contact",before.locator(".contact-page"));
+  } catch(error){all.push({view:label,task:"before comparisons",status:"unavailable",reason:String(error)});}
+  await before.close();
+}
+await browser.close();
+await writeFile(`${output}/audit.json`,JSON.stringify({root,failures,checks:all},null,2));
+for(const item of all){if(item.status==="failed")console.error("[FAIL]",item.view,item.task,item.error);else console.log("[OK]",item.view,item.task,item.status??"");}
+console.log(`VISUAL_AUDIT_FAILED_CHECKS=${failures}`);
+if(failures) process.exitCode=1;

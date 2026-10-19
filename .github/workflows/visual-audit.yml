@@ -1,0 +1,52 @@
+name: Visual audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [redesign]
+
+permissions:
+  contents: read
+
+jobs:
+  browser-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install audit tools
+        run: |
+          npm install --no-save --package-lock=false playwright @axe-core/playwright lighthouse
+          npx playwright install --with-deps chromium
+      - name: Serve prerendered portfolio
+        run: |
+          npm run preview -- --host 127.0.0.1 > /tmp/portfolio-preview.log 2>&1 &
+          for i in $(seq 1 45); do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/portfolio-preview.log
+          exit 1
+      - name: Desktop and mobile screenshots, interaction checks and axe
+        run: node scripts/visual-audit.mjs
+      - name: Lighthouse mobile
+        if: always()
+        run: |
+          mkdir -p artifacts/lighthouse
+          npx lighthouse http://127.0.0.1:4173/ --output=json --output-path=artifacts/lighthouse/mobile.json --quiet --chrome-flags="--headless --no-sandbox" --throttling-method=simulate
+      - name: Lighthouse desktop
+        if: always()
+        run: npx lighthouse http://127.0.0.1:4173/ --preset=desktop --output=json --output-path=artifacts/lighthouse/desktop.json --quiet --chrome-flags="--headless --no-sandbox"
+      - name: Print Lighthouse scores
+        if: always()
+        run: |
+          node -e 'for(const mode of ["mobile","desktop"]){try{const r=require("./artifacts/lighthouse/"+mode+".json");console.log("LIGHTHOUSE "+mode+" Performance="+Math.round(r.categories.performance.score*100)+" Accessibility="+Math.round(r.categories.accessibility.score*100)+" SEO="+Math.round(r.categories.seo.score*100)+" BestPractices="+Math.round(r.categories["best-practices"].score*100))}catch(e){console.log("LIGHTHOUSE "+mode+" unavailable: "+e.message)}}'
+      - name: Upload visual audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-redesign-visual-audit
+          path: artifacts/
+          retention-days: 14
