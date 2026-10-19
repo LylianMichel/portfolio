@@ -1,156 +1,60 @@
-import {
-  BriefcaseBusiness,
-  Github,
-  Linkedin,
-  Mail,
-  Settings2,
-} from "lucide-react";
-import { useState } from "react";
-import { projects } from "../../data/projects";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, BriefcaseBusiness, Download, Mail, Menu, Settings2, X } from "lucide-react";
 import { profile } from "../../data/profile";
-import type { PortfolioMode, ThemeMode } from "../../types";
-import { SettingsPanel } from "./SettingsPanel";
 import { useActiveSection } from "../../hooks/useActiveSection";
-
-const projectIds = projects.map((project) => project.id);
+import type { PortfolioMode } from "../../types";
+import type { Accent, Appearance } from "../../utils/preferences";
 
 interface NavbarProps {
-  mode: PortfolioMode;
-  theme: ThemeMode;
-  onModeChange: (mode: PortfolioMode) => void;
-  onThemeChange: (theme: ThemeMode) => void;
+ mode:PortfolioMode; theme:Appearance; accent:Accent;
+ onModeChange:(mode:PortfolioMode)=>void;
+ onThemeChange:(theme:Appearance)=>void;
+ onAccentChange:(accent:Accent)=>void;
 }
-
-export const Navbar = ({
-  mode,
-  theme,
-  onModeChange,
-  onThemeChange,
-}: NavbarProps) => {
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const activeProject = useActiveSection(projectIds, mode === "work");
-
-  return (
-    <>
-      <aside className="sidebar hidden lg:flex" aria-label="Navigation du portfolio">
-        <div className="sidebar-profile">
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-[var(--text)]">{profile.name}</p>
-            <p className="mt-0.5 truncate text-[11px] text-[var(--muted)]">BUT Informatique</p>
-          </div>
-        </div>
-
-        <div className="mt-5 grid gap-1">
-          <button
-            type="button"
-            onClick={() => onModeChange("work")}
-            className={`sidebar-nav ${mode === "work" ? "sidebar-nav-active" : ""}`}
-            aria-current={mode === "work" ? "page" : undefined}
-          >
-            <BriefcaseBusiness className="h-4 w-4" />
-            <span>Portfolio</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => onModeChange("contact")}
-            className={`sidebar-nav ${mode === "contact" ? "sidebar-nav-active" : ""}`}
-            aria-current={mode === "contact" ? "page" : undefined}
-          >
-            <Mail className="h-4 w-4" />
-            <span>Contact</span>
-          </button>
-        </div>
-
-        <div className="mt-7">
-          <p className="sidebar-label">Projets</p>
-          <nav className="mt-2 grid gap-0.5" aria-label="Naviguer entre les projets">
-            {projects.map((project) => (
-              <a
-                key={project.id}
-                href={`#${project.id}`}
-                className={`sidebar-project ${mode === "work" && activeProject === project.id ? "sidebar-project-active" : ""}`}
-                aria-current={mode === "work" && activeProject === project.id ? "location" : undefined}
-                aria-label={`Aller au projet ${project.title}`}
-              >
-                <span className="sidebar-dot" aria-hidden="true" />
-                <span className="truncate">{project.title}</span>
-              </a>
-            ))}
-          </nav>
-        </div>
-
-        <div className="mt-auto">
-          <button
-            type="button"
-            onClick={() => setSettingsOpen(true)}
-            className="sidebar-settings"
-          >
-            <Settings2 className="h-4 w-4" />
-            <span>Paramètres</span>
-          </button>
-
-          <div className="mt-2 grid grid-cols-3 gap-1">
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="sidebar-social" aria-label="GitHub">
-              <Github className="h-4 w-4" />
-            </a>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="sidebar-social" aria-label="LinkedIn">
-              <Linkedin className="h-4 w-4" />
-            </a>
-            <a href={`mailto:${profile.email}`} className="sidebar-social" aria-label="E-mail">
-              <Mail className="h-4 w-4" />
-            </a>
-          </div>
-        </div>
-      </aside>
-
-      <header className="mobile-header lg:hidden">
-        <div className="flex items-center gap-2">
-          <div>
-            <span className="block text-sm font-semibold leading-none">{profile.name}</span>
-            <span className="mt-1 block text-[10px] text-[var(--muted)]">
-              {mode === "work" ? "Portfolio" : "Contact"}
-            </span>
-          </div>
-        </div>
-
-        <div className="mobile-mode-switch" aria-label="Changer de section">
-          <button
-            type="button"
-            onClick={() => onModeChange("work")}
-            className={mode === "work" ? "mobile-mode-active" : ""}
-            aria-label="Ouvrir le portfolio"
-            aria-pressed={mode === "work"}
-          >
-            <BriefcaseBusiness className="h-4 w-4" /><span>Projets</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => onModeChange("contact")}
-            className={mode === "contact" ? "mobile-mode-active" : ""}
-            aria-label="Ouvrir les coordonnées"
-            aria-pressed={mode === "contact"}
-          >
-            <Mail className="h-4 w-4" /><span>Contact</span>
-          </button>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setSettingsOpen(true)}
-          className="mobile-social"
-          aria-label="Ouvrir les paramètres"
-        >
-          <Settings2 className="h-4 w-4" />
-        </button>
-      </header>
-
-      <SettingsPanel
-        open={settingsOpen}
-        theme={theme}
-        onThemeChange={onThemeChange}
-        onClose={() => setSettingsOpen(false)}
-      />
-    </>
-  );
+const sections = [{id:"accueil",title:"Accueil"},{id:"projets",title:"Projets"},{id:"competences",title:"Compétences"},{id:"a-propos",title:"À propos"},{id:"parcours",title:"Parcours"}];
+const colorLabels:Record<Accent,string>={mint:"Menthe",blue:"Azur",violet:"Lavande",orange:"Cuivre"};
+export const Navbar=({mode,theme,accent,onModeChange,onThemeChange,onAccentChange}:NavbarProps)=>{
+ const [menu,setMenu]=useState(false);
+ const [compact,setCompact]=useState(false);
+ const [progress,setProgress]=useState(0);
+ const [settings,setSettings]=useState(false);
+ const active=useActiveSection(sections.map(section=>section.id),mode==="work");
+ useEffect(()=>{
+  let last=window.scrollY;
+  const onScroll=()=>{
+   const y=window.scrollY;
+   setCompact(y>180&&y>last+3&&!menu&&!settings);
+   if(y<last-3||y<100)setCompact(false);
+   last=y;
+   const height=document.documentElement.scrollHeight-window.innerHeight;
+   setProgress(height>0?Math.min(100,y/height*100):0);
+  };
+  window.addEventListener("scroll",onScroll,{passive:true});
+  return ()=>window.removeEventListener("scroll",onScroll);
+ },[menu,settings]);
+ const change=(next:PortfolioMode)=>{onModeChange(next);setMenu(false);setCompact(false)};
+ return <>
+ <div className="lm-progress" style={{width:`${progress}%`}} aria-hidden />
+ <header className={`lm-nav-wrap ${compact?"lm-nav-away":""}`}>
+ <nav aria-label="Navigation principale" className="lm-nav">
+  <a className="lm-logo" href="#work" onClick={event=>{event.preventDefault();change("work")}} aria-label="Lylian Michel — Accueil">
+    <svg width="35" height="35" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="9" fill="currentColor" opacity=".10"/><path d="M11 15v35h18v-8H20V15zM33 50V15h7l7 13 7-13h2v35h-8V30l-7 12-7-12v20z" fill="currentColor"/></svg>
+  </a>
+  <div className="lm-nav-modes" role="group" aria-label="Choisir un espace">
+    <button className={mode==="work"?"selected":""} aria-pressed={mode==="work"} onClick={()=>change("work")}><BriefcaseBusiness size={14} aria-hidden />Work</button>
+    <button className={mode==="contact"?"selected":""} aria-pressed={mode==="contact"} onClick={()=>change("contact")}><Mail size={14} aria-hidden />Chat</button>
+  </div>
+  <div className="lm-desktop-links">{mode==="work"?sections.slice(1,4).map(item=><a key={item.id} href={`#${item.id}`} aria-current={active===item.id?"location":undefined}>{item.title}</a>):<span className="lm-mono">CONTACT / DISCUSSION</span>}</div>
+  <a className="lm-nav-cv" href={profile.cvUrl} download>CV <Download size={14} aria-hidden /><span className="sr-only">PDF, environ 100 Ko</span></a>
+  <button className="lm-nav-icon" onClick={()=>setSettings(!settings)} aria-label="Personnaliser l'apparence" aria-expanded={settings}><Settings2 size={18} aria-hidden /></button>
+  <button className="lm-nav-icon lm-nav-menu" onClick={()=>setMenu(!menu)} aria-label={menu?"Fermer le menu":"Ouvrir le menu"} aria-expanded={menu}>{menu?<X size={19}/>:<Menu size={19}/>}</button>
+ </nav>
+ {menu&&<div className="lm-mobile-menu"><div className="lm-mobile-list">{sections.map(item=><a key={item.id} href={`#${item.id}`} onClick={()=>{change("work");window.requestAnimationFrame(()=>document.getElementById(item.id)?.scrollIntoView())}}>{item.title}<ArrowUpRight size={15} aria-hidden /></a>)}</div><a href={profile.cvUrl} download>CV · PDF ~100 Ko</a></div>}
+ {settings&&<section className="lm-quick-settings" aria-label="Personnalisation">
+  <div className="lm-settings-head"><span>APPARENCE</span><button onClick={()=>setSettings(false)} aria-label="Fermer l'apparence"><X size={17}/></button></div>
+  <div role="group" aria-label="Thème" className="lm-settings-choice">{(["dark","light","contrast"] as Appearance[]).map(t=><button key={t} aria-pressed={theme===t} onClick={()=>onThemeChange(t)}>{({dark:"Sombre",light:"Clair",contrast:"Contraste +"})[t]}</button>)}</div>
+  <p className="lm-kicker">ACCENT</p><div className="lm-accent-choice" role="group" aria-label="Couleur d'accent">{(["mint","blue","violet","orange"] as Accent[]).map(a=><button key={a} data-swatch={a} aria-label={colorLabels[a]} aria-pressed={accent===a} onClick={()=>onAccentChange(a)}><span/></button>)}</div>
+ </section>}
+ </header>
+ </>;
 };
