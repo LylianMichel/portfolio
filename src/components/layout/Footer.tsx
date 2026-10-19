@@ -1,28 +1,3 @@
-import { Github, Linkedin } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { profile } from "../../data/profile";
-
-const hasLinkedIn = Boolean(profile.linkedin);
-
-export const Footer = () => (
-  <footer className="px-3 pb-8 sm:px-5">
-    <div className="mx-auto flex max-w-7xl flex-col gap-5 border-t border-[var(--border)] py-7 text-sm text-[var(--muted)] md:flex-row md:items-center md:justify-between">
-      <div>
-        <p className="font-semibold text-[var(--text)]">{profile.name} · {new Date().getFullYear()}</p>
-        <p className="mt-1 text-xs">React · TypeScript · Vite · Tailwind CSS</p>
-      </div>
-
-      <div className="flex items-center gap-4">
-        <a href={profile.github} target="_blank" rel="noreferrer" className="contact-link" aria-label="GitHub">
-          <Github className="h-4 w-4" />
-          GitHub
-        </a>
-        {hasLinkedIn ? (
-          <a href={profile.linkedin} target="_blank" rel="noreferrer" className="contact-link" aria-label="LinkedIn">
-            <Linkedin className="h-4 w-4" />
-            LinkedIn
-          </a>
-        ) : null}
-      </div>
-    </div>
-  </footer>
-);
+export const Footer=()=><footer className="lm-footer lm-shell"><div className="lm-footer-title"><span>LM.</span><span className="lm-mono">DÉVELOPPÉ AVEC SOIN</span></div><div className="lm-footer-bottom"><span>© {new Date().getFullYear()} {profile.name} · React / TypeScript / Vite</span><div><a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Lylian Michel"><Github size={16}/> <ArrowUpRight size={13} aria-hidden/></a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Lylian Michel"><Linkedin size={16}/> <ArrowUpRight size={13} aria-hidden/></a><a href="#accueil">Retour en haut ↑</a></div></div></footer>;

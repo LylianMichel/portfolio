@@ -1,21 +1,8 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin } from "lucide-react";
 import { profile } from "../data/profile";
-
-export const WorkContact = () => (
-  <section aria-labelledby="work-contact-title" className="content-shell pb-20 pt-16">
-    <div className="mx-auto max-w-6xl work-contact-card">
-      <div>
-        <p className="section-eyebrow">Contact</p>
-        <h2 id="work-contact-title" className="mt-2 text-2xl font-semibold tracking-tight">On peut en discuter.</h2>
-        <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-          Je cherche un stage en développement de 8 semaines à partir du 12 avril 2027.
-          Tu peux aussi m'écrire au sujet d'un de mes projets.
-        </p>
-      </div>
-      <div className="flex flex-wrap gap-3">
-        <a href={`mailto:${profile.email}`} className="primary-action">M'écrire <ArrowUpRight size={16} aria-hidden="true" /></a>
-        <a href="#contact" className="secondary-action">Mes coordonnées</a>
-      </div>
-    </div>
-  </section>
-);
+import { ActionButton } from "../components/ui/ActionButton";
+import { EmailCopy } from "../components/ui/EmailCopy";
+export const WorkContact=()=><section id="ecrire" aria-labelledby="work-contact-title" className="lm-section lm-shell lm-contact-final">
+ <div className="lm-section-head"><div><span className="lm-kicker">05 / LA SUITE</span><h2 id="work-contact-title" className="lm-section-title">On peut en<br/><em>discuter.</em></h2></div><p className="lm-section-summary">Je cherche un stage en développement de 8 semaines à partir du 12 avril 2027. Tu peux aussi m'écrire au sujet d'un de mes projets.</p></div>
+ <div className="lm-final-body"><EmailCopy/><div className="lm-final-links"><ActionButton primary href={`mailto:${profile.email}`}>M'écrire <ArrowUpRight size={18} aria-hidden/></ActionButton><a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="Consulter GitHub de Lylian Michel"><Github size={18} aria-hidden/> GitHub <ArrowUpRight size={15} aria-hidden/></a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="Consulter LinkedIn de Lylian Michel"><Linkedin size={18} aria-hidden/> LinkedIn <ArrowUpRight size={15} aria-hidden/></a></div></div>
+ </section>;

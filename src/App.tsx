@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navbar } from "./components/layout/Navbar";
 import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
@@ -8,6 +8,8 @@ import { About } from "./sections/About";
 import { Contact } from "./sections/Contact";
 import { WorkContact } from "./sections/WorkContact";
 import { Footer } from "./components/layout/Footer";
+import { NotFound } from "./sections/NotFound";
+import { X } from "lucide-react";
 import { initialAccent, initialAppearance, type Accent, type Appearance } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 
@@ -19,6 +21,11 @@ const App=()=>{
  const [mode,setMode]=useState<PortfolioMode>("work");
  const [theme,setTheme]=useState<Appearance>(readTheme);
  const [accent,setAccent]=useState<Accent>(readAccent);
+ const [notFound,setNotFound]=useState(false);
+ const [help,setHelp]=useState(false);
+ const [egg,setEgg]=useState("");
+ const sequence=useRef("");
+ useEffect(()=>setNotFound(!["/","/index.html"].includes(window.location.pathname)),[]);
  useEffect(()=>{
   document.documentElement.dataset.theme=theme;
   document.documentElement.style.colorScheme=theme==="light"?"light":"dark";
@@ -36,11 +43,31 @@ const App=()=>{
  },[]);
  useEffect(()=>{document.title=mode==="contact"?"Lylian Michel — Contact":"Lylian Michel — Développeur & étudiant en BUT Informatique"},[mode]);
  const changeMode=(next:PortfolioMode)=>{setMode(next);window.history.pushState(null,"",next==="work"?"#work":"#contact");window.scrollTo({top:0,behavior:"instant"})};
+ 
+ useEffect(()=>{
+  const onKey=(event:KeyboardEvent)=>{
+   const target=event.target;
+   if(event.ctrlKey||event.metaKey||event.altKey||event.repeat||target instanceof HTMLInputElement||target instanceof HTMLTextAreaElement||(target instanceof HTMLElement&&target.isContentEditable))return;
+   if(event.key==="Escape"){setHelp(false);sequence.current="";return;}
+   if(event.key==="?"){setHelp(state=>!state);return;}
+   const key=event.key.toLowerCase();
+   if(!/^[a-z]$/.test(key)&&!["arrowup","arrowdown","arrowleft","arrowright"].includes(key))return;
+   sequence.current=(sequence.current+key).slice(-75);
+   if(sequence.current.endsWith("gp")){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
+   if(sequence.current.endsWith("gc")){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
+   const konami="arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowarrowrightba";
+   if(sequence.current.endsWith(konami)){setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setEgg("Bonus débloqué : nouvel accent !");sequence.current="";}
+  };
+  window.addEventListener("keydown",onKey);
+  return()=>window.removeEventListener("keydown",onKey);
+ },[]);
  return <div className="portfolio-app">
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main">{mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</main>
+  <main id="main-content" tabIndex={-1} className="lm-main">{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</main>
   <Footer/>
+  <span className="sr-only" role="status" aria-live="polite">{egg}</span>
+  {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}
  </div>;
 };
 export default App;
