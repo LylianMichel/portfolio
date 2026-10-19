@@ -24,3 +24,6 @@ Polices : @fontsource-variable/space-grotesk, inter et jetbrains-mono, livrées 
 
 ## Consolidation CSS (Claude / revue)
 Les anciennes feuilles index.css, design.css, visual-impact.css et redesign.css ont été remplacées par un seul fichier `src/styles.css`. Les variables de thème et les styles des galeries/modales sont conservés. Le Hero est resserré pour donner la priorité à l’identification et à la disponibilité de stage sans retarder le LCP.
+
+### Arbitrage de performance
+Suite aux mesures Lighthouse mobiles (89 avec trois polices, 73 avec préchargements), seule Space Grotesk reste téléchargée et auto-hébergée. Le texte et le code utilisent les polices système, afin de privilégier le LCP et la lisibilité. Les autres fontsource ont été retirées plutôt que préchargées.

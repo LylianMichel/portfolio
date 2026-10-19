@@ -1674,8 +1674,8 @@ a, button { cursor: pointer; }
  --lm-accent:#a6e6c5; --lm-accent-ink:#14251b;
  --lm-measure:1320px; --lm-gutter:clamp(20px,4vw,76px);
  --lm-radius:10px; --lm-font-display:"Space Grotesk Variable","Bahnschrift","Arial Narrow",Arial,sans-serif;
- --lm-font-body:"Inter Variable",Inter,"Segoe UI",system-ui,sans-serif;
- --lm-font-mono:"JetBrains Mono Variable","Cascadia Code",Consolas,ui-monospace,monospace;
+ --lm-font-body:"Segoe UI",system-ui,sans-serif;
+ --lm-font-mono:"Cascadia Code",Consolas,ui-monospace,monospace;
  --lm-ease:cubic-bezier(.22,1,.36,1); --lm-fast:180ms; --lm-mid:420ms;
  --accent:var(--lm-accent); --accent-ink:var(--lm-accent-ink);
  --page-bg:var(--lm-page); --text:var(--lm-ink); --muted:var(--lm-sub);
