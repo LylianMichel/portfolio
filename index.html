@@ -43,7 +43,9 @@
       (() => {
         let savedTheme = null;
         try { savedTheme = localStorage.getItem("portfolio-theme"); } catch { /* Private browsing fallback. */ }
-        const theme = savedTheme === "light" || savedTheme === "medium" ? savedTheme : "dark";
+        const theme = savedTheme === "light" || savedTheme === "contrast" ? savedTheme : savedTheme === "dark" ? "dark" : matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        let accent = "mint"; try { const saved = localStorage.getItem("portfolio-accent"); if (["mint","blue","violet","orange"].includes(saved)) accent = saved; } catch {}
+        document.documentElement.dataset.accent = accent;
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
       })();

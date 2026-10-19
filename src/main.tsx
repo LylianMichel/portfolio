@@ -16,3 +16,4 @@ hydrateRoot(root,
     <App />
   </StrictMode>,
 );
+import "./redesign.css";
