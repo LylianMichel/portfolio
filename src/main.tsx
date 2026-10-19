@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { hydrateRoot } from "react-dom/client";
 import App from "./App";
-import "./index.css";
-import "./design.css";
-import "./visual-impact.css";
+import "@fontsource-variable/space-grotesk/wght.css";
+import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable/jetbrains-mono/wght.css";
+import "./styles.css";
 
 const root = document.getElementById("root");
 
@@ -16,4 +17,3 @@ hydrateRoot(root,
     <App />
   </StrictMode>,
 );
-import "./redesign.css";

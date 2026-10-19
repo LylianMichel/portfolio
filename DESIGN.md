@@ -9,7 +9,7 @@ Identité éditoriale sobre pour un développeur web et jeux vidéo. Les vraies 
 ## Tokens
 Couleurs : `--lm-page` #151516, `--lm-ink` #f4f3ee, `--lm-sub` #b8b9b8, `--lm-panel` #1c1d1d, `--lm-rule` #424642. Accent principal `--lm-accent` menthe #a6e6c5. Variantes azur #a0caff, lavande #dec0fc et cuivre #ffc79e, ajustées selon le thème pour respecter le contraste.
 Thèmes : sombre par défaut ou système au premier chargement, clair et contraste élevé; choix persistés. Ne pas coder de couleurs arbitraires dans les sections.
-Typography : titre `--lm-font-display` Bahnschrift (fallback Arial Narrow), texte `--lm-font-body` Inter / Segoe UI, technique `--lm-font-mono` Cascadia Code / Consolas. Échelle titre fluide clamp(2.5rem,6vw,5.7rem), corps 15–16px.
+Typography : polices variables auto-hébergées Space Grotesk (titres), Inter (texte), JetBrains Mono (éléments techniques). Utiliser les fichiers CSS fournis par @fontsource-variable ; aucune police externe à l’exécution.
 Grille : largeur max 1320px, gouttière `clamp(20px,4vw,76px)`, sections 80–164px, espace négatif volontaire. Traits 1px. Rayons 4px actions, 10px cadres; éviter les « cards » répétées.
 Motion : 180ms interaction, 420ms apparition, ease cubic-bezier(.22,1,.36,1); déplacements courts. Tout mouvement non essentiel s'arrête avec prefers-reduced-motion. Aucun loader qui retarde le LCP.
 Interaction : focus 3px visible, clavier complet, aria-label précis, pas de scroll horizontal; le contenu essentiel ne dépend jamais du hover.
@@ -20,4 +20,7 @@ Logotype vectoriel LM dans la navigation et le favicon. Image Open Graph réelle
 La sélection et la scrollbar réutilisent `--lm-accent`. La barre de progression n'est pas un indicateur d'expérience fictif, elle reflète uniquement la progression dans la page. Shortcut g,p / g,c / ? ; le Konami code change uniquement l'accent.
 Galeries : navigation flèches, Échap, bouton fermeture, swipe tactile; boîte de dialogue HTML native pour verrouiller le focus. Tilt limité à 2° et exclu du mobile et reduced-motion. Aucun effet magnétique qui compromet la cible tactile. Aucun écran de chargement bloquant.
 Accessibilité : contrastes programmatiquement vérifiés dans `src/utils/contrast.test.ts`; focus 3px; pages sémantiques, texte visible sans hover, alt issus de src/data; vérifier au navigateur sur les deux thèmes. Le score Lighthouse dépend de l'environnement du test et n'est jamais garanti par les seuls tokens.
-Polices : aucune fonte réseau externe. Familles système déclarées (Bahnschrift / Inter / Consolas) avec fallbacks; l'auto-hébergement de fontes spécialisées est reporté pour éviter une dépendance ou licence imprévue.
+Polices : @fontsource-variable/space-grotesk, inter et jetbrains-mono, livrées avec le bundle. Aucune requête Google Fonts et fallback système.
+
+## Consolidation CSS (Claude / revue)
+Les anciennes feuilles index.css, design.css, visual-impact.css et redesign.css ont été remplacées par un seul fichier `src/styles.css`. Les variables de thème et les styles des galeries/modales sont conservés. Le Hero est resserré pour donner la priorité à l’identification et à la disponibilité de stage sans retarder le LCP.

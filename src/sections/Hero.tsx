@@ -25,7 +25,7 @@ export const Hero = () => {
     <div className="lm-hero-copy">
       <p className="lm-kicker">Développeur web & jeux vidéo</p>
       <h1 id="intro-title" className="lm-name"><span className="lm-name-first">Lylian</span><span className="lm-name-last">Michel<span className="lm-name-period">.</span></span></h1>
-      <p className="lm-hero-pitch">Je développe des <span className="lm-word" key={word}>{words[word]}</span><span className="lm-period">.</span></p>
+      <p className="lm-hero-pitch">Je développe des <span className="lm-word" key={word}>{words[word]}<span className="lm-period">.</span></span></p>
       <p className="lm-hero-static">Je développe des applications web et des jeux vidéo.</p>
       <p className="lm-hero-description">Je suis étudiant en deuxième année de BUT Informatique à Lens. En dehors des cours, je travaille notamment sur AniVault, une application web, et sur mon jeu de tower defense réalisé avec Godot.</p>
       <div className="lm-hero-actions"><ActionButton primary href="#projets">Voir mes projets <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download>Télécharger mon CV <Download size={17} aria-hidden /></ActionButton></div>

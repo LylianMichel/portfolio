@@ -33,6 +33,12 @@ export const Navbar=({mode,theme,accent,onModeChange,onThemeChange,onAccentChang
   window.addEventListener("scroll",onScroll,{passive:true});
   return ()=>window.removeEventListener("scroll",onScroll);
  },[menu,settings]);
+ useEffect(()=>{
+  if(!menu&&!settings)return;
+  const handleEscape=(event:KeyboardEvent)=>{if(event.key==="Escape"){setMenu(false);setSettings(false);}};
+  window.addEventListener("keydown",handleEscape);
+  return()=>window.removeEventListener("keydown",handleEscape);
+ },[menu,settings]);
  const change=(next:PortfolioMode)=>{onModeChange(next);setMenu(false);setCompact(false)};
  return <>
  <div className="lm-progress" style={{width:`${progress}%`}} aria-hidden />
