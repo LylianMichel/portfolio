@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import { useId, useState, type KeyboardEvent } from "react";
+import { useId, useState, useRef, type KeyboardEvent, type TouchEvent } from "react";
 import type { ProjectImage } from "../../types";
 import { Modal } from "../ui/Modal";
 
@@ -15,6 +15,7 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
   const [activeIndex, setActiveIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const titleId = useId();
+  const swipeStart = useRef<number | null>(null);
   const hasMultipleImages = images.length > 1;
   const activeImage = images[activeIndex] ?? images[0];
   if (!activeImage) return null;
@@ -22,6 +23,7 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
   const previous = () => setActiveIndex((current) => (current - 1 + images.length) % images.length);
   const next = () => setActiveIndex((current) => (current + 1) % images.length);
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (expanded && (event.key === "ArrowLeft" || event.key === "ArrowRight")) { event.preventDefault(); event.key === "ArrowLeft" ? previous() : next(); return; }
     if (!hasMultipleImages || event.target !== event.currentTarget) return;
     if (event.key === "Home" || event.key === "End") {
       event.preventDefault();
@@ -33,9 +35,11 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
     }
   };
 
+  const onTouchStart = (event: TouchEvent<HTMLElement>) => { swipeStart.current = event.changedTouches[0]?.clientX ?? null; };
+  const onTouchEnd = (event: TouchEvent<HTMLElement>) => { const end = event.changedTouches[0]?.clientX; if (swipeStart.current !== null && end !== undefined && Math.abs(end-swipeStart.current)>55 && hasMultipleImages) { end<swipeStart.current?next():previous(); } swipeStart.current=null; };
   return (
     <figure className="project-gallery" tabIndex={hasMultipleImages ? 0 : undefined}
-      onKeyDown={handleKeyDown} aria-label={`Captures du projet ${projectTitle}`}>
+      onKeyDown={handleKeyDown} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} aria-label={`Captures du projet ${projectTitle}`}>
       <div className="project-image-wrap">
         <img key={activeImage.src} src={activeImage.src} srcSet={activeImage.srcSet}
           sizes="(min-width: 1024px) calc((100vw - 396px) * 0.55), (min-width: 768px) 50vw, 100vw"
@@ -80,7 +84,7 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
       ) : null}
       {expanded ? (
         <Modal titleId={titleId} className="image-modal" onClose={() => setExpanded(false)}>
-          <div className="image-modal-content">
+          <div className="image-modal-content" onKeyDown={handleKeyDown} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
             <div className="image-modal-header">
               <h2 id={titleId}>{projectTitle} · {activeImage.label}</h2>
               <button type="button" className="icon-button" onClick={() => setExpanded(false)}
