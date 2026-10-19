@@ -14,3 +14,10 @@ Grille : largeur max 1320px, gouttière `clamp(20px,4vw,76px)`, sections 80–16
 Motion : 180ms interaction, 420ms apparition, ease cubic-bezier(.22,1,.36,1); déplacements courts. Tout mouvement non essentiel s'arrête avec prefers-reduced-motion. Aucun loader qui retarde le LCP.
 Interaction : focus 3px visible, clavier complet, aria-label précis, pas de scroll horizontal; le contenu essentiel ne dépend jamais du hover.
 Les données éditoriales restent dans src/data; préserver la date 12 avril 2027 et l'accès au PDF. L'OG, la nav, le hero et les projets doivent partager cette direction.
+
+## Finitions et production
+Logotype vectoriel LM dans la navigation et le favicon. Image Open Graph réelle 1200×630 au format PNG indexé pour une lisibilité sans téléchargement de police. Les noms et dates restent dans src/data et le contenu actuel.
+La sélection et la scrollbar réutilisent `--lm-accent`. La barre de progression n'est pas un indicateur d'expérience fictif, elle reflète uniquement la progression dans la page. Shortcut g,p / g,c / ? ; le Konami code change uniquement l'accent.
+Galeries : navigation flèches, Échap, bouton fermeture, swipe tactile; boîte de dialogue HTML native pour verrouiller le focus. Tilt limité à 2° et exclu du mobile et reduced-motion. Aucun effet magnétique qui compromet la cible tactile. Aucun écran de chargement bloquant.
+Accessibilité : contrastes programmatiquement vérifiés dans `src/utils/contrast.test.ts`; focus 3px; pages sémantiques, texte visible sans hover, alt issus de src/data; vérifier au navigateur sur les deux thèmes. Le score Lighthouse dépend de l'environnement du test et n'est jamais garanti par les seuls tokens.
+Polices : aucune fonte réseau externe. Familles système déclarées (Bahnschrift / Inter / Consolas) avec fallbacks; l'auto-hébergement de fontes spécialisées est reporté pour éviter une dépendance ou licence imprévue.

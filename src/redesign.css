@@ -261,3 +261,15 @@ button{cursor:pointer}
 .lm-shortcuts kbd{font:.69rem var(--lm-font-mono);border:1px solid var(--lm-rule);padding:4px 6px;color:var(--lm-accent)}
 .lm-shortcuts>button{position:absolute;right:15px;top:15px;border:0;background:none;color:var(--lm-ink)}
 @media(max-width:760px){.lm-chat-grid{grid-template-columns:1fr}.lm-chat-aside{border-left:0;border-top:1px solid var(--lm-rule);padding:20px 0 0}.lm-email-address{font-size:1.26rem}}
+
+/* Stage 7 — reconcile legacy tokens with 12 theme/accent combinations */
+:root[data-theme] {
+ --accent:var(--lm-accent); --accent-ink:var(--lm-accent-ink);
+ --text:var(--lm-ink); --muted:var(--lm-sub); --muted-strong:var(--lm-sub);
+ --border:var(--lm-rule); --border-strong:var(--lm-rule);
+ --panel-border:var(--lm-rule); --page-bg:var(--lm-page);
+ --panel-bg:var(--lm-panel); --surface:var(--lm-panel);
+}
+:root[data-theme="contrast"] .lm-tag{color:var(--lm-ink)}
+.lm-mode-content{width:100%}
+@media (forced-colors:active){.lm-nav,.lm-button,.lm-tag{forced-color-adjust:auto}}

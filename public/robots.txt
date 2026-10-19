@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://portfolio-lylian-michel.vercel.app/sitemap.xml

@@ -10,6 +10,7 @@ import { WorkContact } from "./sections/WorkContact";
 import { Footer } from "./components/layout/Footer";
 import { NotFound } from "./sections/NotFound";
 import { X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { initialAccent, initialAppearance, type Accent, type Appearance } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 
@@ -64,7 +65,7 @@ const App=()=>{
  return <div className="portfolio-app">
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main">{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</main>
+  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-9}} transition={{duration:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero/><Projects/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   <span className="sr-only" role="status" aria-live="polite">{egg}</span>
   {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}

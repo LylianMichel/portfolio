@@ -12,13 +12,14 @@ interface NavbarProps {
  onAccentChange:(accent:Accent)=>void;
 }
 const sections = [{id:"accueil",title:"Accueil"},{id:"projets",title:"Projets"},{id:"competences",title:"Compétences"},{id:"a-propos",title:"À propos"},{id:"parcours",title:"Parcours"}];
+const sectionIds=sections.map(s=>s.id);
 const colorLabels:Record<Accent,string>={mint:"Menthe",blue:"Azur",violet:"Lavande",orange:"Cuivre"};
 export const Navbar=({mode,theme,accent,onModeChange,onThemeChange,onAccentChange}:NavbarProps)=>{
  const [menu,setMenu]=useState(false);
  const [compact,setCompact]=useState(false);
  const [progress,setProgress]=useState(0);
  const [settings,setSettings]=useState(false);
- const active=useActiveSection(sections.map(section=>section.id),mode==="work");
+ const active=useActiveSection(sectionIds,mode==="work");
  useEffect(()=>{
   let last=window.scrollY;
   const onScroll=()=>{
