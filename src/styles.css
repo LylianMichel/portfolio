@@ -2519,3 +2519,15 @@ button{cursor:pointer}
  .lm-journey-active{border-color:var(--lm-pair)}
 }
 @media(prefers-reduced-motion:reduce){.lm-journey-line{scroll-behavior:auto}.lm-skill-connector{transition:none}}
+
+/* Contraste du Konami : palette rare inversée par les accents, fond encre conservé. */
+:root[data-pixel="true"]{
+ --lm-page:#050d10;--lm-panel:#102125;--lm-sunken:#09191d;
+ --lm-ink:#f1fff6;--lm-sub:#c5e7de;--lm-rule:#799c98;
+ --lm-accent:#ffd7a8;--lm-accent-ink:#201407;--lm-pair:#a7f6d7
+}
+:root[data-pixel="true"][data-theme="matrix"]{
+ --lm-page:#050d10;--lm-panel:#102125;--lm-sunken:#09191d;
+ --lm-ink:#f1fff6;--lm-sub:#c5e7de;--lm-rule:#799c98;
+ --lm-accent:#ffd7a8;--lm-accent-ink:#201407;--lm-pair:#a7f6d7
+}
