@@ -17,7 +17,7 @@ async function task(label, name, fn) {
   try {const result = await fn();all.push({view:label,task:name,status:"ok",result:result??null});}
   catch(error){all.push({view:label,task:name,status:"failed",error:String(error)});failures++;}
 }
-for (const width of [390,1440]) {
+for (const width of [390,768,1024,1440]) {
   const label=String(width);
   const context=await browser.newContext({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
   const page=await context.newPage();
@@ -42,6 +42,27 @@ for (const width of [390,1440]) {
     await page.getByRole("button",{name:"Sombre",exact:true}).click();
     await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
   });
+  if(width===390||width===1440){
+    await task(label,"12 combinaisons thème/accent",async()=>{
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+      const theming=[["dark","Sombre"],["light","Clair"],["contrast","Contraste +"]];
+      const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
+      for(const [theme,themeLabel] of theming){
+        await page.getByRole("button",{name:themeLabel,exact:true}).click();
+        for(const [accent,accentLabel] of chroma){
+          await page.getByRole("button",{name:accentLabel,exact:true}).click();
+          const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+          if(result.violations.length)throw new Error(`WCAG ${theme}/${accent}: ${result.violations.map(v=>v.id).join(",")}`);
+          const info=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,scroll:document.documentElement.scrollWidth,width:innerWidth}));
+          if(info.theme!==theme||info.accent!==accent||info.scroll>info.width+1)throw new Error(JSON.stringify(info));
+          if(theme==="light"&&accent==="mint")await record(page,label,"light-hero",page.locator(".lm-hero"));
+        }
+      }
+      await page.getByRole("button",{name:"Menthe",exact:true}).click();
+      await page.getByRole("button",{name:"Sombre",exact:true}).click();
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+    });
+  }
   await task(label,"axe WCAG A/AA home",async()=>{
     const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
     const violations=results.violations.map(v=>({id:v.id,impact:v.impact,count:v.nodes.length,help:v.help}));
@@ -61,6 +82,7 @@ for (const width of [390,1440]) {
     await page.waitForTimeout(500);
   });
   await task(label,"project capture",async()=>await record(page,label,"project",page.locator("#anivault")));
+  await task(label,"skills capture",async()=>await record(page,label,"skills",page.locator("#competences")));
   await task(label,"gallery Escape closes lightbox",async()=>{
     await page.locator("#towerdefence .gallery-expand").click();
     const dialog=page.locator("dialog[open]");
@@ -74,6 +96,13 @@ for (const width of [390,1440]) {
     await page.getByRole("button",{name:/Chat/}).click();
     await page.locator(".lm-chat-page").waitFor();
     await record(page,label,"contact",page.locator(".lm-chat-page"));
+    if(width===390||width===1440){
+      await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
+      await page.getByRole("button",{name:"Clair",exact:true}).click();
+      await record(page,label,"light-contact",page.locator(".lm-chat-page"));
+      await page.getByRole("button",{name:"Sombre",exact:true}).click();
+      await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
+    }
   });
   await task(label,"axe WCAG A/AA contact",async()=>{
     const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
@@ -93,6 +122,7 @@ for (const width of [390,1440]) {
     await before.goto("https://portfolio-lylian-michel.vercel.app/",{waitUntil:"domcontentloaded",timeout:20000});
     await record(before,label,"before-hero",before.locator(".editorial-hero"));
     await record(before,label,"before-project",before.locator("#anivault"));
+    await record(before,label,"before-skills",before.locator("#competences"));
     await before.goto("https://portfolio-lylian-michel.vercel.app/#contact",{waitUntil:"domcontentloaded",timeout:20000});
     await record(before,label,"before-contact",before.locator(".contact-page"));
   } catch(error){all.push({view:label,task:"before comparisons",status:"unavailable",reason:String(error)});}

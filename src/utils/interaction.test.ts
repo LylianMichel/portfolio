@@ -19,3 +19,18 @@ describe("filtres projets",()=>{
  it("filtre Web sans cacher de projet web",()=>expect(filterProjects(items,"web").map(p=>p.id)).toEqual(["anivault","le-temple","eco-repare"]));
  it("isole le jeu vidéo",()=>expect(filterProjects(items,"game").map(p=>p.id)).toEqual(["towerdefence"]));
 });
+
+import { appendShortcut, shortcutAction, KONAMI_KEYS } from "./keyboard";
+describe("raccourcis clavier",()=>{
+ it("GP ouvre les projets",()=>expect(shortcutAction(appendShortcut("g","p"))).toBe("projects"));
+ it("GC ouvre le contact",()=>expect(shortcutAction(appendShortcut("g","c"))).toBe("contact"));
+ it("code Konami exact active le mode pixel",()=>expect(shortcutAction(KONAMI_KEYS)).toBe("pixel"));
+ it("séquences non définies ignorées",()=>expect(shortcutAction("abc")).toBeNull());
+ it("les touches non pertinentes n'altèrent pas la séquence",()=>expect(appendShortcut("g","Enter")).toBe("g"));
+});
+describe("robustesse des préférences et du presse-papiers",()=>{
+ it("thème système désactivé = sombre",()=>expect(initialAppearance({getItem:()=>null},false)).toBe("dark"));
+ it("accent orange est restauré",()=>expect(initialAccent({getItem:()=> "orange"})).toBe("orange"));
+ it("absence d'accès à Storage",()=>expect(initialAccent({getItem:()=>{throw new Error("Denied")}})).toBe("mint"));
+ it("copie avec promesse rejetée",async()=>expect(await copyEmail("x@x.fr",{writeText:async()=>{throw new Error("Denied")}})).toBe(false));
+});

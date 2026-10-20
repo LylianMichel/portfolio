@@ -49,6 +49,7 @@ export const Hero = () => {
         <p className="lm-hero-static">Je développe des applications web et des jeux vidéo.</p>
         <p className="lm-hero-description">Je suis étudiant en deuxième année de BUT Informatique à Lens. En dehors des cours, je travaille notamment sur AniVault, une application web, et sur mon jeu de tower defense réalisé avec Godot.</p>
         <div className="lm-hero-actions"><ActionButton primary href="#projets">Voir mes projets <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download>Télécharger mon CV <Download size={17} aria-hidden /></ActionButton></div>
+        <p className="lm-hero-mobile-stage">STAGE · 8 SEMAINES · 12/04/2027 · {profile.location}</p>
       </div>
       <div className="lm-hero-feature" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
         <div className="lm-feature-label"><span>01 / EN DÉVELOPPEMENT</span><span>WEB + GAME</span></div>

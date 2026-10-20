@@ -14,6 +14,7 @@ import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { initialAccent, initialAppearance, type Accent, type Appearance } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
+import { appendShortcut, shortcutAction } from "./utils/keyboard";
 
 const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
 const readTheme=():Appearance=>typeof window!=="undefined"?initialAppearance(window.localStorage,window.matchMedia("(prefers-color-scheme: light)").matches):"dark";
@@ -62,11 +63,10 @@ const App=()=>{
    if(event.key==="?"){setHelp(state=>!state);return;}
    const key=event.key.toLowerCase();
    if(!/^[a-z]$/.test(key)&&!["arrowup","arrowdown","arrowleft","arrowright"].includes(key))return;
-   sequence.current=(sequence.current+key).slice(-75);
-   if(sequence.current.endsWith("gp")){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
-   if(sequence.current.endsWith("gc")){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
-   const konami="arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowarrowrightba";
-   if(sequence.current.endsWith(konami)){if(!previousAccent.current)previousAccent.current=accent;setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setPixel(true);setEgg("Mode pixel activé pour dix secondes.");sequence.current="";}
+   sequence.current=appendShortcut(sequence.current,key);
+   if(shortcutAction(sequence.current)==="projects"){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
+   if(shortcutAction(sequence.current)==="contact"){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
+   if(shortcutAction(sequence.current)==="pixel"){if(!previousAccent.current)previousAccent.current=accent;setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setPixel(true);setEgg("Mode pixel activé pour dix secondes.");sequence.current="";}
   };
   window.addEventListener("keydown",onKey);
   return()=>window.removeEventListener("keydown",onKey);

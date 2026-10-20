@@ -2067,3 +2067,15 @@ button{cursor:pointer}
 :root[data-pixel="true"] .lm-name{letter-spacing:-.045em}
 .lm-404{position:relative;overflow:hidden}
 .lm-404::after{content:"404 / ROUTE NOT FOUND";position:absolute;right:2%;bottom:8%;color:var(--lm-rule);font:500 clamp(.72rem,1.2vw,1rem) var(--lm-font-mono);letter-spacing:.08em;pointer-events:none}
+
+/* Phase 5 — Priorité à l'information utile en moins de cinq secondes. */
+.lm-hero-mobile-stage{display:none}
+@media(max-width:850px){
+ .lm-hero-mobile-stage{display:block;margin-top:20px;padding:12px 0;border-block:1px solid var(--lm-rule);color:var(--lm-accent);font:600 .72rem/1.65 var(--lm-font-mono)}
+ .lm-hero-status{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ .lm-journey-node{box-shadow:none}
+ .lm-case-media .project-image{animation:none;transform:none}
+ .lm-hero-feature,.lm-hero-copy::before{animation:none}
+}
