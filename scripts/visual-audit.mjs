@@ -99,6 +99,8 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.getByRole("button",{name:/Chat/}).click();
           await matrixPage.locator(".lm-chat-page").waitFor();
           await record(matrixPage,label,`matrix-${accent}-contact`,matrixPage.locator(".lm-chat-page"));
+          await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+          await matrixPage.waitForTimeout(300);
           await matrixPage.getByRole("button",{name:"Personnaliser l'apparence"}).click();
           await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
           if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
