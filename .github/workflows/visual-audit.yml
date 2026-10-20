@@ -51,10 +51,8 @@ jobs:
       - name: Lighthouse desktop
         run: npx lighthouse http://127.0.0.1:4173/ --preset=desktop --output=json --output-path=artifacts/lighthouse/desktop.json --quiet --chrome-flags="--headless --no-sandbox"
       - name: Lighthouse Matrix mobile
-        if: always()
         run: npx lighthouse "http://127.0.0.1:4173/?theme=matrix" --output=json --output-path=artifacts/lighthouse/matrix-mobile.json --quiet --chrome-flags="--headless --no-sandbox" --throttling-method=simulate
       - name: Lighthouse Matrix desktop
-        if: always()
         run: npx lighthouse "http://127.0.0.1:4173/?theme=matrix" --preset=desktop --output=json --output-path=artifacts/lighthouse/matrix-desktop.json --quiet --chrome-flags="--headless --no-sandbox"
       - name: Print Lighthouse scores
         if: always()
