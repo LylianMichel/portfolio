@@ -26,7 +26,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    const w=innerWidth,h=innerHeight,dpr=Math.min(devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
    ctx.setTransform(dpr,0,0,dpr,0,0);
-   const layers=[{size:10,spacing:w<700?30:26,velocity:.3},{size:14,spacing:w<700?16:16,velocity:.7},{size:20,spacing:w<700?46:40,velocity:1.1}];
+   const layers=[{size:10,spacing:w<700?27:26,velocity:.3},{size:14,spacing:w<700?16:16,velocity:.7},{size:20,spacing:w<700?46:40,velocity:1.1}];
    drops=layers.flatMap(({size,spacing,velocity},layer)=>Array.from({length:Math.ceil(w/spacing)},(_,i)=>({
     x:i*spacing+rand(spacing),y:rand(h+size*8),velocity:velocity*(.55+rand(1.55)),
     length:8+Math.floor(rand(33)),size,layer,glyphSeed:Math.floor(rand(glyphs.length))
