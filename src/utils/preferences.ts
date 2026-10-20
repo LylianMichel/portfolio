@@ -17,5 +17,5 @@ export function initialAccent(storage: Pick<Storage,"getItem"> | null): Accent {
 export function initialRain(storage: Pick<Storage,"getItem"> | null, saveData:boolean):RainIntensity {
  let value:string|null=null;
  try{value=storage?.getItem("portfolio-matrix-rain")??null}catch{/* Storage facultatif */}
- return value==="off"||value==="soft"||value==="intense"?value:saveData?"off":"soft";
+ return value==="off"||value==="soft"||value==="intense"?value:saveData?"off":"intense";
 }

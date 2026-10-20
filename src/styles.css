@@ -2420,17 +2420,17 @@ button{cursor:pointer}
 :root[data-theme="matrix"] .portfolio-app > .lm-main, :root[data-theme="matrix"] .portfolio-app > .lm-footer{position:relative;z-index:1}
 :root[data-theme="matrix"] .lm-matrix-rain{
  position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;
- opacity:.13;mask-image:radial-gradient(ellipse 65% 72% at 50% 42%,transparent 5%,#000 90%)
+ opacity:.35
 }
-:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="intense"]{opacity:.21}
-:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="soft"]{opacity:.12}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="intense"]{opacity:.55}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="soft"]{opacity:.35}
 :root[data-theme="matrix"] .lm-hero::before{background:radial-gradient(circle,color-mix(in srgb,var(--lm-accent) 8%,transparent),transparent 70%);opacity:.18}
 :root[data-theme="matrix"] .lm-hero::after{opacity:.14}
 :root[data-theme="matrix"] :is(.lm-name,.lm-section-title,.lm-footer-logo){text-shadow:0 0 5px color-mix(in srgb,var(--lm-accent) 15%,transparent)}
 :root[data-theme="matrix"] .lm-name{font-weight:700}
 :root[data-theme="matrix"] .lm-nav{border-color:var(--lm-rule)}
 :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window{position:relative}
-:root[data-theme="matrix"] .lm-hero-pitch .lm-word-window::after{content:"_";position:absolute;right:0;top:0;color:var(--lm-accent);animation:lm-matrix-caret 1.15s steps(1,end) infinite}
+:root[data-theme="matrix"] .lm-hero-pitch .lm-word::after{content:"_";display:inline;color:var(--lm-accent);animation:lm-matrix-caret 1.15s steps(1,end) infinite}
 @keyframes lm-matrix-caret{50%{opacity:0}}
 :root[data-theme="matrix"] .lm-hero-pitch{color:var(--lm-ink)}
 :root[data-theme="matrix"] :is(.lm-panel,.lm-project-frame,.lm-about-photo){background:var(--lm-panel)}
@@ -2444,7 +2444,7 @@ button{cursor:pointer}
 :root[data-theme="matrix"] .lm-tag{color:var(--lm-ink)}
 :root[data-theme="matrix"] .lm-rain-options button{padding:10px 7px}
 @media(prefers-reduced-motion:reduce){
- :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window::after{animation:none;opacity:1}
+ :root[data-theme="matrix"] .lm-hero-pitch .lm-word::after{animation:none;opacity:1}
  :root[data-theme="matrix"] .lm-hero::before{animation:none}
 }
 @media(prefers-contrast:more){:root[data-theme="matrix"] .lm-matrix-rain{display:none}}
@@ -2561,7 +2561,7 @@ button{cursor:pointer}
 /* Respect global du mouvement réduit, y compris les ancres. */
 @media(prefers-reduced-motion:reduce){
  html{scroll-behavior:auto}
- :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window::after{animation:none}
+ :root[data-theme="matrix"] .lm-hero-pitch .lm-word::after{animation:none}
  .lm-hero-feature,.lm-case-story,.lm-email-letter,.lm-magnetic{animation:none;transition:none}
 }
 
@@ -2650,3 +2650,16 @@ button{cursor:pointer}
 .lm-skills .lm-skill-matrix{margin-top:clamp(16px,2.5vw,32px)}
 /* Ne jamais créer un scroll imbriqué sans barre dans les études de cas. */
 @media(min-width:1081px){.lm-case-media{max-height:none;overflow:visible;scrollbar-width:auto}}
+
+/* Matrix lisible : le canvas est visible dans les marges et les interstices ;
+   les surfaces de lecture ont un fond dense qui absorbe les glyphes décoratifs. */
+:root[data-theme="matrix"] .lm-hero-copy{
+ background:linear-gradient(90deg,rgba(2,10,5,.97) 0%,rgba(2,10,5,.91) 70%,rgba(2,10,5,.73) 100%);
+}
+:root[data-theme="matrix"] :is(.lm-section-head,.lm-case-story,.lm-about-copy>p,.lm-skill-row,.lm-skill-extra,.lm-work-contact,.lm-journey-item){
+ background-color:color-mix(in srgb,var(--lm-page) 96%,transparent);
+}
+:root[data-theme="matrix"] .lm-matrix-rain{filter:none}
+:root[data-theme="matrix"] .lm-hero-pitch .lm-word-window{width:min(18ch,100%);position:relative}
+:root[data-theme="matrix"] .lm-hero-pitch .lm-word{width:max-content;max-width:100%}
+@media(prefers-contrast:more){:root[data-theme="matrix"] .lm-matrix-rain{display:none}}
