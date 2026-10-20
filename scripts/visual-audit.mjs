@@ -208,6 +208,10 @@ for (const width of [390,768,1024,1440]) {
           });
           await writeFile(`${output}/${label}-matrix-${accent}-coverage.json`,JSON.stringify(density,null,2));
           if(!density||density.percent===0)throw Error("Rain canvas is empty: "+JSON.stringify(density));
+          // The floating navigation is intentionally hidden while scrolling down.
+          // Restore the viewport to the top before interacting with its appearance control.
+          await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+          await matrixPage.locator(".lm-nav-wrap:not(.lm-nav-away)").waitFor({state:"visible"});
           await matrixPage.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
           await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
           if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
