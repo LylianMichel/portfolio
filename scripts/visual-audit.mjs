@@ -363,7 +363,7 @@ for(const width of [390,1440]){
  const samplePage=await sampleContext.newPage();
  await task(String(width),"Matrix animation statistics",async()=>{
   await samplePage.goto(root,{waitUntil:"domcontentloaded"});
-  await samplePage.waitForFunction(()=>Boolean(window.__matrixStats),{timeout:16000});
+  await samplePage.waitForFunction(()=>Boolean(window.__matrixStats),null,{timeout:16000});
   const stats=await samplePage.evaluate(()=>window.__matrixStats);
   await writeFile(`${output}/${width}-matrix-runtime.json`,JSON.stringify(stats,null,2));
   if(!stats||stats.fps>30||stats.averageMs>30)throw Error("Canvas frame budget exceeded: "+JSON.stringify(stats));
