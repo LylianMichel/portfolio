@@ -24,7 +24,7 @@ jobs:
       - name: Install audit tools
         run: |
           npm install --no-save --package-lock=false playwright @axe-core/playwright lighthouse
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
       - name: Serve prerendered portfolio
         run: |
           npm run preview -- --host 127.0.0.1 > /tmp/portfolio-preview.log 2>&1 &
@@ -41,19 +41,16 @@ jobs:
       - name: Desktop and mobile screenshots, interaction checks and axe
         run: node scripts/visual-audit.mjs
       - name: Lighthouse mobile
-        if: always()
         run: |
           mkdir -p artifacts/lighthouse
           npx lighthouse http://127.0.0.1:4173/ --output=json --output-path=artifacts/lighthouse/mobile.json --quiet --chrome-flags="--headless --no-sandbox" --throttling-method=simulate
       - name: Lighthouse desktop
-        if: always()
         run: npx lighthouse http://127.0.0.1:4173/ --preset=desktop --output=json --output-path=artifacts/lighthouse/desktop.json --quiet --chrome-flags="--headless --no-sandbox"
       - name: Print Lighthouse scores
         if: always()
         run: |
           node -e 'for(const mode of ["mobile","desktop"]){try{const r=require("./artifacts/lighthouse/"+mode+".json");console.log("LIGHTHOUSE "+mode+" Performance="+Math.round(r.categories.performance.score*100)+" Accessibility="+Math.round(r.categories.accessibility.score*100)+" SEO="+Math.round(r.categories.seo.score*100)+" BestPractices="+Math.round(r.categories["best-practices"].score*100))}catch(e){console.log("LIGHTHOUSE "+mode+" unavailable: "+e.message)}}'
       - name: Check performance, LCP, CLS and accessibility budgets
-        if: always()
         run: node scripts/verify-performance.mjs
       - name: Upload visual audit
         if: always()
