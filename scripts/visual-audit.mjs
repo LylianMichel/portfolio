@@ -44,6 +44,9 @@ for (const width of [390,768,1024,1440]) {
   const label=String(width);
   const context=await browser.newContext({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
   const page=await context.newPage();
+  const consoleIssues=[];
+  page.on("pageerror",error=>consoleIssues.push(error.message));
+  page.on("console",message=>{if(["warning","error"].includes(message.type()))consoleIssues.push(message.text())});
   await page.addInitScript(()=>{
     window.__portfolioShiftLog=[];
     try{new PerformanceObserver(list=>{
@@ -327,6 +330,10 @@ for (const width of [390,768,1024,1440]) {
   await task(label,"404 view",async()=>{
     await page.goto(new URL("/cette-page-nexiste-pas",root).href,{waitUntil:"networkidle"});
     await page.getByRole("heading",{name:/404/}).waitFor();
+  });
+  await task(label,"console vierge après tous les modes et thèmes",async()=>{
+    if(consoleIssues.length)throw Error(JSON.stringify(consoleIssues.slice(0,12)));
+    return {issues:0};
   });
   await context.close();
   const before=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1});
