@@ -87,6 +87,11 @@ for (const width of [390,768,1024,1440]) {
   });
   await task(label,"project capture",async()=>await record(page,label,"project",page.locator("#anivault")));
   await task(label,"skills capture",async()=>await record(page,label,"skills",page.locator("#competences")));
+  await task(label,"no invented skills links",async()=>{
+    const cssLink=await page.locator(".lm-skill-entry").filter({hasText:"Tailwind CSS"}).locator("a").count();
+    const prisma=page.getByRole("link",{name:/Prisma.*AniVault/i});
+    if(cssLink!==0||await prisma.count()!==1)throw new Error("Skill links are not grounded in project data");
+  });
   await task(label,"gallery Escape closes lightbox",async()=>{
     await page.locator("#towerdefence .gallery-expand").click();
     const dialog=page.locator("dialog[open]");

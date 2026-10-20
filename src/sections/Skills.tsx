@@ -9,7 +9,7 @@ export const Skills=()=><section id="competences" aria-labelledby="skills-title"
   <div className="lm-skill-label"><span className="lm-kicker">{String(index+1).padStart(2,"0")}</span><h3>{group.title}</h3><p>{group.description}</p></div>
   <ul className="lm-skill-items">{group.skills.map(skill=>{
    const tokens=skill.name.toLowerCase().split(/\s*[\/]\s*/);
-   const project=projects.find(project=>project.technologies.some(tech=>tokens.some(token=>token.length>2&&(tech.toLowerCase().includes(token)||token.includes(tech.toLowerCase())))));
+   const project=projects.find(project=>project.technologies.some(tech=>tokens.some(token=>token.length>1&&tech.toLowerCase().trim()===token.trim())));
    return <li key={skill.name} className="lm-skill-entry">
     {project ? <a className="lm-skill-link" href={`#${project.id}`} aria-label={`${skill.name} — voir le projet ${project.title}`}><Tag>{skill.name}</Tag><span className="lm-skill-project">{project.title} ↗</span></a> : <Tag>{skill.name}</Tag>}
     <span className="sr-only">{skill.description}</span>

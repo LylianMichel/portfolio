@@ -2091,3 +2091,7 @@ button{cursor:pointer}
 }
 @keyframes lm-title-enter{from{opacity:.65;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.lm-title-word{animation:none;opacity:1;transform:none}}
+
+/* Final polish: the skip link is visible only on an intentional keyboard focus. */
+.skip-link{top:-90px;transform:none}
+.skip-link:focus,.skip-link:focus-visible{top:12px;transform:none}
