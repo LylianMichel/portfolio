@@ -2473,3 +2473,49 @@ button{cursor:pointer}
 .lm-project-frame .project-image{transition:transform .4s ease,opacity .4s ease}
 @media(max-width:1080px){.lm-case-decisions>div{min-height:0}}
 @media(prefers-reduced-motion:reduce){.lm-case-decisions>div,.lm-project-frame .project-image{transition:none}}
+
+/* Phase 4 — domaines en bento, sans aucun niveau fictif. */
+.lm-skill-matrix{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.lm-skill-row{display:grid;grid-template-columns:1fr;align-content:start;gap:18px;padding:clamp(20px,2.7vw,34px);
+ background:var(--lm-panel);border:1px solid var(--lm-rule);min-width:0}
+.lm-skill-row:nth-child(4n+1),.lm-skill-row:nth-child(4n+4){grid-column:span 7}
+.lm-skill-row:nth-child(4n+2),.lm-skill-row:nth-child(4n+3){grid-column:span 5}
+.lm-skill-row:last-child{border:1px solid var(--lm-rule)}
+.lm-skill-row .lm-skill-label h3{margin:8px 0;font-size:clamp(1.4rem,2.5vw,2.7rem)}
+.lm-skill-items{padding:15px 0 0;border-top:1px solid var(--lm-rule)}
+.lm-skill-extra{grid-column:span 6;display:grid;align-content:start;gap:20px;padding:clamp(24px,3vw,38px);border:1px solid var(--lm-rule);background:var(--lm-sunken)}
+.lm-skill-extra strong{font:650 clamp(1.3rem,2.8vw,2.7rem)/1.15 var(--lm-font-display);letter-spacing:-.04em}
+.lm-skill-extra p{color:var(--lm-sub);line-height:1.6}
+.lm-skill-extra ul{display:flex;gap:8px;flex-wrap:wrap;list-style:none;padding:0;margin:0}
+.lm-skill-extra li{border:1px solid var(--lm-rule);padding:7px 10px;color:var(--lm-ink);font:.72rem var(--lm-font-mono)}
+.lm-skill-learning{border-top:2px solid var(--lm-pair)}
+.lm-skill-portfolio{border-top:2px solid var(--lm-accent)}
+.lm-skill-connector{position:absolute;top:calc(100% - 1px);left:20px;width:20px;height:22px;z-index:6;opacity:0;pointer-events:none;color:var(--lm-pair)}
+.lm-skill-link:hover .lm-skill-connector,.lm-skill-link:focus-visible .lm-skill-connector{opacity:1}
+.lm-skill-link .lm-skill-project{top:calc(100% + 19px)}
+@media(max-width:900px){.lm-skill-row{grid-column:span 6!important}.lm-skill-extra{grid-column:span 6}}
+@media(max-width:650px){.lm-skill-row,.lm-skill-extra{grid-column:1/-1!important}}
+/* À propos : garder tous les textes existants en cases d'échelles distinctes. */
+.lm-about-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.lm-about-copy{grid-column:span 7;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-content:start}
+.lm-about-copy>p{margin:0;grid-column:span 1;padding:22px;border:1px solid var(--lm-rule);background:var(--lm-panel);line-height:1.65}
+.lm-about-copy>.lm-about-lead{grid-column:span 2;padding:clamp(25px,3vw,45px);margin:0}
+.lm-about-copy>.lm-seeking{grid-column:span 2;margin:0;padding:20px 24px;border:1px solid var(--lm-rule);background:var(--lm-sunken)}
+.lm-about-aside{grid-column:span 5;min-width:0;display:grid;align-content:start;gap:16px}
+.lm-about-photo{margin:0}
+.lm-about-facts{margin:0;border:1px solid var(--lm-rule);background:var(--lm-panel);padding:10px 18px}
+.lm-about-facts>div:last-child{border:0}
+@media(max-width:1080px){.lm-about-copy{grid-column:span 7}.lm-about-aside{grid-column:span 5}.lm-about-copy>p:not(.lm-about-lead){grid-column:span 2}}
+@media(max-width:760px){.lm-about-copy,.lm-about-aside{grid-column:1/-1}.lm-about-copy>p{grid-column:span 2}.lm-about-aside{max-width:100%}}
+/* Parcours : scroll-snap desktop natif, vertical accessible sur mobile. */
+@media(min-width:1000px){
+ .lm-journey-line{display:flex;gap:17px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;
+ padding:24px 2px 28px;scrollbar-width:thin;scroll-padding-inline:2px}
+ .lm-journey-line::before,.lm-journey-line::after{content:none}
+ .lm-journey-item{flex:0 0 clamp(310px,31vw,465px);min-width:0;min-height:365px;scroll-snap-align:start;
+ display:flex;flex-direction:column;gap:36px;padding:22px 24px 36px;background:var(--lm-panel);border:1px solid var(--lm-rule)}
+ .lm-journey-node{position:static;width:12px;height:12px;display:inline-block}
+ .lm-journey-date{min-height:60px}
+ .lm-journey-active{border-color:var(--lm-pair)}
+}
+@media(prefers-reduced-motion:reduce){.lm-journey-line{scroll-behavior:auto}.lm-skill-connector{transition:none}}
