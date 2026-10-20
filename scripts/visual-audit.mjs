@@ -18,6 +18,28 @@ async function task(label, name, fn) {
   try {const result = await fn();all.push({view:label,task:name,status:"ok",result:result??null});}
   catch(error){all.push({view:label,task:name,status:"failed",error:String(error)});failures++;}
 }
+// Hydration is also tested with a SAVED theme before first paint, not only with clicks.
+for(const theme of ["dark","light","contrast","matrix"]){
+ const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:"reduce"});
+ await context.addInitScript(value=>{
+  localStorage.setItem("portfolio-theme",value);
+  localStorage.setItem("portfolio-experience","play");
+  localStorage.setItem("portfolio-matrix-rain","intense");
+ },theme);
+ const tab=await context.newPage(),issues=[];
+ tab.on("pageerror",error=>issues.push("pageerror: "+error.message));
+ tab.on("console",message=>{if(["warning","error"].includes(message.type()))issues.push(message.type()+": "+message.text())});
+ await task("hydration-"+theme,"console vierge et DOM hydraté",async()=>{
+  await tab.goto(root,{waitUntil:"networkidle"});
+  await tab.locator("#intro-title").waitFor();
+  await tab.waitForTimeout(400);
+  const state=await tab.evaluate(()=>({theme:document.documentElement.dataset.theme,experience:document.documentElement.dataset.experience,
+    image:document.querySelector(".lm-hero-image img")?.getAttribute("src")}));
+  if(state.theme!==theme||state.experience!=="play"||!state.image||issues.length)throw Error(JSON.stringify({state,issues}));
+  return {theme,experience:state.experience,consoleIssues:0};
+ });
+ await context.close();
+}
 for (const width of [390,768,1024,1440]) {
   const label=String(width);
   const context=await browser.newContext({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
