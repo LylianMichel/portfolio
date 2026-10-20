@@ -2679,3 +2679,9 @@ button{cursor:pointer}
  background:#230c1f;color:#ffe5f4;border:1px solid #ff72bf;padding:12px 20px;
  font:700 .7rem var(--lm-font-mono);letter-spacing:.12em;box-shadow:0 0 18px #ff72bf33}
 @media(prefers-reduced-motion:reduce){:root[data-theme="matrix"] .lm-title-word[data-decoding="true"]::after{content:none}}
+
+/* La pluie volontairement figée par les préférences d'accessibilité ne doit pas sembler en panne. */
+.lm-matrix-reduced-note{display:none;margin:8px 0 0;color:var(--lm-sub);font-size:.74rem;line-height:1.45}
+@media(prefers-reduced-motion:reduce){
+  :root[data-theme="matrix"] .lm-matrix-reduced-note{display:block}
+}
