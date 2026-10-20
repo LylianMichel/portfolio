@@ -43,6 +43,21 @@ for (const width of [390,768,1024,1440]) {
     });
     if(typeof animated==="string"||animated.name!=="none"||animated.glow!=="none"||animated.tracks.some(x=>x!=="none"))throw new Error(JSON.stringify(animated));
   });
+  if(width===390){
+    await task(label,"bascule SOURCE PLAY clavier et persistance",async()=>{
+      const toggle=page.locator(".lm-nav .lm-sourceplay-toggle");
+      await toggle.focus();
+      await page.keyboard.press("Enter");
+      await page.locator("html[data-experience='play']").waitFor();
+      if(await toggle.getAttribute("aria-pressed")!=="true")throw new Error("PLAY aria-pressed absent");
+      const saved=await page.evaluate(()=>localStorage.getItem("portfolio-experience"));
+      if(saved!=="play")throw new Error("PLAY non sauvegardé");
+      await page.reload({waitUntil:"networkidle"});
+      await page.locator("html[data-experience='play']").waitFor();
+      await page.locator(".lm-nav .lm-sourceplay-toggle").click();
+      await page.locator("html[data-experience='source']").waitFor();
+    });
+  }
   await task(label,"horizontal overflow",async()=>{
     const dimensions=await page.evaluate(()=>({page:document.documentElement.scrollWidth,screen:window.innerWidth}));
     if(dimensions.page>dimensions.screen+1)throw new Error(JSON.stringify(dimensions));

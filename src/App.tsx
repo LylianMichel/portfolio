@@ -12,7 +12,7 @@ import { Marquee } from "./components/ui/Marquee";
 import { KineticDivider } from "./components/ui/KineticDivider";
 import { NotFound } from "./sections/NotFound";
 import { X } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { initialAccent, initialAppearance, initialRain, type Accent, type Appearance, type RainIntensity } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 import { appendShortcut, shortcutAction } from "./utils/keyboard";
@@ -40,6 +40,7 @@ const readRain=():RainIntensity=>{
 };
 const App=()=>{
  const [mode,setMode]=useState<PortfolioMode>("work");
+ const reducedMotion=useReducedMotion();
  const [theme,setTheme]=useState<Appearance>(readTheme);
  const [accent,setAccent]=useState<Accent>(readAccent);
  const [experience,setExperience]=useState<Experience>(readExperience);
@@ -106,7 +107,7 @@ const App=()=>{
   {theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-9}} transition={{duration:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
+  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={reducedMotion?false:{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   <span className="sr-only" role="status" aria-live="polite">{egg}</span>
   {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}

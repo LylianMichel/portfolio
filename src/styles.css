@@ -2551,3 +2551,10 @@ button{cursor:pointer}
 }
 @keyframes lm-kinetic-fill{to{background-size:100% 100%}}
 @media(prefers-reduced-motion:reduce){.lm-kinetic-type{animation:none;background-size:0 100%}}
+
+/* Respect global du mouvement réduit, y compris les ancres. */
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window::after{animation:none}
+ .lm-hero-feature,.lm-case-story,.lm-email-letter,.lm-magnetic{animation:none;transition:none}
+}

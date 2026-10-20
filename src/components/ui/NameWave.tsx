@@ -4,6 +4,7 @@ export const NameWave=({text,className,light=false}:Props)=>{
  const line=useRef<HTMLSpanElement>(null);
  const frame=useRef<number|null>(null);
  const pointer=useRef<{x:number;y:number}|null>(null);
+ const decoded=useRef(false);
  useEffect(()=>()=>{if(frame.current!==null)cancelAnimationFrame(frame.current)},[]);
  useEffect(()=>{
   let timer=0,step=0;
@@ -13,7 +14,8 @@ export const NameWave=({text,className,light=false}:Props)=>{
   const resetText=()=>{elements().forEach((element,index)=>{element.textContent=original[index]??""})};
   const decode=()=>{
    window.clearInterval(timer);resetText();
-   if(document.documentElement.dataset.theme!=="matrix"||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+   if(decoded.current||document.documentElement.dataset.theme!=="matrix"||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+   decoded.current=true;
    step=0;
    timer=window.setInterval(()=>{
     step++;
