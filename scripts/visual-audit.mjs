@@ -184,6 +184,7 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.waitForTimeout(300);
           await matrixPage.getByRole("button",{name:"Personnaliser l'apparence"}).click();
           await matrixPage.getByRole("button",{name:"Intense",exact:true}).click();
+          await matrixPage.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
           await matrixPage.locator(".lm-matrix-rain[data-intensity='intense']").waitFor();
           await matrixPage.waitForTimeout(500);
           const rainCanvas=matrixPage.locator(".lm-matrix-rain");
@@ -207,6 +208,7 @@ for (const width of [390,768,1024,1440]) {
           });
           await writeFile(`${output}/${label}-matrix-${accent}-coverage.json`,JSON.stringify(density,null,2));
           if(!density||density.percent===0)throw Error("Rain canvas is empty: "+JSON.stringify(density));
+          await matrixPage.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
           await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
           if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
         }finally{await contextM.close()}
