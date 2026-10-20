@@ -7,7 +7,7 @@ const glyphs="ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆ
 const words=[...new Set(projects.flatMap(project=>project.technologies))].filter(value=>["React","Prisma","Godot","TypeScript","Express"].includes(value));
 const rand=(max:number)=>Math.random()*max;
 type Drop={x:number;y:number;velocity:number;length:number;size:number;layer:number;glyphSeed:number};
-type MatrixStats={fps:number;averageMs:number;columns:number;quality:"full"|"half"|"frozen";coverage:number};
+type MatrixStats={fps:number;averageMs:number;columns:number;quality:"full"|"half"|"frozen"};
 declare global {interface Window{__matrixStats?:MatrixStats}}
 const palette=(pixel:boolean,accent:string)=>pixel?"#ff497d":accent;
 export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
@@ -26,7 +26,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    const w=innerWidth,h=innerHeight,dpr=Math.min(devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
    ctx.setTransform(dpr,0,0,dpr,0,0);
-   const layers=[{size:10,spacing:w<700?40:26,velocity:.3},{size:14,spacing:w<700?24:16,velocity:.7},{size:20,spacing:w<700?58:40,velocity:1.1}];
+   const layers=[{size:10,spacing:w<700?30:26,velocity:.3},{size:14,spacing:w<700?16:16,velocity:.7},{size:20,spacing:w<700?46:40,velocity:1.1}];
    drops=layers.flatMap(({size,spacing,velocity},layer)=>Array.from({length:Math.ceil(w/spacing)},(_,i)=>({
     x:i*spacing+rand(spacing),y:rand(h+size*8),velocity:velocity*(.55+rand(1.55)),
     length:8+Math.floor(rand(33)),size,layer,glyphSeed:Math.floor(rand(glyphs.length))
@@ -72,14 +72,14 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     else if(decision!=="keep"){quality="frozen";cancelAnimationFrame(raf);}
     const elapsed=Math.max(1,now-measureStart);
     window.__matrixStats={fps:Math.round(60000/elapsed),averageMs:Math.round(avg*100)/100,
-      columns:drops.length,quality,coverage:0};
+      columns:drops.length,quality};
     frames=0;total=0;measureStart=now;
    }
   };
   const canRun=()=>live&&rainShouldRun(document.hidden,reduced,quality==="frozen");
   const loop=(now:number)=>{
    if(!canRun())return;
-   if(now-last>=34){draw(now,true);last=now}
+   if(now-last>=32){draw(now,true);last=now}
    raf=requestAnimationFrame(loop);
   };
   const resume=()=>{cancelAnimationFrame(raf);if(canRun()){last=0;raf=requestAnimationFrame(loop)}};
