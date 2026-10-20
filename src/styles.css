@@ -2558,3 +2558,10 @@ button{cursor:pointer}
  :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window::after{animation:none}
  .lm-hero-feature,.lm-case-story,.lm-email-letter,.lm-magnetic{animation:none;transition:none}
 }
+
+/* Vraie priorité CSS : l'ancien sélecteur :not() avait une spécificité supérieure. */
+:root[data-pixel="true"]:not([data-theme="contrast"]){
+ --lm-page:#050d10;--lm-panel:#102125;--lm-sunken:#09191d;
+ --lm-ink:#f1fff6;--lm-sub:#c5e7de;--lm-rule:#799c98;
+ --lm-accent:#ffd7a8;--lm-accent-ink:#201407;--lm-pair:#a7f6d7
+}
