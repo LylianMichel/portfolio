@@ -2356,3 +2356,9 @@ button{cursor:pointer}
  .lm-hero-secondary{width:91%;margin:12px 0 0 auto;transform:translateX(0)}
 }
 @media(max-width:979px){.lm-hero-secondary{width:100%;margin-top:12px}}
+
+/* Correction 0.4 : lumière neutre en clair, sans voile rosé sous le texte. */
+:root[data-theme="light"] .lm-hero{background:none}
+:root[data-theme="light"] .lm-hero::before,
+:root[data-theme="light"] .lm-hero-copy::before{display:none}
+:root[data-theme="light"] .lm-hero::after{opacity:.08}
