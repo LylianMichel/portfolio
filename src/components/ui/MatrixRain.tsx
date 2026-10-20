@@ -22,7 +22,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   let reduced=motion.matches||contrast.matches,live=true,raf=0,last=0,frames=0,total=0;
   let quality:"full"|"half"|"frozen"="full",drops:Drop[]=[],accent="#00ff41",waveAt=-10000,burstUntil=-10000;
   let cursor={x:-1000,y:-1000},lastSection="",measureStart=performance.now(),renderedFrames=0;
-  let scrollDirection:1|-1=1,lastScrollY=window.scrollY,simulationTime=0;
+  let lastScrollY=window.scrollY,simulationTime=0,visibleHeight=window.innerHeight;
   const build=()=>{
    const w=window.innerWidth,h=window.innerHeight,dpr=Math.min(window.devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
@@ -38,7 +38,10 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   };
   const draw=(now:number,advance:boolean)=>{
    const start=performance.now(),w=window.innerWidth,h=window.innerHeight;
-   if(advance)simulationTime+=scrollDirection*33;
+   const heroBottom=document.getElementById("projets")?.getBoundingClientRect().top ?? h;
+   visibleHeight=Math.max(0,Math.min(h,heroBottom));
+   canvas.style.clipPath=`inset(0 0 ${Math.max(0,h-visibleHeight)}px 0)`;
+   simulationTime=window.scrollY*3;
    ctx.clearRect(0,0,w,h);
    const selected=palette(document.documentElement.dataset.pixel==="true",accent);
    const bursting=now<burstUntil;
@@ -50,9 +53,10 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     const wave=waveProgress>=0&&waveProgress<=1?Math.max(0,1-Math.abs(x-waveProgress*w)/110):0;
     const speed=1+near*.65+wave*1.15+(bursting?.35:0);
     if(advance){
-     drop.y+=scrollDirection*drop.velocity*size*.32*speed;
-     if(drop.y-length*size>h)drop.y=-rand(h*.65);
-     else if(drop.y+size<0)drop.y=h+length*size+rand(h*.3);
+     // Absolute scroll position makes the animation reversible and deterministic.
+     const track=h+length*size*2;
+     const travelled=window.scrollY*drop.velocity*.55;
+     drop.y=((drop.glyphSeed*31+travelled)%track+track)%track-length*size;
     }
     ctx.font=`${size}px monospace`;
     const baseAlpha=layer===0?.32:layer===1?.58:.72;
@@ -85,16 +89,17 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   const canRun=()=>live&&rainShouldRun(document.hidden,reduced,quality==="frozen");
   const loop=(now:number)=>{
    if(!canRun())return;
-   if(now-last>=33){draw(now,true);last=now}
+   if(visibleHeight>0&&now-last>=33){draw(now,false);last=now}
    raf=requestAnimationFrame(loop);
   };
   const resume=()=>{cancelAnimationFrame(raf);if(canRun()){last=0;raf=requestAnimationFrame(loop)}};
   const visibility=()=>{if(document.hidden)cancelAnimationFrame(raf);else {draw(performance.now(),false);resume()}};
   const reduce=()=>{reduced=motion.matches||contrast.matches;cancelAnimationFrame(raf);if(reduced){draw(performance.now(),false)}else {draw(performance.now(),false);resume()}};
   const onScroll=()=>{
-   const current=window.scrollY,delta=current-lastScrollY;
-   if(Math.abs(delta)>2)scrollDirection=delta>0?1:-1;
+   const current=window.scrollY;
+   if(current===lastScrollY)return;
    lastScrollY=current;
+   draw(performance.now(),true);
   };
   const move=(event:PointerEvent)=>{if(fine)cursor={x:event.clientX,y:event.clientY}};
   const wave=()=>{waveAt=performance.now()};
