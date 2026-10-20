@@ -2079,3 +2079,15 @@ button{cursor:pointer}
  .lm-case-media .project-image{animation:none;transform:none}
  .lm-hero-feature,.lm-hero-copy::before{animation:none}
 }
+
+/* Phase 3 detail — words enter successively, no JS scroll handler. */
+.lm-title-word{display:inline-block;transform-origin:left bottom}
+@supports (animation-timeline:view()){
+ @media(prefers-reduced-motion:no-preference){
+  .lm-title-word{animation:lm-title-enter linear both;animation-timeline:view();animation-range:entry 0% cover 22%}
+  .lm-section-title>.lm-title-word:nth-of-type(2){animation-range:entry 5% cover 28%}
+  .lm-section-title>em .lm-title-word{animation-range:entry 10% cover 32%}
+ }
+}
+@keyframes lm-title-enter{from{opacity:.65;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.lm-title-word{animation:none;opacity:1;transform:none}}

@@ -31,6 +31,11 @@ jobs:
           for i in $(seq 1 45); do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
           cat /tmp/portfolio-preview.log
           exit 1
+      - name: Save the generated 1200 x 630 OG card
+        run: |
+          mkdir -p artifacts/visual
+          cp dist/og-portfolio.png artifacts/visual/og-portfolio.png
+          node -e 'const fs=require("fs");const b=fs.readFileSync("dist/og-portfolio.png");if(b.readUInt32BE(16)!==1200||b.readUInt32BE(20)!==630)process.exit(1);console.log("OG dimensions 1200 x 630 verified")'
       - name: Desktop and mobile screenshots, interaction checks and axe
         run: node scripts/visual-audit.mjs
       - name: Lighthouse mobile

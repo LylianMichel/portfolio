@@ -1,6 +1,6 @@
 import { profile } from "../data/profile";
 export const About=()=><section id="a-propos" aria-labelledby="about-title" className="lm-section lm-shell lm-about">
- <div className="lm-section-head"><div><span className="lm-kicker">03 / QUI JE SUIS</span><h2 id="about-title" className="lm-section-title">Entre logique<br/>et création.</h2></div><p className="lm-section-summary">J’aime comprendre ce qui se passe derrière une interface : les données, les interactions et les choix qui rendent un outil agréable à utiliser. C’est ce que j’explore avec AniVault et THE WORLD DEFENCE.</p></div>
+ <div className="lm-section-head"><div><span className="lm-kicker">03 / QUI JE SUIS</span><h2 id="about-title" className="lm-section-title"><span className="lm-title-word">Entre logique</span><br/><span className="lm-title-word">et création.</span></h2></div><p className="lm-section-summary">J’aime comprendre ce qui se passe derrière une interface : les données, les interactions et les choix qui rendent un outil agréable à utiliser. C’est ce que j’explore avec AniVault et THE WORLD DEFENCE.</p></div>
  <div className="lm-about-grid"><div className="lm-about-copy">
   <p className="lm-about-lead">Du web au jeu vidéo. J’aime construire des interfaces utiles, comprendre leur fonctionnement et améliorer chaque détail.</p>
   <p>Je suis en deuxième année de BUT Informatique à l’IUT de Lens et je vis à Barlin, dans le Pas-de-Calais. Je construis mes projets en parallèle des cours, avec l’envie de progresser en développement web et logiciel.</p>

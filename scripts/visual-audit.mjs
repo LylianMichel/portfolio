@@ -55,7 +55,11 @@ for (const width of [390,768,1024,1440]) {
           if(result.violations.length)throw new Error(`WCAG ${theme}/${accent}: ${result.violations.map(v=>v.id).join(",")}`);
           const info=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,scroll:document.documentElement.scrollWidth,width:innerWidth}));
           if(info.theme!==theme||info.accent!==accent||info.scroll>info.width+1)throw new Error(JSON.stringify(info));
-          if(theme==="light"&&accent==="mint")await record(page,label,"light-hero",page.locator(".lm-hero"));
+          if(theme==="light"&&accent==="mint"){
+            await record(page,label,"light-hero",page.locator(".lm-hero"));
+            await record(page,label,"light-project",page.locator("#anivault"));
+            await record(page,label,"light-skills",page.locator("#competences"));
+          }
         }
       }
       await page.getByRole("button",{name:"Menthe",exact:true}).click();
