@@ -1977,3 +1977,13 @@ button{cursor:pointer}
  .lm-case-grid{grid-template-columns:minmax(0,1fr)}
 }
 
+
+/* Phase 0.5 — WCAG AA across three appearances and four accents. */
+:root[data-theme="contrast"]{--lm-rule:#858585;--lm-sub:#fff}
+:root[data-theme="contrast"] .lm-filters button:not(.active),
+:root[data-theme="contrast"] .lm-desktop-links a{color:#fff}
+:root[data-theme="contrast"] .lm-quick-settings,
+:root[data-theme="contrast"] .lm-mobile-menu,
+:root[data-theme="contrast"] .lm-nav{border-color:#a0a0a0}
+:root[data-theme="light"] .lm-nav{background:var(--lm-page)}
+:where(.lm-nav a,.lm-nav button,.lm-footer a,.lm-case-actions a):focus-visible{outline:3px solid var(--lm-accent);outline-offset:3px}
