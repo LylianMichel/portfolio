@@ -1968,3 +1968,12 @@ button{cursor:pointer}
 .lm-nav-icon,.lm-settings-head button,.lm-nav-modes button{min-width:44px;min-height:44px}
 .lm-mobile-list>a,.lm-mobile-menu>a{min-height:44px;align-items:center}
 
+
+
+/* Phase 0.4 — Éviter les médias plus étroits que leurs colonnes. */
+@media(min-width:761px) and (max-width:1080px){
+ .lm-case-media,.lm-case-media .lm-project-frame,.lm-case-media .project-gallery,.lm-case-media .project-image-wrap{width:100%;max-width:none;min-width:0}
+ .lm-case-media .project-image{width:100%;max-width:100%;object-fit:contain}
+ .lm-case-grid{grid-template-columns:minmax(0,1fr)}
+}
+
