@@ -2663,3 +2663,19 @@ button{cursor:pointer}
 :root[data-theme="matrix"] .lm-hero-pitch .lm-word-window{width:min(18ch,100%);position:relative}
 :root[data-theme="matrix"] .lm-hero-pitch .lm-word{width:max-content;max-width:100%}
 @media(prefers-contrast:more){:root[data-theme="matrix"] .lm-matrix-rain{display:none}}
+
+/* Le texte des titres reste dans le DOM : seul ce calque purement visuel est décodé. */
+:root[data-theme="matrix"] .lm-title-word[data-decoding="true"]{position:relative;color:transparent}
+:root[data-theme="matrix"] .lm-title-word[data-decoding="true"]::after{
+ content:attr(data-scramble);position:absolute;inset:0;white-space:nowrap;overflow:hidden;
+ color:var(--lm-ink);font-family:var(--lm-font-mono);pointer-events:none
+}
+:root[data-theme="matrix"][data-pixel="true"]:not([data-theme="contrast"]){
+ --lm-page:#0e030d;--lm-panel:#230c1f;--lm-sunken:#190815;
+ --lm-ink:#ffe5f4;--lm-sub:#e8b9d7;--lm-rule:#96587e;
+ --lm-accent:#ff72bf;--lm-accent-ink:#270519;--lm-pair:#ffb4dd
+}
+.lm-neo-message{position:fixed;bottom:22px;left:50%;z-index:110;transform:translateX(-50%);pointer-events:none;
+ background:#230c1f;color:#ffe5f4;border:1px solid #ff72bf;padding:12px 20px;
+ font:700 .7rem var(--lm-font-mono);letter-spacing:.12em;box-shadow:0 0 18px #ff72bf33}
+@media(prefers-reduced-motion:reduce){:root[data-theme="matrix"] .lm-title-word[data-decoding="true"]::after{content:none}}

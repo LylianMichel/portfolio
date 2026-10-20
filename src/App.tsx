@@ -18,6 +18,7 @@ import type { PortfolioMode } from "./types";
 import { appendShortcut, shortcutAction } from "./utils/keyboard";
 import { flushSync } from "react-dom";
 import { initialExperience, experienceAnnouncement, type Experience } from "./utils/creative";
+import { useMatrixSectionDecode } from "./hooks/useMatrixSectionDecode";
 
 const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
 const readTheme=():Appearance=>{
@@ -40,6 +41,7 @@ const readRain=():RainIntensity=>{
  try{return initialRain(window.localStorage,Boolean(connection?.saveData))}catch{return connection?.saveData?"off":"soft"}
 };
 const App=()=>{
+ useMatrixSectionDecode();
  const [mode,setMode]=useState<PortfolioMode>("work");
  const reducedMotion=useReducedMotion();
  const [mounted,setMounted]=useState(false);
@@ -102,7 +104,7 @@ const App=()=>{
  useEffect(()=>{
   if(!pixel)return;
   document.documentElement.dataset.pixel="true";
-  const timeout=window.setTimeout(()=>{setPixel(false);},10000);
+  const timeout=window.setTimeout(()=>{setPixel(false);},8000);
   return()=>{window.clearTimeout(timeout);delete document.documentElement.dataset.pixel;};
  },[pixel]);
  useEffect(()=>{
@@ -126,7 +128,7 @@ const App=()=>{
    sequence.current=appendShortcut(sequence.current,key);
    if(shortcutAction(sequence.current)==="projects"){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
    if(shortcutAction(sequence.current)==="contact"){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
-   if(shortcutAction(sequence.current)==="pixel"){setPixel(true);setEgg("Variante rare débloquée pour dix secondes.");sequence.current="";}
+   if(shortcutAction(sequence.current)==="pixel"){setPixel(true);setEgg(theme==="matrix"?"Mode Neo activé pour huit secondes.":"Variante rare débloquée pour huit secondes.");sequence.current="";}
   };
   window.addEventListener("keydown",onKey);
   return()=>window.removeEventListener("keydown",onKey);
@@ -137,6 +139,7 @@ const App=()=>{
   <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
   <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={reducedMotion?false:{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
+  {pixel&&theme==="matrix"&&<div className="lm-neo-message" aria-hidden="true">NEO // SYSTEM OVERRIDE</div>}
   <span className="sr-only" role="status" aria-live="polite">{egg}</span>
   {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}
  </div>;
