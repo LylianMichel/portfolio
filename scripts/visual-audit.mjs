@@ -24,9 +24,7 @@ async function task(label, name, fn) {
  const page=await context.newPage();
  await task("matrix-active","le choix Matrix affiche une pluie qui bouge",async()=>{
    await page.goto(root,{waitUntil:"networkidle"});
-   await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
    const start=Date.now();
-   await page.getByRole("button",{name:"Matrix",exact:true}).click();
    const rain=page.locator(".lm-matrix-rain");
    await rain.waitFor({timeout:1600});
    const startupMs=Date.now()-start;
@@ -39,9 +37,10 @@ async function task(label, name, fn) {
      return false;
    },null,{timeout:2500});
    const first=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
+   await page.evaluate(()=>window.scrollTo({top:220,behavior:"instant"}));
    await page.waitForTimeout(360);
    const second=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
-   if(!first||!second||first===second)throw Error("Le Canvas existe mais la pluie est figée");
+   if(!first||!second||first===second)throw Error("La pluie ne réagit pas au défilement");
    if(startupMs>1600)throw Error("Affichage trop lent après sélection : "+startupMs+"ms");
    return {startupMs,moved:true,theme:"matrix"};
  });
