@@ -2317,3 +2317,10 @@ button{cursor:pointer}
  .lm-footer-logo{transition:none;transform:none}
  .lm-error-zero{transform:none}
 }
+
+/* Polishing: the copy control now has an SVG animation wrapper; keep original button styling. */
+.lm-copy-action button{
+ border:1px solid var(--lm-accent);background:transparent;color:var(--lm-accent);
+ border-radius:4px;padding:10px 13px;font-size:.78rem
+}
+.lm-copy-action button:hover,.lm-copy-action button:focus-visible{background:var(--lm-accent);color:var(--lm-accent-ink)}
