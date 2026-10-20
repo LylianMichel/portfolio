@@ -2460,3 +2460,16 @@ button{cursor:pointer}
 .lm-hero-image-stage img{transform-origin:center;will-change:auto}
 @media(max-width:850px){.lm-scene-tech{top:24px;right:8px}.lm-scene-tech span{font-size:.5rem;padding:4px 5px}}
 @media(prefers-reduced-motion:reduce){.lm-hero-feature .lm-hero-image,.lm-hero-feature .lm-hero-secondary,.lm-scene-tech{transform:none}.lm-hero-image-stage img{animation:none}}
+
+/* Phase 3 — lecture en trois temps, captures réelles du jeu uniquement. */
+@media(min-width:1081px){
+ .lm-case-featured .lm-case-grid{align-items:start}
+ .lm-case-featured .lm-case-media{position:sticky;top:100px;align-self:start}
+ .lm-case-decisions>div{min-height:130px;transition:background-color .2s,border-color .2s;padding-inline:12px}
+ .lm-case[data-active-beat="0"] .lm-case-decisions>div:nth-child(1),
+ .lm-case[data-active-beat="1"] .lm-case-decisions>div:nth-child(2),
+ .lm-case[data-active-beat="2"] .lm-case-decisions>div:nth-child(3){border-top-color:var(--lm-pair);background:color-mix(in srgb,var(--lm-pair) 4%,transparent)}
+}
+.lm-project-frame .project-image{transition:transform .4s ease,opacity .4s ease}
+@media(max-width:1080px){.lm-case-decisions>div{min-height:0}}
+@media(prefers-reduced-motion:reduce){.lm-case-decisions>div,.lm-project-frame .project-image{transition:none}}

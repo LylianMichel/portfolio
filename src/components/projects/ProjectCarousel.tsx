@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
-import { useId, useState, useRef, type KeyboardEvent, type TouchEvent } from "react";
+import { useEffect, useId, useState, useRef, type KeyboardEvent, type TouchEvent } from "react";
 import type { ProjectImage } from "../../types";
 import { Modal } from "../ui/Modal";
 
@@ -7,21 +7,27 @@ interface ProjectCarouselProps {
   images: ProjectImage[];
   projectTitle: string;
   eager?: boolean;
+  sceneIndex?: number;
 }
 
 const fallbackImage = `${import.meta.env.BASE_URL}project-fallback.svg`;
 
-export const ProjectCarousel = ({ images, projectTitle, eager = false }: ProjectCarouselProps) => {
+export const ProjectCarousel = ({ images, projectTitle, eager = false, sceneIndex }: ProjectCarouselProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const titleId = useId();
   const swipeStart = useRef<number | null>(null);
+  const userSelected = useRef(false);
+  useEffect(()=>{
+    if(sceneIndex===undefined||userSelected.current||expanded||images.length<2)return;
+    setActiveIndex(Math.max(0,sceneIndex)%images.length);
+  },[sceneIndex,images.length,expanded]);
   const hasMultipleImages = images.length > 1;
   const activeImage = images[activeIndex] ?? images[0];
   if (!activeImage) return null;
 
-  const previous = () => setActiveIndex((current) => (current - 1 + images.length) % images.length);
-  const next = () => setActiveIndex((current) => (current + 1) % images.length);
+  const previous = () => {userSelected.current=true;setActiveIndex((current) => (current - 1 + images.length) % images.length);};
+  const next = () => {userSelected.current=true;setActiveIndex((current) => (current + 1) % images.length);};
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (expanded && (event.key === "ArrowLeft" || event.key === "ArrowRight")) { event.preventDefault(); event.key === "ArrowLeft" ? previous() : next(); return; }
     if (!hasMultipleImages || event.target !== event.currentTarget) return;
@@ -75,7 +81,7 @@ export const ProjectCarousel = ({ images, projectTitle, eager = false }: Project
               type="button"
               className={`gallery-select-button ${activeIndex === index ? "gallery-select-active" : ""}`}
               aria-pressed={activeIndex === index}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => {userSelected.current=true;setActiveIndex(index)}}
             >
               {image.label}
             </button>

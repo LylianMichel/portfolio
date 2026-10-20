@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { ArrowDownRight, ArrowUpRight, Github, LockKeyhole } from "lucide-react";
 import type { Project } from "../../types";
 import { ProjectCarousel } from "./ProjectCarousel";
@@ -8,10 +9,26 @@ import { MetaBar } from "./MetaBar";
 
 export const ProjectCard=({project,nextProject,featured,index}:{project:Project;nextProject?:Project;featured:boolean;index:number})=>{
  const game=project.id==="towerdefence";
- return <article id={project.id} className={`lm-case ${featured?"lm-case-featured":"lm-case-compact"}`} aria-labelledby={`${project.id}-title`}>
+ const [beat,setBeat]=useState(0);
+ const root=useRef<HTMLElement>(null);
+ useEffect(()=>{
+  if(!game||typeof IntersectionObserver==="undefined"||window.innerWidth<=1080||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const beats=root.current?.querySelectorAll<HTMLElement>(".lm-case-decisions>div");
+  if(!beats?.length)return;
+  const observer=new IntersectionObserver(entries=>{
+   for(const entry of entries)if(entry.isIntersecting){
+    const next=Array.from(beats).indexOf(entry.target as HTMLElement);
+    if(next>=0)setBeat(next);
+   }
+  },{threshold:.08,rootMargin:"-18% 0px -51% 0px"});
+  beats.forEach(el=>observer.observe(el));
+  return()=>observer.disconnect();
+ },[game]);
+
+ return <article ref={root} data-active-beat={beat} id={project.id} className={`lm-case ${featured?"lm-case-featured":"lm-case-compact"}`} aria-labelledby={`${project.id}-title`}>
  <div className="lm-case-top"><span className="lm-kicker">{project.type}</span><span className="lm-mono">{project.year}</span></div>
  <div className="lm-case-grid">
-  <div className="lm-case-media"><ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title}/></ProjectFrame></div>
+  <div className="lm-case-media"><ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title} sceneIndex={game?beat:undefined}/></ProjectFrame></div>
   <div className="lm-case-story" data-case-number={String(index+1).padStart(2,"0")}>
    <div className="lm-case-overline"><span className="lm-kicker">{featured?"ÉTUDE DE CAS":"RÉALISATION"}</span><span className="lm-mono">{project.context??project.type}</span></div>
    <h3 id={`${project.id}-title`} data-case-number={String(index+1).padStart(2,"0")}>{project.title}</h3>
