@@ -13,7 +13,7 @@ import { KineticDivider } from "./components/ui/KineticDivider";
 import { NotFound } from "./sections/NotFound";
 import { X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { initialAccent, initialAppearance, initialRain, type Accent, type Appearance, type RainIntensity } from "./utils/preferences";
+import { initialAccent, initialRain, type Accent, type Appearance, type RainIntensity } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 import { appendShortcut, shortcutAction } from "./utils/keyboard";
 import { flushSync } from "react-dom";
@@ -21,12 +21,6 @@ import { initialExperience, experienceAnnouncement, type Experience } from "./ut
 import { useMatrixSectionDecode } from "./hooks/useMatrixSectionDecode";
 
 const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
-const readTheme=():Appearance=>{
- if(typeof window==="undefined")return "dark";
- const query=new URLSearchParams(window.location.search).get("theme");
- if(query==="matrix")return "matrix";
- try{return initialAppearance(window.localStorage,window.matchMedia("(prefers-color-scheme: light)").matches)}catch{return "dark"}
-};
 const readAccent=():Accent=>typeof window!=="undefined"?initialAccent(window.localStorage):"mint";
 
 const readExperience=():Experience=>{
@@ -46,8 +40,7 @@ const App=()=>{
  const reducedMotion=useReducedMotion();
  const [mounted,setMounted]=useState(false);
  const [rainReady,setRainReady]=useState(false);
- const matrixChosenByUser=useRef(false);
- const [theme,setTheme]=useState<Appearance>("dark");
+ const theme:Appearance="matrix";
  const [accent,setAccent]=useState<Accent>("mint");
  const [experience,setExperience]=useState<Experience>("source");
  const [rainIntensity,setRainIntensity]=useState<RainIntensity>("soft");
@@ -58,17 +51,17 @@ const App=()=>{
 
  const sequence=useRef("");
  useEffect(()=>{
-   setTheme(readTheme());setAccent(readAccent());setExperience(readExperience());setRainIntensity(readRain());setMounted(true);
+   setAccent(readAccent());setExperience(readExperience());setRainIntensity(readRain());setMounted(true);
  },[]);
  useEffect(()=>setNotFound(!["/","/index.html"].includes(window.location.pathname)),[]);
  useEffect(()=>{
   if(!mounted)return;
   document.documentElement.dataset.theme=theme;
-  document.documentElement.style.colorScheme=theme==="light"?"light":"dark";
+  document.documentElement.style.colorScheme="dark";
   try{window.localStorage.setItem("portfolio-theme",theme)}catch{/* Privacy mode */}
   const meta=document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":theme==="matrix"?"#020a05":"#0c0d0f";
- },[theme,mounted]);
+  if(meta)meta.content="#020a05";
+ },[mounted]);
  useEffect(()=>{if(!mounted)return;document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience,mounted]);
  useEffect(()=>{
   if(!mounted||theme!=="matrix"||rainIntensity==="off"){setRainReady(false);return;}
@@ -82,9 +75,7 @@ const App=()=>{
     queued=true;
     // An intentional choice should react in the next frame, not after a multi-second delay.
     const apply=()=>{if(!cancelled)setRainReady(true)};
-    if(matrixChosenByUser.current){
-      raf=window.requestAnimationFrame(apply);
-    }else if(scheduler.requestIdleCallback){
+    if(scheduler.requestIdleCallback){
       idle=scheduler.requestIdleCallback(apply,{timeout:350});
     }else{
       fallback=window.setTimeout(apply,0);
@@ -92,7 +83,7 @@ const App=()=>{
   };
   // On a cold visit, wait until the initial document has loaded so that
   // the lazily imported Canvas does not compete with the hero's LCP.
-  if(matrixChosenByUser.current||document.readyState==="complete")reveal();
+  if(document.readyState==="complete")reveal();
   else window.addEventListener("load",reveal,{once:true});
   // Browsers/extensions sometimes defer load indefinitely: recover after the LCP budget.
   const watchdog=window.setTimeout(reveal,3600);
@@ -104,7 +95,7 @@ const App=()=>{
     window.cancelAnimationFrame(raf);
     if(idle)scheduler.cancelIdleCallback?.(idle);
   };
- },[mounted,theme,rainIntensity]);
+ },[mounted,rainIntensity]);
  const changeExperience=(next:Experience)=>{
    if(next===experience)return;
    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -151,7 +142,7 @@ const App=()=>{
  return <div className="portfolio-app">
   {mounted&&rainReady&&theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
-  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={(next)=>{matrixChosenByUser.current=true;setTheme(next)}} onAccentChange={setAccent}/>
+  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onAccentChange={setAccent}/>
   <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={false} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   {pixel&&theme==="matrix"&&<div className="lm-neo-message" aria-hidden="true">NEO // SYSTEM OVERRIDE</div>}
