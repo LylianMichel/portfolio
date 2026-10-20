@@ -7,7 +7,7 @@ describe("personnalisation",()=>{
  it("retient le thème sauvegardé",()=>expect(initialAppearance({getItem:()=> "contrast"},false)).toBe("contrast"));
  it("respecte le système au premier affichage",()=>expect(initialAppearance({getItem:()=>null},true)).toBe("light"));
  it("retient un accent valide et rejette les valeurs inconnues",()=>{expect(initialAccent({getItem:()=> "blue"})).toBe("blue");expect(initialAccent({getItem:()=> "unknown"})).toBe("mint");});
- it("déclare toutes les combinaisons",()=>{expect(appearances).toHaveLength(3);expect(accents).toHaveLength(4);});
+ it("déclare toutes les combinaisons",()=>{expect(appearances).toHaveLength(4);expect(accents).toHaveLength(4);});
 });
 describe("copie d'email",()=>{
  it("copie une adresse avec succès",async()=>{const writeText=vi.fn().mockResolvedValue(undefined);expect(await copyEmail("bonjour@example.fr",{writeText})).toBe(true);expect(writeText).toHaveBeenCalledWith("bonjour@example.fr");});
@@ -50,4 +50,13 @@ describe("SOURCE / PLAY",()=>{
  it("ignore un choix invalide",()=>expect(initialExperience({getItem:()=> "bogus"})).toBe("source"));
  it("protège du stockage bloqué",()=>expect(initialExperience({getItem:()=>{throw Error("Denied")}})).toBe("source"));
  it("annonce les deux modes",()=>{expect(experienceAnnouncement("play")).toMatch(/PLAY activé/);expect(experienceAnnouncement("source")).toMatch(/SOURCE activé/)});
+});
+
+import {initialRain} from "./preferences";
+describe("thème Matrix et persistance",()=>{
+ it("restaure Matrix depuis Storage",()=>expect(initialAppearance({getItem:()=> "matrix"},false)).toBe("matrix"));
+ it("désactive la pluie par défaut avec économie de données",()=>expect(initialRain({getItem:()=>null},true)).toBe("off"));
+ it("conserve explicitement l'intensité choisie",()=>expect(initialRain({getItem:()=> "intense"},true)).toBe("intense"));
+ it("choisit douce hors économie",()=>expect(initialRain({getItem:()=>null},false)).toBe("soft"));
+ it("protège contre le stockage bloqué",()=>expect(initialRain({getItem:()=>{throw Error("Denied")}},false)).toBe("soft"));
 });

@@ -36,3 +36,28 @@ describe("couleurs complémentaires SOURCE / PLAY, 4 paires × 3 thèmes",()=>{
    }
  }
 });
+
+const matrixColors={page:"#020a05",panel:"#09160e",text:"#d7ffe0",secondary:"#addbb7",pair:"#6ff3ff",accents:["#00ff41","#a0caff","#dec0fc","#ffc79e"]};
+function rgbBlend(bg:string,overlay:string,opacity:number):string{
+ const a=[1,3,5].map(i=>parseInt(bg.slice(i,i+2),16));
+ const b=[1,3,5].map(i=>parseInt(overlay.slice(i,i+2),16));
+ return "#"+a.map((v,i)=>Math.round(v*(1-opacity)+(b[i]??0)*opacity).toString(16).padStart(2,"0")).join("");
+}
+describe("Matrix sur SOURCE et PLAY, quatre accents et pluie",()=>{
+ for(const mode of ["source","play"] as const){
+  for(const color of matrixColors.accents){
+   it(`AA de Matrix ${mode} pour ${color}`,()=>{
+     expect(ratio(matrixColors.text,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
+     expect(ratio(matrixColors.secondary,matrixColors.panel)).toBeGreaterThanOrEqual(4.5);
+     expect(ratio(color,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
+     expect(ratio("#001d09",color)).toBeGreaterThanOrEqual(4.5);
+     expect(ratio(matrixColors.pair,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
+   });
+  }
+ }
+ it("pire pixel blanc à 22% reste lisible sur la pluie",()=>{
+  const worst=rgbBlend(matrixColors.page,"#ffffff",.22);
+  expect(ratio(matrixColors.text,worst)).toBeGreaterThanOrEqual(4.5);
+  expect(ratio(matrixColors.secondary,worst)).toBeGreaterThanOrEqual(4.5);
+ });
+});

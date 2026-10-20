@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Navbar } from "./components/layout/Navbar";
 import { Hero } from "./sections/Hero";
 import { Projects } from "./sections/Projects";
@@ -12,7 +12,7 @@ import { Marquee } from "./components/ui/Marquee";
 import { NotFound } from "./sections/NotFound";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { initialAccent, initialAppearance, type Accent, type Appearance } from "./utils/preferences";
+import { initialAccent, initialAppearance, initialRain, type Accent, type Appearance, type RainIntensity } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 import { appendShortcut, shortcutAction } from "./utils/keyboard";
 import { flushSync } from "react-dom";
@@ -26,11 +26,18 @@ const readExperience=():Experience=>{
  if(typeof window==="undefined")return "source";
  try{return initialExperience(window.localStorage)}catch{return "source"}
 };
+const MatrixRain=lazy(()=>import("./components/ui/MatrixRain"));
+const readRain=():RainIntensity=>{
+ if(typeof window==="undefined")return "soft";
+ const connection=(navigator as Navigator & {connection?:{saveData?:boolean}}).connection;
+ try{return initialRain(window.localStorage,Boolean(connection?.saveData))}catch{return connection?.saveData?"off":"soft"}
+};
 const App=()=>{
  const [mode,setMode]=useState<PortfolioMode>("work");
  const [theme,setTheme]=useState<Appearance>(readTheme);
  const [accent,setAccent]=useState<Accent>(readAccent);
  const [experience,setExperience]=useState<Experience>(readExperience);
+ const [rainIntensity,setRainIntensity]=useState<RainIntensity>(readRain);
  const [notFound,setNotFound]=useState(false);
  const [help,setHelp]=useState(false);
  const [egg,setEgg]=useState("");
@@ -43,7 +50,7 @@ const App=()=>{
   document.documentElement.style.colorScheme=theme==="light"?"light":"dark";
   try{window.localStorage.setItem("portfolio-theme",theme)}catch{/* Privacy mode */}
   const meta=document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":"#151516";
+  if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":theme==="matrix"?"#020a05":"#0c0d0f";
  },[theme]);
  useEffect(()=>{document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience]);
  const changeExperience=(next:Experience)=>{
@@ -55,6 +62,7 @@ const App=()=>{
    else change();
    setEgg(experienceAnnouncement(next));
  };
+ useEffect(()=>{try{window.localStorage.setItem("portfolio-matrix-rain",rainIntensity)}catch{/* navigateur privé */}},[rainIntensity]);
  useEffect(()=>{document.documentElement.dataset.accent=accent;try{window.localStorage.setItem("portfolio-accent",accent)}catch{/* Privacy mode */}},[accent]);
  useEffect(()=>{
   if(!pixel)return;
@@ -89,8 +97,9 @@ const App=()=>{
   return()=>window.removeEventListener("keydown",onKey);
  },[accent]);
  return <div className="portfolio-app">
+  {theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
-  <Navbar mode={mode} theme={theme} accent={accent} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
+  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
   <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-9}} transition={{duration:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   <span className="sr-only" role="status" aria-live="polite">{egg}</span>
