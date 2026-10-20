@@ -1,4 +1,5 @@
 import { profile } from "../data/profile";
+import { PixelIcon } from "../components/ui/PixelIcon";
 export const About=()=><section id="a-propos" aria-labelledby="about-title" className="lm-section lm-shell lm-about">
  <div className="lm-section-head"><div><span className="lm-kicker">03 / QUI JE SUIS</span><h2 id="about-title" className="lm-section-title"><span className="lm-title-word">Qui je suis,</span><br/><span className="lm-title-word">hors du code.</span></h2></div><p className="lm-section-summary">J’aime comprendre ce qui se passe derrière une interface : les données, les interactions et les choix qui rendent un outil agréable à utiliser. C’est ce que j’explore avec AniVault et THE WORLD DEFENCE.</p></div>
  <div className="lm-about-grid"><div className="lm-about-copy">
@@ -6,7 +7,7 @@ export const About=()=><section id="a-propos" aria-labelledby="about-title" clas
   <p>Je suis en deuxième année de BUT Informatique à l’IUT de Lens et je vis à Barlin, dans le Pas-de-Calais. Je construis mes projets en parallèle des cours, avec l’envie de progresser en développement web et logiciel.</p>
   <p>Sérieux, autonome et rigoureux, j’apprécie le travail en équipe. Mes projets me permettent de mettre en pratique ce que j’apprends en cours.</p>
   <p>Pour mon prochain stage, je souhaite participer à un vrai projet d’équipe, apprendre des retours sur mon code et prendre part aux tests comme aux améliorations de l’expérience utilisateur.</p>
-  <div className="lm-interests" aria-labelledby="interests-title"><h3 id="interests-title">Ce que j’aime</h3><ul><li>Le volley</li><li>La veille technologique et l’intelligence artificielle</li><li>Créer des sites web et des jeux vidéo</li></ul></div>
+  <div className="lm-interests" aria-labelledby="interests-title"><h3 id="interests-title">Ce que j’aime</h3><ul><li><PixelIcon kind="volley" /> Le volley</li><li>La veille technologique et l’intelligence artificielle</li><li><PixelIcon kind="game" /> Créer des sites web et des jeux vidéo</li></ul></div>
   <div className="lm-seeking"><span className="lm-kicker">CE QUE JE CHERCHE</span>
    <div><span>01</span><p>Une mission de développement web ou logiciel au sein d'une équipe.</p></div>
    <div><span>02</span><p>Contribuer à des interfaces, à la logique applicative et aux tests.</p></div>
