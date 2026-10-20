@@ -40,6 +40,32 @@ for (const width of [390,768,1024,1440]) {
     return {count:shifts.length,total:shifts.reduce((sum,s)=>sum+s.value,0)};
   });
   await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
+  await task(label,"stage visible dès le premier écran",async()=>{
+    const details=await page.locator(".lm-stage-badge").evaluate(el=>{
+      const rect=el.getBoundingClientRect();
+      return {top:rect.top,bottom:rect.bottom,text:el.textContent??"",viewport:window.innerHeight};
+    });
+    if(details.top<0||details.bottom>details.viewport*.75||!details.text.includes("12/04/2027"))throw new Error(JSON.stringify(details));
+    return details;
+  });
+  await task(label,"preuve projet sourcée et mise en page mobile",async()=>{
+    const details=await page.locator("#anivault").evaluate(el=>{
+      const evidence=el.querySelector(".lm-case-evidence");
+      const tech=el.querySelector(".lm-case-tags");
+      const status=el.querySelector(".lm-meta-bar");
+      return {
+        points:evidence?.querySelectorAll("li").length??0,
+        visibleEvidence:evidence?getComputedStyle(evidence).display!=="none":false,
+        visibleDuplicates:tech?getComputedStyle(tech).display!=="none":false,
+        metaColumns:status?getComputedStyle(status).gridTemplateColumns.split(" ").length:0,
+        width:innerWidth
+      };
+    });
+    if(details.points!==3)throw new Error("Fonctionnalités sourcées absentes "+JSON.stringify(details));
+    if(width<=650 && (details.visibleEvidence||details.visibleDuplicates||details.metaColumns!==2))throw new Error(JSON.stringify(details));
+    if(width>=1081&&!details.visibleEvidence)throw new Error(JSON.stringify(details));
+    return details;
+  });
   await task(label,"hiérarchie de la carte jeu",async()=>{
     const card=page.locator(".lm-hero-secondary");
     const positions=await card.evaluate(el=>{
