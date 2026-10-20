@@ -17,7 +17,7 @@ export const Projects=()=>{
      if (!cards.length) return setCurrent(0);
      const marker=window.innerHeight*.42;
      let index=0;
-     for(let i=0;i<cards.length;i++)if(cards[i].getBoundingClientRect().top<=marker)index=i;
+     for(let i=0;i<cards.length;i++)if((cards[i]?.getBoundingClientRect().top??Number.POSITIVE_INFINITY)<=marker)index=i;
      setCurrent(index+1);
    };
    calculate();
