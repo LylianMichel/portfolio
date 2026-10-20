@@ -8,9 +8,9 @@
       name="description"
       content="Portfolio de Lylian Michel, étudiant en BUT Informatique à l’IUT de Lens. Découvrez mes projets web, logiciels et jeux vidéo."
     />
-    <meta name="theme-color" content="#151516" />
+    <meta name="theme-color" content="#020a05" />
     <meta name="robots" content="index, follow" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="color-scheme" content="dark" />
 
     <meta property="og:title" content="Lylian Michel — Développeur & étudiant en BUT Informatique" />
     <meta
@@ -42,14 +42,11 @@
 
     <script>
       (() => {
-        let savedTheme = null;
-        try { savedTheme = localStorage.getItem("portfolio-theme"); } catch { /* Private browsing fallback. */ }
-        const queryTheme = new URLSearchParams(location.search).get("theme");
-        const theme = queryTheme === "matrix" ? "matrix" : savedTheme === "light" || savedTheme === "contrast" || savedTheme === "matrix" ? savedTheme : savedTheme === "dark" ? "dark" : matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        const theme = "matrix";
         let accent = "mint"; try { const saved = localStorage.getItem("portfolio-accent"); if (["mint","blue","violet","orange"].includes(saved)) accent = saved; } catch {}
         document.documentElement.dataset.accent = accent;
         document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme === "light" ? "light" : "dark";
+        document.documentElement.style.colorScheme = "dark";
       })();
     </script>
 
