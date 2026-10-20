@@ -25,6 +25,15 @@ for (const width of [390,768,1024,1440]) {
   page.setDefaultTimeout(12000);
   await task(label,"home",async()=>{await page.goto(root,{waitUntil:"networkidle"}); await page.locator("#intro-title").waitFor();});
   await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
+  await task(label,"reduced motion statique",async()=>{
+    const animated=await page.evaluate(()=>{
+      const name=document.querySelector(".lm-name-first");
+      const glow=document.querySelector(".lm-hero");
+      if(!name||!glow)return "missing nodes";
+      return {name:getComputedStyle(name).animationName,glow:getComputedStyle(glow,"::before").animationName,tracks:Array.from(document.querySelectorAll(".lm-marquee-track")).map(el=>getComputedStyle(el).animationName)};
+    });
+    if(typeof animated==="string"||animated.name!=="none"||animated.glow!=="none"||animated.tracks.some(x=>x!=="none"))throw new Error(JSON.stringify(animated));
+  });
   await task(label,"horizontal overflow",async()=>{
     const dimensions=await page.evaluate(()=>({page:document.documentElement.scrollWidth,screen:window.innerWidth}));
     if(dimensions.page>dimensions.screen+1)throw new Error(JSON.stringify(dimensions));
@@ -68,6 +77,19 @@ for (const width of [390,768,1024,1440]) {
       await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
     });
   }
+  if(width===390){
+    await task(label,"Konami réel active le mode pixel",async()=>{
+      const actual=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+      await page.evaluate(()=>{const current=document.activeElement;if(current instanceof HTMLElement)current.blur()});
+      for(const key of actual)await page.keyboard.press(key);
+      await page.locator("html[data-pixel='true']").waitFor();
+      const contrast=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+      if(contrast.violations.length)throw new Error("Pixel mode accessibility: "+contrast.violations.map(v=>v.id).join(","));
+      await page.waitForTimeout(10100);
+      const pixel=await page.evaluate(()=>document.documentElement.dataset.pixel??"");
+      if(pixel)throw new Error("Pixel mode did not expire after 10 seconds");
+    });
+  }
   await task(label,"axe WCAG A/AA home",async()=>{
     const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
     const violations=results.violations.map(v=>({id:v.id,impact:v.impact,count:v.nodes.length,help:v.help}));
@@ -88,6 +110,16 @@ for (const width of [390,768,1024,1440]) {
   });
   await task(label,"project capture",async()=>await record(page,label,"project",page.locator("#anivault")));
   await task(label,"skills capture",async()=>await record(page,label,"skills",page.locator("#competences")));
+  if(width===1440){
+    await task(label,"infobulles compétences sans déplacement",async()=>{
+      const entries=page.locator(".lm-skill-entry");
+      const before=await entries.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height]}));
+      await page.locator(".lm-skill-link").first().hover();
+      await page.waitForTimeout(230);
+      const after=await entries.evaluateAll(els=>els.map(el=>{const r=el.getBoundingClientRect();return [r.x,r.y,r.width,r.height]}));
+      if(before.some((b,i)=>b.some((value,j)=>Math.abs(value-after[i][j])>1)))throw new Error("Technologies shifted on hover");
+    });
+  }
   await task(label,"no invented skills links",async()=>{
     const cssLink=await page.locator(".lm-skill-entry").filter({hasText:"Tailwind CSS"}).locator("a").count();
     const prisma=page.getByRole("link",{name:/Prisma.*AniVault/i});

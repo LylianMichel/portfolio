@@ -31,6 +31,8 @@ jobs:
           for i in $(seq 1 45); do curl --fail --silent http://127.0.0.1:4173/ >/dev/null && exit 0; sleep 1; done
           cat /tmp/portfolio-preview.log
           exit 1
+      - name: Compare JavaScript/CSS gzip to ba0cee4 baseline
+        run: node scripts/bundle-budget.mjs
       - name: Save the generated 1200 x 630 OG card
         run: |
           mkdir -p artifacts/visual
@@ -50,6 +52,9 @@ jobs:
         if: always()
         run: |
           node -e 'for(const mode of ["mobile","desktop"]){try{const r=require("./artifacts/lighthouse/"+mode+".json");console.log("LIGHTHOUSE "+mode+" Performance="+Math.round(r.categories.performance.score*100)+" Accessibility="+Math.round(r.categories.accessibility.score*100)+" SEO="+Math.round(r.categories.seo.score*100)+" BestPractices="+Math.round(r.categories["best-practices"].score*100))}catch(e){console.log("LIGHTHOUSE "+mode+" unavailable: "+e.message)}}'
+      - name: Check performance, LCP, CLS and accessibility budgets
+        if: always()
+        run: node scripts/verify-performance.mjs
       - name: Upload visual audit
         if: always()
         uses: actions/upload-artifact@v4
