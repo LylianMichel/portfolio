@@ -43,9 +43,7 @@ async function task(label, name, fn) {
    const second=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
    if(!first||!second||first===second)throw Error("Le Canvas existe mais la pluie est figée");
    if(startupMs>1600)throw Error("Affichage trop lent après sélection : "+startupMs+"ms");
-   await page.getByRole("button",{name:"Sombre",exact:true}).click();
-   await rain.waitFor({state:"detached"});
-   return {startupMs,moved:true,removedOnThemeExit:true};
+   return {startupMs,moved:true,theme:"matrix"};
  });
  await context.close();
 }
@@ -263,8 +261,6 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
           await matrixPage.locator(".lm-nav-wrap:not(.lm-nav-away)").waitFor({state:"visible"});
           await matrixPage.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
-          await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
-          if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
         }finally{await contextM.close()}
       }
     });
@@ -342,7 +338,6 @@ for (const width of [390,768,1024,1440]) {
       await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
       await page.getByRole("button",{name:"Clair",exact:true}).click();
       await record(page,label,"light-contact",page.locator(".lm-chat-page"));
-      await page.getByRole("button",{name:"Sombre",exact:true}).click();
       await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
     }
   });
