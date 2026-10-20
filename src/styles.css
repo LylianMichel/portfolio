@@ -2329,3 +2329,9 @@ button{cursor:pointer}
 .lm-hero-secondary{min-height:103px}
 .lm-hero-status>span:nth-child(2){flex:0 0 23ch;min-width:23ch;text-align:center}
 @media(max-width:850px){.lm-hero-secondary{min-height:92px}}
+
+/* Contrôle visuel: préserver les deux lignes dans la mini-carte de jeu. */
+.lm-hero-secondary>span:nth-child(2){display:grid;gap:7px;min-width:0;flex:1}
+.lm-hero-secondary>span:nth-child(2) strong{overflow-wrap:normal;line-height:1.25}
+.lm-hero-secondary>span:last-child{flex:none}
+.lm-mobile-countdown{display:inline-block;min-width:6ch;margin-left:7px;color:var(--lm-pair);white-space:nowrap}

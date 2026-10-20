@@ -25,6 +25,15 @@ for (const width of [390,768,1024,1440]) {
   page.setDefaultTimeout(12000);
   await task(label,"home",async()=>{await page.goto(root,{waitUntil:"networkidle"}); await page.locator("#intro-title").waitFor();});
   await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
+  await task(label,"hiérarchie de la carte jeu",async()=>{
+    const card=page.locator(".lm-hero-secondary");
+    const positions=await card.evaluate(el=>{
+      const label=el.querySelector(".lm-kicker")?.getBoundingClientRect();
+      const title=el.querySelector("strong")?.getBoundingClientRect();
+      return {labelBottom:label?.bottom,titleTop:title?.top};
+    });
+    if(positions.labelBottom===undefined||positions.titleTop===undefined||positions.titleTop<positions.labelBottom-1)throw new Error("Titre de jeu chevauche son libellé");
+  });
   await task(label,"reduced motion statique",async()=>{
     const animated=await page.evaluate(()=>{
       const name=document.querySelector(".lm-name-first");
