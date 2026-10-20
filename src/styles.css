@@ -1987,3 +1987,26 @@ button{cursor:pointer}
 :root[data-theme="contrast"] .lm-nav{border-color:#a0a0a0}
 :root[data-theme="light"] .lm-nav{background:var(--lm-page)}
 :where(.lm-nav a,.lm-nav button,.lm-footer a,.lm-case-actions a):focus-visible{outline:3px solid var(--lm-accent);outline-offset:3px}
+
+/* Phase 1 — Signature retenue: spotlight non bloquant et image réelle. */
+.lm-hero-copy{position:relative;--hero-x:50%;--hero-y:40%;isolation:isolate}
+.lm-hero-copy::before{content:"";position:absolute;inset:-35px;z-index:-1;pointer-events:none;background:radial-gradient(circle 220px at var(--hero-x) var(--hero-y),color-mix(in srgb,var(--lm-accent) 9%,transparent),transparent 80%);opacity:0;transition:opacity 250ms}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.lm-hero-copy:hover::before{opacity:1}}
+.lm-hero-image-stage{display:block;position:relative;overflow:hidden}
+.lm-hero-image-stage img{width:100%;aspect-ratio:1424 / 730;object-fit:cover;display:block;animation:lm-frame-in 400ms ease both}
+.lm-image-count{position:absolute;right:8px;bottom:8px;background:var(--lm-page);padding:5px 8px;color:var(--lm-ink);font:.64rem var(--lm-font-mono)}
+.lm-hero-status{display:flex;align-items:center;justify-content:space-between;gap:10px 25px;flex-wrap:wrap;border-top:1px solid var(--lm-rule);border-bottom:1px solid var(--lm-rule);padding:16px 0;margin-bottom:12px;color:var(--lm-sub);font:500 clamp(.63rem,.8vw,.74rem)/1.6 var(--lm-font-mono);letter-spacing:.01em}
+.lm-hero-status>span:first-child{display:inline-flex;align-items:center;gap:12px;color:var(--lm-ink)}
+.lm-hero-status .lm-status-dot{width:6px;height:6px;animation:none;box-shadow:none}
+@keyframes lm-frame-in{from{opacity:.65}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+.lm-hero-actions{animation:lm-hero-rise 450ms both 360ms}
+.lm-hero-feature{animation:lm-hero-rise 530ms both 190ms}
+.lm-hero-description{animation:lm-hero-rise 430ms both 290ms}
+}
+@keyframes lm-hero-rise{from{transform:translateY(10px)}to{transform:none}}
+@media(max-width:850px){.lm-hero-status{justify-content:flex-start}.lm-hero-layout{padding-bottom:22px}}
+@media(prefers-reduced-motion:reduce){
+.lm-hero-copy::before{display:none}
+.lm-hero-image-stage img,.lm-hero-actions,.lm-hero-feature,.lm-hero-description{animation:none}
+}
