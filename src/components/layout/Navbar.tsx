@@ -16,7 +16,7 @@ interface NavbarProps {
 }
 const sections = [{id:"accueil",title:"Accueil"},{id:"projets",title:"Projets"},{id:"competences",title:"Compétences"},{id:"a-propos",title:"À propos"},{id:"parcours",title:"Parcours"}];
 const sectionIds=sections.map(s=>s.id);
-const colorLabels:Record<Accent,string>={mint:"Menthe",blue:"Azur",violet:"Lavande",orange:"Cuivre"};
+const colorLabels:Record<Accent,string>={mint:"Or — THE WORLD DEFENCE",blue:"Corail — AniVault",violet:"Ciel — THE WORLD DEFENCE",orange:"Vert — Eco’Répare"};
 export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChange,onAccentChange,rainIntensity,onRainChange}:NavbarProps)=>{
  const [menu,setMenu]=useState(false);
  const [compact,setCompact]=useState(false);
