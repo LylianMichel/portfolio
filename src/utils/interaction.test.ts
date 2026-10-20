@@ -4,10 +4,10 @@ import { copyEmail } from "./copyEmail";
 import { filterProjects } from "./filterProjects";
 
 describe("personnalisation",()=>{
- it("retient le thème sauvegardé",()=>expect(initialAppearance({getItem:()=> "contrast"},false)).toBe("contrast"));
- it("respecte le système au premier affichage",()=>expect(initialAppearance({getItem:()=>null},true)).toBe("light"));
+ it("ignore les anciens thèmes enregistrés",()=>expect(initialAppearance({getItem:()=> "contrast"},false)).toBe("matrix"));
+ it("reste Matrix même si le système est clair",()=>expect(initialAppearance({getItem:()=>null},true)).toBe("matrix"));
  it("retient un accent valide et rejette les valeurs inconnues",()=>{expect(initialAccent({getItem:()=> "blue"})).toBe("blue");expect(initialAccent({getItem:()=> "unknown"})).toBe("mint");});
- it("déclare toutes les combinaisons",()=>{expect(appearances).toHaveLength(4);expect(accents).toHaveLength(4);});
+ it("déclare toutes les combinaisons",()=>{expect(appearances).toEqual(["matrix"]);expect(accents).toHaveLength(4);});
 });
 describe("copie d'email",()=>{
  it("copie une adresse avec succès",async()=>{const writeText=vi.fn().mockResolvedValue(undefined);expect(await copyEmail("bonjour@example.fr",{writeText})).toBe(true);expect(writeText).toHaveBeenCalledWith("bonjour@example.fr");});
@@ -37,7 +37,7 @@ it("ne déclenche pas le pixel si la seconde touche gauche est oubliée",()=>{
  it("les touches non pertinentes n'altèrent pas la séquence",()=>expect(appendShortcut("g","Enter")).toBe("g"));
 });
 describe("robustesse des préférences et du presse-papiers",()=>{
- it("thème système désactivé = sombre",()=>expect(initialAppearance({getItem:()=>null},false)).toBe("dark"));
+ it("reste Matrix même si le système est sombre",()=>expect(initialAppearance({getItem:()=>null},false)).toBe("matrix"));
  it("accent orange est restauré",()=>expect(initialAccent({getItem:()=> "orange"})).toBe("orange"));
  it("absence d'accès à Storage",()=>expect(initialAccent({getItem:()=>{throw new Error("Denied")}})).toBe("mint"));
  it("copie avec promesse rejetée",async()=>expect(await copyEmail("x@x.fr",{writeText:async()=>{throw new Error("Denied")}})).toBe(false));
