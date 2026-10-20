@@ -2531,3 +2531,23 @@ button{cursor:pointer}
  --lm-ink:#f1fff6;--lm-sub:#c5e7de;--lm-rule:#799c98;
  --lm-accent:#ffd7a8;--lm-accent-ink:#201407;--lm-pair:#a7f6d7
 }
+
+/* Phase 5 — typographie monumentale purement décorative, sans JS. */
+.lm-kinetic-divider{position:relative;overflow:hidden;min-height:clamp(130px,21vw,300px);padding:clamp(20px,4vw,60px) 0;
+ border-block:1px solid var(--lm-rule);isolation:isolate;display:grid;place-items:center}
+.lm-kinetic-type{display:flex;justify-content:center;align-items:center;gap:clamp(7px,1.4vw,24px);
+ white-space:nowrap;color:transparent;-webkit-text-stroke:1px var(--lm-pair);
+ font:800 clamp(2.25rem,10.5vw,13rem)/1 var(--lm-font-display);letter-spacing:-.09em;
+ background:linear-gradient(var(--lm-pair),var(--lm-pair)) left center/0% 100% no-repeat;
+ background-clip:text;-webkit-background-clip:text}
+.lm-kinetic-arrow{font-size:.47em;color:var(--lm-accent);-webkit-text-stroke:0;letter-spacing:0}
+.lm-kinetic-rule{position:absolute;left:var(--lm-gutter);right:var(--lm-gutter);bottom:14px;height:1px;background:var(--lm-rule)}
+.lm-kinetic-divider::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.025;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='2' seed='8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@supports(animation-timeline:view()){
+ @media(min-width:1000px) and (prefers-reduced-motion:no-preference){
+  .lm-kinetic-type{animation:lm-kinetic-fill linear both;animation-timeline:view();animation-range:entry 0% cover 80%}
+ }
+}
+@keyframes lm-kinetic-fill{to{background-size:100% 100%}}
+@media(prefers-reduced-motion:reduce){.lm-kinetic-type{animation:none;background-size:0 100%}}

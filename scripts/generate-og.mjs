@@ -74,7 +74,7 @@ text("BUT INFORMATIQUE - IUT DE LENS",59,517,2,C.sub);
 rect(56,576,626,2,C.rule);text("STAGE - 8 SEMAINES - 12 AVRIL 2027",59,593,2,C.mint);
 rect(741,115,401,385,C.rule);rect(743,117,397,381,C.panel);
 rect(760,133,364,36,C.bg);text("LM / 01",780,144,2,C.mint);
-rect(765,194,354,1,C.rule);text("LM.",806,257,15,C.ink);
+rect(765,194,354,1,C.rule);text("SOURCE",786,253,6,C.ink);text("PLAY",786,339,8,C.pair);
 rect(765,426,354,1,C.rule);text("WEB  /  GAME",782,453,3,C.pair);
 rect(741,517,401,58,C.bg);rect(741,575,401,4,C.pair);text("DES PROJETS CONCRETS",761,537,2,C.sub);
 function crc32(bytes){
