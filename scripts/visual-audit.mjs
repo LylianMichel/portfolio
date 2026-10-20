@@ -185,6 +185,11 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.waitForTimeout(500);
           const rainCanvas=matrixPage.locator(".lm-matrix-rain");
           await record(matrixPage,label,`matrix-${accent}-intense-canvas-only`,rainCanvas);
+          await record(matrixPage,label,`matrix-${accent}-intense-contact`,matrixPage.locator(".lm-chat-page"));
+          await matrixPage.getByRole("button",{name:/Work/}).click();
+          await matrixPage.locator(".lm-hero").waitFor();
+          await record(matrixPage,label,`matrix-${accent}-intense-hero`,matrixPage.locator(".lm-hero"));
+          await record(matrixPage,label,`matrix-${accent}-intense-project`,matrixPage.locator("#anivault"));
           const density=await matrixPage.evaluate(()=>{
             const canvas=document.querySelector(".lm-matrix-rain");
             if(!(canvas instanceof HTMLCanvasElement))return null;
