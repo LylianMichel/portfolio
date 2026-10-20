@@ -2420,10 +2420,10 @@ button{cursor:pointer}
 :root[data-theme="matrix"] .portfolio-app > .lm-main, :root[data-theme="matrix"] .portfolio-app > .lm-footer{position:relative;z-index:1}
 :root[data-theme="matrix"] .lm-matrix-rain{
  position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;
- opacity:.35
+ opacity:.75
 }
-:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="intense"]{opacity:.55}
-:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="soft"]{opacity:.35}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="intense"]{opacity:.9}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="soft"]{opacity:.7}
 :root[data-theme="matrix"] .lm-hero::before{background:radial-gradient(circle,color-mix(in srgb,var(--lm-accent) 8%,transparent),transparent 70%);opacity:.18}
 :root[data-theme="matrix"] .lm-hero::after{opacity:.14}
 :root[data-theme="matrix"] :is(.lm-name,.lm-section-title,.lm-footer-logo){text-shadow:0 0 5px color-mix(in srgb,var(--lm-accent) 15%,transparent)}
