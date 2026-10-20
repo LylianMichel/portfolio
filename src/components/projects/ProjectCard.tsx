@@ -28,7 +28,13 @@ export const ProjectCard=({project,nextProject,featured,index}:{project:Project;
  return <article ref={root} data-active-beat={beat} id={project.id} className={`lm-case ${featured?"lm-case-featured":"lm-case-compact"}`} aria-labelledby={`${project.id}-title`}>
  <div className="lm-case-top"><span className="lm-kicker">{project.type}</span><span className="lm-mono">{project.year}</span></div>
  <div className="lm-case-grid">
-  <div className="lm-case-media"><ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title} sceneIndex={game?beat:undefined}/></ProjectFrame></div>
+  <div className="lm-case-media">
+   <ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title} sceneIndex={game?beat:undefined}/></ProjectFrame>
+   {project.features.length>0&&<aside className="lm-case-evidence" aria-label={`Fonctionnalités de ${project.title}`}>
+    <div className="lm-evidence-head"><span>FONCTIONNALITÉS</span><span aria-hidden="true">↗</span></div>
+    <ul>{project.features.slice(0,3).map((feature,i)=><li key={feature}><span aria-hidden="true">{String(i+1).padStart(2,"0")}</span>{feature}</li>)}</ul>
+   </aside>}
+  </div>
   <div className="lm-case-story" data-case-number={String(index+1).padStart(2,"0")}>
    <div className="lm-case-overline"><span className="lm-kicker">{featured?"ÉTUDE DE CAS":"RÉALISATION"}</span><span className="lm-mono">{project.context??project.type}</span></div>
    <h3 id={`${project.id}-title`} data-case-number={String(index+1).padStart(2,"0")}>{project.title}</h3>

@@ -2618,3 +2618,30 @@ button{cursor:pointer}
  .lm-hero-actions .lm-button{padding-inline:9px;font-size:.75rem}
  .lm-stage-badge{font-size:.59rem}
 }
+
+/* Passe de critique : exploiter le vrai contenu sous la capture sticky.
+   Les fonctionnalités sont lues dans src/data/projects.ts, jamais inventées. */
+.lm-case-evidence{margin-top:18px;border:1px solid var(--lm-rule);background:var(--lm-sunken)}
+.lm-evidence-head{display:flex;justify-content:space-between;align-items:center;padding:12px 17px;border-bottom:1px solid var(--lm-rule);color:var(--lm-accent);font:650 .65rem var(--lm-font-mono);letter-spacing:.08em}
+.lm-evidence-head>span:last-child{color:var(--lm-pair)}
+.lm-case-evidence ul{list-style:none;margin:0;padding:5px 17px 8px}
+.lm-case-evidence li{display:flex;align-items:baseline;gap:15px;border-bottom:1px solid color-mix(in srgb,var(--lm-rule) 60%,transparent);padding:10px 0;color:var(--lm-ink);font-size:clamp(.78rem,1vw,.91rem);line-height:1.48}
+.lm-case-evidence li:last-child{border:0}
+.lm-case-evidence li>span{flex:none;color:var(--lm-pair);font:600 .68rem var(--lm-font-mono);font-variant-numeric:tabular-nums}
+@media(min-width:1081px){.lm-case-media{min-width:0;max-height:calc(100vh - 116px);overflow:auto;scrollbar-width:none}.lm-case-media::-webkit-scrollbar{display:none}}
+@media(max-width:1080px){.lm-case-evidence{display:none}}
+/* Une seule présentation visible de la stack sur petit écran, et des faits plus compacts. */
+@media(max-width:650px){
+ .lm-meta-bar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin:20px 0 10px}
+ .lm-meta-bar>div{padding:12px 0;min-width:0}
+ .lm-meta-bar>div:nth-child(1){grid-column:1;grid-row:1;padding-right:12px;border-right:1px solid var(--lm-rule);border-bottom:1px solid var(--lm-rule)}
+ .lm-meta-bar>div:nth-child(4){grid-column:2;grid-row:1;padding-left:12px;border-bottom:1px solid var(--lm-rule)}
+ .lm-meta-bar>div:nth-child(2){grid-column:1/-1;grid-row:2;border-bottom:1px solid var(--lm-rule)}
+ .lm-meta-bar>div:nth-child(3){grid-column:1/-1;grid-row:3;border:0}
+ .lm-case-tags{display:none}
+ .lm-case-decisions{margin-top:15px}
+ .lm-case-decisions>div{padding:12px 0}
+ .lm-case-actions{margin-top:14px}
+ .lm-next-project{min-height:75px;gap:9px;flex-wrap:wrap}
+ .lm-next-project strong{color:var(--lm-ink);-webkit-text-stroke:0;font-size:clamp(1.2rem,5vw,1.85rem);line-height:1.15;overflow-wrap:anywhere}
+}
