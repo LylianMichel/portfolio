@@ -7,6 +7,13 @@ export const Skills=()=><section id="competences" aria-labelledby="skills-title"
  <div className="lm-skills-overview"><div><strong>{projects.length.toString().padStart(2,"0")}</strong><span>Projets présentés</span></div><div><strong>{count.toString().padStart(2,"0")}</strong><span>Technologies sur ces projets</span></div><div><strong>02</strong><span>Année de BUT Informatique</span></div></div>
  <div className="lm-skill-matrix">{skillGroups.map((group,index)=><article key={group.title} className="lm-skill-row">
   <div className="lm-skill-label"><span className="lm-kicker">{String(index+1).padStart(2,"0")}</span><h3>{group.title}</h3><p>{group.description}</p></div>
-  <ul className="lm-skill-items">{group.skills.map(skill=><li key={skill.name}><Tag>{skill.name}</Tag><span className="sr-only">{skill.description}</span></li>)}</ul>
+  <ul className="lm-skill-items">{group.skills.map(skill=>{
+   const tokens=skill.name.toLowerCase().split(/\s*[\/]\s*/);
+   const project=projects.find(project=>project.technologies.some(tech=>tokens.some(token=>token.length>2&&(tech.toLowerCase().includes(token)||token.includes(tech.toLowerCase())))));
+   return <li key={skill.name} className="lm-skill-entry">
+    {project ? <a className="lm-skill-link" href={`#${project.id}`} aria-label={`${skill.name} — voir le projet ${project.title}`}><Tag>{skill.name}</Tag><span className="lm-skill-project">{project.title} ↗</span></a> : <Tag>{skill.name}</Tag>}
+    <span className="sr-only">{skill.description}</span>
+   </li>;
+  })}</ul>
  </article>)}</div>
  </section>;

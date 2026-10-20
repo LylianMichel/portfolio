@@ -2030,3 +2030,26 @@ button{cursor:pointer}
 @media(max-width:1080px){.lm-meta-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.lm-meta-bar>div:nth-child(2){border-right:0}.lm-meta-bar>div:nth-child(-n+2){border-bottom:1px solid var(--lm-rule)}.lm-case-decisions>div{grid-template-columns:125px minmax(0,1fr)}}
 @media(max-width:480px){.lm-meta-bar>div{padding:13px 8px}.lm-case-decisions>div{grid-template-columns:1fr}.lm-case-decisions>div>span{display:flex;align-items:center;gap:15px}}
 @media(prefers-reduced-motion:reduce){.lm-project-frame .project-image{transform:none;transition:none}}
+
+/* Phase 3 — typographic pacing and technology-to-project affordances. */
+.lm-marquee{margin:clamp(60px,9vw,128px) auto 0;max-width:100%;overflow:hidden;border-block:1px solid var(--lm-rule);padding:16px 0;color:var(--lm-sub);font:500 .76rem var(--lm-font-mono)}
+.lm-marquee-track{display:flex;width:max-content;animation:lm-marquee 65s linear infinite}
+.lm-marquee-group{display:flex;align-items:center;gap:34px;flex:none;padding-right:34px;white-space:nowrap}
+.lm-marquee-group>span{display:flex;align-items:center;gap:34px}
+.lm-marquee-sep{color:var(--lm-accent)}
+@keyframes lm-marquee{to{transform:translateX(-50%)}}
+.lm-marquee:hover .lm-marquee-track,.lm-marquee:focus-within .lm-marquee-track{animation-play-state:paused}
+.lm-marquee:focus-visible{outline:2px solid var(--lm-accent);outline-offset:4px}
+.lm-skill-entry{min-height:42px}
+.lm-skill-link{display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.lm-skill-link .lm-tag{transition:border-color .18s,color .18s}
+.lm-skill-project{opacity:0;max-width:0;overflow:hidden;white-space:nowrap;transform:translateX(-4px);color:var(--lm-accent);font:500 .65rem var(--lm-font-mono);transition:max-width .25s,opacity .25s,transform .25s}
+.lm-skill-link:hover .lm-skill-project,.lm-skill-link:focus-visible .lm-skill-project{opacity:1;max-width:180px;transform:none}
+.lm-skill-link:hover .lm-tag,.lm-skill-link:focus-visible .lm-tag{border-color:var(--lm-accent);color:var(--lm-accent)}
+.lm-journey-active .lm-journey-node{background:var(--lm-accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--lm-accent) 12%,transparent)}
+.lm-section-head{position:relative}
+@supports (animation-timeline:view()){
+ .lm-section-head:after{content:"";position:absolute;bottom:-15px;left:0;right:0;height:1px;background:var(--lm-accent);transform:scaleX(0);transform-origin:left;animation:lm-rule-reveal linear both;animation-timeline:view();animation-range:entry 0% cover 55%}
+}
+@keyframes lm-rule-reveal{to{transform:scaleX(1)}}
+@media(prefers-reduced-motion:reduce){.lm-marquee-track{animation:none}.lm-marquee-group:nth-child(2){display:none}.lm-skill-project{transition:none}.lm-section-head:after{animation:none;transform:scaleX(1)}.lm-journey-active .lm-journey-node{box-shadow:none}}
