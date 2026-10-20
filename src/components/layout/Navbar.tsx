@@ -50,9 +50,9 @@ export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChan
   <a className="lm-logo" href="#work" onClick={event=>{event.preventDefault();change("work");if(theme==="matrix")window.dispatchEvent(new Event("matrix-wave"))}} aria-label="Lylian Michel — Accueil">
     <svg width="35" height="35" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="9" fill="currentColor" opacity=".10"/><path d="M11 15v35h18v-8H20V15zM33 50V15h7l7 13 7-13h2v35h-8V30l-7 12-7-12v20z" fill="currentColor"/></svg>
   </a>
-  <div className="lm-nav-modes" role="group" aria-label="Choisir un espace">
-    <button className={mode==="work"?"selected":""} aria-pressed={mode==="work"} onClick={()=>change("work")}><BriefcaseBusiness size={14} aria-hidden />Work</button>
-    <button className={mode==="contact"?"selected":""} aria-pressed={mode==="contact"} onClick={()=>change("contact")}><Mail size={14} aria-hidden />Chat</button>
+  <div className="lm-nav-modes" role="group" aria-label="Navigation Portfolio et Contact">
+    <button className={mode==="work"?"selected":""} aria-pressed={mode==="work"} onClick={()=>change("work")}><BriefcaseBusiness size={14} aria-hidden />Portfolio</button>
+    <button className={mode==="contact"?"selected":""} aria-pressed={mode==="contact"} onClick={()=>change("contact")}><Mail size={14} aria-hidden />Contact</button>
   </div>
   <SourcePlayToggle experience={experience} onChange={onExperienceChange}/>
   {experience==="play"&&<span className="lm-score" aria-hidden="true">SCORE {String(Math.round(progress)).padStart(3,"0")}</span>}
