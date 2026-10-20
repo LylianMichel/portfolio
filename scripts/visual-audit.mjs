@@ -18,6 +18,56 @@ async function task(label, name, fn) {
   try {const result = await fn();all.push({view:label,task:name,status:"ok",result:result??null});}
   catch(error){all.push({view:label,task:name,status:"failed",error:String(error)});failures++;}
 }
+// An actual animation regression test: compare two Canvas frames without reduced motion.
+{
+ const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:"no-preference"});
+ const page=await context.newPage();
+ await task("matrix-active","le choix Matrix affiche une pluie qui bouge",async()=>{
+   await page.goto(root,{waitUntil:"networkidle"});
+   await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+   const start=Date.now();
+   await page.getByRole("button",{name:"Matrix",exact:true}).click();
+   const rain=page.locator(".lm-matrix-rain");
+   await rain.waitFor({timeout:1600});
+   const startupMs=Date.now()-start;
+   await page.waitForFunction(()=>{
+     const canvas=document.querySelector(".lm-matrix-rain");
+     if(!(canvas instanceof HTMLCanvasElement))return false;
+     const pixels=canvas.getContext("2d")?.getImageData(0,0,canvas.width,canvas.height).data;
+     if(!pixels)return false;
+     for(let i=3;i<pixels.length;i+=4)if(pixels[i]>24)return true;
+     return false;
+   },null,{timeout:2500});
+   const first=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
+   await page.waitForTimeout(360);
+   const second=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
+   if(!first||!second||first===second)throw Error("Le Canvas existe mais la pluie est figée");
+   if(startupMs>1600)throw Error("Affichage trop lent après sélection : "+startupMs+"ms");
+   await page.getByRole("button",{name:"Sombre",exact:true}).click();
+   await rain.waitFor({state:"detached"});
+   return {startupMs,moved:true,removedOnThemeExit:true};
+ });
+ await context.close();
+}
+{
+ const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:"reduce"});
+ await context.addInitScript(()=>{localStorage.setItem("portfolio-theme","matrix");localStorage.setItem("portfolio-matrix-rain","intense")});
+ const page=await context.newPage();
+ await task("matrix-reduced","respecte le mouvement réduit et l'explique",async()=>{
+   await page.goto(root,{waitUntil:"networkidle"});
+   await page.locator(".lm-matrix-rain").waitFor({timeout:4500});
+   await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+   await page.locator(".lm-matrix-reduced-note:visible").waitFor();
+   const rain=page.locator(".lm-matrix-rain");
+   await page.waitForTimeout(300);
+   const first=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
+   await page.waitForTimeout(360);
+   const second=await rain.evaluate(el=>(el instanceof HTMLCanvasElement)?el.toDataURL():"");
+   if(!first||first!==second)throw Error("Animation active malgré prefers-reduced-motion");
+   return {static:true,noticeVisible:true};
+ });
+ await context.close();
+}
 // Hydration is also tested with a SAVED theme before first paint, not only with clicks.
 for(const theme of ["dark","light","contrast","matrix"]){
  const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:"reduce"});
