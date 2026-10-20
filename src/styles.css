@@ -2442,3 +2442,21 @@ button{cursor:pointer}
  :root[data-theme="matrix"] .lm-hero::before{animation:none}
 }
 @media(prefers-contrast:more){:root[data-theme="matrix"] .lm-matrix-rain{display:none}}
+
+/* Phase 2 — composition en trois plans, les noms de stacks proviennent des données réelles. */
+.lm-hero-feature{--scene-x:0px;--scene-y:0px}
+.lm-scene-tech{position:absolute;top:28px;right:0;z-index:4;display:flex;gap:5px;pointer-events:none;
+ transform:translate3d(calc(var(--scene-x)*-.55),calc(var(--scene-y)*-.55),0)}
+.lm-scene-tech span{padding:6px 8px;border:1px solid var(--lm-rule);background:var(--lm-page);
+ color:var(--lm-pair);font:650 .56rem var(--lm-font-mono);letter-spacing:.04em}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .lm-hero-feature .lm-hero-image{transform:translate3d(calc(var(--scene-x)*.18),calc(var(--scene-y)*.18),0);will-change:transform}
+ .lm-hero-feature .lm-hero-secondary{transform:translate3d(calc(var(--scene-x)*.65),calc(var(--scene-y)*.65),0)}
+ .lm-hero-feature .lm-hero-image:hover{transform:translate3d(calc(var(--scene-x)*.18),calc(var(--scene-y)*.18),0) perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y))}
+ .lm-hero-image:hover .lm-hero-image-stage img,.lm-hero-image:focus-visible .lm-hero-image-stage img{animation:lm-real-image-pan 8s ease-in-out infinite alternate}
+}
+@keyframes lm-real-image-pan{from{transform:scale(1.04) translateY(0)}to{transform:scale(1.10) translateY(-4%)}}
+.lm-hero-image-stage{overflow:hidden}
+.lm-hero-image-stage img{transform-origin:center;will-change:auto}
+@media(max-width:850px){.lm-scene-tech{top:24px;right:8px}.lm-scene-tech span{font-size:.5rem;padding:4px 5px}}
+@media(prefers-reduced-motion:reduce){.lm-hero-feature .lm-hero-image,.lm-hero-feature .lm-hero-secondary,.lm-scene-tech{transform:none}.lm-hero-image-stage img{animation:none}}

@@ -19,6 +19,7 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
   const [frameIndex, setFrameIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const spotlightRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<HTMLDivElement>(null);
   const images = anivault?.images ?? [];
   useEffect(() => {
     const update = () => setDays(daysUntilStage(Date.now()));
@@ -55,7 +56,21 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
         <div className="lm-hero-experience"><span className="lm-kicker">CHOISIR UNE EXPÉRIENCE</span><SourcePlayToggle variant="hero" experience={experience} onChange={onExperienceChange}/></div>
         <p className="lm-hero-mobile-stage">STAGE · 8 SEMAINES · 12/04/2027 · {profile.location} <span className="lm-mobile-countdown" aria-live="off">{days === null ? "" : days > 0 ? `J–${days}` : "DATE ATTEINTE"}</span></p>
       </div>
-      <div className="lm-hero-feature" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
+      <div className="lm-hero-feature" ref={sceneRef}
+        onPointerMove={event=>{
+          if(event.pointerType!=="mouse"||!window.matchMedia("(pointer:fine) and (prefers-reduced-motion:no-preference)").matches)return;
+          const box=event.currentTarget.getBoundingClientRect();
+          const x=(event.clientX-box.left)/box.width-.5;
+          const y=(event.clientY-box.top)/box.height-.5;
+          event.currentTarget.style.setProperty("--scene-x",`${(x*14).toFixed(2)}px`);
+          event.currentTarget.style.setProperty("--scene-y",`${(y*14).toFixed(2)}px`);
+        }}
+        onPointerLeave={event=>{
+          event.currentTarget.style.removeProperty("--scene-x");
+          event.currentTarget.style.removeProperty("--scene-y");
+          setPaused(false);
+        }}
+        onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>
         <div className="lm-feature-label"><span>01 / EN DÉVELOPPEMENT</span><span>WEB + GAME</span></div>
         {images[0] && <a href="#anivault" className="lm-hero-image"
  onPointerMove={event=>{
@@ -74,6 +89,7 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
           </span>
           <span className="lm-feature-caption"><strong>ANIVAULT</strong><span>React · Express · Prisma</span></span>
         </a>}
+        {anivault && <div className="lm-scene-tech" aria-hidden="true">{anivault.technologies.filter(t=>["React","Express","Prisma"].includes(t)).map(t=><span key={t}>{t}</span>)}</div>}
         {tower && <a href="#towerdefence" className="lm-hero-secondary">{tower.images[0] && <img src={tower.images[0].src} srcSet={tower.images[0].srcSet} sizes="110px" width={110} height={70} loading="lazy" decoding="async" alt="" aria-hidden="true"/>}<span><span className="lm-kicker">02 / PROJET JEU</span><strong>THE WORLD DEFENCE</strong></span><span className="lm-mono">GODOT <ArrowUpRight size={15} aria-hidden /></span></a>}
       </div>
     </div>
