@@ -6,6 +6,7 @@ import { ProjectFrame } from "./ProjectFrame";
 import { Tag } from "../ui/Tag";
 import { profile } from "../../data/profile";
 import { MetaBar } from "./MetaBar";
+import { projectDecisions } from "../../utils/projectDecisions";
 
 export const ProjectCard=({project,nextProject,featured,index}:{project:Project;nextProject?:Project;featured:boolean;index:number})=>{
  const game=project.id==="towerdefence";
@@ -42,12 +43,8 @@ export const ProjectCard=({project,nextProject,featured,index}:{project:Project;
    <MetaBar project={project}/>
    <div className="lm-case-tags">{project.technologies.slice(0,5).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>
    <div className="lm-case-decisions">
-    {([
-      ["DIFFICULTÉ", project.challenge],
-      ["CHOIX TECHNIQUE", project.technicalApproach],
-      ["RÉSULTAT", project.result],
-    ] as const).filter(([,value])=>Boolean(value)).map(([label,value],i)=>
-      <div key={label}><span><strong>{String(i+1).padStart(2,"0")}</strong> {label}</span><p>{value}</p></div>)}
+    {projectDecisions(project).map(({label,value,number})=>
+      <div key={label}><span><strong>{number}</strong> {label}</span><p>{value}</p></div>)}
    </div>
    <div className="lm-case-actions">
     {project.demoUrl&&<a className="lm-button lm-button--primary" href={project.demoUrl} rel="noopener noreferrer" target="_blank" aria-label={`Tester l’application — ${project.title} (nouvel onglet)`}>Tester l'application <ArrowUpRight size={16} aria-hidden /></a>}
