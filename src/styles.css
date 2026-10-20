@@ -2685,3 +2685,11 @@ button{cursor:pointer}
 @media(prefers-reduced-motion:reduce){
   :root[data-theme="matrix"] .lm-matrix-reduced-note{display:block}
 }
+
+/* Priorité LCP sur petits écrans : la lecture et le projet restent, le décor
+   lumineux non essentiel est supprimé avant le premier rendu. */
+@media(max-width:850px){
+  .lm-hero::before,
+  .lm-hero::after,
+  .lm-hero-copy::before{display:none}
+}
