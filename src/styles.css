@@ -2119,3 +2119,57 @@ button{cursor:pointer}
  opacity:1;visibility:visible;max-width:min(260px,78vw);transform:none
 }
 @media(prefers-reduced-motion:reduce){.lm-skill-project{transition:none}}
+
+/* Direction artistique SOURCE / PLAY II — duo chromatique et profondeur. */
+:root{
+ --lm-page:#0c0d0f;--lm-panel:#15181c;--lm-sunken:#111316;
+ --lm-rule:#42494c;--lm-pair:#ffb4a2;
+}
+:root[data-accent="mint"]{--lm-pair:#ffb4a2}
+:root[data-accent="blue"]{--lm-pair:#ffd17d}
+:root[data-accent="violet"]{--lm-pair:#f1e491}
+:root[data-accent="orange"]{--lm-pair:#7bddf1}
+:root[data-theme="light"]{--lm-page:#f2f1ed;--lm-panel:#fffdfa;--lm-sunken:#e6e9e7}
+:root[data-theme="light"][data-accent="mint"]{--lm-pair:#9b382e}
+:root[data-theme="light"][data-accent="blue"]{--lm-pair:#775000}
+:root[data-theme="light"][data-accent="violet"]{--lm-pair:#605900}
+:root[data-theme="light"][data-accent="orange"]{--lm-pair:#006579}
+:root[data-theme="contrast"]{--lm-page:#000;--lm-panel:#000;--lm-sunken:#000}
+:root[data-theme="contrast"][data-accent="mint"]{--lm-pair:#ffd3ca}
+:root[data-theme="contrast"][data-accent="blue"]{--lm-pair:#ffe2a1}
+:root[data-theme="contrast"][data-accent="violet"]{--lm-pair:#fff49b}
+:root[data-theme="contrast"][data-accent="orange"]{--lm-pair:#adf0ff}
+:root[data-theme="dark"] .lm-hero,
+:root:not([data-theme]) .lm-hero{background:radial-gradient(ellipse at 78% 32%,color-mix(in srgb,var(--lm-accent) 7%,transparent),transparent 61%)}
+.lm-hero{position:relative;isolation:isolate}
+.lm-hero::before{
+ content:"";position:absolute;inset:8% 1% auto auto;width:min(54%,600px);aspect-ratio:1;
+ border-radius:50%;z-index:-1;pointer-events:none;
+ background:radial-gradient(circle,color-mix(in srgb,var(--lm-pair) 13%,transparent),transparent 68%);
+ opacity:.4;animation:lm-atmosphere 20s ease-in-out infinite alternate
+}
+@keyframes lm-atmosphere{to{transform:translate(-20px,14px);opacity:.21}}
+.lm-hero::after{
+ content:"";position:absolute;inset:90px 0 22% 0;z-index:-2;pointer-events:none;
+ background-image:radial-gradient(var(--lm-rule) .7px,transparent .8px);
+ background-size:31px 31px;opacity:.12;
+ mask-image:linear-gradient(to right,transparent 30%,black 100%)
+}
+.lm-hero-feature{position:relative}
+.lm-hero-feature::after{
+ content:"+";position:absolute;right:-12px;top:14px;color:var(--lm-pair);
+ font:600 1.15rem var(--lm-font-mono);pointer-events:none
+}
+.lm-case-top::after{content:"+";color:var(--lm-pair);margin-left:10px}
+.lm-topline::before{content:"SOURCE / PLAY · v2026.10";color:var(--lm-pair);order:3;font-weight:700}
+.lm-feature-label span:last-child,.lm-project-step,.lm-case-decisions>div:nth-child(2)>span strong{color:var(--lm-pair)}
+.lm-section-title{font-weight:800;font-size:clamp(3.35rem,6.8vw,8rem);line-height:.92}
+.lm-section-title em,.lm-projects .lm-section-title em{font-weight:300;color:var(--lm-accent);font-style:italic}
+.lm-name{font-weight:800;font-size:clamp(3.6rem,9vw,10.7rem);font-variation-settings:"wght" 800}
+.lm-name-last{font-weight:300;font-variation-settings:"wght" 300}
+.lm-name-period{color:var(--lm-pair)}
+.lm-meta-bar dt:nth-child(odd),.lm-journey-item .lm-kicker{font-variant-numeric:tabular-nums}
+.lm-hero-status,.lm-project-step,.lm-mono{font-variant-numeric:tabular-nums}
+@media(max-width:850px){.lm-name{font-size:clamp(3.7rem,13vw,8.5rem)}.lm-topline::before{display:none}}
+@media(prefers-reduced-motion:reduce){.lm-hero::before{animation:none;opacity:.24}}
+@media(prefers-contrast:more){.lm-hero::before,.lm-hero::after{display:none}}

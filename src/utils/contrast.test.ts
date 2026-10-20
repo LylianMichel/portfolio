@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-const background={dark:"#151516",light:"#f2f1ed",contrast:"#000000"} as const;
+const background={dark:"#0c0d0f",light:"#f2f1ed",contrast:"#000000"} as const;
 const inks={dark:"#f4f3ee",light:"#1e2522",contrast:"#ffffff"} as const;
 const sub={dark:"#b8b9b8",light:"#4a5650",contrast:"#ffffff"} as const;
 const accent={
@@ -19,5 +19,20 @@ describe("contrastes de texte WCAG AA",()=>{
   for(const color of accent[theme]){
    it(`accent ${color} lisible sur ${theme}`,()=>{expect(ratio(color,background[theme])).toBeGreaterThanOrEqual(4.5);expect(ratio(foreground[theme],color)).toBeGreaterThanOrEqual(4.5);});
   }
+ }
+});
+
+const secondaryPairs={
+ dark:["#ffb4a2","#ffd17d","#f1e491","#7bddf1"],
+ light:["#9b382e","#775000","#605900","#006579"],
+ contrast:["#ffd3ca","#ffe2a1","#fff49b","#adf0ff"]
+} as const;
+describe("couleurs complémentaires SOURCE / PLAY, 4 paires × 3 thèmes",()=>{
+ for(const theme of ["dark","light","contrast"] as const){
+   for(const color of secondaryPairs[theme]){
+     it(`secondaire ${color} est lisible dans ${theme}`,()=>{
+       expect(ratio(color,background[theme])).toBeGreaterThanOrEqual(4.5);
+     });
+   }
  }
 });
