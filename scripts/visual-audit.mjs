@@ -92,7 +92,7 @@ for(const theme of ["dark","light","contrast","matrix"]){
      await tab.waitForTimeout(250);
      const before=await rain.evaluate(element=>(element instanceof HTMLCanvasElement)?element.toDataURL():"");
      await tab.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-     await tab.getByRole("button",{name:"Azur",exact:true}).click();
+     await tab.getByRole("button",{name:"Corail — AniVault",exact:true}).click();
      await tab.waitForTimeout(200);
      const after=await rain.evaluate(element=>(element instanceof HTMLCanvasElement)?element.toDataURL():"");
      if(!before||before===after)throw Error("La palette du Canvas est figée malgré le changement d'accent");
@@ -193,7 +193,7 @@ for (const width of [390,768,1024,1440]) {
   if(width===390||width===1440){
     await task(label,"SOURCE PLAY × Matrix × 4 accents axe AA",async()=>{
        await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-       const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
+       const chroma=[["mint","Or — THE WORLD DEFENCE"],["blue","Corail — AniVault"],["violet","Ciel — THE WORLD DEFENCE"],["orange","Vert — Eco’Répare"]];
        for(const experience of ["source","play"]){
          const current=await page.evaluate(()=>document.documentElement.dataset.experience);
          if(current!==experience)await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
@@ -205,7 +205,7 @@ for (const width of [390,768,1024,1440]) {
            if(results.violations.length)throw Error(`axe ${experience}/matrix/${accent}: ${results.violations.map(v=>v.id).join(",")}`);
          }
        }
-       await page.getByRole("button",{name:"Menthe",exact:true}).click();
+       await page.getByRole("button",{name:"Or — THE WORLD DEFENCE",exact:true}).click();
        await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
      });
      await task(label,"Matrix × accents captures réelles",async()=>{
@@ -266,10 +266,10 @@ for (const width of [390,768,1024,1440]) {
   }
   await task(label,"navigation Matrix et accents",async()=>{
      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-     await page.getByRole("button",{name:"Azur",exact:true}).click();
+     await page.getByRole("button",{name:"Corail — AniVault",exact:true}).click();
      const values=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent}));
      if(values.theme!=="matrix"||values.accent!=="blue")throw Error(JSON.stringify(values));
-     await page.getByRole("button",{name:"Menthe",exact:true}).click();
+     await page.getByRole("button",{name:"Or — THE WORLD DEFENCE",exact:true}).click();
      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
    });
    if(width===390){
