@@ -4,6 +4,8 @@ import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { ActionButton } from "../components/ui/ActionButton";
 import { NameWave } from "../components/ui/NameWave";
+import { SourcePlayToggle } from "../components/ui/SourcePlayToggle";
+import type { Experience } from "../utils/creative";
 
 const anivault = projects.find((project) => project.id === "anivault");
 const tower = projects.find((project) => project.id === "towerdefence");
@@ -11,7 +13,7 @@ const words = ["applications web", "jeux vidéo", "interfaces"];
 const deadline = new Date("2027-04-12T00:00:00+02:00").getTime();
 export const daysUntilStage = (today: number): number => Math.max(0, Math.ceil((deadline - today) / 86_400_000));
 
-export const Hero = () => {
+export const Hero = ({experience,onExperienceChange}:{experience:Experience;onExperienceChange:(mode:Experience)=>void}) => {
   const [word, setWord] = useState(0);
   const [days, setDays] = useState<number | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
@@ -50,6 +52,7 @@ export const Hero = () => {
         <p className="lm-hero-static">Je développe des applications web et des jeux vidéo.</p>
         <p className="lm-hero-description">Je suis étudiant en deuxième année de BUT Informatique à Lens. En dehors des cours, je travaille notamment sur AniVault, une application web, et sur mon jeu de tower defense réalisé avec Godot.</p>
         <div className="lm-hero-actions"><ActionButton primary href="#projets">Voir mes projets <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download>Télécharger mon CV <Download size={17} aria-hidden /></ActionButton></div>
+        <div className="lm-hero-experience"><span className="lm-kicker">CHOISIR UNE EXPÉRIENCE</span><SourcePlayToggle variant="hero" experience={experience} onChange={onExperienceChange}/></div>
         <p className="lm-hero-mobile-stage">STAGE · 8 SEMAINES · 12/04/2027 · {profile.location} <span className="lm-mobile-countdown" aria-live="off">{days === null ? "" : days > 0 ? `J–${days}` : "DATE ATTEINTE"}</span></p>
       </div>
       <div className="lm-hero-feature" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false); }}>

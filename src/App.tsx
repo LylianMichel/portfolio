@@ -15,20 +15,27 @@ import { AnimatePresence, motion } from "framer-motion";
 import { initialAccent, initialAppearance, type Accent, type Appearance } from "./utils/preferences";
 import type { PortfolioMode } from "./types";
 import { appendShortcut, shortcutAction } from "./utils/keyboard";
+import { flushSync } from "react-dom";
+import { initialExperience, experienceAnnouncement, type Experience } from "./utils/creative";
 
 const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
 const readTheme=():Appearance=>typeof window!=="undefined"?initialAppearance(window.localStorage,window.matchMedia("(prefers-color-scheme: light)").matches):"dark";
 const readAccent=():Accent=>typeof window!=="undefined"?initialAccent(window.localStorage):"mint";
 
+const readExperience=():Experience=>{
+ if(typeof window==="undefined")return "source";
+ try{return initialExperience(window.localStorage)}catch{return "source"}
+};
 const App=()=>{
  const [mode,setMode]=useState<PortfolioMode>("work");
  const [theme,setTheme]=useState<Appearance>(readTheme);
  const [accent,setAccent]=useState<Accent>(readAccent);
+ const [experience,setExperience]=useState<Experience>(readExperience);
  const [notFound,setNotFound]=useState(false);
  const [help,setHelp]=useState(false);
  const [egg,setEgg]=useState("");
  const [pixel,setPixel]=useState(false);
- const previousAccent=useRef<Accent|null>(null);
+
  const sequence=useRef("");
  useEffect(()=>setNotFound(!["/","/index.html"].includes(window.location.pathname)),[]);
  useEffect(()=>{
@@ -38,11 +45,21 @@ const App=()=>{
   const meta=document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":"#151516";
  },[theme]);
+ useEffect(()=>{document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience]);
+ const changeExperience=(next:Experience)=>{
+   if(next===experience)return;
+   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+   const documentWithTransition=document as Document & {startViewTransition?:(update:()=>void)=>unknown};
+   const change=()=>flushSync(()=>setExperience(next));
+   if(!reduced&&typeof documentWithTransition.startViewTransition==="function")documentWithTransition.startViewTransition(change);
+   else change();
+   setEgg(experienceAnnouncement(next));
+ };
  useEffect(()=>{document.documentElement.dataset.accent=accent;try{window.localStorage.setItem("portfolio-accent",accent)}catch{/* Privacy mode */}},[accent]);
  useEffect(()=>{
   if(!pixel)return;
   document.documentElement.dataset.pixel="true";
-  const timeout=window.setTimeout(()=>{setPixel(false);setAccent(previousAccent.current??"mint");previousAccent.current=null;},10000);
+  const timeout=window.setTimeout(()=>{setPixel(false);},10000);
   return()=>{window.clearTimeout(timeout);delete document.documentElement.dataset.pixel;};
  },[pixel]);
  useEffect(()=>{
@@ -66,15 +83,15 @@ const App=()=>{
    sequence.current=appendShortcut(sequence.current,key);
    if(shortcutAction(sequence.current)==="projects"){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
    if(shortcutAction(sequence.current)==="contact"){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
-   if(shortcutAction(sequence.current)==="pixel"){if(!previousAccent.current)previousAccent.current=accent;setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setPixel(true);setEgg("Mode pixel activé pour dix secondes.");sequence.current="";}
+   if(shortcutAction(sequence.current)==="pixel"){setPixel(true);setEgg("Variante rare débloquée pour dix secondes.");sequence.current="";}
   };
   window.addEventListener("keydown",onKey);
   return()=>window.removeEventListener("keydown",onKey);
  },[accent]);
  return <div className="portfolio-app">
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
-  <Navbar mode={mode} theme={theme} accent={accent} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-9}} transition={{duration:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero/><Projects/><Marquee/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
+  <Navbar mode={mode} theme={theme} accent={accent} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
+  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-9}} transition={{duration:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   <span className="sr-only" role="status" aria-live="polite">{egg}</span>
   {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}

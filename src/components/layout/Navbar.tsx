@@ -4,9 +4,12 @@ import { profile } from "../../data/profile";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import type { PortfolioMode } from "../../types";
 import type { Accent, Appearance } from "../../utils/preferences";
+import type { Experience } from "../../utils/creative";
+import { SourcePlayToggle } from "../ui/SourcePlayToggle";
 
 interface NavbarProps {
- mode:PortfolioMode; theme:Appearance; accent:Accent;
+ mode:PortfolioMode; theme:Appearance; accent:Accent; experience:Experience;
+ onExperienceChange:(mode:Experience)=>void;
  onModeChange:(mode:PortfolioMode)=>void;
  onThemeChange:(theme:Appearance)=>void;
  onAccentChange:(accent:Accent)=>void;
@@ -14,7 +17,7 @@ interface NavbarProps {
 const sections = [{id:"accueil",title:"Accueil"},{id:"projets",title:"Projets"},{id:"competences",title:"Compétences"},{id:"a-propos",title:"À propos"},{id:"parcours",title:"Parcours"}];
 const sectionIds=sections.map(s=>s.id);
 const colorLabels:Record<Accent,string>={mint:"Menthe",blue:"Azur",violet:"Lavande",orange:"Cuivre"};
-export const Navbar=({mode,theme,accent,onModeChange,onThemeChange,onAccentChange}:NavbarProps)=>{
+export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChange,onThemeChange,onAccentChange}:NavbarProps)=>{
  const [menu,setMenu]=useState(false);
  const [compact,setCompact]=useState(false);
  const [progress,setProgress]=useState(0);
@@ -51,6 +54,8 @@ export const Navbar=({mode,theme,accent,onModeChange,onThemeChange,onAccentChang
     <button className={mode==="work"?"selected":""} aria-pressed={mode==="work"} onClick={()=>change("work")}><BriefcaseBusiness size={14} aria-hidden />Work</button>
     <button className={mode==="contact"?"selected":""} aria-pressed={mode==="contact"} onClick={()=>change("contact")}><Mail size={14} aria-hidden />Chat</button>
   </div>
+  <SourcePlayToggle experience={experience} onChange={onExperienceChange}/>
+  {experience==="play"&&<span className="lm-score" aria-hidden="true">SCORE {String(Math.round(progress)).padStart(3,"0")}</span>}
   <div className="lm-desktop-links">{mode==="work"?sections.slice(1,4).map(item=><a key={item.id} href={`#${item.id}`} aria-current={active===item.id?"location":undefined}>{item.title}</a>):<span className="lm-mono">CONTACT / DISCUSSION</span>}</div>
   <a className="lm-nav-cv" href={profile.cvUrl} download>CV <Download size={14} aria-hidden /><span className="sr-only">PDF, environ 100 Ko</span></a>
   <button className="lm-nav-icon" onClick={()=>setSettings(!settings)} aria-label="Personnaliser l'apparence" aria-expanded={settings}><Settings2 size={18} aria-hidden /></button>

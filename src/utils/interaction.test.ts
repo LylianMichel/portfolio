@@ -42,3 +42,12 @@ describe("robustesse des préférences et du presse-papiers",()=>{
  it("absence d'accès à Storage",()=>expect(initialAccent({getItem:()=>{throw new Error("Denied")}})).toBe("mint"));
  it("copie avec promesse rejetée",async()=>expect(await copyEmail("x@x.fr",{writeText:async()=>{throw new Error("Denied")}})).toBe(false));
 });
+
+import {initialExperience,experienceAnnouncement} from "./creative";
+describe("SOURCE / PLAY",()=>{
+ it("démarre en SOURCE sans préférence",()=>expect(initialExperience({getItem:()=>null})).toBe("source"));
+ it("restaure PLAY",()=>expect(initialExperience({getItem:()=> "play"})).toBe("play"));
+ it("ignore un choix invalide",()=>expect(initialExperience({getItem:()=> "bogus"})).toBe("source"));
+ it("protège du stockage bloqué",()=>expect(initialExperience({getItem:()=>{throw Error("Denied")}})).toBe("source"));
+ it("annonce les deux modes",()=>{expect(experienceAnnouncement("play")).toMatch(/PLAY activé/);expect(experienceAnnouncement("source")).toMatch(/SOURCE activé/)});
+});
