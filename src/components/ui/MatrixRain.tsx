@@ -39,7 +39,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     ctx.fillStyle=accent;ctx.fillText(glyph,x,y);
     ctx.globalAlpha=Math.min(.94,.73+near*.12+pulse*.12);
     ctx.fillStyle="#effff0";ctx.fillText(chars[Math.floor(number(chars.length))]??"1",x,y-16);
-    positions[i]=(y+speeds[i]*6.3*force)>height+number(6)?-number(90):y+speeds[i]*6.3*force;
+    positions[i]=(y+(speeds[i]??1)*6.3*force)>height+number(6)?-number(90):y+(speeds[i]??1)*6.3*force;
    }
    ctx.globalAlpha=1;
    frames++;total+=performance.now()-start;

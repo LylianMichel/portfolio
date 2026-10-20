@@ -2411,7 +2411,7 @@ button{cursor:pointer}
 :root[data-theme="matrix"][data-accent="violet"]{--lm-accent:#dec0fc;--lm-accent-ink:#271637}
 :root[data-theme="matrix"][data-accent="orange"]{--lm-accent:#ffc79e;--lm-accent-ink:#35200f}
 :root[data-theme="matrix"] .portfolio-app{position:relative;isolation:isolate;background:transparent}
-:root[data-theme="matrix"] .portfolio-app > :not(.lm-matrix-rain){position:relative;z-index:1}
+:root[data-theme="matrix"] .portfolio-app > .lm-main, :root[data-theme="matrix"] .portfolio-app > .lm-footer{position:relative;z-index:1}
 :root[data-theme="matrix"] .lm-matrix-rain{
  position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none;
  opacity:.13;mask-image:radial-gradient(ellipse 65% 72% at 50% 42%,transparent 5%,#000 90%)
