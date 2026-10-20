@@ -2,7 +2,7 @@ import { deflateSync } from "node:zlib";
 import { writeFile } from "node:fs/promises";
 const width=1200,height=630;
 const pixels=Buffer.alloc(width*height*4);
-const C={bg:[12,13,15],rule:[65,72,75],sub:[184,185,184],ink:[244,243,238],mint:[166,230,197],panel:[21,24,28],pair:[255,180,162]};
+const C={bg:[12,13,15],rule:[65,72,75],sub:[184,185,184],ink:[244,243,238],mint:[166,230,197],panel:[21,24,28],pair:[255,180,162],matrix:[0,255,65],matrixDim:[36,83,48]};
 function rect(x,y,w,h,color){
  const x1=Math.max(0,Math.round(x)),y1=Math.max(0,Math.round(y));
  for(let yy=y1; yy<Math.min(height,y1+Math.round(h)); yy++)for(let xx=x1;xx<Math.min(width,x1+Math.round(w));xx++){
@@ -64,7 +64,7 @@ rect(0,0,width,height,C.bg);
 for(let x=0;x<width;x+=40)rect(x,0,1,height,[27,29,28]);
 for(let y=0;y<height;y+=40)rect(0,y,width,1,[27,29,28]);
 rect(0,0,12,height,C.pair);
-rect(56,52,12,12,C.mint);text("SOURCE / PLAY",84,51,3,C.mint);
+rect(56,52,12,12,C.mint);text("SOURCE / PLAY / MATRIX",84,51,3,C.mint);
 rect(58,114,625,2,C.rule);rect(661,109,12,12,C.pair);
 text("LYLIAN",59,164,13,C.ink);
 text("MICHEL.",59,289,13,C.ink);
@@ -74,8 +74,10 @@ text("BUT INFORMATIQUE - IUT DE LENS",59,517,2,C.sub);
 rect(56,576,626,2,C.rule);text("STAGE - 8 SEMAINES - 12 AVRIL 2027",59,593,2,C.mint);
 rect(741,115,401,385,C.rule);rect(743,117,397,381,C.panel);
 rect(760,133,364,36,C.bg);text("LM / 01",780,144,2,C.mint);
-rect(765,194,354,1,C.rule);text("SOURCE",786,253,6,C.ink);text("PLAY",786,339,8,C.pair);
-rect(765,426,354,1,C.rule);text("WEB  /  GAME",782,453,3,C.pair);
+rect(765,194,354,1,C.rule);
+for(let x=790;x<1120;x+=44){text("0101",x,199+((x*7)%6)*24,1,C.matrixDim);}
+text("SOURCE",786,253,6,C.ink);text("PLAY",786,339,8,C.pair);
+rect(765,426,354,1,C.rule);text("MATRIX / WEB / GAME",782,453,2,C.matrix);
 rect(741,517,401,58,C.bg);rect(741,575,401,4,C.pair);text("DES PROJETS CONCRETS",761,537,2,C.sub);
 function crc32(bytes){
  let crc=0xffffffff;
@@ -92,4 +94,4 @@ for(let y=0;y<height;y++){raw[y*(width*4+1)]=0;pixels.copy(raw,y*(width*4+1)+1,y
 const ihdr=Buffer.alloc(13);ihdr.writeUInt32BE(width,0);ihdr.writeUInt32BE(height,4);ihdr[8]=8;ihdr[9]=6;
 const png=Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk("IHDR",ihdr),chunk("IDAT",deflateSync(raw,{level:9})),chunk("IEND",Buffer.alloc(0))]);
 await writeFile(new URL("../dist/og-portfolio.png",import.meta.url),png);
-console.log("OG SOURCE / PLAY generated",width,height,png.length);
+console.log("OG SOURCE / PLAY / MATRIX generated",width,height,png.length);
