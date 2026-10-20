@@ -12,13 +12,12 @@ interface NavbarProps {
  onRainChange:(intensity:RainIntensity)=>void;
  onExperienceChange:(mode:Experience)=>void;
  onModeChange:(mode:PortfolioMode)=>void;
- onThemeChange:(theme:Appearance)=>void;
  onAccentChange:(accent:Accent)=>void;
 }
 const sections = [{id:"accueil",title:"Accueil"},{id:"projets",title:"Projets"},{id:"competences",title:"Compétences"},{id:"a-propos",title:"À propos"},{id:"parcours",title:"Parcours"}];
 const sectionIds=sections.map(s=>s.id);
 const colorLabels:Record<Accent,string>={mint:"Menthe",blue:"Azur",violet:"Lavande",orange:"Cuivre"};
-export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChange,onThemeChange,onAccentChange,rainIntensity,onRainChange}:NavbarProps)=>{
+export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChange,onAccentChange,rainIntensity,onRainChange}:NavbarProps)=>{
  const [menu,setMenu]=useState(false);
  const [compact,setCompact]=useState(false);
  const [progress,setProgress]=useState(0);
@@ -65,7 +64,7 @@ export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChan
  {menu&&<div className="lm-mobile-menu"><div className="lm-mobile-list">{sections.map(item=><a key={item.id} href={`#${item.id}`} onClick={()=>{change("work");window.requestAnimationFrame(()=>document.getElementById(item.id)?.scrollIntoView())}}>{item.title}<ArrowUpRight size={15} aria-hidden /></a>)}</div><a href={profile.cvUrl} download>CV · PDF ~100 Ko</a></div>}
  {settings&&<section className="lm-quick-settings" aria-label="Personnalisation">
   <div className="lm-settings-head"><span>APPARENCE</span><button onClick={()=>setSettings(false)} aria-label="Fermer l'apparence"><X size={17}/></button></div>
-  <div role="group" aria-label="Thème" className="lm-settings-choice">{(["dark","light","contrast","matrix"] as Appearance[]).map(t=><button key={t} aria-pressed={theme===t} onClick={()=>onThemeChange(t)}>{({dark:"Sombre",light:"Clair",contrast:"Contraste +",matrix:"Matrix"})[t]}</button>)}</div>
+  <p className="lm-kicker">MATRIX // IDENTITÉ VISUELLE</p>
   <p className="lm-kicker">ACCENT</p><div className="lm-accent-choice" role="group" aria-label="Couleur d'accent">{(["mint","blue","violet","orange"] as Accent[]).map(a=><button key={a} data-swatch={a} aria-label={colorLabels[a]} aria-pressed={accent===a} onClick={()=>onAccentChange(a)}><span/></button>)}</div>
   {theme==="matrix"&&<><p className="lm-kicker lm-rain-label">INTENSITÉ DE LA PLUIE</p><div className="lm-settings-choice lm-rain-options" role="group" aria-label="Intensité de la pluie">{(["off","soft","intense"] as RainIntensity[]).map(r=><button key={r} aria-pressed={rainIntensity===r} onClick={()=>onRainChange(r)}>{({off:"Désactivée",soft:"Douce",intense:"Intense"})[r]}</button>)}</div><p className="lm-matrix-reduced-note" role="status">La pluie reste statique lorsque la réduction des animations est activée dans les réglages du système.</p></>}
  </section>}
