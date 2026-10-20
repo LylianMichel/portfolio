@@ -38,6 +38,20 @@ for(const theme of ["dark","light","contrast","matrix"]){
   if(state.theme!==theme||state.experience!=="play"||!state.image||issues.length)throw Error(JSON.stringify({state,issues}));
   return {theme,experience:state.experience,consoleIssues:0};
  });
+ if(theme==="matrix"){
+   await task("hydration-matrix","accent de la pluie actualisé à chaud",async()=>{
+     const rain=tab.locator(".lm-matrix-rain");
+     await rain.waitFor({timeout:16000});
+     await tab.waitForTimeout(250);
+     const before=await rain.evaluate(element=>(element instanceof HTMLCanvasElement)?element.toDataURL():"");
+     await tab.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+     await tab.getByRole("button",{name:"Azur",exact:true}).click();
+     await tab.waitForTimeout(200);
+     const after=await rain.evaluate(element=>(element instanceof HTMLCanvasElement)?element.toDataURL():"");
+     if(!before||before===after)throw Error("La palette du Canvas est figée malgré le changement d'accent");
+     return {updated:true};
+   });
+ }
  await context.close();
 }
 for (const width of [390,768,1024,1440]) {

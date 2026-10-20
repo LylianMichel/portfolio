@@ -87,6 +87,15 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   const reduce=()=>{reduced=motion.matches||contrast.matches;cancelAnimationFrame(raf);if(reduced){draw(performance.now(),false)}else resume()};
   const move=(event:PointerEvent)=>{if(fine)cursor={x:event.clientX,y:event.clientY}};
   const wave=()=>{waveAt=performance.now()};
+  // Update the accent without remounting the Canvas; redraw when motion is reduced.
+  const refreshPalette=()=>{
+   accent=getComputedStyle(document.documentElement).getPropertyValue("--lm-accent").trim()||"#00ff41";
+   if(reduced)draw(performance.now(),false);
+  };
+  const paletteObserver=new MutationObserver(records=>{
+   if(records.some(record=>record.attributeName==="data-accent"||record.attributeName==="data-pixel"))refreshPalette();
+  });
+  paletteObserver.observe(document.documentElement,{attributes:true,attributeFilter:["data-accent","data-pixel"]});
   const resize=()=>{build();if(reduced)draw(performance.now(),false)};
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(resize):null;
   const sectionObserver=typeof IntersectionObserver!=="undefined"?new IntersectionObserver(entries=>{
@@ -102,7 +111,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   motion.addEventListener("change",reduce);contrast.addEventListener("change",reduce);
   if(fine){window.addEventListener("pointermove",move,{passive:true});window.addEventListener("matrix-wave",wave);}
   if(reduced)draw(performance.now(),false);else resume();
-  return()=>{live=false;cancelAnimationFrame(raf);observer?.disconnect();sectionObserver?.disconnect();
+  return()=>{live=false;cancelAnimationFrame(raf);observer?.disconnect();sectionObserver?.disconnect();paletteObserver.disconnect();
    window.removeEventListener("resize",resize);document.removeEventListener("visibilitychange",visibility);
    motion.removeEventListener("change",reduce);contrast.removeEventListener("change",reduce);
    window.removeEventListener("pointermove",move);window.removeEventListener("matrix-wave",wave);
