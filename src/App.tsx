@@ -36,12 +36,14 @@ const MatrixRain=lazy(()=>import("./components/ui/MatrixRain"));
 const readRain=():RainIntensity=>{
  if(typeof window==="undefined")return "soft";
  const connection=(navigator as Navigator & {connection?:{saveData?:boolean}}).connection;
+ if(window.matchMedia("(prefers-contrast: more)").matches)return "off";
  try{return initialRain(window.localStorage,Boolean(connection?.saveData))}catch{return connection?.saveData?"off":"soft"}
 };
 const App=()=>{
  const [mode,setMode]=useState<PortfolioMode>("work");
  const reducedMotion=useReducedMotion();
  const [mounted,setMounted]=useState(false);
+ const [rainReady,setRainReady]=useState(false);
  const [theme,setTheme]=useState<Appearance>("dark");
  const [accent,setAccent]=useState<Accent>("mint");
  const [experience,setExperience]=useState<Experience>("source");
@@ -65,6 +67,27 @@ const App=()=>{
   if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":theme==="matrix"?"#020a05":"#0c0d0f";
  },[theme,mounted]);
  useEffect(()=>{if(!mounted)return;document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience,mounted]);
+ useEffect(()=>{
+  if(!mounted||theme!=="matrix"||rainIntensity==="off"){setRainReady(false);return;}
+  let cancelled=false,idle=0,timer=0;
+  // The theme colors are immediate, but the Canvas chunk never competes with initial LCP.
+  const start=()=>{
+    const delay=Math.max(0,3250-performance.now());
+    timer=window.setTimeout(()=>{
+      const scheduler=window as Window & {
+        requestIdleCallback?:(callback:()=>void,options?:{timeout:number})=>number;
+      };
+      const makeReady=()=>{if(!cancelled)setRainReady(true)};
+      if(scheduler.requestIdleCallback)idle=scheduler.requestIdleCallback(makeReady,{timeout:2400});
+      else makeReady();
+    },delay);
+  };
+  if(document.readyState==="complete")start();else window.addEventListener("load",start,{once:true});
+  return()=>{
+    cancelled=true;window.clearTimeout(timer);window.removeEventListener("load",start);
+    (window as Window & {cancelIdleCallback?:(id:number)=>void}).cancelIdleCallback?.(idle);
+  };
+ },[mounted,theme,rainIntensity]);
  const changeExperience=(next:Experience)=>{
    if(next===experience)return;
    const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -109,7 +132,7 @@ const App=()=>{
   return()=>window.removeEventListener("keydown",onKey);
  },[accent]);
  return <div className="portfolio-app">
-  {mounted&&theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
+  {mounted&&rainReady&&theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
   <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={reducedMotion?false:{opacity:0,y:9}} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
