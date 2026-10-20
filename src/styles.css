@@ -2324,3 +2324,8 @@ button{cursor:pointer}
  border-radius:4px;padding:10px 13px;font-size:.78rem
 }
 .lm-copy-action button:hover,.lm-copy-action button:focus-visible{background:var(--lm-accent);color:var(--lm-accent-ink)}
+
+/* Stabiliser les géométries du Hero pendant le chargement de la police locale. */
+.lm-hero-secondary{min-height:103px}
+.lm-hero-status>span:nth-child(2){flex:0 0 23ch;min-width:23ch;text-align:center}
+@media(max-width:850px){.lm-hero-secondary{min-height:92px}}
