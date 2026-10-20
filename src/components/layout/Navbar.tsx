@@ -57,6 +57,7 @@ export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChan
   <SourcePlayToggle experience={experience} onChange={onExperienceChange}/>
   {experience==="play"&&<span className="lm-score" aria-hidden="true">SCORE {String(Math.round(progress)).padStart(3,"0")}</span>}
   <div className="lm-desktop-links">{mode==="work"?sections.slice(1,4).map(item=><a key={item.id} href={`#${item.id}`} aria-current={active===item.id?"location":undefined}>{item.title}</a>):<span className="lm-mono">CONTACT / DISCUSSION</span>}</div>
+  <a className="lm-nav-contact" href={`mailto:${profile.email}`} aria-label="Me contacter par e-mail">Me contacter</a>
   <a className="lm-nav-cv" href={profile.cvUrl} download>CV <Download size={14} aria-hidden /><span className="sr-only">PDF, environ 100 Ko</span></a>
   <button className="lm-nav-icon" onClick={()=>setSettings(!settings)} aria-label="Personnaliser l'apparence" aria-expanded={settings}><Settings2 size={18} aria-hidden /></button>
   <button className="lm-nav-icon lm-nav-menu" onClick={()=>setMenu(!menu)} aria-label={menu?"Fermer le menu":"Ouvrir le menu"} aria-expanded={menu}>{menu?<X size={19}/>:<Menu size={19}/>}</button>
