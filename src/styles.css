@@ -2755,3 +2755,16 @@ button{cursor:pointer}
 /* Pixel-art personnel, à échelle fixe et sans animation décorative. */
 .lm-interests li:has(svg){display:flex;align-items:center;gap:12px}
 .lm-interests li svg{flex:none;color:var(--lm-accent)}
+
+/* Palette SOURCE / PLAY inspirée des projets — identité Matrix conservée. */
+:root[data-theme="matrix"]{
+ --lm-accent:#f0b429;--lm-accent-ink:#0e1424;
+}
+:root[data-theme="matrix"][data-accent="mint"]{--lm-accent:#f0b429;--lm-accent-ink:#0e1424}
+:root[data-theme="matrix"][data-accent="blue"]{--lm-accent:#ff6f59;--lm-accent-ink:#0e1424}
+:root[data-theme="matrix"][data-accent="violet"]{--lm-accent:#7fb2ff;--lm-accent-ink:#0e1424}
+:root[data-theme="matrix"][data-accent="orange"]{--lm-accent:#8fd6a5;--lm-accent-ink:#0e1424}
+.lm-accent-choice [data-swatch="mint"] span{background:#f0b429}
+.lm-accent-choice [data-swatch="blue"] span{background:#ff6f59}
+.lm-accent-choice [data-swatch="violet"] span{background:#7fb2ff}
+.lm-accent-choice [data-swatch="orange"] span{background:#8fd6a5}
