@@ -2575,3 +2575,13 @@ button{cursor:pointer}
  .lm-hero::after{opacity:.06}
  .lm-hero-feature .lm-hero-image{will-change:auto}
 }
+
+/* Préréserver la scène mobile : chargement des glyphes et compteur sans poussée verticale. */
+@media(max-width:850px){
+ .lm-hero-copy{min-width:0}
+ .lm-hero-pitch{min-height:2.65em}
+ .lm-hero-mobile-stage{min-height:3.4em}
+ .lm-hero-feature{min-width:0}
+ .lm-hero-image-stage{aspect-ratio:1424 / 730}
+ .lm-hero-image-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+}
