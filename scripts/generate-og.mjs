@@ -2,7 +2,7 @@ import { deflateSync } from "node:zlib";
 import { writeFile } from "node:fs/promises";
 const width=1200,height=630;
 const pixels=Buffer.alloc(width*height*4);
-const C={bg:[21,21,22],rule:[55,61,57],sub:[184,185,184],ink:[244,243,238],mint:[166,230,197],panel:[28,29,29]};
+const C={bg:[12,13,15],rule:[65,72,75],sub:[184,185,184],ink:[244,243,238],mint:[166,230,197],panel:[21,24,28],pair:[255,180,162]};
 function rect(x,y,w,h,color){
  const x1=Math.max(0,Math.round(x)),y1=Math.max(0,Math.round(y));
  for(let yy=y1; yy<Math.min(height,y1+Math.round(h)); yy++)for(let xx=x1;xx<Math.min(width,x1+Math.round(w));xx++){
@@ -63,9 +63,9 @@ function text(message,x,y,scale,color){
 rect(0,0,width,height,C.bg);
 for(let x=0;x<width;x+=40)rect(x,0,1,height,[27,29,28]);
 for(let y=0;y<height;y+=40)rect(0,y,width,1,[27,29,28]);
-rect(0,0,12,height,C.mint);
+rect(0,0,12,height,C.pair);
 rect(56,52,12,12,C.mint);text("SOURCE / PLAY",84,51,3,C.mint);
-rect(58,114,625,2,C.rule);
+rect(58,114,625,2,C.rule);rect(661,109,12,12,C.pair);
 text("LYLIAN",59,164,13,C.ink);
 text("MICHEL.",59,289,13,C.ink);
 rect(56,441,626,2,C.rule);
@@ -75,8 +75,8 @@ rect(56,576,626,2,C.rule);text("STAGE - 8 SEMAINES - 12 AVRIL 2027",59,593,2,C.m
 rect(741,115,401,385,C.rule);rect(743,117,397,381,C.panel);
 rect(760,133,364,36,C.bg);text("LM / 01",780,144,2,C.mint);
 rect(765,194,354,1,C.rule);text("LM.",806,257,15,C.ink);
-rect(765,426,354,1,C.rule);text("WEB  /  GAME",782,453,3,C.mint);
-rect(741,517,401,58,C.bg);text("DES PROJETS CONCRETS",761,537,2,C.sub);
+rect(765,426,354,1,C.rule);text("WEB  /  GAME",782,453,3,C.pair);
+rect(741,517,401,58,C.bg);rect(741,575,401,4,C.pair);text("DES PROJETS CONCRETS",761,537,2,C.sub);
 function crc32(bytes){
  let crc=0xffffffff;
  for(const b of bytes){crc^=b;for(let n=0;n<8;n++)crc=(crc>>>1)^(crc&1?0xedb88320:0);}
