@@ -1,5 +1,5 @@
 export type ShortcutAction = "projects" | "contact" | "pixel" | null;
-export const KONAMI_KEYS = "arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowarrowrightba";
+export const KONAMI_KEYS = ["arrowup","arrowup","arrowdown","arrowdown","arrowleft","arrowright","arrowleft","arrowright","b","a"].join("");
 export function shortcutAction(sequence: string): ShortcutAction {
  if(sequence.endsWith(KONAMI_KEYS))return "pixel";
  if(sequence.endsWith("gp"))return "projects";

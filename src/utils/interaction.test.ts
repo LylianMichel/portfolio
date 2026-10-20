@@ -20,11 +20,19 @@ describe("filtres projets",()=>{
  it("isole le jeu vidéo",()=>expect(filterProjects(items,"game").map(p=>p.id)).toEqual(["towerdefence"]));
 });
 
-import { appendShortcut, shortcutAction, KONAMI_KEYS } from "./keyboard";
+import { appendShortcut, shortcutAction } from "./keyboard";
 describe("raccourcis clavier",()=>{
  it("GP ouvre les projets",()=>expect(shortcutAction(appendShortcut("g","p"))).toBe("projects"));
  it("GC ouvre le contact",()=>expect(shortcutAction(appendShortcut("g","c"))).toBe("contact"));
- it("code Konami exact active le mode pixel",()=>expect(shortcutAction(KONAMI_KEYS)).toBe("pixel"));
+ it("déclenche le mode pixel avec les 10 véritables touches ↑↑↓↓←→←→BA",()=>{
+  const keys = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  const input = keys.reduce((acc, key)=>appendShortcut(acc,key),"");
+  expect(shortcutAction(input)).toBe("pixel");
+});
+it("ne déclenche pas le pixel si la seconde touche gauche est oubliée",()=>{
+  const wrong = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowRight","b","a"];
+  expect(shortcutAction(wrong.reduce((acc,key)=>appendShortcut(acc,key),""))).toBeNull();
+});
  it("séquences non définies ignorées",()=>expect(shortcutAction("abc")).toBeNull());
  it("les touches non pertinentes n'altèrent pas la séquence",()=>expect(appendShortcut("g","Enter")).toBe("g"));
 });
