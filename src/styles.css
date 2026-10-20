@@ -2091,3 +2091,16 @@ button{cursor:pointer}
 /* Final polish: the skip link is visible only on an intentional keyboard focus. */
 .skip-link{top:-90px;transform:none}
 .skip-link:focus,.skip-link:focus-visible{top:12px;transform:none}
+
+/* Phase 0.2 — la fiche est lisible, même quand le rôle est long. */
+@media(min-width:1081px){
+ .lm-meta-bar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .lm-meta-bar>div{padding:16px 15px}
+ .lm-meta-bar>div:nth-child(2){border-right:0}
+ .lm-meta-bar>div:nth-child(-n+2){border-bottom:1px solid var(--lm-rule)}
+}
+@media(max-width:520px){
+ .lm-meta-bar{grid-template-columns:minmax(0,1fr)}
+ .lm-meta-bar>div{border-right:0;border-bottom:1px solid var(--lm-rule);padding:14px 0}
+ .lm-meta-bar>div:last-child{border:0}
+}
