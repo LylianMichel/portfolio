@@ -6,7 +6,7 @@ export const appearances: Appearance[] = ["dark","light","contrast","matrix"];
 export function initialAppearance(storage: Pick<Storage,"getItem"> | null, prefersLight: boolean): Appearance {
  let raw: string | null = null;
  try { raw = storage?.getItem("portfolio-theme") ?? null; } catch { /* Storage is optional. */ }
- return raw==="dark"||raw==="light"||raw==="contrast"||raw==="matrix" ? raw : prefersLight ? "light" : "dark";
+ return raw==="dark"||raw==="light"||raw==="contrast"||raw==="matrix" ? raw : "matrix";
 }
 export function initialAccent(storage: Pick<Storage,"getItem"> | null): Accent {
  let raw: string | null = null;
