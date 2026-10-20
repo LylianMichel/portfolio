@@ -26,9 +26,9 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    const w=innerWidth,h=innerHeight,dpr=Math.min(devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
    ctx.setTransform(dpr,0,0,dpr,0,0);
-   const layers=[{size:10,spacing:w<700?56:34,velocity:.3},{size:14,spacing:w<700?36:22,velocity:.7},{size:20,spacing:w<700?82:52,velocity:1.1}];
+   const layers=[{size:10,spacing:w<700?40:26,velocity:.3},{size:14,spacing:w<700?24:16,velocity:.7},{size:20,spacing:w<700?58:40,velocity:1.1}];
    drops=layers.flatMap(({size,spacing,velocity},layer)=>Array.from({length:Math.ceil(w/spacing)},(_,i)=>({
-    x:i*spacing+rand(spacing),y:rand(h+size*32),velocity:velocity*(.55+rand(1.55)),
+    x:i*spacing+rand(spacing),y:rand(h+size*8),velocity:velocity*(.55+rand(1.55)),
     length:8+Math.floor(rand(33)),size,layer,glyphSeed:Math.floor(rand(glyphs.length))
    })));
    if(quality==="half")drops=drops.filter((_,i)=>i%2===0);
@@ -49,10 +49,10 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     const speed=1+near*.65+wave*1.15+(bursting?.35:0);
     if(advance){drop.y+=drop.velocity*size*.32*speed;if(drop.y-length*size>h)drop.y=-rand(h*.65);}
     ctx.font=`${size}px monospace`;
-    const baseAlpha=layer===0?.16:layer===1?.37:.51;
+    const baseAlpha=layer===0?.21:layer===1?.42:.52;
     for(let i=length-1;i>=0;i--){
      const y=drop.y-i*size;if(y<0||y>h+size)continue;
-     const fade=Math.pow(1-i/length,1.5);
+     const fade=Math.pow(1-i/length,.75);
      const head=i===0;
      // Every frame starts transparent: pixel brightness cannot accumulate between frames.
      ctx.globalAlpha=(head?.52:baseAlpha*fade)*(intensity==="soft"?.72:1);
