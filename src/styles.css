@@ -1959,3 +1959,12 @@ button{cursor:pointer}
 }
 @media(max-width:1080px){.lm-case-media{position:static}}
 
+
+
+/* Phase 0.3 — 44 CSS px sans grossir la typographie. */
+.lm-desktop-links a,.lm-footer-bottom a,.lm-final-links>a,.lm-chat-aside a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-block:10px}
+.lm-footer-bottom a{padding-inline:8px}
+.lm-nav-cv{min-height:44px}
+.lm-nav-icon,.lm-settings-head button,.lm-nav-modes button{min-width:44px;min-height:44px}
+.lm-mobile-list>a,.lm-mobile-menu>a{min-height:44px;align-items:center}
+
