@@ -1,12 +1,10 @@
 export type Accent = "mint" | "blue" | "violet" | "orange";
-export type Appearance = "dark" | "light" | "contrast" | "matrix";
+export type Appearance = "matrix";
 export type RainIntensity = "off" | "soft" | "intense";
 export const accents: Accent[] = ["mint","blue","violet","orange"];
-export const appearances: Appearance[] = ["dark","light","contrast","matrix"];
-export function initialAppearance(storage: Pick<Storage,"getItem"> | null, prefersLight: boolean): Appearance {
- let raw: string | null = null;
- try { raw = storage?.getItem("portfolio-theme") ?? null; } catch { /* Storage is optional. */ }
- return raw==="dark"||raw==="light"||raw==="contrast"||raw==="matrix" ? raw : "matrix";
+export const appearances: Appearance[] = ["matrix"];
+export function initialAppearance(_storage: Pick<Storage,"getItem"> | null, _prefersLight: boolean): Appearance {
+ return "matrix";
 }
 export function initialAccent(storage: Pick<Storage,"getItem"> | null): Accent {
  let raw: string | null = null;
