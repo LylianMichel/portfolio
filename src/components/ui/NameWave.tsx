@@ -5,6 +5,30 @@ export const NameWave=({text,className,light=false}:Props)=>{
  const frame=useRef<number|null>(null);
  const pointer=useRef<{x:number;y:number}|null>(null);
  useEffect(()=>()=>{if(frame.current!==null)cancelAnimationFrame(frame.current)},[]);
+ useEffect(()=>{
+  let timer=0,step=0;
+  const original=Array.from(text);
+  const alphabet="ｱｲｳｴｵｶｷｸｹｺ0123456789{}<>";
+  const elements=()=>Array.from(line.current?.querySelectorAll<HTMLElement>(".lm-letter")??[]);
+  const resetText=()=>{elements().forEach((element,index)=>{element.textContent=original[index]??""})};
+  const decode=()=>{
+   window.clearInterval(timer);resetText();
+   if(document.documentElement.dataset.theme!=="matrix"||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+   step=0;
+   timer=window.setInterval(()=>{
+    step++;
+    elements().forEach((element,index)=>{
+      const real=original[index]??"";
+      element.textContent=step>=10||index<Math.floor(step/10*original.length)||real==="."?real:alphabet[Math.floor(Math.random()*alphabet.length)]??real;
+    });
+    if(step>=10){window.clearInterval(timer);resetText()}
+   },65);
+  };
+  const observer=new MutationObserver(records=>{if(records.some(r=>r.attributeName==="data-theme"))decode()});
+  observer.observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+  decode();
+  return()=>{observer.disconnect();window.clearInterval(timer);resetText()};
+ },[text]);
  const draw=()=>{
   frame.current=null;
   if(!line.current||!pointer.current)return;

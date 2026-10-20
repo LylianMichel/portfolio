@@ -60,3 +60,14 @@ describe("thème Matrix et persistance",()=>{
  it("choisit douce hors économie",()=>expect(initialRain({getItem:()=>null},false)).toBe("soft"));
  it("protège contre le stockage bloqué",()=>expect(initialRain({getItem:()=>{throw Error("Denied")}},false)).toBe("soft"));
 });
+
+import {rainShouldRun,rainQuality} from "./rainPolicy";
+describe("cycle de vie du Canvas Matrix",()=>{
+ it("suspend la boucle quand l'onglet est masqué",()=>expect(rainShouldRun(true,false,false)).toBe(false));
+ it("réduit l'animation à une image statique en mouvement réduit",()=>expect(rainShouldRun(false,true,false)).toBe(false));
+ it("ne relance pas un moteur auto-figé",()=>expect(rainShouldRun(false,false,true)).toBe(false));
+ it("autorise l'animation dans un onglet visible",()=>expect(rainShouldRun(false,false,false)).toBe(true));
+ it("divise les colonnes sur surcharge",()=>expect(rainQuality(14,30)).toBe("halve"));
+ it("fige le Canvas si les colonnes sont déjà réduites",()=>expect(rainQuality(14,6)).toBe("freeze"));
+ it("conserve la qualité sous le budget",()=>expect(rainQuality(9,20)).toBe("keep"));
+});

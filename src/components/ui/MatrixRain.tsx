@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { projects } from "../../data/projects";
 import type { RainIntensity } from "../../utils/preferences";
+import {rainShouldRun,rainQuality} from "../../utils/rainPolicy";
 const chars="ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓ0123456789{}<>/;=#";
 const technologies=[...new Set(projects.flatMap(p=>p.technologies))].filter(s=>["React","Prisma","Godot","TypeScript","Express"].includes(s));
 const number=(max:number)=>Math.random()*max;
@@ -9,7 +10,8 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
  useEffect(()=>{
   const canvas=ref.current;if(!canvas||intensity==="off")return;
   const ctx=canvas.getContext("2d",{alpha:true});if(!ctx)return;
-  const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const preference=matchMedia("(prefers-reduced-motion: reduce)");
+  let reduced=preference.matches;
   const fine=matchMedia("(pointer:fine)").matches;
   let running=true,raf=0,timer=0,last=0,frames=0,total=0,columns=0,spacing=18,frozen=false;
   let positions:number[]=[],speeds:number[]=[],mouse={x:-1000,y:-1000},wave=-2000;
@@ -43,16 +45,17 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    }
    ctx.globalAlpha=1;
    frames++;total+=performance.now()-start;
-   if(frames>=60){if(total/frames>12){if(columns>8){columns=Math.ceil(columns/2);spacing=width/columns;positions=positions.filter((_,i)=>i%2===0);speeds=speeds.filter((_,i)=>i%2===0)}else frozen=true}frames=0;total=0}
+   if(frames>=60){if(rainQuality(total/frames,columns)!=="keep"){if(rainQuality(total/frames,columns)==="halve"){columns=Math.ceil(columns/2);spacing=width/columns;positions=positions.filter((_,i)=>i%2===0);speeds=speeds.filter((_,i)=>i%2===0)}else frozen=true}frames=0;total=0}
   };
-  const loop=(now:number)=>{if(!running||frozen||document.hidden)return;if(now-last>=34){draw(now);last=now}raf=requestAnimationFrame(loop)};
-  const resume=()=>{cancelAnimationFrame(raf);if(!document.hidden&&!frozen&&running){last=0;raf=requestAnimationFrame(loop)}};
+  const loop=(now:number)=>{if(!running||!rainShouldRun(document.hidden,reduced,frozen))return;if(now-last>=34){draw(now);last=now}raf=requestAnimationFrame(loop)};
+  const resume=()=>{cancelAnimationFrame(raf);if(running&&rainShouldRun(document.hidden,reduced,frozen)){last=0;raf=requestAnimationFrame(loop)}};
   const visibility=()=>{if(document.hidden)cancelAnimationFrame(raf);else resume()};
+  const onReduce=()=>{reduced=preference.matches;cancelAnimationFrame(raf);if(reduced){size();draw(0)}else resume()};
   const pointer=(event:MouseEvent)=>{if(fine)mouse={x:event.clientX,y:event.clientY}};
   const changeWave=()=>{wave=performance.now()};
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(()=>{size();if(reduced)draw(0)}):null;
   const init=()=>{if(!running)return;size();observer?.observe(document.documentElement);
-   addEventListener("resize",size);document.addEventListener("visibilitychange",visibility);
+   addEventListener("resize",size);document.addEventListener("visibilitychange",visibility);preference.addEventListener("change",onReduce);
    if(fine){window.addEventListener("pointermove",pointer,{passive:true});window.addEventListener("matrix-wave",changeWave)}
    if(reduced)draw(0);else resume();
   };
@@ -60,7 +63,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   if(document.readyState==="complete")deferred();else window.addEventListener("load",deferred,{once:true});
   return()=>{running=false;clearTimeout(timer);cancelAnimationFrame(raf);observer?.disconnect();
    window.removeEventListener("load",deferred);window.removeEventListener("resize",size);
-   document.removeEventListener("visibilitychange",visibility);
+   document.removeEventListener("visibilitychange",visibility);preference.removeEventListener("change",onReduce);
    window.removeEventListener("pointermove",pointer);window.removeEventListener("matrix-wave",changeWave);
    ctx.clearRect(0,0,canvas.width,canvas.height);
   };
