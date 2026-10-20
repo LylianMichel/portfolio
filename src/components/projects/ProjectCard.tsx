@@ -6,13 +6,13 @@ import { Tag } from "../ui/Tag";
 import { profile } from "../../data/profile";
 import { MetaBar } from "./MetaBar";
 
-export const ProjectCard=({project,nextProject,featured}:{project:Project;nextProject?:Project;featured:boolean})=>{
+export const ProjectCard=({project,nextProject,featured,index}:{project:Project;nextProject?:Project;featured:boolean;index:number})=>{
  const game=project.id==="towerdefence";
  return <article id={project.id} className={`lm-case ${featured?"lm-case-featured":"lm-case-compact"}`} aria-labelledby={`${project.id}-title`}>
  <div className="lm-case-top"><span className="lm-kicker">{project.type}</span><span className="lm-mono">{project.year}</span></div>
  <div className="lm-case-grid">
   <div className="lm-case-media"><ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title}/></ProjectFrame></div>
-  <div className="lm-case-story">
+  <div className="lm-case-story" data-case-number={String(index+1).padStart(2,"0")}>
    <div className="lm-case-overline"><span className="lm-kicker">{featured?"ÉTUDE DE CAS":"RÉALISATION"}</span><span className="lm-mono">{project.context??project.type}</span></div>
    <h3 id={`${project.id}-title`}>{project.title}</h3>
    <p className="lm-case-description">{project.shortDescription}</p>
