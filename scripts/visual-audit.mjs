@@ -169,6 +169,23 @@ for (const width of [390,768,1024,1440]) {
     await record(before,label,"before-contact",before.locator(".contact-page"));
   } catch(error){all.push({view:label,task:"before comparisons",status:"unavailable",reason:String(error)});}
   await before.close();
+  if(width===390||width===1440){
+    const beforeLight=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,colorScheme:"light"});
+    beforeLight.setDefaultTimeout(12000);
+    await beforeLight.addInitScript(()=>{try{window.localStorage.setItem("portfolio-theme","light")}catch{/* no storage */}});
+    try{
+      await beforeLight.goto("https://portfolio-lylian-michel.vercel.app/",{waitUntil:"domcontentloaded",timeout:20000});
+      await beforeLight.waitForTimeout(350);
+      const theme=await beforeLight.evaluate(()=>document.documentElement.dataset.theme);
+      if(theme!=="light")throw new Error("Production light theme not verified: "+theme);
+      await record(beforeLight,label,"before-light-hero",beforeLight.locator(".editorial-hero"));
+      await record(beforeLight,label,"before-light-project",beforeLight.locator("#anivault"));
+      await record(beforeLight,label,"before-light-skills",beforeLight.locator("#competences"));
+      await beforeLight.goto("https://portfolio-lylian-michel.vercel.app/#contact",{waitUntil:"domcontentloaded",timeout:20000});
+      await record(beforeLight,label,"before-light-contact",beforeLight.locator(".contact-page"));
+    }catch(error){all.push({view:label,task:"before light comparisons",status:"unavailable",reason:String(error)})}
+    await beforeLight.close();
+  }
 }
 await browser.close();
 await writeFile(`${output}/audit.json`,JSON.stringify({root,failures,checks:all},null,2));
