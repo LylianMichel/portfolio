@@ -2565,3 +2565,13 @@ button{cursor:pointer}
  --lm-ink:#f1fff6;--lm-sub:#c5e7de;--lm-rule:#799c98;
  --lm-accent:#ffd7a8;--lm-accent-ink:#201407;--lm-pair:#a7f6d7
 }
+
+/* Budget LCP mobile : pas de révélation retardant le nom, ni de calque animé au chargement. */
+@media(max-width:850px){
+ .lm-name-first,.lm-name-last,.lm-hero-feature,.lm-hero-description,.lm-hero-actions,
+ .lm-hero-image-stage img,.lm-word{animation:none}
+ .lm-name-first,.lm-name-last{opacity:1;transform:none}
+ .lm-hero::before{animation:none;opacity:.15}
+ .lm-hero::after{opacity:.06}
+ .lm-hero-feature .lm-hero-image{will-change:auto}
+}
