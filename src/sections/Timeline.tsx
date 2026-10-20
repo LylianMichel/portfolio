@@ -5,7 +5,15 @@ export const Timeline=()=>{
  useEffect(()=>{
   if(typeof IntersectionObserver==="undefined")return;
   const items=document.querySelectorAll<HTMLElement>(".lm-journey-item");
-  const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){const index=Number((entry.target as HTMLElement).dataset.step??"0");setActive(current=>Math.max(current,index));}},{rootMargin:"-18% 0px -50% 0px",threshold:0});
+  const observer=new IntersectionObserver(()=>{
+   const marker=window.innerHeight*.5;
+   let nearest=0,closest=Number.POSITIVE_INFINITY;
+   items.forEach((item,index)=>{
+    const distance=Math.abs(item.getBoundingClientRect().top-marker);
+    if(distance<closest){closest=distance;nearest=index;}
+   });
+   setActive(nearest);
+  },{rootMargin:"-18% 0px -50% 0px",threshold:0});
   items.forEach(item=>observer.observe(item));
   return()=>observer.disconnect();
  },[]);
