@@ -2,7 +2,7 @@ import { skillGroups } from "../data/skills";
 import { projects } from "../data/projects";
 import { Tag } from "../components/ui/Tag";
 export const Skills=()=><section id="competences" aria-labelledby="skills-title" className="lm-section lm-shell lm-skills">
- <div className="lm-section-head"><div><span className="lm-kicker">02 / SAVOIR-FAIRE</span><h2 id="skills-title" className="lm-section-title"><span className="lm-title-word">Des outils.</span><br/><span className="lm-title-word">Des usages.</span></h2></div><p className="lm-section-summary">React et TypeScript pour les interfaces, Express et Laravel côté serveur, Prisma et SQL pour les données. Java et Python complètent mon travail en BUT.</p></div>
+ <div className="lm-section-head"><div><span className="lm-kicker">02 / SAVOIR-FAIRE</span><h2 id="skills-title" className="lm-section-title"><span className="lm-title-word">Ce que je sais</span><br/><span className="lm-title-word">mettre en pratique.</span></h2></div><p className="lm-section-summary">React et TypeScript pour les interfaces, Express et Laravel côté serveur, Prisma et SQL pour les données. Java et Python complètent mon travail en BUT.</p></div>
  
  <div className="lm-skill-matrix">{skillGroups.map((group,index)=><article key={group.title} className="lm-skill-row">
   <div className="lm-skill-label"><span className="lm-kicker">{String(index+1).padStart(2,"0")}</span><h3>{group.title}</h3><p>{group.description}</p></div>
