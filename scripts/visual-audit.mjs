@@ -22,8 +22,23 @@ for (const width of [390,768,1024,1440]) {
   const label=String(width);
   const context=await browser.newContext({viewport:{width,height:width===390?844:900},deviceScaleFactor:1,reducedMotion:"reduce",colorScheme:"dark"});
   const page=await context.newPage();
+  await page.addInitScript(()=>{
+    window.__portfolioShiftLog=[];
+    try{new PerformanceObserver(list=>{
+      for(const entry of list.getEntries()){
+        if(entry.hadRecentInput)continue;
+        window.__portfolioShiftLog.push({value:entry.value,sources:(entry.sources??[]).map(s=>({node:s.node?.outerHTML?.slice(0,220),previous:s.previousRect,current:s.currentRect}))});
+      }
+    }).observe({type:"layout-shift",buffered:true})}catch{/* browser fallback */}
+  });
   page.setDefaultTimeout(12000);
   await task(label,"home",async()=>{await page.goto(root,{waitUntil:"networkidle"}); await page.locator("#intro-title").waitFor();});
+  await task(label,"layout shift attribution",async()=>{
+    await page.waitForTimeout(550);
+    const shifts=await page.evaluate(()=>window.__portfolioShiftLog??[]);
+    await writeFile(`${output}/${label}-layout-shifts.json`,JSON.stringify(shifts,null,2));
+    return {count:shifts.length,total:shifts.reduce((sum,s)=>sum+s.value,0)};
+  });
   await task(label,"hero capture",async()=>await record(page,label,"hero",page.locator(".lm-hero")));
   await task(label,"hiérarchie de la carte jeu",async()=>{
     const card=page.locator(".lm-hero-secondary");
