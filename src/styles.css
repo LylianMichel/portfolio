@@ -1944,3 +1944,9 @@ button{cursor:pointer}
 /* Post-patch audit fixes carried forward from redesign. */
 .lm-nav-wrap:focus-within{transform:translateX(-50%);opacity:1;pointer-events:auto}
 @media (prefers-reduced-motion:reduce){.lm-project-frame:hover{transform:none}}
+
+
+/* Phase 0.1 — La navigation ne laisse plus transparaître les titres derrière. */
+.lm-nav{background:var(--lm-page);border:1px solid var(--lm-rule)}
+.lm-mobile-menu,.lm-quick-settings{background:var(--lm-page);border:1px solid var(--lm-rule)}
+
