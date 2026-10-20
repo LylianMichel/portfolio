@@ -2348,3 +2348,11 @@ button{cursor:pointer}
 /* Correction 0.2 : aligner année et repère + sur le même bord. */
 .lm-case-top>.lm-mono{margin-left:auto;white-space:nowrap}
 .lm-case-top::after{margin-left:3px;flex:none}
+
+/* Correction 0.3 : garder la mini-carte dans les colonnes, sans cacher la capture. */
+.lm-hero-feature{min-width:0}
+.lm-hero-secondary{max-width:100%;box-sizing:border-box}
+@media(min-width:980px){
+ .lm-hero-secondary{width:91%;margin:12px 0 0 auto;transform:translateX(0)}
+}
+@media(max-width:979px){.lm-hero-secondary{width:100%;margin-top:12px}}
