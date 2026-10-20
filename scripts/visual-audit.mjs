@@ -94,6 +94,8 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.waitForTimeout(550);
           await record(matrixPage,label,`matrix-${accent}-hero`,matrixPage.locator(".lm-hero"));
           await record(matrixPage,label,`matrix-${accent}-project`,matrixPage.locator("#anivault"));
+          await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
+          await matrixPage.waitForTimeout(350);
           await matrixPage.getByRole("button",{name:/Chat/}).click();
           await matrixPage.locator(".lm-chat-page").waitFor();
           await record(matrixPage,label,`matrix-${accent}-contact`,matrixPage.locator(".lm-chat-page"));
