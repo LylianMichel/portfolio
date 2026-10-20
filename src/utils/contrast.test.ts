@@ -37,7 +37,7 @@ describe("couleurs complémentaires SOURCE / PLAY, 4 paires × 3 thèmes",()=>{
  }
 });
 
-const matrixColors={page:"#020a05",panel:"#09160e",text:"#d7ffe0",secondary:"#addbb7",pair:"#6ff3ff",accents:["#00ff41","#a0caff","#dec0fc","#ffc79e"]};
+const matrixColors={page:"#020a05",panel:"#09160e",text:"#d7ffe0",secondary:"#addbb7",pair:"#6ff3ff",accents:["#f0b429","#ff6f59","#7fb2ff","#8fd6a5"]};
 function rgbBlend(bg:string,overlay:string,opacity:number):string{
  const a=[1,3,5].map(i=>parseInt(bg.slice(i,i+2),16));
  const b=[1,3,5].map(i=>parseInt(overlay.slice(i,i+2),16));
@@ -50,7 +50,7 @@ describe("Matrix sur SOURCE et PLAY, quatre accents et pluie",()=>{
      expect(ratio(matrixColors.text,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
      expect(ratio(matrixColors.secondary,matrixColors.panel)).toBeGreaterThanOrEqual(4.5);
      expect(ratio(color,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
-     expect(ratio("#001d09",color)).toBeGreaterThanOrEqual(4.5);
+     expect(ratio("#0e1424",color)).toBeGreaterThanOrEqual(4.5);
      expect(ratio(matrixColors.pair,matrixColors.page)).toBeGreaterThanOrEqual(4.5);
    });
   }
