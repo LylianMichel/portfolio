@@ -2727,3 +2727,8 @@ button{cursor:pointer}
 @media(prefers-reduced-motion:reduce){
  :root[data-theme="matrix"] .lm-matrix-rain{opacity:.25}
 }
+
+/* La stack n'est présentée qu'une fois, en tags, y compris sur mobile. */
+.lm-case-tags{display:flex;gap:6px;flex-wrap:wrap}
+.lm-meta-bar{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:650px){.lm-meta-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.lm-meta-bar>div{grid-column:auto!important;grid-row:auto!important;padding:12px!important;border-right:0!important}.lm-meta-bar>div:last-child{grid-column:1/-1!important}}
