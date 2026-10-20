@@ -22,6 +22,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   let reduced=motion.matches||contrast.matches,live=true,raf=0,last=0,frames=0,total=0;
   let quality:"full"|"half"|"frozen"="full",drops:Drop[]=[],accent="#00ff41",waveAt=-10000,burstUntil=-10000;
   let cursor={x:-1000,y:-1000},lastSection="",measureStart=performance.now(),renderedFrames=0;
+  let scrollDirection:1|-1=1,lastScrollY=window.scrollY,simulationTime=0;
   const build=()=>{
    const w=window.innerWidth,h=window.innerHeight,dpr=Math.min(window.devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
@@ -37,6 +38,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   };
   const draw=(now:number,advance:boolean)=>{
    const start=performance.now(),w=window.innerWidth,h=window.innerHeight;
+   if(advance)simulationTime+=scrollDirection*33;
    ctx.clearRect(0,0,w,h);
    const selected=palette(document.documentElement.dataset.pixel==="true",accent);
    const bursting=now<burstUntil;
@@ -47,7 +49,11 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     const waveProgress=(now-waveAt)/800;
     const wave=waveProgress>=0&&waveProgress<=1?Math.max(0,1-Math.abs(x-waveProgress*w)/110):0;
     const speed=1+near*.65+wave*1.15+(bursting?.35:0);
-    if(advance){drop.y+=drop.velocity*size*.32*speed;if(drop.y-length*size>h)drop.y=-rand(h*.65);}
+    if(advance){
+     drop.y+=scrollDirection*drop.velocity*size*.32*speed;
+     if(drop.y-length*size>h)drop.y=-rand(h*.65);
+     else if(drop.y+size<0)drop.y=h+length*size+rand(h*.3);
+    }
     ctx.font=`${size}px monospace`;
     const baseAlpha=layer===0?.32:layer===1?.58:.72;
     for(let i=length-1;i>=0;i--){
@@ -58,7 +64,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
      ctx.globalAlpha=(head?.92:baseAlpha*fade)*(intensity==="soft"?.84:1);
      ctx.fillStyle=head?"#e4ffe7":selected;
      if(head && (layer===2||wave>.35)){ctx.shadowColor=selected;ctx.shadowBlur=3;}
-     let glyph=glyphs[(drop.glyphSeed+i+Math.floor(now/250+i*.8))%glyphs.length]??"0";
+     let glyph=glyphs[(drop.glyphSeed+i+Math.floor(simulationTime/250+i*.8))%glyphs.length]??"0";
      if(!head&&i%19===8&&layer===2&&words.length){glyph=words[(drop.glyphSeed+i)%words.length]?.slice(0,4)??glyph;}
      ctx.fillText(glyph,x,y);
      ctx.shadowBlur=0;
@@ -85,6 +91,11 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   const resume=()=>{cancelAnimationFrame(raf);if(canRun()){last=0;raf=requestAnimationFrame(loop)}};
   const visibility=()=>{if(document.hidden)cancelAnimationFrame(raf);else {draw(performance.now(),false);resume()}};
   const reduce=()=>{reduced=motion.matches||contrast.matches;cancelAnimationFrame(raf);if(reduced){draw(performance.now(),false)}else {draw(performance.now(),false);resume()}};
+  const onScroll=()=>{
+   const current=window.scrollY,delta=current-lastScrollY;
+   if(Math.abs(delta)>2)scrollDirection=delta>0?1:-1;
+   lastScrollY=current;
+  };
   const move=(event:PointerEvent)=>{if(fine)cursor={x:event.clientX,y:event.clientY}};
   const wave=()=>{waveAt=performance.now()};
   // Update the accent without remounting the Canvas; redraw when motion is reduced.
@@ -113,12 +124,13 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   build();observer?.observe(document.documentElement);
   document.querySelectorAll("main section[id]").forEach(section=>sectionObserver?.observe(section));
   window.addEventListener("resize",resize,{passive:true});
+  window.addEventListener("scroll",onScroll,{passive:true});
   document.addEventListener("visibilitychange",visibility);
   motion.addEventListener("change",reduce);contrast.addEventListener("change",reduce);
   if(fine){window.addEventListener("pointermove",move,{passive:true});window.addEventListener("matrix-wave",wave);}
   if(reduced)draw(performance.now(),false);else { draw(performance.now(),false); resume(); }
   return()=>{live=false;cancelAnimationFrame(raf);observer?.disconnect();sectionObserver?.disconnect();paletteObserver.disconnect();
-   window.removeEventListener("resize",resize);document.removeEventListener("visibilitychange",visibility);
+   window.removeEventListener("resize",resize);window.removeEventListener("scroll",onScroll);document.removeEventListener("visibilitychange",visibility);
    motion.removeEventListener("change",reduce);contrast.removeEventListener("change",reduce);
    window.removeEventListener("pointermove",move);window.removeEventListener("matrix-wave",wave);
    ctx.clearRect(0,0,canvas.width,canvas.height);delete window.__matrixStats;
