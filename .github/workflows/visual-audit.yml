@@ -6,6 +6,10 @@ on:
   push:
     branches: [redesign]
 
+concurrency:
+  group: portfolio-visual-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
