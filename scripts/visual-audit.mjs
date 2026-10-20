@@ -10,6 +10,7 @@ const all = [];
 let failures = 0;
 async function record(page, label, name, target) {
   try {
+    await page.evaluate(()=>{const element=document.activeElement;if(element instanceof HTMLElement)element.blur();});
     await target.screenshot({path:`${output}/${label}-${name}.png`,animations:"disabled",timeout:20000});
   } catch (error) {all.push({view:label,task:`capture ${name}`,error:String(error)});failures++;}
 }
