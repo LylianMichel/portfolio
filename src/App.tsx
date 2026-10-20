@@ -26,6 +26,8 @@ const App=()=>{
  const [notFound,setNotFound]=useState(false);
  const [help,setHelp]=useState(false);
  const [egg,setEgg]=useState("");
+ const [pixel,setPixel]=useState(false);
+ const previousAccent=useRef<Accent|null>(null);
  const sequence=useRef("");
  useEffect(()=>setNotFound(!["/","/index.html"].includes(window.location.pathname)),[]);
  useEffect(()=>{
@@ -36,6 +38,12 @@ const App=()=>{
   if(meta)meta.content=theme==="light"?"#f2f1ed":theme==="contrast"?"#000000":"#151516";
  },[theme]);
  useEffect(()=>{document.documentElement.dataset.accent=accent;try{window.localStorage.setItem("portfolio-accent",accent)}catch{/* Privacy mode */}},[accent]);
+ useEffect(()=>{
+  if(!pixel)return;
+  document.documentElement.dataset.pixel="true";
+  const timeout=window.setTimeout(()=>{setPixel(false);setAccent(previousAccent.current??"mint");previousAccent.current=null;},10000);
+  return()=>{window.clearTimeout(timeout);delete document.documentElement.dataset.pixel;};
+ },[pixel]);
  useEffect(()=>{
   const onHash=()=>{setMode(readMode());const hash=window.location.hash.slice(1);
    if(hash&&hash!=="work"&&hash!=="contact"&&hash!=="chat")window.requestAnimationFrame(()=>document.getElementById(hash)?.scrollIntoView());
@@ -58,11 +66,11 @@ const App=()=>{
    if(sequence.current.endsWith("gp")){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
    if(sequence.current.endsWith("gc")){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
    const konami="arrowuparrowuparrowdownarrowdownarrowleftarrowrightarrowarrowrightba";
-   if(sequence.current.endsWith(konami)){setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setEgg("Bonus débloqué : nouvel accent !");sequence.current="";}
+   if(sequence.current.endsWith(konami)){if(!previousAccent.current)previousAccent.current=accent;setAccent(a=>({mint:"blue",blue:"violet",violet:"orange",orange:"mint"} as const)[a]);setPixel(true);setEgg("Mode pixel activé pour dix secondes.");sequence.current="";}
   };
   window.addEventListener("keydown",onKey);
   return()=>window.removeEventListener("keydown",onKey);
- },[]);
+ },[accent]);
  return <div className="portfolio-app">
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
   <Navbar mode={mode} theme={theme} accent={accent} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>

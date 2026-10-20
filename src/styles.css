@@ -2053,3 +2053,17 @@ button{cursor:pointer}
 }
 @keyframes lm-rule-reveal{to{transform:scaleX(1)}}
 @media(prefers-reduced-motion:reduce){.lm-marquee-track{animation:none}.lm-marquee-group:nth-child(2){display:none}.lm-skill-project{transition:none}.lm-section-head:after{animation:none;transform:scaleX(1)}.lm-journey-active .lm-journey-node{box-shadow:none}}
+
+/* Phase 4 — contact et Easter egg facultatif, jamais au détriment du focus. */
+.lm-contact-final .lm-email-address{font-size:clamp(1.7rem,4.2vw,4.9rem);line-height:1.08;letter-spacing:-.05em}
+.lm-chat-main .lm-email-address{font-size:clamp(1.5rem,3vw,3rem)}
+.lm-email-address{color:var(--lm-ink);text-decoration:underline;text-decoration-color:var(--lm-accent);text-underline-offset:.14em;text-decoration-thickness:1px}
+.lm-email-address:hover{color:var(--lm-accent);text-decoration-thickness:2px}
+.lm-magnetic{display:inline-flex;min-height:44px;transition:transform 220ms ease-out}
+.lm-magnetic>.lm-button{min-height:44px}
+@media(prefers-reduced-motion:reduce){.lm-magnetic{transform:none;transition:none}}
+:root[data-pixel="true"]{--lm-radius:0px;--lm-font-display:var(--lm-font-mono)}
+:root[data-pixel="true"] :is(.lm-nav,.lm-button,.lm-project-frame,.lm-tag,.lm-logo,.lm-nav-icon,.lm-about-photo,.lm-frame-game,.lm-quick-settings,.lm-mobile-menu){border-radius:0}
+:root[data-pixel="true"] .lm-name{letter-spacing:-.045em}
+.lm-404{position:relative;overflow:hidden}
+.lm-404::after{content:"404 / ROUTE NOT FOUND";position:absolute;right:2%;bottom:8%;color:var(--lm-rule);font:500 clamp(.72rem,1.2vw,1rem) var(--lm-font-mono);letter-spacing:.08em;pointer-events:none}
