@@ -55,8 +55,8 @@ describe("Matrix sur SOURCE et PLAY, quatre accents et pluie",()=>{
    });
   }
  }
- it("pire pixel blanc à 22% reste lisible sur la pluie",()=>{
-  const worst=rgbBlend(matrixColors.page,"#ffffff",.22);
+ it("pire pixel blanc à 32% (canvas à 55% × glyphes plafonnés) reste lisible",()=>{
+  const worst=rgbBlend(matrixColors.page,"#ffffff",.32);
   expect(ratio(matrixColors.text,worst)).toBeGreaterThanOrEqual(4.5);
   expect(ratio(matrixColors.secondary,worst)).toBeGreaterThanOrEqual(4.5);
  });

@@ -57,8 +57,8 @@ describe("thème Matrix et persistance",()=>{
  it("restaure Matrix depuis Storage",()=>expect(initialAppearance({getItem:()=> "matrix"},false)).toBe("matrix"));
  it("désactive la pluie par défaut avec économie de données",()=>expect(initialRain({getItem:()=>null},true)).toBe("off"));
  it("conserve explicitement l'intensité choisie",()=>expect(initialRain({getItem:()=> "intense"},true)).toBe("intense"));
- it("choisit douce hors économie",()=>expect(initialRain({getItem:()=>null},false)).toBe("soft"));
- it("protège contre le stockage bloqué",()=>expect(initialRain({getItem:()=>{throw Error("Denied")}},false)).toBe("soft"));
+ it("choisit intense hors économie",()=>expect(initialRain({getItem:()=>null},false)).toBe("intense"));
+ it("protège contre le stockage bloqué",()=>expect(initialRain({getItem:()=>{throw Error("Denied")}},false)).toBe("intense"));
 });
 
 import {rainShouldRun,rainQuality} from "./rainPolicy";
