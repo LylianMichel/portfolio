@@ -1,3 +1,9 @@
+/* Police auto-hébergée; optional évite le swap tardif et le CLS des lettres du Hero. */
+@font-face {
+ font-family:"Space Grotesk Variable";
+ src:url("@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2") format("woff2");
+ font-style:normal;font-weight:300 800;font-display:optional;
+}
 @import "tailwindcss";
 
 /* 1. Base legacy (galeries, dialogues, variables historiques) */
