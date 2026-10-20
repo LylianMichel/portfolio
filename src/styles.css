@@ -2173,3 +2173,26 @@ button{cursor:pointer}
 @media(max-width:850px){.lm-name{font-size:clamp(3.7rem,13vw,8.5rem)}.lm-topline::before{display:none}}
 @media(prefers-reduced-motion:reduce){.lm-hero::before{animation:none;opacity:.24}}
 @media(prefers-contrast:more){.lm-hero::before,.lm-hero::after{display:none}}
+
+/* Signature HERO — variable font responsive to mouse; tactile remains static. */
+.lm-name-line{display:block;white-space:nowrap}
+.lm-letter{display:inline-block;transform:translateY(var(--letter-rise,0px));font-variation-settings:"wght" var(--letter-weight,720)}
+.lm-name-last .lm-letter{--letter-weight:320}
+.lm-name-period{color:var(--lm-pair)}
+.lm-hero-pitch .lm-word-window{display:block;min-height:1.25em;width:min(18ch,100%);overflow:hidden}
+.lm-hero-pitch .lm-word{display:block;white-space:nowrap;animation:lm-slot-in .38s cubic-bezier(.22,1,.36,1) both}
+@keyframes lm-slot-in{from{opacity:.25;transform:translateY(85%);clip-path:inset(100% 0 0)}to{opacity:1;transform:translateY(0);clip-path:inset(0)}}
+.lm-hero-copy::before{background:radial-gradient(ellipse 240px 230px at var(--hero-x) var(--hero-y),color-mix(in srgb,var(--lm-pair) 11%,transparent),transparent 75%)}
+.lm-hero-feature{isolation:isolate}
+.lm-hero-image{position:relative;z-index:1;--tilt-x:0deg;--tilt-y:0deg}
+.lm-hero-image-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 38%,color-mix(in srgb,var(--lm-pair) 25%,transparent) 49%,transparent 61%);background-size:220% 100%;background-position:110% 0;opacity:0}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .lm-hero-image:hover{transform:perspective(1000px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));transition:transform 170ms ease-out}
+ .lm-hero-image:hover .lm-hero-image-stage::after{opacity:.5}
+}
+.lm-hero-secondary{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--lm-panel);border:1px solid var(--lm-rule);padding:10px 16px}
+.lm-hero-secondary img{width:clamp(66px,8vw,104px);height:65px;object-fit:cover;flex:none;border:1px solid var(--lm-rule)}
+.lm-hero-secondary strong{font-size:clamp(.83rem,1.1vw,1.15rem)}
+@media(min-width:980px){.lm-hero-secondary{width:90%;margin:-17px -14px 0 auto;box-shadow:-12px 18px 0 -7px var(--lm-sunken)}}
+@media(max-width:500px){.lm-hero-secondary img{width:62px;height:54px}.lm-hero-secondary strong{font-size:.87rem}}
+@media(prefers-reduced-motion:reduce){.lm-letter{transform:none}.lm-hero-image{transform:none}.lm-hero-pitch .lm-word{animation:none}.lm-hero-image-stage::after{display:none}}
