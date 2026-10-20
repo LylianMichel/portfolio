@@ -2693,3 +2693,37 @@ button{cursor:pointer}
   .lm-hero::after,
   .lm-hero-copy::before{display:none}
 }
+
+
+/* Editorial polish: Matrix is the signature, not a glow effect on every block. */
+:root[data-theme="matrix"]{
+ --lm-rule:#294334;
+ --lm-sub:#a0bba7;
+ --lm-panel:#08130d;
+}
+:root[data-theme="matrix"] .lm-nav{
+ box-shadow:0 10px 26px rgba(0,0,0,.2);
+ border-color:var(--lm-rule);
+}
+:root[data-theme="matrix"] :is(.lm-name,.lm-section-title,.lm-footer-logo){
+ text-shadow:none;
+}
+:root[data-theme="matrix"] .lm-hero::before,
+:root[data-theme="matrix"] .lm-hero::after{opacity:0}
+:root[data-theme="matrix"] .lm-hero-copy{
+ background:linear-gradient(90deg,rgba(2,10,5,.97),rgba(2,10,5,.91) 75%,rgba(2,10,5,.78));
+}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="soft"]{opacity:.46}
+:root[data-theme="matrix"] .lm-matrix-rain[data-intensity="intense"]{opacity:.7}
+:root[data-theme="matrix"] .lm-status-dot{box-shadow:none;animation:none}
+:root[data-theme="matrix"] .lm-scene-tech{display:none}
+:root[data-theme="matrix"] .lm-feature-label,
+:root[data-theme="matrix"] .lm-section-head .lm-kicker{
+ letter-spacing:.08em;
+}
+:root[data-theme="matrix"] :is(.lm-project-frame,.lm-hero-image,.lm-nav,.lm-quick-settings){
+ border-radius:2px;
+}
+@media(prefers-reduced-motion:reduce){
+ :root[data-theme="matrix"] .lm-matrix-rain{opacity:.25}
+}
