@@ -21,7 +21,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   const fine=matchMedia("(pointer: fine)").matches;
   let reduced=motion.matches||contrast.matches,live=true,raf=0,last=0,frames=0,total=0;
   let quality:"full"|"half"|"frozen"="full",drops:Drop[]=[],accent="#00ff41",waveAt=-10000,burstUntil=-10000;
-  let cursor={x:-1000,y:-1000},lastSection="",measureStart=performance.now();
+  let cursor={x:-1000,y:-1000},lastSection="",measureStart=performance.now(),renderedFrames=0;
   const build=()=>{
    const w=window.innerWidth,h=window.innerHeight,dpr=Math.min(window.devicePixelRatio||1,1.5);
    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
@@ -65,15 +65,15 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
     }
    }
    ctx.globalAlpha=1;
-   frames++;total+=performance.now()-start;
+   frames++;renderedFrames++;total+=performance.now()-start;
    if(frames>=60){
     const avg=total/frames;const decision=rainQuality(avg,drops.length);
     if(decision==="halve"&&quality==="full"){drops=drops.filter((_,i)=>i%2===0);quality="half"}
-    else if(decision!=="keep"){quality="half";} // Never freeze a requested animation solely due to a slow sample.
+    // Already reduced to half density: retain motion rather than freezing the canvas.
     const elapsed=Math.max(1,now-measureStart);
-    window.__matrixStats={fps:Math.round(60000/elapsed),averageMs:Math.round(avg*100)/100,
+    window.__matrixStats={fps:Math.round(renderedFrames*1000/elapsed),averageMs:Math.round(avg*100)/100,
       columns:drops.length,quality};
-    frames=0;total=0;measureStart=now;
+    frames=0;renderedFrames=0;total=0;measureStart=now;
    }
   };
   const canRun=()=>live&&rainShouldRun(document.hidden,reduced,quality==="frozen");
@@ -83,8 +83,8 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    raf=requestAnimationFrame(loop);
   };
   const resume=()=>{cancelAnimationFrame(raf);if(canRun()){last=0;raf=requestAnimationFrame(loop)}};
-  const visibility=()=>{if(document.hidden)cancelAnimationFrame(raf);else resume()};
-  const reduce=()=>{reduced=motion.matches||contrast.matches;cancelAnimationFrame(raf);if(reduced){draw(performance.now(),false)}else resume()};
+  const visibility=()=>{if(document.hidden)cancelAnimationFrame(raf);else {draw(performance.now(),false);resume()}};
+  const reduce=()=>{reduced=motion.matches||contrast.matches;cancelAnimationFrame(raf);if(reduced){draw(performance.now(),false)}else {draw(performance.now(),false);resume()}};
   const move=(event:PointerEvent)=>{if(fine)cursor={x:event.clientX,y:event.clientY}};
   const wave=()=>{waveAt=performance.now()};
   // Update the accent without remounting the Canvas; redraw when motion is reduced.
@@ -96,7 +96,13 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    if(records.some(record=>record.attributeName==="data-accent"||record.attributeName==="data-pixel"))refreshPalette();
   });
   paletteObserver.observe(document.documentElement,{attributes:true,attributeFilter:["data-accent","data-pixel"]});
-  const resize=()=>{build();if(reduced)draw(performance.now(),false)};
+  let lastWidth=window.innerWidth,lastHeight=window.innerHeight;
+  const resize=()=>{
+   const width=window.innerWidth,height=window.innerHeight;
+   if(width===lastWidth&&height===lastHeight)return;
+   lastWidth=width;lastHeight=height;
+   build();draw(performance.now(),false);
+  };
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(resize):null;
   const sectionObserver=typeof IntersectionObserver!=="undefined"?new IntersectionObserver(entries=>{
    if(reduced)return;
