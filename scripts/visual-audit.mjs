@@ -180,6 +180,25 @@ for (const width of [390,768,1024,1440]) {
           await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
           await matrixPage.waitForTimeout(300);
           await matrixPage.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+          await matrixPage.getByRole("button",{name:"Intense",exact:true}).click();
+          await matrixPage.locator(".lm-matrix-rain[data-intensity='intense']").waitFor();
+          await matrixPage.waitForTimeout(500);
+          const rainCanvas=matrixPage.locator(".lm-matrix-rain");
+          await record(matrixPage,label,`matrix-${accent}-intense-canvas-only`,rainCanvas);
+          const density=await matrixPage.evaluate(()=>{
+            const canvas=document.querySelector(".lm-matrix-rain");
+            if(!(canvas instanceof HTMLCanvasElement))return null;
+            const context=canvas.getContext("2d");
+            if(!context)return null;
+            const data=context.getImageData(0,0,canvas.width,canvas.height);
+            let visible=0,count=0;
+            for(let y=0;y<canvas.height;y+=3)for(let x=0;x<canvas.width;x+=3){
+              count++;if((data.data[(y*canvas.width+x)*4+3]??0)>30)visible++;
+            }
+            return {width:canvas.width,height:canvas.height,percent:Math.round(visible/count*10000)/100};
+          });
+          await writeFile(`${output}/${label}-matrix-${accent}-coverage.json`,JSON.stringify(density,null,2));
+          if(!density||density.percent===0)throw Error("Rain canvas is empty: "+JSON.stringify(density));
           await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
           if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
         }finally{await contextM.close()}
