@@ -1950,3 +1950,12 @@ button{cursor:pointer}
 .lm-nav{background:var(--lm-page);border:1px solid var(--lm-rule)}
 .lm-mobile-menu,.lm-quick-settings{background:var(--lm-page);border:1px solid var(--lm-rule)}
 
+
+
+/* Phase 0.2 — Le visuel reste près des décisions techniques. */
+@media(min-width:1081px){
+ .lm-case-media{position:sticky;top:100px;align-self:start}
+ .lm-case-grid{align-items:start}
+}
+@media(max-width:1080px){.lm-case-media{position:static}}
+
