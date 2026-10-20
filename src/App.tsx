@@ -19,7 +19,12 @@ import { flushSync } from "react-dom";
 import { initialExperience, experienceAnnouncement, type Experience } from "./utils/creative";
 
 const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
-const readTheme=():Appearance=>typeof window!=="undefined"?initialAppearance(window.localStorage,window.matchMedia("(prefers-color-scheme: light)").matches):"dark";
+const readTheme=():Appearance=>{
+ if(typeof window==="undefined")return "dark";
+ const query=new URLSearchParams(window.location.search).get("theme");
+ if(query==="matrix")return "matrix";
+ try{return initialAppearance(window.localStorage,window.matchMedia("(prefers-color-scheme: light)").matches)}catch{return "dark"}
+};
 const readAccent=():Accent=>typeof window!=="undefined"?initialAccent(window.localStorage):"mint";
 
 const readExperience=():Experience=>{

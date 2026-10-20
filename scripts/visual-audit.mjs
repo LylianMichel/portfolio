@@ -48,6 +48,62 @@ for (const width of [390,768,1024,1440]) {
     if(dimensions.page>dimensions.screen+1)throw new Error(JSON.stringify(dimensions));
     return dimensions;
   });
+  if(width===390||width===1440){
+    await task(label,"SOURCE PLAY × 4 thèmes × 4 accents axe AA",async()=>{
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+      const themes=[["dark","Sombre"],["light","Clair"],["contrast","Contraste +"],["matrix","Matrix"]];
+      const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
+      for(const experience of ["source","play"]){
+        const current=await page.evaluate(()=>document.documentElement.dataset.experience);
+        if(current!==experience){
+          await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
+          await page.waitForTimeout(700);
+        }
+        for(const [theme,labelTheme] of themes){
+          await page.getByRole("button",{name:labelTheme,exact:true}).click();
+          for(const [accent,labelAccent] of chroma){
+            await page.getByRole("button",{name:labelAccent,exact:true}).click();
+            const data=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,experience:document.documentElement.dataset.experience}));
+            if(data.theme!==theme||data.accent!==accent||data.experience!==experience)throw Error(JSON.stringify(data));
+            const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+            if(results.violations.length)throw Error(`axe ${experience}/${theme}/${accent}: ${results.violations.map(v=>v.id).join(",")}`);
+            if((theme==="dark"||theme==="light")&&accent==="mint"){
+              await record(page,label,`${experience}-${theme}-hero`,page.locator(".lm-hero"));
+              await record(page,label,`${experience}-${theme}-project`,page.locator("#anivault"));
+              await record(page,label,`${experience}-${theme}-skills`,page.locator("#competences"));
+            }
+          }
+        }
+      }
+      await page.getByRole("button",{name:"Sombre",exact:true}).click();
+      await page.getByRole("button",{name:"Menthe",exact:true}).click();
+      await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+    });
+    await task(label,"Matrix × accents captures réelles",async()=>{
+      const themes=["mint","blue","violet","orange"];
+      for(const accent of themes){
+        const contextM=await browser.newContext({viewport:{width,height:width===390?844:900},colorScheme:"dark",reducedMotion:"reduce"});
+        await contextM.addInitScript((a)=>{localStorage.setItem("portfolio-theme","matrix");localStorage.setItem("portfolio-accent",a);localStorage.setItem("portfolio-matrix-rain","soft")},accent);
+        const matrixPage=await contextM.newPage();
+        matrixPage.setDefaultTimeout(12000);
+        try{
+          await matrixPage.goto(root,{waitUntil:"networkidle"});
+          await matrixPage.locator("html[data-theme='matrix']").waitFor();
+          await matrixPage.locator(".lm-matrix-rain").waitFor();
+          await matrixPage.waitForTimeout(550);
+          await record(matrixPage,label,`matrix-${accent}-hero`,matrixPage.locator(".lm-hero"));
+          await record(matrixPage,label,`matrix-${accent}-project`,matrixPage.locator("#anivault"));
+          await matrixPage.getByRole("button",{name:/Chat/}).click();
+          await matrixPage.locator(".lm-chat-page").waitFor();
+          await record(matrixPage,label,`matrix-${accent}-contact`,matrixPage.locator(".lm-chat-page"));
+          await matrixPage.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+          await matrixPage.getByRole("button",{name:"Sombre",exact:true}).click();
+          if(await matrixPage.locator(".lm-matrix-rain").count()!==0)throw Error("Canvas Matrix encore monté après changement de thème");
+        }finally{await contextM.close()}
+      }
+    });
+  }
   await task(label,"navigation contrast themes",async()=>{
     await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
     await page.getByRole("button",{name:"Clair",exact:true}).click();
