@@ -47,14 +47,14 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
     <div className="lm-topline"><span>PORTFOLIO — 2026</span><span>BUT Informatique · IUT de Lens</span></div>
     <div className="lm-hero-layout">
       <div className="lm-hero-copy" ref={spotlightRef} onPointerMove={onPointerMove}>
-        <p className="lm-kicker">Développeur web & jeux vidéo</p>
+        <div className="lm-hero-eyebrow"><p className="lm-kicker">Développeur web & jeux vidéo</p><span className="lm-stage-badge"><span aria-hidden="true" className="lm-stage-indicator"/>STAGE · 8 SEMAINES · 12/04/2027</span></div>
         <h1 id="intro-title" className="lm-name" aria-label={profile.name}><NameWave text="Lylian" className="lm-name-first" /><NameWave text="Michel." className="lm-name-last" light /></h1>
         <p className="lm-hero-pitch">Je développe des <span className="lm-word-window"><span className="lm-word" key={word}>{words[word]}<span className="lm-period">.</span></span></span></p>
         <p className="lm-hero-static">Je développe des applications web et des jeux vidéo.</p>
-        <p className="lm-hero-description">Je suis étudiant en deuxième année de BUT Informatique à Lens. En dehors des cours, je travaille notamment sur AniVault, une application web, et sur mon jeu de tower defense réalisé avec Godot.</p>
-        <div className="lm-hero-actions"><ActionButton primary href="#projets">Voir mes projets <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download>Télécharger mon CV <Download size={17} aria-hidden /></ActionButton></div>
+        <p className="lm-hero-description">Étudiant en deuxième année de BUT Informatique à Lens, je développe AniVault pour le web et THE WORLD DEFENCE avec Godot, en parallèle des cours.</p>
+        <div className="lm-hero-actions"><ActionButton primary href="#projets"><span className="lm-action-long">Voir mes projets</span><span className="lm-action-short">Projets</span> <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download><span className="lm-action-long">Télécharger mon CV</span><span className="lm-action-short">Mon CV</span> <Download size={17} aria-hidden /></ActionButton></div>
         <div className="lm-hero-experience"><span className="lm-kicker">CHOISIR UNE EXPÉRIENCE</span><SourcePlayToggle variant="hero" experience={experience} onChange={onExperienceChange}/></div>
-        <p className="lm-hero-mobile-stage">STAGE · 8 SEMAINES · 12/04/2027 · {profile.location} <span className="lm-mobile-countdown" aria-live="off">{days === null ? "" : days > 0 ? `J–${days}` : "DATE ATTEINTE"}</span></p>
+        <p className="lm-hero-mobile-stage"><span>{days === null ? "STAGE À PARTIR DU 12 AVRIL 2027" : days > 0 ? `J–${days} AVANT LE STAGE` : "DATE DE DÉBUT ATTEINTE"}</span><span>{profile.location}</span></p>
       </div>
       <div className="lm-hero-feature" ref={sceneRef}
         onPointerMove={event=>{
