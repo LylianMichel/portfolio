@@ -42,9 +42,12 @@ export const ProjectCard=({project,nextProject,featured,index}:{project:Project;
    <MetaBar project={project}/>
    <div className="lm-case-tags">{project.technologies.slice(0,5).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>
    <div className="lm-case-decisions">
-    {project.challenge&&<div><span><strong>01</strong> DIFFICULTÉ</span><p>{project.challenge}</p></div>}
-    {project.technicalApproach&&<div><span><strong>02</strong> CHOIX TECHNIQUE</span><p>{project.technicalApproach}</p></div>}
-    {project.result&&<div><span><strong>03</strong> RÉSULTAT</span><p>{project.result}</p></div>}
+    {([
+      ["DIFFICULTÉ", project.challenge],
+      ["CHOIX TECHNIQUE", project.technicalApproach],
+      ["RÉSULTAT", project.result],
+    ] as const).filter(([,value])=>Boolean(value)).map(([label,value],i)=>
+      <div key={label}><span><strong>{String(i+1).padStart(2,"0")}</strong> {label}</span><p>{value}</p></div>)}
    </div>
    <div className="lm-case-actions">
     {project.demoUrl&&<a className="lm-button lm-button--primary" href={project.demoUrl} rel="noopener noreferrer" target="_blank" aria-label={`Tester l’application — ${project.title} (nouvel onglet)`}>Tester l'application <ArrowUpRight size={16} aria-hidden /></a>}
