@@ -5,6 +5,7 @@ export const useMatrixSectionDecode=()=>{
  useEffect(()=>{
   const reduced=matchMedia("(prefers-reduced-motion: reduce)");
   const complete=new WeakSet<HTMLElement>();
+  const active=new Map<HTMLElement,number>();
   const timers=new Set<number>();
   const symbols="ｱｶｻｼｽｾｿﾀﾁﾂﾃﾄ0123456789#{};";
   const headings=Array.from(document.querySelectorAll<HTMLElement>(".lm-section-title .lm-title-word"));
@@ -12,13 +13,20 @@ export const useMatrixSectionDecode=()=>{
    if(document.documentElement.dataset.theme!=="matrix"||reduced.matches)return;
    for(const entry of entries){
     const el=entry.target as HTMLElement;
-    if(!entry.isIntersecting||complete.has(el))continue;
+    if(!entry.isIntersecting){
+     complete.delete(el);
+     const running=active.get(el);
+     if(running!==undefined){window.clearInterval(running);timers.delete(running);active.delete(el)}
+     delete el.dataset.decoding;delete el.dataset.scramble;
+     continue;
+    }
+    if(complete.has(el))continue;
     complete.add(el);
     const original=el.textContent??"";
     let step=0;
     const timer=window.setInterval(()=>{
      step++;
-     if(step>=11){window.clearInterval(timer);timers.delete(timer);delete el.dataset.decoding;delete el.dataset.scramble;return}
+     if(step>=11){window.clearInterval(timer);timers.delete(timer);active.delete(el);delete el.dataset.decoding;delete el.dataset.scramble;return}
      const ratio=step/10;
      const count=Math.floor(original.length*ratio);
      el.dataset.decoding="true";
@@ -26,14 +34,14 @@ export const useMatrixSectionDecode=()=>{
       /[\s.!?'·]/.test(ch)||index<count?ch:symbols[Math.floor(Math.random()*symbols.length)]??ch
      ).join("");
     },65);
-    timers.add(timer);
+    timers.add(timer);active.set(el,timer);
    }
   },{threshold:.28}):null;
   const sync=()=>{
    if(!observer)return;
    headings.forEach(el=>observer.unobserve(el));
    if(document.documentElement.dataset.theme==="matrix"&&!reduced.matches){
-    headings.forEach(el=>{if(!complete.has(el))observer.observe(el)});
+    headings.forEach(el=>observer.observe(el));
    }else{
     headings.forEach(el=>{delete el.dataset.scramble;delete el.dataset.decoding});
    }
