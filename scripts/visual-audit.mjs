@@ -353,6 +353,24 @@ for (const width of [390,768,1024,1440]) {
     await beforeLight.close();
   }
 }
+// Non-reduced-motion sample: actual fps and CPU cost per frame after the first 60 draws.
+for(const width of [390,1440]){
+ const sampleContext=await browser.newContext({viewport:{width,height:width===390?844:900},reducedMotion:"no-preference"});
+ await sampleContext.addInitScript(()=>{
+  localStorage.setItem("portfolio-theme","matrix");
+  localStorage.setItem("portfolio-matrix-rain","intense");
+ });
+ const samplePage=await sampleContext.newPage();
+ await task(String(width),"Matrix animation statistics",async()=>{
+  await samplePage.goto(root,{waitUntil:"domcontentloaded"});
+  await samplePage.waitForFunction(()=>Boolean(window.__matrixStats),{timeout:16000});
+  const stats=await samplePage.evaluate(()=>window.__matrixStats);
+  await writeFile(`${output}/${width}-matrix-runtime.json`,JSON.stringify(stats,null,2));
+  if(!stats||stats.fps>30||stats.averageMs>30)throw Error("Canvas frame budget exceeded: "+JSON.stringify(stats));
+  return stats;
+ });
+ await sampleContext.close();
+}
 await browser.close();
 await writeFile(`${output}/audit.json`,JSON.stringify({root,failures,checks:all},null,2));
 for(const item of all){if(item.status==="failed")console.error("[FAIL]",item.view,item.task,item.error);else console.log("[OK]",item.view,item.task,item.status??"");}
