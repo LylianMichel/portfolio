@@ -4,7 +4,7 @@ export const About=()=><section id="a-propos" aria-labelledby="about-title" clas
  <div className="lm-about-grid"><div className="lm-about-copy">
   <p className="lm-about-lead">J’aime construire des interfaces utiles, comprendre leur fonctionnement et améliorer chaque détail.</p>
   <p>Je suis en deuxième année de BUT Informatique à l’IUT de Lens et je vis à Barlin, dans le Pas-de-Calais. Je construis mes projets en parallèle des cours, avec l’envie de progresser en développement web et logiciel.</p>
-  <p>Sérieux, autonome et rigoureux, j’apprécie le travail en équipe. En dehors de mes études, je pratique le volley et m’intéresse à la veille technologique, à l’intelligence artificielle que je suis régulièrement, ainsi qu’à la création de sites web et de jeux vidéo.</p>
+  <p>Sérieux, autonome et rigoureux, j’apprécie le travail en équipe. Mes projets me permettent de mettre en pratique ce que j’apprends en cours.</p>
   <p>Pour mon prochain stage, je souhaite participer à un vrai projet d’équipe, apprendre des retours sur mon code et prendre part aux tests comme aux améliorations de l’expérience utilisateur.</p>
   <div className="lm-interests" aria-labelledby="interests-title"><h3 id="interests-title">Ce que j’aime</h3><ul><li>Le volley</li><li>La veille technologique et l’intelligence artificielle</li><li>Créer des sites web et des jeux vidéo</li></ul></div>
   <div className="lm-seeking"><span className="lm-kicker">CE QUE JE CHERCHE</span>
