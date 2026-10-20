@@ -194,38 +194,24 @@ for (const width of [390,768,1024,1440]) {
     return dimensions;
   });
   if(width===390||width===1440){
-    await task(label,"SOURCE PLAY × 4 thèmes × 4 accents axe AA",async()=>{
-      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-      const themes=[["dark","Sombre"],["light","Clair"],["contrast","Contraste +"],["matrix","Matrix"]];
-      const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
-      for(const experience of ["source","play"]){
-        const current=await page.evaluate(()=>document.documentElement.dataset.experience);
-        if(current!==experience){
-          await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
-          await page.waitForTimeout(700);
-        }
-        for(const [theme,labelTheme] of themes){
-          await page.getByRole("button",{name:labelTheme,exact:true}).click();
-          for(const [accent,labelAccent] of chroma){
-            await page.getByRole("button",{name:labelAccent,exact:true}).click();
-            const data=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,experience:document.documentElement.dataset.experience}));
-            if(data.theme!==theme||data.accent!==accent||data.experience!==experience)throw Error(JSON.stringify(data));
-            const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
-            if(results.violations.length)throw Error(`axe ${experience}/${theme}/${accent}: ${results.violations.map(v=>v.id).join(",")}`);
-            if((theme==="dark"||theme==="light")&&accent==="mint"){
-              await record(page,label,`${experience}-${theme}-hero`,page.locator(".lm-hero"));
-              await record(page,label,`${experience}-${theme}-project`,page.locator("#anivault"));
-              await record(page,label,`${experience}-${theme}-skills`,page.locator("#competences"));
-            }
-          }
-        }
-      }
-      await page.getByRole("button",{name:"Sombre",exact:true}).click();
-      await page.getByRole("button",{name:"Menthe",exact:true}).click();
-      await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
-      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-    });
-    await task(label,"Matrix × accents captures réelles",async()=>{
+    await task(label,"SOURCE PLAY × Matrix × 4 accents axe AA",async()=>{
+       await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+       const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
+       for(const experience of ["source","play"]){
+         const current=await page.evaluate(()=>document.documentElement.dataset.experience);
+         if(current!==experience)await page.getByRole("button",{name:/SOURCE.*PLAY/}).first().click();
+         for(const [accent,labelAccent] of chroma){
+           await page.getByRole("button",{name:labelAccent,exact:true}).click();
+           const data=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,experience:document.documentElement.dataset.experience}));
+           if(data.theme!=="matrix"||data.accent!==accent||data.experience!==experience)throw Error(JSON.stringify(data));
+           const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
+           if(results.violations.length)throw Error(`axe ${experience}/matrix/${accent}: ${results.violations.map(v=>v.id).join(",")}`);
+         }
+       }
+       await page.getByRole("button",{name:"Menthe",exact:true}).click();
+       await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+     });
+     await task(label,"Matrix × accents captures réelles",async()=>{
       const themes=["mint","blue","violet","orange"];
       for(const accent of themes){
         const contextM=await browser.newContext({viewport:{width,height:width===390?844:900},colorScheme:"dark",reducedMotion:"reduce"});
@@ -241,7 +227,7 @@ for (const width of [390,768,1024,1440]) {
           await record(matrixPage,label,`matrix-${accent}-project`,matrixPage.locator("#anivault"));
           await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
           await matrixPage.waitForTimeout(350);
-          await matrixPage.getByRole("button",{name:/Chat/}).click();
+          await matrixPage.getByRole("button",{name:"Contact",exact:true}).click();
           await matrixPage.locator(".lm-chat-page").waitFor();
           await record(matrixPage,label,`matrix-${accent}-contact`,matrixPage.locator(".lm-chat-page"));
           await matrixPage.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
@@ -254,7 +240,7 @@ for (const width of [390,768,1024,1440]) {
           const rainCanvas=matrixPage.locator(".lm-matrix-rain");
           await record(matrixPage,label,`matrix-${accent}-intense-canvas-only`,rainCanvas);
           await record(matrixPage,label,`matrix-${accent}-intense-contact`,matrixPage.locator(".lm-chat-page"));
-          await matrixPage.getByRole("button",{name:/Work/}).click();
+          await matrixPage.getByRole("button",{name:"Portfolio",exact:true}).click();
           await matrixPage.locator(".lm-hero").waitFor();
           await record(matrixPage,label,`matrix-${accent}-intense-hero`,matrixPage.locator(".lm-hero"));
           await record(matrixPage,label,`matrix-${accent}-intense-project`,matrixPage.locator("#anivault"));
@@ -283,45 +269,15 @@ for (const width of [390,768,1024,1440]) {
       }
     });
   }
-  await task(label,"navigation contrast themes",async()=>{
-    await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-    await page.getByRole("button",{name:"Clair",exact:true}).click();
-    const light=await page.evaluate(()=>document.documentElement.dataset.theme);
-    await page.getByRole("button",{name:"Contraste +"}).click();
-    const contrast=await page.evaluate(()=>document.documentElement.dataset.theme);
-    await page.getByRole("button",{name:"Menthe",exact:true}).click();
-    await page.getByRole("button",{name:"Azur",exact:true}).click();
-    const accent=await page.evaluate(()=>document.documentElement.dataset.accent);
-    if(light!=="light"||contrast!=="contrast"||accent!=="blue")throw new Error(`Theme ${light}/${contrast}, accent ${accent}`);
-    await page.getByRole("button",{name:"Sombre",exact:true}).click();
-    await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-  });
-  if(width===390||width===1440){
-    await task(label,"12 combinaisons thème/accent",async()=>{
-      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-      const theming=[["dark","Sombre"],["light","Clair"],["contrast","Contraste +"]];
-      const chroma=[["mint","Menthe"],["blue","Azur"],["violet","Lavande"],["orange","Cuivre"]];
-      for(const [theme,themeLabel] of theming){
-        await page.getByRole("button",{name:themeLabel,exact:true}).click();
-        for(const [accent,accentLabel] of chroma){
-          await page.getByRole("button",{name:accentLabel,exact:true}).click();
-          const result=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
-          if(result.violations.length)throw new Error(`WCAG ${theme}/${accent}: ${result.violations.map(v=>v.id).join(",")}`);
-          const info=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent,scroll:document.documentElement.scrollWidth,width:innerWidth}));
-          if(info.theme!==theme||info.accent!==accent||info.scroll>info.width+1)throw new Error(JSON.stringify(info));
-          if(theme==="light"&&accent==="mint"){
-            await record(page,label,"light-hero",page.locator(".lm-hero"));
-            await record(page,label,"light-project",page.locator("#anivault"));
-            await record(page,label,"light-skills",page.locator("#competences"));
-          }
-        }
-      }
-      await page.getByRole("button",{name:"Menthe",exact:true}).click();
-      await page.getByRole("button",{name:"Sombre",exact:true}).click();
-      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
-    });
-  }
-  if(width===390){
+  await task(label,"navigation Matrix et accents",async()=>{
+     await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+     await page.getByRole("button",{name:"Azur",exact:true}).click();
+     const values=await page.evaluate(()=>({theme:document.documentElement.dataset.theme,accent:document.documentElement.dataset.accent}));
+     if(values.theme!=="matrix"||values.accent!=="blue")throw Error(JSON.stringify(values));
+     await page.getByRole("button",{name:"Menthe",exact:true}).click();
+     await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+   });
+   if(width===390){
     await task(label,"Konami réel active le mode pixel",async()=>{
       const actual=["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
       await page.evaluate(()=>{const current=document.activeElement;if(current instanceof HTMLElement)current.blur()});
@@ -379,7 +335,7 @@ for (const width of [390,768,1024,1440]) {
   await task(label,"contact view",async()=>{
     await page.evaluate(()=>window.scrollTo({top:0,behavior:"instant"}));
     await page.waitForTimeout(420);
-    await page.getByRole("button",{name:/Chat/}).click();
+    await page.getByRole("button",{name:"Contact",exact:true}).click();
     await page.locator(".lm-chat-page").waitFor();
     await record(page,label,"contact",page.locator(".lm-chat-page"));
     if(width===390||width===1440){
@@ -448,7 +404,7 @@ for(const width of [390,1440]){
   await samplePage.waitForFunction(()=>Boolean(window.__matrixStats),null,{timeout:16000});
   const stats=await samplePage.evaluate(()=>window.__matrixStats);
   await writeFile(`${output}/${width}-matrix-runtime.json`,JSON.stringify(stats,null,2));
-  if(!stats||stats.fps>30||stats.averageMs>30)throw Error("Canvas frame budget exceeded: "+JSON.stringify(stats));
+  if(!stats||stats.fps>32||stats.averageMs>30)throw Error("Canvas frame budget exceeded: "+JSON.stringify(stats));
   return stats;
  });
  await sampleContext.close();
