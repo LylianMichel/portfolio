@@ -47,7 +47,7 @@ export const ProjectCard=({project,nextProject,featured,index}:{project:Project;
       <div key={label}><span><strong>{number}</strong> {label}</span><p>{value}</p></div>)}
    </div>
    <div className="lm-case-actions">
-    {project.demoUrl&&<a className="lm-button lm-button--primary" href={project.demoUrl} rel="noopener noreferrer" target="_blank" aria-label={`Tester l’application — ${project.title} (nouvel onglet)`}>{project.id==="anivault"?"Tester la démo":"Tester l’application"} <ArrowUpRight size={16} aria-hidden /></a>}
+    {project.demoUrl&&<a className="lm-button lm-button--primary" href={project.demoUrl} rel="noopener noreferrer" target="_blank" aria-label={`${project.id==="anivault"?"Tester la démo":"Tester l’application"} — ${project.title} (nouvel onglet)`}>{project.id==="anivault"?"Tester la démo":"Tester l’application"} <ArrowUpRight size={16} aria-hidden /></a>}
     {project.codeAccess==="public"?<a className="lm-button" target="_blank" rel="noopener noreferrer" href={project.githubUrl}><Github size={16} aria-hidden/>Voir le code</a>:<a href={`mailto:${profile.email}?subject=${encodeURIComponent("Demande d'accès au code — "+project.title)}`} className="lm-button" aria-label={`Code sur demande — ${project.title} (par e-mail)`}><LockKeyhole size={15} aria-hidden/>Code sur demande <ArrowUpRight size={16} aria-hidden/></a>}
    </div>
   </div>
