@@ -46,6 +46,7 @@ const App=()=>{
  const reducedMotion=useReducedMotion();
  const [mounted,setMounted]=useState(false);
  const [rainReady,setRainReady]=useState(false);
+ const matrixChosenByUser=useRef(false);
  const [theme,setTheme]=useState<Appearance>("dark");
  const [accent,setAccent]=useState<Accent>("mint");
  const [experience,setExperience]=useState<Experience>("source");
@@ -71,23 +72,37 @@ const App=()=>{
  useEffect(()=>{if(!mounted)return;document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience,mounted]);
  useEffect(()=>{
   if(!mounted||theme!=="matrix"||rainIntensity==="off"){setRainReady(false);return;}
-  let cancelled=false,idle=0,timer=0;
-  // The theme colors are immediate, but the Canvas chunk never competes with initial LCP.
-  const start=()=>{
-    const delay=Math.max(0,3250-performance.now());
-    timer=window.setTimeout(()=>{
-      const scheduler=window as Window & {
-        requestIdleCallback?:(callback:()=>void,options?:{timeout:number})=>number;
-      };
-      const makeReady=()=>{if(!cancelled)setRainReady(true)};
-      if(scheduler.requestIdleCallback)idle=scheduler.requestIdleCallback(makeReady,{timeout:2400});
-      else makeReady();
-    },delay);
+  let cancelled=false,queued=false,raf=0,idle=0,fallback=0;
+  const scheduler=window as Window & {
+    requestIdleCallback?:(callback:()=>void,options?:{timeout:number})=>number;
+    cancelIdleCallback?:(id:number)=>void;
   };
-  if(document.readyState==="complete")start();else window.addEventListener("load",start,{once:true});
+  const reveal=()=>{
+    if(cancelled||queued)return;
+    queued=true;
+    // An intentional choice should react in the next frame, not after a multi-second delay.
+    const apply=()=>{if(!cancelled)setRainReady(true)};
+    if(matrixChosenByUser.current){
+      raf=window.requestAnimationFrame(apply);
+    }else if(scheduler.requestIdleCallback){
+      idle=scheduler.requestIdleCallback(apply,{timeout:350});
+    }else{
+      fallback=window.setTimeout(apply,0);
+    }
+  };
+  // On a cold visit, wait until the initial document has loaded so that
+  // the lazily imported Canvas does not compete with the hero's LCP.
+  if(matrixChosenByUser.current||document.readyState==="complete")reveal();
+  else window.addEventListener("load",reveal,{once:true});
+  // Browsers/extensions sometimes defer load indefinitely: recover after the LCP budget.
+  const watchdog=window.setTimeout(reveal,3600);
   return()=>{
-    cancelled=true;window.clearTimeout(timer);window.removeEventListener("load",start);
-    (window as Window & {cancelIdleCallback?:(id:number)=>void}).cancelIdleCallback?.(idle);
+    cancelled=true;
+    window.removeEventListener("load",reveal);
+    window.clearTimeout(watchdog);
+    window.clearTimeout(fallback);
+    window.cancelAnimationFrame(raf);
+    if(idle)scheduler.cancelIdleCallback?.(idle);
   };
  },[mounted,theme,rainIntensity]);
  const changeExperience=(next:Experience)=>{
@@ -136,7 +151,7 @@ const App=()=>{
  return <div className="portfolio-app">
   {mounted&&rainReady&&theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
   <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
-  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={setTheme} onAccentChange={setAccent}/>
+  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onThemeChange={(next)=>{matrixChosenByUser.current=true;setTheme(next)}} onAccentChange={setAccent}/>
   <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={false} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero experience={experience} onExperienceChange={changeExperience}/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
   <Footer/>
   {pixel&&theme==="matrix"&&<div className="lm-neo-message" aria-hidden="true">NEO // SYSTEM OVERRIDE</div>}
