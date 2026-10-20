@@ -11,7 +11,7 @@ export const Skills=()=><section id="competences" aria-labelledby="skills-title"
    const tokens=skill.name.toLowerCase().split(/\s*[\/]\s*/);
    const project=projects.find(project=>project.technologies.some(tech=>tokens.some(token=>token.length>1&&tech.toLowerCase().trim()===token.trim())));
    return <li key={skill.name} className="lm-skill-entry">
-    {project ? <a className="lm-skill-link" href={`#${project.id}`} aria-label={`${skill.name} — voir le projet ${project.title}`}><Tag>{skill.name}</Tag><span className="lm-skill-project">{project.title} ↗</span></a> : <Tag>{skill.name}</Tag>}
+    {project ? <a className="lm-skill-link" href={`#${project.id}`} aria-label={`${skill.name} — voir le projet ${project.title}`}><Tag>{skill.name}</Tag><span className="lm-skill-project"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M1 7.5H13M8 2.5L13 7.5L8 12.5" stroke="currentColor" strokeWidth="1.5"/></svg>{project.title}</span></a> : <Tag>{skill.name}</Tag>}
     <span className="sr-only">{skill.description}</span>
    </li>;
   })}</ul>

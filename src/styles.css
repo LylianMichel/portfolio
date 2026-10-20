@@ -2245,3 +2245,35 @@ button{cursor:pointer}
  .lm-project-frame .project-gallery::after{display:none}
 }
 @media(max-width:1080px){.lm-case-story::before{display:none}}
+
+/* Phase 4 — deux bandes inversées à vitesse modérée. */
+.lm-marquee-duo{display:grid;gap:10px;padding-block:20px}
+.lm-marquee-row{overflow:hidden}
+.lm-marquee-reverse .lm-marquee-track{animation-direction:reverse;animation-duration:85s;color:var(--lm-pair)}
+.lm-marquee-row:first-child .lm-marquee-track{animation-duration:76s}
+.lm-marquee-duo:hover .lm-marquee-track,.lm-marquee-duo:focus-within .lm-marquee-track{animation-play-state:paused}
+.lm-skill-project{align-items:center;gap:8px}
+.lm-skill-link:hover .lm-skill-project,.lm-skill-link:focus-visible .lm-skill-project{display:inline-flex}
+.lm-skill-project svg{flex:none;color:var(--lm-pair)}
+@media(min-width:1100px) and (prefers-reduced-motion:no-preference){
+ @supports(animation-timeline:view()){
+  .lm-section-title .lm-title-word{animation:lm-word-section linear both;animation-timeline:view();animation-range:entry 0% cover 23%}
+ }
+}
+@keyframes lm-word-section{from{clip-path:inset(0 0 100% 0);translate:0 8px;opacity:.75}to{clip-path:inset(0);translate:none;opacity:1}}
+.lm-journey-date .lm-kicker{font:650 clamp(.85rem,1.2vw,1.18rem) var(--lm-font-mono)}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ .lm-journey-active .lm-journey-node{animation:lm-node-beat 2.6s ease-in-out infinite}
+ .lm-about-photo:hover img{transform:translate(5px,-3px);filter:grayscale(.62) contrast(1.05)}
+}
+@keyframes lm-node-beat{50%{box-shadow:0 0 0 10px color-mix(in srgb,var(--lm-pair) 6%,transparent)}}
+.lm-about-photo img{transition:transform .36s ease-out,filter .36s ease-out}
+.lm-about-photo::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:var(--lm-pair);mix-blend-mode:color;opacity:.045;transform:translate(0,0);transition:transform .35s,opacity .35s}
+@media(hover:hover) and (pointer:fine){.lm-about-photo:hover::before{opacity:.11;transform:translate(-3px,3px)}}
+@media(prefers-reduced-motion:reduce){
+ .lm-marquee-duo .lm-marquee-track{animation:none}
+ .lm-marquee-row .lm-marquee-group:nth-child(2){display:none}
+ .lm-journey-active .lm-journey-node{animation:none}
+ .lm-about-photo img,.lm-about-photo::before{transition:none;transform:none}
+ .lm-section-title .lm-title-word{animation:none;clip-path:none;translate:none;opacity:1}
+}
