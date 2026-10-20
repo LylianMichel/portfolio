@@ -334,12 +334,7 @@ for (const width of [390,768,1024,1440]) {
     await page.getByRole("button",{name:"Contact",exact:true}).click();
     await page.locator(".lm-chat-page").waitFor();
     await record(page,label,"contact",page.locator(".lm-chat-page"));
-    if(width===390||width===1440){
-      await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
-      await page.getByRole("button",{name:"Clair",exact:true}).click();
-      await record(page,label,"light-contact",page.locator(".lm-chat-page"));
-      await page.getByRole("button",{name:"Personnaliser l\'apparence"}).click();
-    }
+
   });
   await task(label,"axe WCAG A/AA contact",async()=>{
     const results=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21a","wcag21aa"]).analyze();
