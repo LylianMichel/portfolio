@@ -2645,3 +2645,8 @@ button{cursor:pointer}
  .lm-next-project{min-height:75px;gap:9px;flex-wrap:wrap}
  .lm-next-project strong{color:var(--lm-ink);-webkit-text-stroke:0;font-size:clamp(1.2rem,5vw,1.85rem);line-height:1.15;overflow-wrap:anywhere}
 }
+
+/* Le savoir-faire est démontré par les projets, pas une bande de statistiques. */
+.lm-skills .lm-skill-matrix{margin-top:clamp(16px,2.5vw,32px)}
+/* Ne jamais créer un scroll imbriqué sans barre dans les études de cas. */
+@media(min-width:1081px){.lm-case-media{max-height:none;overflow:visible;scrollbar-width:auto}}
