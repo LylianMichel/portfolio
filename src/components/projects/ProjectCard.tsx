@@ -14,7 +14,7 @@ export const ProjectCard=({project,nextProject,featured,index}:{project:Project;
   <div className="lm-case-media"><ProjectFrame game={game} title={project.title}><ProjectCarousel images={project.images} projectTitle={project.title}/></ProjectFrame></div>
   <div className="lm-case-story" data-case-number={String(index+1).padStart(2,"0")}>
    <div className="lm-case-overline"><span className="lm-kicker">{featured?"ÉTUDE DE CAS":"RÉALISATION"}</span><span className="lm-mono">{project.context??project.type}</span></div>
-   <h3 id={`${project.id}-title`}>{project.title}</h3>
+   <h3 id={`${project.id}-title`} data-case-number={String(index+1).padStart(2,"0")}>{project.title}</h3>
    <p className="lm-case-description">{project.shortDescription}</p>
    <MetaBar project={project}/>
    <div className="lm-case-tags">{project.technologies.slice(0,5).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>

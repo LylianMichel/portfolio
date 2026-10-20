@@ -2335,3 +2335,12 @@ button{cursor:pointer}
 .lm-hero-secondary>span:nth-child(2) strong{overflow-wrap:normal;line-height:1.25}
 .lm-hero-secondary>span:last-child{flex:none}
 .lm-mobile-countdown{display:inline-block;min-width:6ch;margin-left:7px;color:var(--lm-pair);white-space:nowrap}
+
+/* Correction 0.1 : numéro contenu exclusivement dans le titre, jamais sur les métadonnées. */
+.lm-case-story::before{content:none}
+.lm-case-story h3{position:relative;isolation:isolate}
+@media(min-width:1081px){
+ .lm-case-story h3::before{content:attr(data-case-number);position:absolute;inset:-.15em .05em auto auto;
+ color:var(--lm-pair);opacity:.07;z-index:-1;font:800 2.5em/.8 var(--lm-font-display);
+ pointer-events:none;font-variant-numeric:tabular-nums}
+}
