@@ -2751,3 +2751,7 @@ button{cursor:pointer}
 .lm-interests li:last-child{border-bottom:0}
 :root[data-theme="matrix"] .lm-about-photo{border:1px solid var(--lm-rule);background:var(--lm-panel)}
 :root[data-theme="matrix"] .lm-about-photo figcaption{color:var(--lm-sub);font:500 .7rem/1.5 var(--lm-font-mono);letter-spacing:.02em}
+
+/* Pixel-art personnel, à échelle fixe et sans animation décorative. */
+.lm-interests li:has(svg){display:flex;align-items:center;gap:12px}
+.lm-interests li svg{flex:none;color:var(--lm-accent)}
