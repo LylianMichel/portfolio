@@ -4,6 +4,7 @@ import { ProjectCarousel } from "./ProjectCarousel";
 import { ProjectFrame } from "./ProjectFrame";
 import { Tag } from "../ui/Tag";
 import { profile } from "../../data/profile";
+import { MetaBar } from "./MetaBar";
 
 export const ProjectCard=({project,nextProject,featured}:{project:Project;nextProject?:Project;featured:boolean})=>{
  const game=project.id==="towerdefence";
@@ -15,16 +16,12 @@ export const ProjectCard=({project,nextProject,featured}:{project:Project;nextPr
    <div className="lm-case-overline"><span className="lm-kicker">{featured?"ÉTUDE DE CAS":"RÉALISATION"}</span><span className="lm-mono">{project.context??project.type}</span></div>
    <h3 id={`${project.id}-title`}>{project.title}</h3>
    <p className="lm-case-description">{project.shortDescription}</p>
-   <dl className="lm-case-facts">
-    <div><dt>Rôle</dt><dd>{project.contribution??project.context??project.type}</dd></div>
-    <div><dt>Stack</dt><dd>{project.technologies.join(" · ")}</dd></div>
-    <div><dt>Statut</dt><dd>{project.demoUrl?"Démo en ligne":"Projet présenté en portfolio"}</dd></div>
-   </dl>
+   <MetaBar project={project}/>
    <div className="lm-case-tags">{project.technologies.slice(0,5).map(tag=><Tag key={tag}>{tag}</Tag>)}</div>
    <div className="lm-case-decisions">
-    {project.challenge&&<div><span>01 / DIFFICULTÉ</span><p>{project.challenge}</p></div>}
-    {project.technicalApproach&&<div><span>02 / CHOIX TECHNIQUE</span><p>{project.technicalApproach}</p></div>}
-    {project.result&&<div><span>03 / RÉSULTAT</span><p>{project.result}</p></div>}
+    {project.challenge&&<div><span><strong>01</strong> DIFFICULTÉ</span><p>{project.challenge}</p></div>}
+    {project.technicalApproach&&<div><span><strong>02</strong> CHOIX TECHNIQUE</span><p>{project.technicalApproach}</p></div>}
+    {project.result&&<div><span><strong>03</strong> RÉSULTAT</span><p>{project.result}</p></div>}
    </div>
    <div className="lm-case-actions">
     {project.demoUrl&&<a className="lm-button lm-button--primary" href={project.demoUrl} rel="noopener noreferrer" target="_blank" aria-label={`Tester l’application — ${project.title} (nouvel onglet)`}>Tester l'application <ArrowUpRight size={16} aria-hidden /></a>}

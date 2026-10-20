@@ -2010,3 +2010,23 @@ button{cursor:pointer}
 .lm-hero-copy::before{display:none}
 .lm-hero-image-stage img,.lm-hero-actions,.lm-hero-feature,.lm-hero-description{animation:none}
 }
+
+/* Phase 2 — Études de cas éditoriales. */
+.lm-meta-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--lm-rule);gap:0;margin:25px 0}
+.lm-meta-bar>div{padding:14px 12px;border-right:1px solid var(--lm-rule);min-width:0}
+.lm-meta-bar>div:first-child{padding-left:0}
+.lm-meta-bar>div:last-child{border:0}
+.lm-meta-bar dt{font:500 .63rem/1.5 var(--lm-font-mono);text-transform:uppercase;color:var(--lm-accent);margin-bottom:6px}
+.lm-meta-bar dd{margin:0;font-size:.72rem;line-height:1.6;overflow-wrap:anywhere}
+.lm-case-decisions>div{grid-template-columns:125px minmax(0,1fr);align-items:start}
+.lm-case-decisions>div>span{display:grid;gap:7px;align-content:start}
+.lm-case-decisions>div>span strong{font:650 clamp(1.8rem,2.9vw,2.8rem)/.95 var(--lm-font-display);letter-spacing:-.045em;color:var(--lm-accent)}
+.lm-frame-game{border:3px solid var(--lm-rule);border-radius:3px;position:relative}
+.lm-frame-game .project-image-wrap{position:relative}
+.lm-frame-game .project-image-wrap:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.10) 4px);opacity:.2}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.lm-project-frame:hover .project-image{transform:scale(1.02)}}
+.lm-project-controls{display:flex;gap:19px;align-items:center}
+.lm-project-step{min-width:55px;text-align:right;border-left:1px solid var(--lm-rule);padding-left:16px;color:var(--lm-accent);font:600 .75rem var(--lm-font-mono)}
+@media(max-width:1080px){.lm-meta-bar{grid-template-columns:repeat(2,minmax(0,1fr))}.lm-meta-bar>div:nth-child(2){border-right:0}.lm-meta-bar>div:nth-child(-n+2){border-bottom:1px solid var(--lm-rule)}.lm-case-decisions>div{grid-template-columns:125px minmax(0,1fr)}}
+@media(max-width:480px){.lm-meta-bar>div{padding:13px 8px}.lm-case-decisions>div{grid-template-columns:1fr}.lm-case-decisions>div>span{display:flex;align-items:center;gap:15px}}
+@media(prefers-reduced-motion:reduce){.lm-project-frame .project-image{transform:none;transition:none}}
