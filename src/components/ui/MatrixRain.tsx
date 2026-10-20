@@ -117,7 +117,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
    const width=window.innerWidth,height=window.innerHeight;
    if(width===lastWidth&&height===lastHeight)return;
    lastWidth=width;lastHeight=height;
-   build();draw(performance.now(),false);
+   build();draw(performance.now(),true);
   };
   const observer=typeof ResizeObserver!=="undefined"?new ResizeObserver(resize):null;
   const sectionObserver=typeof IntersectionObserver!=="undefined"?new IntersectionObserver(entries=>{
@@ -133,7 +133,7 @@ export const MatrixRain=({intensity}:{intensity:RainIntensity})=>{
   document.addEventListener("visibilitychange",visibility);
   motion.addEventListener("change",reduce);contrast.addEventListener("change",reduce);
   if(fine){window.addEventListener("pointermove",move,{passive:true});window.addEventListener("matrix-wave",wave);}
-  if(reduced)draw(performance.now(),false);else { draw(performance.now(),false); resume(); }
+  if(reduced)draw(performance.now(),false);else { draw(performance.now(),true); resume(); }
   return()=>{live=false;cancelAnimationFrame(raf);observer?.disconnect();sectionObserver?.disconnect();paletteObserver.disconnect();
    window.removeEventListener("resize",resize);window.removeEventListener("scroll",onScroll);document.removeEventListener("visibilitychange",visibility);
    motion.removeEventListener("change",reduce);contrast.removeEventListener("change",reduce);
