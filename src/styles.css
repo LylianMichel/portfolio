@@ -2104,3 +2104,18 @@ button{cursor:pointer}
  .lm-meta-bar>div{border-right:0;border-bottom:1px solid var(--lm-rule);padding:14px 0}
  .lm-meta-bar>div:last-child{border:0}
 }
+
+/* Phase 0.3 — tooltip hors flux: aucun déplacement des tags voisins. */
+.lm-skill-entry{position:relative}
+.lm-skill-link{position:relative;isolation:isolate}
+.lm-skill-project{
+ position:absolute;top:calc(100% + 6px);left:0;z-index:5;
+ width:max-content;max-width:min(260px,78vw);
+ padding:7px 10px;background:var(--lm-page);border:1px solid var(--lm-accent);
+ color:var(--lm-accent);box-shadow:0 8px 20px #0003;pointer-events:none;
+ opacity:0;visibility:hidden;transform:translateY(-3px);transition:opacity .18s,transform .18s,visibility .18s
+}
+.lm-skill-link:hover .lm-skill-project,.lm-skill-link:focus-visible .lm-skill-project{
+ opacity:1;visibility:visible;max-width:min(260px,78vw);transform:none
+}
+@media(prefers-reduced-motion:reduce){.lm-skill-project{transition:none}}
