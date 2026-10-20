@@ -27,8 +27,16 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
     const dayTimer = window.setInterval(update, 60_000);
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) return () => window.clearInterval(dayTimer);
-    const wordTimer = window.setInterval(() => setWord((index) => (index + 1) % words.length), 3_400);
-    return () => { window.clearInterval(dayTimer); window.clearInterval(wordTimer); };
+    const updateWord = () => {
+      const hero = document.getElementById("accueil");
+      if (!hero) return;
+      const distance = Math.max(0, Math.min(hero.offsetHeight, window.scrollY));
+      setWord(Math.min(words.length - 1, Math.floor(distance / Math.max(1, hero.offsetHeight / words.length))));
+    };
+    updateWord();
+    window.addEventListener("scroll", updateWord, { passive: true });
+    window.addEventListener("resize", updateWord);
+    return () => { window.clearInterval(dayTimer); window.removeEventListener("scroll", updateWord); window.removeEventListener("resize", updateWord); };
   }, []);
   useEffect(() => {
     if (images.length < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
