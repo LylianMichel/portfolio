@@ -4,8 +4,6 @@ import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { ActionButton } from "../components/ui/ActionButton";
 import { NameWave } from "../components/ui/NameWave";
-import { SourcePlayToggle } from "../components/ui/SourcePlayToggle";
-import type { Experience } from "../utils/creative";
 
 const anivault = projects.find((project) => project.id === "anivault");
 const tower = projects.find((project) => project.id === "towerdefence");
@@ -13,7 +11,7 @@ const words = ["applications web", "jeux vidéo", "interfaces"];
 const deadline = new Date("2027-04-12T00:00:00+02:00").getTime();
 export const daysUntilStage = (today: number): number => Math.max(0, Math.ceil((deadline - today) / 86_400_000));
 
-export const Hero = ({experience,onExperienceChange}:{experience:Experience;onExperienceChange:(mode:Experience)=>void}) => {
+export const Hero = () => {
   const [word, setWord] = useState(0);
   const [days, setDays] = useState<number | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
@@ -62,7 +60,6 @@ export const Hero = ({experience,onExperienceChange}:{experience:Experience;onEx
         <p className="lm-hero-description">Étudiant en deuxième année de BUT Informatique à Lens, je développe AniVault pour le web et THE WORLD DEFENCE avec Godot, en parallèle des cours.</p>
         <div className="lm-hero-actions"><ActionButton primary href="#projets"><span className="lm-action-long">Voir mes projets</span><span className="lm-action-short">Projets</span> <ArrowDown size={18} aria-hidden /></ActionButton><ActionButton href={profile.cvUrl} download><span className="lm-action-long">Télécharger mon CV</span><span className="lm-action-short">Mon CV</span> <Download size={17} aria-hidden /></ActionButton></div>
         <a className="lm-hero-contact-link" href={`mailto:${profile.email}`}>Me contacter pour un stage <ArrowUpRight size={15} aria-hidden /></a>
-        <div className="lm-hero-experience"><span className="lm-kicker">CHOISIR UNE EXPÉRIENCE</span><SourcePlayToggle variant="hero" experience={experience} onChange={onExperienceChange}/></div>
         <p className="lm-hero-mobile-stage"><span>{days === null ? "STAGE À PARTIR DU 12 AVRIL 2027" : days > 0 ? `J–${days} AVANT LE STAGE` : "DATE DE DÉBUT ATTEINTE"}</span><span>{profile.location}</span></p>
       </div>
       <div className="lm-hero-feature" ref={sceneRef}
