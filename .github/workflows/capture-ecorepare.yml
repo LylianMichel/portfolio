@@ -1,9 +1,5 @@
 name: Capture EcoRepare Laravel
 on:
-  push:
-    branches: [dev]
-    paths:
-      - '.github/workflows/capture-ecorepare.yml'
   workflow_dispatch:
 permissions:
   contents: write
@@ -23,6 +19,7 @@ jobs:
           ref: main
           path: ecorepare-source
           persist-credentials: false
+          token: ${{ secrets.ECOREPARE_READ_TOKEN }}
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
