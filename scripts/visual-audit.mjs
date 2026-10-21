@@ -172,7 +172,8 @@ for (const width of [390,768,1024,1440]) {
   });
   if(width===390){
     await task(label,"bascule SOURCE PLAY clavier et persistance",async()=>{
-      const toggle=page.locator(".lm-nav .lm-sourceplay-toggle");
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+      const toggle=page.locator(".lm-quick-settings .lm-sourceplay-toggle");
       await toggle.focus();
       await page.keyboard.press("Enter");
       await page.locator("html[data-experience='play']").waitFor();
@@ -181,7 +182,8 @@ for (const width of [390,768,1024,1440]) {
       if(saved!=="play")throw new Error("PLAY non sauvegardé");
       await page.reload({waitUntil:"networkidle"});
       await page.locator("html[data-experience='play']").waitFor();
-      await page.locator(".lm-nav .lm-sourceplay-toggle").click();
+      await page.getByRole("button",{name:"Personnaliser l'apparence"}).click();
+      await page.locator(".lm-quick-settings .lm-sourceplay-toggle").click();
       await page.locator("html[data-experience='source']").waitFor();
     });
   }
