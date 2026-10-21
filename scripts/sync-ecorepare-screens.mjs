@@ -1,0 +1,15 @@
+import { readFile, writeFile } from "node:fs/promises";
+const dataPath="src/data/projects.ts";
+const sizesPath="src/data/projectImageSizes.json";
+const pages=[["home","Accueil","Page d'accueil de la nouvelle version Laravel d'Eco'Répare"],["catalogue","Catalogue","Catalogue des produits Eco'Répare sous Laravel"],["services","Services","Page de services et réparation d'Eco'Répare"],["contact","Contact","Page de contact et demande de devis d'Eco'Répare"]];
+let source=await readFile(dataPath,"utf8");
+const start=source.indexOf('    id: "eco-repare"');
+const imagesStart=source.indexOf("    images: [",start);
+const imagesEnd=source.indexOf("    ],",imagesStart);
+if(start<0||imagesStart<0||imagesEnd<0)throw Error("Fiche Eco'Répare introuvable");
+const images=pages.map(([id,label,alt])=>`      { src: projectAsset("eco-repare-${id}.webp"), alt: "${alt}", label: "${label}" }`).join(",\n");
+source=source.slice(0,imagesStart)+`    images: [\n${images}\n    ],`+source.slice(imagesEnd+6);
+await writeFile(dataPath,source);
+const sizes=JSON.parse(await readFile(sizesPath,"utf8"));
+for(const [id] of pages)sizes[`eco-repare-${id}.webp`]={width:1440,height:900,small:`eco-repare-${id}-640.webp`};
+await writeFile(sizesPath,JSON.stringify(sizes,null,2)+"\n");
