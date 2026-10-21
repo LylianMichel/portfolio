@@ -130,7 +130,7 @@ const projectList: Project[] = [
     result:
       "Un site Laravel structuré avec navigation responsive, catalogue, fiches produits et demandes de devis.",
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
-    codeAccess: "public",
+    codeAccess: "private",
     technicalApproach:
       "Blade pour les vues, Eloquent pour les produits, contrôleurs Laravel pour le catalogue et les devis, CSS et JavaScript statiques pour l'interface.",
     images: [
