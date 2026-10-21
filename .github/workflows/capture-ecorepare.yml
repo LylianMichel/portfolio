@@ -1,0 +1,63 @@
+name: Capture EcoRepare Laravel
+on:
+  push:
+    branches: [dev]
+    paths:
+      - '.github/workflows/capture-ecorepare.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout portfolio dev
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          persist-credentials: true
+      - name: Checkout EcoRepare main
+        uses: actions/checkout@v4
+        with:
+          repository: LylianMichel/Eco-repare
+          ref: main
+          path: ecorepare-source
+          persist-credentials: false
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, xml, pdo_sqlite, sqlite3
+          coverage: none
+      - name: Install and seed Laravel
+        working-directory: ecorepare-source
+        run: |
+          composer install --no-interaction --prefer-dist --no-progress
+          cp .env.example .env
+          touch database/database.sqlite
+          php artisan key:generate
+          php artisan migrate --seed --force
+          php artisan serve --host=127.0.0.1 --port=8000 > /tmp/ecorepare.log 2>&1 &
+      - name: Install browser screenshot dependencies
+        run: |
+          npm ci --no-audit
+          npm install --no-save --no-audit playwright sharp
+          npx playwright install --with-deps chromium
+      - name: Photograph four Laravel pages
+        run: |
+          node scripts/capture-ecorepare.mjs
+          node scripts/sync-ecorepare-screens.mjs
+      - name: Confirm generated files
+        run: |
+          test -s public/projects/eco-repare-home.webp
+          test -s public/projects/eco-repare-catalogue.webp
+          test -s public/projects/eco-repare-services.webp
+          test -s public/projects/eco-repare-contact.webp
+      - name: Remove temporary Laravel clone
+        run: rm -rf ecorepare-source
+      - name: Commit verified images to dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/projects.ts src/data/projectImageSizes.json public/projects/eco-repare-*.webp
+          git diff --cached --quiet || (git commit -m "design: actualiser les captures Laravel d'EcoRepare" && git push origin HEAD:dev)
