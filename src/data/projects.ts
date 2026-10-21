@@ -112,30 +112,32 @@ const projectList: Project[] = [
     id: "eco-repare",
     title: "Eco'Répare",
     shortDescription:
-      "Site vitrine responsive autour du reconditionnement informatique, réalisé en HTML, CSS et JavaScript.",
+      "Site Laravel de réparation et de reconditionnement informatique : catalogue de produits, recherche, devis et administration.",
     description:
-      "Un projet plus compact qui m'a permis de travailler la mise en page responsive, la navigation mobile et la cohérence visuelle.",
-    technologies: ["HTML", "CSS", "JavaScript", "Responsive"],
+      "Refonte en Laravel 12, Blade et Eloquent avec un catalogue dynamique, des fiches produits et un parcours de demande de devis.",
+    technologies: ["Laravel", "PHP", "Blade", "Eloquent", "SQLite", "CSS", "JavaScript"],
     features: [
-      "Mise en page responsive",
-      "Navigation mobile",
-      "Validation côté navigateur",
-      "Direction visuelle cohérente"
+      "Catalogue de 21 références avec recherche, filtres et pagination",
+      "Fiches produits et pages de services",
+      "Formulaire de devis avec validation et consentement",
+      "Administration des produits et des demandes"
     ],
-    context: "Projet web · interface responsive",
+    context: "Projet web · refonte Laravel",
     contribution:
-      "Intégration HTML/CSS, responsive, navigation mobile et interactions JavaScript simples.",
+      "Refonte de l'interface et intégration Laravel, des pages de catalogue et du parcours de contact.",
+    challenge:
+      "Moderniser le site tout en conservant les références du catalogue et en organisant les interactions côté serveur.",
     result:
-      "Un site vitrine léger, lisible et adapté aux principaux formats d'écran.",
+      "Un site Laravel structuré avec navigation responsive, catalogue, fiches produits et demandes de devis.",
     githubUrl: "https://github.com/LylianMichel/Eco-repare",
-    codeAccess: "private",
+    codeAccess: "public",
     technicalApproach:
-      "J'ai adapté les mises en page et la navigation mobile en HTML, CSS et JavaScript, sans framework frontend.",
+      "Blade pour les vues, Eloquent pour les produits, contrôleurs Laravel pour le catalogue et les devis, CSS et JavaScript statiques pour l'interface.",
     images: [
-      { src: projectAsset("eco-repare-home.webp"), alt: "Page d'accueil réelle d'Eco’Répare", label: "Accueil" }
+      { src: projectAsset("eco-repare-home.webp"), alt: "Ancienne capture de la page d'accueil d'Eco'Répare, à remplacer par une capture Laravel récente", label: "Accueil (ancienne capture)" }
     ],
     year: "2026",
-    type: "Site vitrine",
+    type: "Application web Laravel",
     tone: "cyan",
     icon: "MonitorSmartphone"
   }
