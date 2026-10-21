@@ -54,7 +54,6 @@ export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChan
     <button className={mode==="work"?"selected":""} aria-pressed={mode==="work"} onClick={()=>change("work")}><BriefcaseBusiness size={14} aria-hidden />Portfolio</button>
     <button className={mode==="contact"?"selected":""} aria-pressed={mode==="contact"} onClick={()=>change("contact")}><Mail size={14} aria-hidden />Contact</button>
   </div>
-  <SourcePlayToggle experience={experience} onChange={onExperienceChange}/>
   {experience==="play"&&<span className="lm-score" aria-hidden="true">SCORE {String(Math.round(progress)).padStart(3,"0")}</span>}
   <div className="lm-desktop-links">{mode==="work"?sections.slice(1,4).map(item=><a key={item.id} href={`#${item.id}`} aria-current={active===item.id?"location":undefined}>{item.title}</a>):<span className="lm-mono">CONTACT / DISCUSSION</span>}</div>
   <a className="lm-nav-contact" href={`mailto:${profile.email}`} aria-label="Me contacter par e-mail">Me contacter</a>
@@ -66,6 +65,8 @@ export const Navbar=({mode,theme,accent,experience,onExperienceChange,onModeChan
  {settings&&<section className="lm-quick-settings" aria-label="Personnalisation">
   <div className="lm-settings-head"><span>APPARENCE</span><button onClick={()=>setSettings(false)} aria-label="Fermer l'apparence"><X size={17}/></button></div>
   <p className="lm-kicker">MATRIX // IDENTITÉ VISUELLE</p>
+  <p className="lm-kicker">MODE D’EXPÉRIENCE</p><SourcePlayToggle experience={experience} onChange={onExperienceChange}/>
+
   <p className="lm-kicker">ACCENT</p><div className="lm-accent-choice" role="group" aria-label="Couleur d'accent">{(["mint","blue","violet","orange"] as Accent[]).map(a=><button key={a} data-swatch={a} aria-label={colorLabels[a]} aria-pressed={accent===a} onClick={()=>onAccentChange(a)}><span/></button>)}</div>
   {theme==="matrix"&&<><p className="lm-kicker lm-rain-label">INTENSITÉ DE LA PLUIE</p><div className="lm-settings-choice lm-rain-options" role="group" aria-label="Intensité de la pluie">{(["off","soft","intense"] as RainIntensity[]).map(r=><button key={r} aria-pressed={rainIntensity===r} onClick={()=>onRainChange(r)}>{({off:"Désactivée",soft:"Douce",intense:"Intense"})[r]}</button>)}</div><p className="lm-matrix-reduced-note" role="status">La pluie reste statique lorsque la réduction des animations est activée dans les réglages du système.</p></>}
  </section>}
