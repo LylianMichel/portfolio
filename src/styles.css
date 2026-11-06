@@ -2783,3 +2783,14 @@ button{cursor:pointer}
 .lm-accent-choice [data-swatch="blue"] span{background:#ff6f59}
 .lm-accent-choice [data-swatch="violet"] span{background:#7fb2ff}
 .lm-accent-choice [data-swatch="orange"] span{background:#8fd6a5}
+
+/* Animations d'entrée visibles : nom lettre par lettre, puis cascade des technos et décisions au scroll.
+   Courbe et durées de DESIGN.md ; tout est coupé avec prefers-reduced-motion. */
+@media(prefers-reduced-motion:no-preference){
+ .lm-name-first,.lm-name-last{animation:none}
+ .lm-name .lm-letter{animation:lm-letter-in 640ms var(--lm-ease) both;animation-delay:calc(var(--letter-index,0)*48ms + 80ms)}
+ .lm-name-last .lm-letter{animation-delay:calc(var(--letter-index,0)*48ms + 380ms)}
+ .lm-stagger{opacity:0;translate:0 22px;transition:opacity 520ms var(--lm-ease),translate 520ms var(--lm-ease)}
+ .lm-stagger-in{opacity:1;translate:none}
+}
+@keyframes lm-letter-in{from{opacity:0;translate:0 .5em}to{opacity:1;translate:none}}
