@@ -7,11 +7,13 @@ import { Tag } from "../ui/Tag";
 import { profile } from "../../data/profile";
 import { MetaBar } from "./MetaBar";
 import { projectDecisions } from "../../utils/projectDecisions";
+import { useStaggerReveal } from "../../hooks/useStaggerReveal";
 
 export const ProjectCard=({project,nextProject,featured,index}:{project:Project;nextProject?:Project;featured:boolean;index:number})=>{
  const game=project.id==="towerdefence";
  const [beat,setBeat]=useState(0);
  const root=useRef<HTMLElement>(null);
+ useStaggerReveal(root,".lm-case-tags .lm-tag, .lm-case-decisions>div");
  useEffect(()=>{
   if(!game||typeof IntersectionObserver==="undefined"||window.innerWidth<=1080||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const beats=root.current?.querySelectorAll<HTMLElement>(".lm-case-decisions>div");
