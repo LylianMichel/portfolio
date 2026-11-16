@@ -13,7 +13,7 @@ export const skillGroups: SkillGroup[] = [
   },
   {
     title: "Backend & applications",
-    description: "API d’AniVault, application Le Temple et travaux de BUT.",
+    description: "API d’AniVault, application Le Temple et travaux de BUT sur un mini-framework PHP (routage, BladeOne, PHPStan et PHPUnit) et les structures de données en Java (listes chaînées, arbres et JUnit).",
     skills: [
       { name: "PHP / Laravel", description: "Utilisé sur Le Temple et mes travaux web en BUT.", level: "En progression", icon: "ServerCog" },
       { name: "Java", description: "Utilisé en BUT pour la POO, les structures de données et les tests.", level: "Intermédiaire", icon: "TerminalSquare" },
