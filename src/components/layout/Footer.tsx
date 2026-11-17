@@ -1,9 +1,0 @@
-import { ArrowUpRight, Github, Linkedin } from "lucide-react";
-import { profile } from "../../data/profile";
-export const Footer=()=><footer className="lm-footer lm-shell">
- <div className="lm-footer-title"><span className="lm-footer-logo">LM.</span><span className="lm-mono">{profile.name} · BUT Informatique</span></div>
- <div className="lm-footer-bottom"><span>© {new Date().getFullYear()} {profile.name} · React / TypeScript / Vite</span>
- <div><a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub Lylian Michel"><Github size={16}/> <ArrowUpRight size={13} aria-hidden/></a>
- <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Lylian Michel"><Linkedin size={16}/> <ArrowUpRight size={13} aria-hidden/></a>
- <a href="#accueil">Retour en haut ↑</a></div></div>
- </footer>;

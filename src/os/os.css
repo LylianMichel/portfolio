@@ -1,0 +1,366 @@
+.os-desktop {
+    position: relative;
+    isolation: isolate;
+
+    width: 100%;
+    height: 100dvh;
+    overflow: hidden;
+
+    background: #a9b8d3;
+    color: #252633;
+
+    font-family: Arial, sans-serif;
+}
+
+.os-wallpaper {
+    position: absolute;
+    inset: 0;
+
+    background-size: cover;
+    background-position: center;
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+.os-topbar {
+    position: absolute;
+    inset: 0 0 auto;
+
+    height: 36px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+
+    z-index: 1000;
+}
+
+.os-workspace {
+    position: absolute;
+    inset: 36px 0 90px;
+}
+
+.os-dock {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 400px;
+    max-width: calc(100% - 24px);
+    height: 65px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.7);
+
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(25px);
+
+    z-index: 1000;
+}
+.os-window {
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+
+    max-width: calc(100% - 24px);
+    max-height: 100%;
+
+    background: rgba(248, 245, 251, 0.88);
+
+    backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 18px;
+
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+
+    overflow: hidden;
+}
+
+.os-window-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 45px;
+
+    padding: 0 16px;
+
+    background: rgba(220, 210, 235, 0.6);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.os-window-header button {
+    display: grid;
+    place-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: inherit;
+    cursor: pointer;
+
+    transition: background 150ms;
+}
+
+.os-window-header button:hover {
+    background: #ef8888;
+    color: white;
+}
+
+.os-window-content {
+    flex: 1;
+    min-height: 0;
+
+    padding: 24px;
+    overflow: auto;
+}
+.os-icons {
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+    padding: 20px 12px;
+}
+
+.os-desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 85px;
+    gap: 8px;
+
+    background: transparent;
+    border: none;
+
+    color: #252633;
+    cursor: pointer;
+}
+
+.os-icon-image {
+    display: grid;
+    place-items: center;
+
+    width: 56px;
+    height: 56px;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    color: #8074ba;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.os-desktop-icon span {
+    font-size: 12px;
+    font-weight: 500;
+    color: white;
+
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+.os-window-header {
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.os-window-header:active {
+    cursor: grabbing;
+}
+
+.os-window-header button {
+    cursor: pointer;
+}
+/* Gestion de l'espace de travail */
+
+.os-workspace {
+    position: absolute;
+    inset: 36px 0 90px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+
+/* Dimensions des fenêtres */
+
+.os-window {
+    position: absolute;
+
+    box-sizing: border-box;
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+/* Barre de titre */
+
+.os-window-header {
+    cursor: grab;
+
+    user-select: none;
+    touch-action: none;
+
+    flex-shrink: 0;
+}
+
+.os-window-header:active {
+    cursor: grabbing;
+}
+
+
+/* Boutons des fenêtres */
+
+.os-window-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.os-window-actions button {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+    color: inherit;
+
+    cursor: pointer;
+
+    transition: background 150ms;
+}
+
+.os-window-actions button:hover {
+    background: rgba(120, 100, 170, 0.18);
+}
+
+.os-window-actions .os-close-button:hover {
+    background: #e87979;
+    color: white;
+}
+
+
+/* Fenêtre maximisée */
+
+.os-window-maximized {
+    border-radius: 0;
+}
+
+.os-window-maximized .os-window-header {
+    cursor: default;
+}
+
+
+/* Zone de redimensionnement */
+
+.os-window-resize {
+    position: absolute;
+
+    bottom: 0;
+    right: 0;
+
+    width: 24px;
+    height: 24px;
+
+    cursor: nwse-resize;
+
+    touch-action: none;
+
+    z-index: 10;
+}
+
+.os-window-resize::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 6px;
+    right: 6px;
+
+    width: 9px;
+    height: 9px;
+
+    border-bottom: 2px solid #8074ba;
+    border-right: 2px solid #8074ba;
+}
+
+
+/* Fenêtre minimisée */
+
+.os-window[inert] {
+    pointer-events: none;
+}
+/* Application CV */
+
+.os-cv-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+    gap: 20px;
+}
+
+.os-cv-image {
+    display: block;
+
+    width: 100%;
+    max-width: 750px;
+    height: auto;
+
+    border-radius: 6px;
+
+    box-shadow: 0 8px 25px
+    rgba(0, 0, 0, 0.15);
+}
+
+.os-cv-download {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+    padding: 12px 24px;
+
+    background: #34334a;
+    color: white;
+
+    border-radius: 12px;
+    text-decoration: none;
+
+    transition: transform 180ms,
+    background 180ms;
+}
+
+.os-cv-download:hover {
+    background: #8074ba;
+    transform: translateY(-3px);
+}
+
+.os-cv-download:active {
+    transform: scale(0.96);
+}
