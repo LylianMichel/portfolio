@@ -1,134 +1,72 @@
-# Portfolio — Lylian Michel
+# LylianOS — portfolio de Lylian Michel
 
-Portfolio personnel réalisé avec React, TypeScript, Vite et Tailwind CSS.
+Portfolio réalisé avec React, TypeScript, Vite, Tailwind CSS, Framer Motion et
+Lucide React. Le bureau, les fenêtres, le dock et la barre système correspondent
+aux TP 1 à 7. L'application Profil reste à développer par l'auteur au TP 8.
 
-L'interface est organisée en deux espaces :
+## Développement
 
-- **Work** : projets, compétences, parcours et présentation ;
-- **Chat** : contact, GitHub, LinkedIn et informations sur mon stage 2027.
-
-## Prérequis
-
-- Node.js 22 recommandé
-- npm
-
-## Installation
+Node.js 22 et npm sont recommandés.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Le serveur local est généralement disponible sur :
+Vite affiche l'adresse locale, généralement http://localhost:5173/.
 
-```text
-http://localhost:5173/
-```
-
-## Vérifier la version de production
+## Vérifications
 
 ```bash
+npx tsc -b
+npm run test
 npm run build
 npm run preview
 ```
 
-Le build final est généré dans `dist/`.
+Le build génère le site dans dist/ et son HTML initial prérendu. Le développement
+utilise createRoot ; le site construit utilise hydrateRoot. Aucun script lint
+n'est actuellement défini.
 
-Pour tester le site depuis un téléphone ou un autre appareil du réseau local :
+Les scénarios navigateur sont dans scripts/os-browser-checks.mjs,
+scripts/os-interaction-checks.mjs et scripts/os-time-checks.mjs. Le workflow
+visual-audit installe temporairement Playwright, axe et Lighthouse pour les
+exécuter ; ces outils ne sont pas ajoutés aux dépendances de l'application.
+Les captures et journaux locaux sont dans output/playwright/ (ignoré par Git).
 
-```bash
-npm run preview:network
-```
+## Reprendre le TP 8
+
+- Application : src/os/apps/AboutApp.tsx.
+- Données et exports profile, socials : src/os/data/profile.ts.
+- Types métier dont Profile : src/os/portfolioTypes.ts.
+- Types du système AppId, OSWindow et WindowBounds : src/os/types.ts.
+- Projets, compétences et parcours : src/os/data/.
+- CSS du bureau : src/os/os.css ; base globale minimale : src/styles.css.
+- Portrait : public/portrait-lylian-michel.png, référencé par profile.photo.
+
+La spécialité de formation est facultative tant que son intitulé n'a pas été
+confirmé. Le stage commence le 12 avril 2027 et dure huit semaines.
+
+Les modèles utiles de l'ancien rendu sont temporairement conservés dans
+archive/portfolio-v1/, hors du code exécuté par le bureau. Leurs anciens tests
+restent exécutés et leurs fichiers TypeScript restent vérifiés.
+
+L'inventaire complet est dans docs/MIGRATION-LYLIANOS.md et le rapport de
+vérification dans docs/AUDIT-TP1-7.md. Les données et les fichiers publics
+originaux sont conservés ; aucune future application n'est implémentée ici.
 
 ## Déploiement
 
-Le projet est une application Vite statique et ne nécessite aucune variable d'environnement.
+Vercel : preset Vite, commande npm run build, sortie dist/. Netlify et Vercel
+conservent leurs fichiers de configuration. Le projet utilise une base Vite
+relative et peut être publié dans un sous-dossier. Les ressources publiques
+restent à leur emplacement et sont préfixées avec import.meta.env.BASE_URL.
 
-### Vercel
+L'image Open Graph existante est copiée par Vite depuis public/ ; l'ancien
+générateur SOURCE / PLAY ne remplace plus cette image pendant le build.
 
-1. importer le dépôt GitHub ;
-2. Framework Preset : **Vite** ;
-3. Build Command : `npm run build` ;
-4. Output Directory : `dist`.
+Aucune variable d'environnement ni clé secrète n'est nécessaire. Les fichiers
+.env, node_modules, dist, les caches et les journaux restent ignorés par Git.
 
-Le fichier `vercel.json` contient déjà les réglages principaux.
-
-### Netlify
-
-Le fichier `netlify.toml` configure automatiquement :
-
-- la commande de build ;
-- le dossier `dist` ;
-- Node.js 22 ;
-- quelques en-têtes de sécurité.
-
-### GitHub Pages
-
-Le projet utilise une base relative dans Vite, il peut donc être publié dans un sous-dossier comme `/portfolio/`.
-
-Il suffit de construire le site puis de publier le contenu de `dist/` avec GitHub Pages ou une action dédiée.
-
-## Structure utile
-
-```text
-src/
-├─ components/
-├─ data/
-├─ sections/
-├─ types/
-├─ App.tsx
-└─ index.css
-
-public/
-├─ projects/
-├─ favicon.svg
-├─ project-fallback.svg
-└─ robots.txt
-```
-
-Les informations du portfolio sont principalement dans :
-
-```text
-src/data/profile.ts
-src/data/projects.ts
-src/data/skills.ts
-src/data/timeline.ts
-```
-
-## Sécurité et configuration
-
-Les fichiers suivants ne doivent pas être versionnés et sont déjà ignorés :
-
-- `.env`
-- `.env.*`
-- `node_modules/`
-- `dist/`
-- fichiers IDE et logs
-
-Le portfolio actuel n'a besoin d'aucun secret ni d'aucune clé API.
-
-## Avant de publier
-
-Vérifier simplement :
-
-```bash
-npm install
-npm run build
-npm run preview
-```
-
-Puis tester Work, Chat, GitHub, LinkedIn, e-mail et les quatre couleurs d'accent.
-
-## Liens et visibilité des projets
-
-La démo d'AniVault pointe vers `https://anivault-blush.vercel.app/`, vérifiée le 11 octobre 2026.
-
-Les quatre dépôts présentés dans `src/data/projects.ts` sont actuellement privés. Les
-cartes n'affichent donc pas de liens « Voir le code » inaccessibles aux recruteurs.
-L'interface indique simplement que le code peut être présenté sur demande.
-
-Pour rendre publiquement consultable le code d'un projet, choisir d'abord ce qui
-peut être publié dans GitHub (licence, secrets, droits des collaborateurs), puis
-passer `codeAccess: "public"` pour le projet concerné après vérification de
-l'accès anonyme à son dépôt. Ne jamais changer automatiquement la confidentialité
-d'un dépôt pour ajouter un lien sur le portfolio.
+Les informations codeAccess des projets sont conservées. Leur confidentialité
+ne doit pas être modifiée automatiquement pour afficher des liens publics.

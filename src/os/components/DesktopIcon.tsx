@@ -8,12 +8,14 @@ import {
 interface Props {
     label: string;
     icon: LucideIcon;
+    color: string;
     onClick: () => void;
 }
 
 export default function DesktopIcon({
                                         label,
                                         icon: Icon,
+                                        color,
                                         onClick
                                     }: Props) {
 
@@ -21,7 +23,9 @@ export default function DesktopIcon({
 
     return (
         <motion.button
+            type="button"
             className="os-desktop-icon"
+            transition={{ duration: 0.15 }}
 
             whileHover={
                 reducedMotion
@@ -38,7 +42,7 @@ export default function DesktopIcon({
             onClick={onClick}
         >
             <div className="os-icon-image">
-                <Icon size={32} />
+                <Icon size={32} color={color} />
             </div>
 
             <span>{label}</span>

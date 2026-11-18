@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type {
     ReactNode,
     PointerEvent
@@ -15,6 +15,7 @@ import {
 
 import {
     motion,
+    useIsPresent,
     useReducedMotion
 } from "framer-motion";
 
@@ -49,6 +50,14 @@ export default function Window({
 
     const reducedMotion = useReducedMotion();
     const windowRef = useRef<HTMLElement>(null);
+    const isPresent = useIsPresent();
+    const wasMinimized = useRef(false);
+    const [restoring, setRestoring] = useState(false);
+
+    useEffect(() => {
+        if (wasMinimized.current && !window.minimized) setRestoring(true);
+        wasMinimized.current = window.minimized;
+    }, [window.minimized]);
 
     const [minimizeTarget, setMinimizeTarget] =
         useState({
@@ -195,7 +204,7 @@ export default function Window({
         resizeStart.current = null;
     }
 
-    function handleMinimize() {
+    const updateMinimizeTarget = useCallback(() => {
 
         const windowElement = windowRef.current;
 
@@ -206,17 +215,17 @@ export default function Window({
 
         if (windowElement && dockIcon) {
 
-            const windowRect =
-                windowElement.getBoundingClientRect();
+            const workspaceRect = windowElement.parentElement?.getBoundingClientRect();
+            if (!workspaceRect) return;
 
             const dockRect =
                 dockIcon.getBoundingClientRect();
 
             const windowCenterX =
-                windowRect.left + windowRect.width / 2;
+                workspaceRect.left + window.x + window.width / 2;
 
             const windowCenterY =
-                windowRect.top + windowRect.height / 2;
+                workspaceRect.top + window.y + window.height / 2;
 
             const dockCenterX =
                 dockRect.left + dockRect.width / 2;
@@ -225,8 +234,8 @@ export default function Window({
                 dockRect.top + dockRect.height / 2;
 
             const scale = Math.min(
-                dockRect.width / windowRect.width,
-                dockRect.height / windowRect.height
+                dockRect.width / window.width,
+                dockRect.height / window.height
             );
 
             setMinimizeTarget({
@@ -236,13 +245,28 @@ export default function Window({
             });
         }
 
+    }, [window.id, window.x, window.y, window.width, window.height]);
+
+    useEffect(() => {
+        if (!window.minimized) return;
+        updateMinimizeTarget();
+        // Le dock peut changer de place sans changer les dimensions de la fenêtre.
+        globalThis.addEventListener("resize", updateMinimizeTarget);
+        return () => globalThis.removeEventListener("resize", updateMinimizeTarget);
+    }, [window.minimized, updateMinimizeTarget]);
+
+    function handleMinimize() {
+        updateMinimizeTarget();
         onMinimize();
 
+        const dockIcon = document.querySelector<HTMLElement>(`[data-dock-app="${window.id}"]`);
         dockIcon?.focus({ preventScroll: true });
     }
     return (
 
         <motion.section
+            role="region"
+            aria-label={window.title}
             ref={windowRef}
             className={
                 window.maximized
@@ -251,6 +275,7 @@ export default function Window({
             }
 
             onPointerDown={onFocus}
+            onFocusCapture={onFocus}
 
             style={{
                 left: window.x,
@@ -295,11 +320,12 @@ export default function Window({
             }}
 
             transition={{
-                duration: reducedMotion ? 0 : 0.3,
+                duration: reducedMotion ? 0 : window.minimized || restoring ? 0.3 : 0.22,
                 ease: "easeInOut"
             }}
 
-            inert={window.minimized}
+            onAnimationComplete={() => setRestoring(false)}
+            inert={window.minimized || !isPresent}
 
         >
 

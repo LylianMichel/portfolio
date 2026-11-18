@@ -2,7 +2,7 @@ import {
     motion,
     useReducedMotion
 } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { applications } from "../config/applications";
 
@@ -25,14 +25,20 @@ export default function Dock({
     const reducedMotion = useReducedMotion();
     const [hoveredIndex, setHoveredIndex] =
         useState<number | null>(null);
-    const [bouncingApp, setBouncingApp] =
-        useState<AppId | null>(null);
     return (
-        <footer className="os-dock">
+        <footer className="os-dock" aria-label="Applications du dock"
+            onPointerLeave={() => setHoveredIndex(null)}
+            onPointerMove={event => {
+                if (event.pointerType !== "mouse") return;
+                const slots = event.currentTarget.querySelectorAll<HTMLElement>(".os-dock-slot");
+                const first = slots[0]?.getBoundingClientRect();
+                const second = slots[1]?.getBoundingClientRect();
+                if (first && second) {
+                    setHoveredIndex((event.clientX - first.left - first.width / 2) / (second.left - first.left));
+                }
+            }}>
 
             {applications.map((app, index) => {
-
-                const Icon = app.icon;
 
                 const isOpen = windows.some(
                     window => window.id === app.id
@@ -51,8 +57,40 @@ export default function Dock({
                     : 1 + influence * 0.4;
 
                 return (
-                    <motion.button
+                    <DockIcon
                         key={app.id}
+                        app={app}
+                        isOpen={isOpen}
+                        scale={scale}
+                        influence={influence}
+                        onOpen={onOpen}
+                    />
+                );
+            })}
+
+        </footer>
+    );
+}
+
+function DockIcon({app, isOpen, scale, influence, onOpen}: {
+    app: (typeof applications)[number];
+    isOpen: boolean;
+    scale: number;
+    influence: number;
+    onOpen: DockProps["onOpen"];
+}) {
+    const reducedMotion = useReducedMotion();
+    const [bouncing, setBouncing] = useState(false);
+    const Icon = app.icon;
+
+    useEffect(() => {
+        if (!bouncing) return;
+        const timeout = window.setTimeout(() => setBouncing(false), 500);
+        return () => window.clearTimeout(timeout);
+    }, [bouncing]);
+
+    return <span className="os-dock-slot">
+                    <motion.button
                         type="button"
                         data-dock-app={app.id}
                         className="os-dock-icon"
@@ -64,16 +102,12 @@ export default function Dock({
                             color: app.color
                         }}
 
-                        onHoverStart={() => setHoveredIndex(index)}
-
-                        onHoverEnd={() => setHoveredIndex(null)}
-
                         animate={{
                             scale: scale,
 
                             y: reducedMotion
                                 ? 0
-                                : bouncingApp === app.id
+                                : bouncing
                                     ? [0, -18, 0, -9, 0]
                                     : -influence * 12
                         }}
@@ -87,7 +121,7 @@ export default function Dock({
                         }
 
                         transition={
-                            bouncingApp === app.id
+                            bouncing
                                 ? { duration: 0.5 }
                                 : {
                                     type: "spring",
@@ -98,17 +132,12 @@ export default function Dock({
 
                         onClick={() => {
                             if (!reducedMotion && !isOpen) {
-                                setBouncingApp(app.id);
+                                setBouncing(true);
                             }
 
                             onOpen(app.id, app.title);
                         }}
 
-                        onAnimationComplete={() => {
-                            if (bouncingApp === app.id) {
-                                setBouncingApp(null);
-                            }
-                        }}
                     >
 
                         <Icon size={28} />
@@ -120,9 +149,5 @@ export default function Dock({
                         )}
 
                     </motion.button>
-                );
-            })}
-
-        </footer>
-    );
+    </span>;
 }

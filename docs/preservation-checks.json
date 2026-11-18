@@ -1,0 +1,202 @@
+{
+  "publicChecks": [
+    {
+      "file": "public/CV-LylianMichel.pdf",
+      "unchanged": true
+    },
+    {
+      "file": "public/cv.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/favicon.svg",
+      "unchanged": true
+    },
+    {
+      "file": "public/img.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/og-portfolio.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/portrait-lylian-michel.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/project-fallback.svg",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-discovery.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-home-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-home.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-list.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-search.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault-title.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/anivault.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/eco-repare-home-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/eco-repare-home.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/eco-repare-preview.svg",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple-home-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple-home.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple-soins-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple-soins.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple-spa.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/le-temple.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-evolution-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-evolution.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-heroes.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-hub-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-hub.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-menu-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-menu.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-personnages-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-personnages.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-play.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-progression.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-tree-640.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence-tree.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/projects/towerdefence.png",
+      "unchanged": true
+    },
+    {
+      "file": "public/robots.txt",
+      "unchanged": true
+    },
+    {
+      "file": "public/sitemap.xml",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-autumn.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-clouds.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-day.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-night.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-sunrise.webp",
+      "unchanged": true
+    },
+    {
+      "file": "public/wallpapers/alpine-sunset.webp",
+      "unchanged": true
+    }
+  ],
+  "businessChecks": [
+    {
+      "file": "projects.ts",
+      "unchangedExceptImports": true
+    },
+    {
+      "file": "skills.ts",
+      "unchangedExceptImports": true
+    },
+    {
+      "file": "timeline.ts",
+      "unchangedExceptImports": true
+    },
+    {
+      "file": "projectImageSizes.json",
+      "unchangedExceptImports": true
+    }
+  ]
+}

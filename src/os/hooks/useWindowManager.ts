@@ -1,287 +1,34 @@
-import { useState } from "react";
-import type { OSWindow, AppId } from "../types";
+﻿import { useEffect, useReducer } from "react";
+import type { AppId } from "../types";
+import { windowReducer } from "../windowState";
+
+function getWorkspaceSize() {
+    const workspace = document.querySelector(".os-workspace");
+    return {width:workspace?.clientWidth ?? 1000,height:workspace?.clientHeight ?? 600};
+}
 
 export function useWindowManager() {
+    const [windows, dispatch] = useReducer(windowReducer, []);
 
-    const [windows, setWindows] =
-        useState<OSWindow[]>([]);
-
-    function getWorkspaceSize() {
-
-        const workspace =
-            document.querySelector(".os-workspace");
-
-        return {
-            width: workspace?.clientWidth ?? 1000,
-            height: workspace?.clientHeight ?? 600
-        };
-    }
-
-    function openWindow(id: AppId, title: string) {
-
-        const workspace = getWorkspaceSize();
-
-        setWindows(previous => {
-
-            const maxZIndex = Math.max(
-                0,
-                ...previous.map(window => window.zIndex)
-            );
-
-            const existingWindow = previous.find(
-                window => window.id === id
-            );
-
-            if (existingWindow) {
-
-                return previous.map(window =>
-                    window.id === id
-                        ? {
-                            ...window,
-                            minimized: false,
-                            zIndex: maxZIndex + 1
-                        }
-                        : window
-                );
-            }
-
-            const offset = (previous.length % 5) * 30;
-
-            const width = Math.min(700, workspace.width);
-            const height = Math.min(450, workspace.height);
-
-            const newWindow: OSWindow = {
-                id,
-                title,
-
-                x: Math.min(
-                    150 + offset,
-                    Math.max(0, workspace.width - width)
-                ),
-
-                y: Math.min(
-                    30 + offset,
-                    Math.max(0, workspace.height - height)
-                ),
-
-                width,
-                height,
-
-                zIndex: maxZIndex + 1,
-
-                minimized: false,
-                maximized: false
-            };
-
-            return [...previous, newWindow];
+    useEffect(() => {
+        const workspace = document.querySelector(".os-workspace");
+        if (!workspace) return;
+        const observer = new ResizeObserver(() => {
+            dispatch({type:"workspace",workspace:getWorkspaceSize()});
         });
-    }
-
-    function closeWindow(id: AppId) {
-
-        setWindows(previous =>
-            previous.filter(window => window.id !== id)
-        );
-    }
-
-    function focusWindow(id: AppId) {
-
-        setWindows(previous => {
-
-            const maxZIndex = Math.max(
-                0,
-                ...previous.map(window => window.zIndex)
-            );
-
-            return previous.map(window =>
-                window.id === id
-                    ? {
-                        ...window,
-                        zIndex: maxZIndex + 1
-                    }
-                    : window
-            );
-        });
-    }
-
-    function moveWindow(
-        id: AppId,
-        x: number,
-        y: number
-    ) {
-
-        const workspace = getWorkspaceSize();
-
-        setWindows(previous =>
-
-            previous.map(window => {
-
-                if (
-                    window.id !== id ||
-                    window.maximized
-                ) {
-                    return window;
-                }
-
-                const maxX = Math.max(
-                    0,
-                    workspace.width - window.width
-                );
-
-                const maxY = Math.max(
-                    0,
-                    workspace.height - window.height
-                );
-
-                return {
-                    ...window,
-
-                    x: Math.max(0, Math.min(x, maxX)),
-
-                    y: Math.max(0, Math.min(y, maxY))
-                };
-            })
-        );
-    }
-
-    function minimizeWindow(id: AppId) {
-
-        setWindows(previous =>
-
-            previous.map(window =>
-                window.id === id
-                    ? {
-                        ...window,
-                        minimized: true
-                    }
-                    : window
-            )
-        );
-    }
-
-    function restoreWindow(id: AppId) {
-
-        setWindows(previous => {
-
-            const maxZIndex = Math.max(
-                0,
-                ...previous.map(window => window.zIndex)
-            );
-
-            return previous.map(window =>
-                window.id === id
-                    ? {
-                        ...window,
-                        minimized: false,
-                        zIndex: maxZIndex + 1
-                    }
-                    : window
-            );
-        });
-    }
-
-    function maximizeWindow(id: AppId) {
-
-        const workspace = getWorkspaceSize();
-
-        setWindows(previous =>
-
-            previous.map(window => {
-
-                if (window.id !== id) {
-                    return window;
-                }
-
-                // Restaurer les anciennes dimensions
-                if (window.maximized) {
-
-                    return {
-                        ...window,
-                        ...window.previousBounds,
-
-                        maximized: false,
-                        previousBounds: undefined
-                    };
-                }
-
-                // Maximiser la fenêtre
-                return {
-                    ...window,
-
-                    previousBounds: {
-                        x: window.x,
-                        y: window.y,
-                        width: window.width,
-                        height: window.height
-                    },
-
-                    x: 0,
-                    y: 0,
-
-                    width: workspace.width,
-                    height: workspace.height,
-
-                    maximized: true
-                };
-            })
-        );
-    }
-
-    function resizeWindow(
-        id: AppId,
-        width: number,
-        height: number
-    ) {
-
-        const workspace = getWorkspaceSize();
-
-        setWindows(previous =>
-
-            previous.map(window => {
-
-                if (
-                    window.id !== id ||
-                    window.maximized
-                ) {
-                    return window;
-                }
-
-                const maxWidth = Math.max(
-                    0,
-                    workspace.width - window.x
-                );
-
-                const maxHeight = Math.max(
-                    0,
-                    workspace.height - window.y
-                );
-
-                return {
-                    ...window,
-
-                    width: Math.min(
-                        maxWidth,
-                        Math.max(300, width)
-                    ),
-
-                    height: Math.min(
-                        maxHeight,
-                        Math.max(200, height)
-                    )
-                };
-            })
-        );
-    }
+        observer.observe(workspace);
+        return () => observer.disconnect();
+    }, []);
 
     return {
         windows,
-        openWindow,
-        closeWindow,
-        focusWindow,
-        moveWindow,
-        minimizeWindow,
-        restoreWindow,
-        maximizeWindow,
-        resizeWindow
+        openWindow: (id:AppId,title:string) => dispatch({type:"open",id,title,workspace:getWorkspaceSize()}),
+        closeWindow: (id:AppId) => dispatch({type:"close",id}),
+        focusWindow: (id:AppId) => dispatch({type:"focus",id}),
+        moveWindow: (id:AppId,x:number,y:number) => dispatch({type:"move",id,x,y,workspace:getWorkspaceSize()}),
+        minimizeWindow: (id:AppId) => dispatch({type:"minimize",id}),
+        restoreWindow: (id:AppId) => dispatch({type:"restore",id}),
+        maximizeWindow: (id:AppId) => dispatch({type:"maximize",id,workspace:getWorkspaceSize()}),
+        resizeWindow: (id:AppId,width:number,height:number) => dispatch({type:"resize",id,width,height,workspace:getWorkspaceSize()})
     };
 }

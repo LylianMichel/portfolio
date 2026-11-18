@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "node:fs/promises";
-const dataPath="src/data/projects.ts";
-const sizesPath="src/data/projectImageSizes.json";
+const dataPath="src/os/data/projects.ts";
+const sizesPath="src/os/data/projectImageSizes.json";
 const pages=[["home","Accueil","Page d'accueil de la nouvelle version Laravel d'Eco'Répare"],["catalogue","Catalogue","Catalogue des produits Eco'Répare sous Laravel"],["services","Services","Page de services et réparation d'Eco'Répare"],["contact","Contact","Page de contact et demande de devis d'Eco'Répare"]];
 let source=await readFile(dataPath,"utf8");
 const start=source.indexOf('    id: "eco-repare"');

@@ -1,0 +1,114 @@
+import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { useEffect, useId, useState, useRef, type KeyboardEvent, type TouchEvent } from "react";
+import type { ProjectImage } from "../../portfolioTypes";
+import { Modal } from "../ui/Modal";
+
+interface ProjectCarouselProps {
+  images: ProjectImage[];
+  projectTitle: string;
+  eager?: boolean;
+  sceneIndex?: number;
+}
+
+const fallbackImage = `${import.meta.env.BASE_URL}project-fallback.svg`;
+
+export const ProjectCarousel = ({ images, projectTitle, eager = false, sceneIndex }: ProjectCarouselProps) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const titleId = useId();
+  const swipeStart = useRef<number | null>(null);
+  const userSelected = useRef(false);
+  useEffect(()=>{
+    if(sceneIndex===undefined||userSelected.current||expanded||images.length<2)return;
+    setActiveIndex(Math.max(0,sceneIndex)%images.length);
+  },[sceneIndex,images.length,expanded]);
+  const hasMultipleImages = images.length > 1;
+  const activeImage = images[activeIndex] ?? images[0];
+  if (!activeImage) return null;
+
+  const previous = () => {userSelected.current=true;setActiveIndex((current) => (current - 1 + images.length) % images.length);};
+  const next = () => {userSelected.current=true;setActiveIndex((current) => (current + 1) % images.length);};
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (expanded && (event.key === "ArrowLeft" || event.key === "ArrowRight")) { event.preventDefault(); event.key === "ArrowLeft" ? previous() : next(); return; }
+    if (!hasMultipleImages || event.target !== event.currentTarget) return;
+    if (event.key === "Home" || event.key === "End") {
+      event.preventDefault();
+      setActiveIndex(event.key === "Home" ? 0 : images.length - 1);
+    }
+    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+      event.preventDefault();
+      event.key === "ArrowLeft" ? previous() : next();
+    }
+  };
+
+  const onTouchStart = (event: TouchEvent<HTMLElement>) => { swipeStart.current = event.changedTouches[0]?.clientX ?? null; };
+  const onTouchEnd = (event: TouchEvent<HTMLElement>) => { const end = event.changedTouches[0]?.clientX; if (swipeStart.current !== null && end !== undefined && Math.abs(end-swipeStart.current)>55 && hasMultipleImages) { end<swipeStart.current?next():previous(); } swipeStart.current=null; };
+  return (
+    <figure className="project-gallery" tabIndex={hasMultipleImages ? 0 : undefined}
+      onKeyDown={handleKeyDown} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} aria-label={`Captures du projet ${projectTitle}`}>
+      <div className="project-image-wrap">
+        <img key={activeImage.src} src={activeImage.src} srcSet={activeImage.srcSet}
+          sizes="(min-width: 1024px) calc((100vw - 396px) * 0.55), (min-width: 768px) 50vw, 100vw"
+          width={activeImage.width} height={activeImage.height} alt={activeImage.alt}
+          className="project-image" loading={eager ? "eager" : "lazy"} decoding="async"
+          fetchPriority={eager ? "high" : "auto"}
+          onError={(event) => {
+            const image = event.currentTarget;
+            if (image.src.endsWith("project-fallback.svg")) return;
+            image.removeAttribute("srcset");
+            image.src = fallbackImage;
+          }} />
+      </div>
+      <figcaption className="gallery-caption">
+        <span className="gallery-label" aria-live="polite">{activeImage.label}</span>
+        {hasMultipleImages ? (
+          <div className="gallery-paging">
+            <button type="button" className="gallery-button" onClick={previous}
+              aria-label={`Image précédente de ${projectTitle}`}><ChevronLeft size={18} aria-hidden="true" /></button>
+            <span className="gallery-count" aria-live="polite" aria-atomic="true">{activeIndex + 1} / {images.length}</span>
+            <button type="button" className="gallery-button" onClick={next}
+              aria-label={`Image suivante de ${projectTitle}`}><ChevronRight size={18} aria-hidden="true" /></button>
+          </div>
+        ) : null}
+        <button type="button" className="gallery-expand" onClick={() => setExpanded(true)}
+          aria-label={`Agrandir la capture de ${projectTitle}`}><Expand size={15} aria-hidden="true" />Agrandir</button>
+      </figcaption>
+      {hasMultipleImages ? (
+        <div className="gallery-select" role="group" aria-label={`Choisir une capture de ${projectTitle}`}>
+          {images.map((image, index) => (
+            <button
+              key={image.src}
+              type="button"
+              className={`gallery-select-button ${activeIndex === index ? "gallery-select-active" : ""}`}
+              aria-pressed={activeIndex === index}
+              onClick={() => {userSelected.current=true;setActiveIndex(index)}}
+            >
+              {image.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      {expanded ? (
+        <Modal titleId={titleId} className="image-modal" onClose={() => setExpanded(false)}>
+          <div className="image-modal-content" onKeyDown={handleKeyDown} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+            <div className="image-modal-header">
+              <h2 id={titleId}>{projectTitle} · {activeImage.label}</h2>
+              <button type="button" className="icon-button" onClick={() => setExpanded(false)}
+                aria-label="Fermer la capture"><X size={20} aria-hidden="true" /></button>
+            </div>
+            <img key={activeImage.src} src={activeImage.src} srcSet={activeImage.srcSet}
+              sizes="90vw" width={activeImage.width} height={activeImage.height} alt={activeImage.alt}
+              decoding="async" onError={(event) => { const image = event.currentTarget; if (!image.src.endsWith("project-fallback.svg")) { image.removeAttribute("srcset"); image.src = fallbackImage; } }} />
+            {hasMultipleImages ? (
+              <div className="image-modal-navigation">
+                <button type="button" className="secondary-action" onClick={previous}><ChevronLeft size={18} aria-hidden="true" />Précédente</button>
+                <span aria-live="polite">{activeIndex + 1} / {images.length}</span>
+                <button type="button" className="secondary-action" onClick={next}>Suivante<ChevronRight size={18} aria-hidden="true" /></button>
+              </div>
+            ) : null}
+          </div>
+        </Modal>
+      ) : null}
+    </figure>
+  );
+};

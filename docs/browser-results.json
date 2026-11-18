@@ -1,0 +1,222 @@
+{
+  "functional": [
+    {
+      "name": "1920x1080: bureau et sept applications",
+      "status": "ok",
+      "detail": {
+        "overflow": false,
+        "inside": true
+      }
+    },
+    {
+      "name": "1366x768: bureau et sept applications",
+      "status": "ok",
+      "detail": {
+        "overflow": false,
+        "inside": true
+      }
+    },
+    {
+      "name": "1280x720: bureau et sept applications",
+      "status": "ok",
+      "detail": {
+        "overflow": false,
+        "inside": true
+      }
+    },
+    {
+      "name": "768x1024: bureau et sept applications",
+      "status": "ok",
+      "detail": {
+        "overflow": false,
+        "inside": true
+      }
+    },
+    {
+      "name": "390x844: bureau et sept applications",
+      "status": "ok",
+      "detail": {
+        "overflow": false,
+        "inside": true
+      }
+    },
+    {
+      "name": "déplacement, relâchement, redimensionnement et contrôles",
+      "status": "ok"
+    },
+    {
+      "name": "CV: PNG réel, PDF, proportions, état conservé et destination dock",
+      "status": "ok",
+      "detail": {
+        "png": [
+          137,
+          80,
+          78,
+          71,
+          13,
+          10,
+          26,
+          10
+        ],
+        "pdf": "%PDF-",
+        "natural": [
+          1819,
+          2573
+        ],
+        "rendered": [
+          650,
+          919
+        ],
+        "iframe": 0
+      }
+    },
+    {
+      "name": "menus, recherche, accents, focus et Échap",
+      "status": "ok"
+    },
+    {
+      "name": "clavier: icône bureau et application active",
+      "status": "ok"
+    },
+    {
+      "name": "console et réseau",
+      "status": "ok",
+      "detail": {
+        "errors": [],
+        "network": []
+      }
+    }
+  ],
+  "time-and-assets": [
+    {
+      "name": "production: prérendu et hydratation",
+      "status": "ok",
+      "detail": {
+        "errors": []
+      }
+    },
+    {
+      "name": "quatre WebP et portrait: téléchargement et décodage",
+      "status": "ok",
+      "detail": [
+        {
+          "file": "wallpapers/alpine-sunrise.webp",
+          "format": "PNG",
+          "bytes": 15602234,
+          "width": 3840,
+          "height": 2160
+        },
+        {
+          "file": "wallpapers/alpine-day.webp",
+          "format": "PNG",
+          "bytes": 4192412,
+          "width": 1920,
+          "height": 842
+        },
+        {
+          "file": "wallpapers/alpine-sunset.webp",
+          "format": "PNG",
+          "bytes": 29677454,
+          "width": 6000,
+          "height": 3375
+        },
+        {
+          "file": "wallpapers/alpine-night.webp",
+          "format": "PNG",
+          "bytes": 21227279,
+          "width": 5120,
+          "height": 2880
+        },
+        {
+          "file": "portrait-lylian-michel.png",
+          "format": "PNG",
+          "bytes": 996553,
+          "width": 1227,
+          "height": 1281
+        }
+      ]
+    },
+    {
+      "name": "horloge: changement de jour et format français",
+      "status": "ok",
+      "detail": "jeu. 19 nov.\n00:00"
+    },
+    {
+      "name": "fonds: limites horaires et transition sans écran vide",
+      "status": "ok",
+      "detail": [
+        {
+          "time": "00:00:00",
+          "name": "night"
+        },
+        {
+          "time": "05:59:00",
+          "name": "night"
+        },
+        {
+          "time": "06:00:00",
+          "name": "sunrise"
+        },
+        {
+          "time": "10:00:00",
+          "name": "day"
+        },
+        {
+          "time": "17:00:00",
+          "name": "sunset"
+        },
+        {
+          "time": "21:00:00",
+          "name": "night"
+        }
+      ]
+    },
+    {
+      "name": "mouvement réduit: dock et fenêtres restent sans transformation",
+      "status": "ok",
+      "detail": "none"
+    }
+  ],
+  "interaction": [
+    {
+      "name": "dock: grossissement progressif et emplacements stables",
+      "status": "ok",
+      "detail": [
+        1,
+        1.13333,
+        1.26667,
+        1.4,
+        1.26667,
+        1.13333,
+        1
+      ]
+    },
+    {
+      "name": "lancements rapides et rebonds indépendants",
+      "status": "ok"
+    },
+    {
+      "name": "tactile: ouverture, minimisation et restauration à 390x844",
+      "status": "ok"
+    }
+  ],
+  "hooks": [
+    "StrictMode: seulement deux intervalles actifs",
+    "openWindow",
+    "focusWindow",
+    "moveWindow",
+    "resizeWindow",
+    "minimizeWindow",
+    "restoreWindow",
+    "maximizeWindow",
+    "maximizeWindow restaure les anciennes dimensions",
+    "closeWindow",
+    "nettoyage des intervalles après démontage"
+  ],
+  "reduced-hydration": {
+    "name": "hydratation avec réduction des animations dès le chargement",
+    "status": "ok",
+    "errors": [],
+    "windows": 1
+  }
+}

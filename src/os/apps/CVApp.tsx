@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { profile } from "../data/profile";
 
 export default function CVApp() {
     const base = import.meta.env.BASE_URL;
@@ -12,7 +13,7 @@ export default function CVApp() {
             />
 
             <a
-                href={`${base}CV-LylianMichel.pdf`}
+                href={profile.cvUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="os-cv-download"

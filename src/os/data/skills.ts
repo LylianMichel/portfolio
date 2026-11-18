@@ -1,0 +1,44 @@
+import type { SkillGroup } from "../portfolioTypes";
+
+export const skillGroups: SkillGroup[] = [
+  {
+    title: "Frontend",
+    description: "AniVault, Eco’Répare et ce portfolio.",
+    skills: [
+      { name: "TypeScript", description: "Utilisé sur AniVault et ce portfolio pour mieux typer les composants et les données.", level: "En progression", icon: "Code2" },
+      { name: "JavaScript", description: "Utilisé sur plusieurs projets web, notamment Eco'Répare.", level: "Intermédiaire", icon: "Code2" },
+      { name: "HTML / CSS", description: "Base de mes projets web et de leur responsive.", level: "Intermédiaire", icon: "Globe2" },
+      { name: "Tailwind CSS", description: "Utilisé pour construire et maintenir l'interface de ce portfolio.", level: "En progression", icon: "WandSparkles" }
+    ]
+  },
+  {
+    title: "Backend & applications",
+    description: "API d’AniVault, application Le Temple et travaux de BUT sur un mini-framework PHP (routage, BladeOne, PHPStan et PHPUnit) et les structures de données en Java (listes chaînées, arbres et JUnit).",
+    skills: [
+      { name: "PHP / Laravel", description: "Utilisé sur Le Temple et mes travaux web en BUT.", level: "En progression", icon: "ServerCog" },
+      { name: "Java", description: "Utilisé en BUT pour la POO, les structures de données et les tests.", level: "Intermédiaire", icon: "TerminalSquare" },
+      { name: "Python", description: "Utilisé en BUT pour l'algorithmique et les scripts.", level: "Intermédiaire", icon: "TerminalSquare" }
+    ]
+  },
+  {
+    title: "Données & qualité",
+    description: "Modèles Prisma, requêtes SQL et tests des applications.",
+    skills: [
+      { name: "PostgreSQL", description: "Base de données utilisée sur AniVault.", level: "En progression", icon: "Database" },
+      { name: "SQLite", description: "Utilisé sur des projets locaux et sur Le Temple.", level: "Intermédiaire", icon: "Database" },
+      { name: "Prisma", description: "Accès aux données et modèles sur AniVault.", level: "En progression", icon: "Database" },
+      { name: "SQL", description: "Requêtes, jointures, fonctions et travail relationnel en BUT.", level: "Intermédiaire", icon: "Database" },
+      { name: "Tests", description: "JUnit, PHPUnit, tests backend et tests end-to-end.", level: "En progression", icon: "Code2" }
+    ]
+  },
+  {
+    title: "Outils & création",
+    description: "Versionner le code, lancer les projets et développer le jeu.",
+    skills: [
+      { name: "Git / GitHub", description: "Branches, commits et organisation de mes dépôts.", level: "Intermédiaire", icon: "GitBranch" },
+      { name: "Linux", description: "Utilisé en cours et dans mon environnement de développement.", level: "En progression", icon: "TerminalSquare" },
+      { name: "Vite", description: "Utilisé sur AniVault et ce portfolio.", level: "Intermédiaire", icon: "Laptop" },
+      { name: "Godot", description: "Moteur utilisé pour développer THE WORLD DEFENCE.", level: "En progression", icon: "Gamepad2" }
+    ]
+  }
+];

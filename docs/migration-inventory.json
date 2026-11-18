@@ -1,0 +1,592 @@
+{
+  "mapping": {
+    "src/App.tsx": "src/App.tsx",
+    "src/assets/circuit-pattern.svg": "archive/portfolio-v1/assets/circuit-pattern.svg",
+    "src/components/projects/MetaBar.tsx": "archive/portfolio-v1/components/projects/MetaBar.tsx",
+    "src/components/projects/ProjectCard.tsx": "archive/portfolio-v1/components/projects/ProjectCard.tsx",
+    "src/components/projects/ProjectCarousel.tsx": "src/os/components/projects/ProjectCarousel.tsx",
+    "src/components/projects/ProjectFrame.tsx": "archive/portfolio-v1/components/projects/ProjectFrame.tsx",
+    "src/components/ui/ActionButton.tsx": "archive/portfolio-v1/components/ui/ActionButton.tsx",
+    "src/components/ui/EmailCopy.tsx": "archive/portfolio-v1/components/ui/EmailCopy.tsx",
+    "src/components/ui/MagneticAction.tsx": "archive/portfolio-v1/components/ui/MagneticAction.tsx",
+    "src/components/ui/Modal.tsx": "src/os/components/ui/Modal.tsx",
+    "src/components/ui/PixelIcon.tsx": "src/os/components/ui/PixelIcon.tsx",
+    "src/components/ui/Tag.tsx": "archive/portfolio-v1/components/ui/Tag.tsx",
+    "src/data/profile.ts": "src/os/data/profile.ts",
+    "src/data/projectImageSizes.json": "src/os/data/projectImageSizes.json",
+    "src/data/projects.ts": "src/os/data/projects.ts",
+    "src/data/skills.ts": "src/os/data/skills.ts",
+    "src/data/timeline.ts": "src/os/data/timeline.ts",
+    "src/hooks/useStaggerReveal.ts": "archive/portfolio-v1/hooks/useStaggerReveal.ts",
+    "src/main.tsx": "src/main.tsx",
+    "src/os/apps/AboutApp.tsx": "src/os/apps/AboutApp.tsx",
+    "src/os/apps/CVApp.tsx": "src/os/apps/CVApp.tsx",
+    "src/os/components/DesktopIcon.tsx": "src/os/components/DesktopIcon.tsx",
+    "src/os/components/Dock.tsx": "src/os/components/Dock.tsx",
+    "src/os/components/TopBar.tsx": "src/os/components/TopBar.tsx",
+    "src/os/components/Wallpaper.tsx": "src/os/components/Wallpaper.tsx",
+    "src/os/components/Window.tsx": "src/os/components/Window.tsx",
+    "src/os/config/applications.ts": "src/os/config/applications.ts",
+    "src/os/config/wallpapers.test.ts": "src/os/config/wallpapers.test.ts",
+    "src/os/config/wallpapers.ts": "src/os/config/wallpapers.ts",
+    "src/os/Desktop.tsx": "src/os/Desktop.tsx",
+    "src/os/hooks/useClock.ts": "src/os/hooks/useClock.ts",
+    "src/os/hooks/useWallpaper.ts": "src/os/hooks/useWallpaper.ts",
+    "src/os/hooks/useWindowManager.ts": "src/os/hooks/useWindowManager.ts",
+    "src/os/os.css": "src/os/os.css",
+    "src/os/types.ts": "src/os/types.ts",
+    "src/os/windowState.test.ts": "src/os/windowState.test.ts",
+    "src/os/windowState.ts": "src/os/windowState.ts",
+    "src/prerender.tsx": "src/prerender.tsx",
+    "src/sections/About.tsx": "archive/portfolio-v1/sections/About.tsx",
+    "src/sections/Contact.tsx": "archive/portfolio-v1/sections/Contact.tsx",
+    "src/sections/Portrait.tsx": "archive/portfolio-v1/sections/Portrait.tsx",
+    "src/sections/Projects.tsx": "archive/portfolio-v1/sections/Projects.tsx",
+    "src/sections/Timeline.tsx": "archive/portfolio-v1/sections/Timeline.tsx",
+    "src/sections/WorkContact.tsx": "archive/portfolio-v1/sections/WorkContact.tsx",
+    "src/styles.css": "archive/portfolio-v1/styles.css",
+    "src/types/index.ts": "src/os/portfolioTypes.ts",
+    "src/utils/contrast.test.ts": "archive/portfolio-v1/utils/contrast.test.ts",
+    "src/utils/copyEmail.ts": "src/os/utils/copyEmail.ts",
+    "src/utils/creative.ts": "archive/portfolio-v1/utils/creative.ts",
+    "src/utils/filterProjects.ts": "src/os/utils/filterProjects.ts",
+    "src/utils/interaction.test.ts": "archive/portfolio-v1/utils/interaction.test.ts",
+    "src/utils/keyboard.ts": "archive/portfolio-v1/utils/keyboard.ts",
+    "src/utils/preferences.ts": "archive/portfolio-v1/utils/preferences.ts",
+    "src/utils/projectDecisions.ts": "src/os/utils/projectDecisions.ts",
+    "src/utils/rainPolicy.ts": "archive/portfolio-v1/utils/rainPolicy.ts",
+    "src/vite-env.d.ts": "src/vite-env.d.ts"
+  },
+  "removed": [
+    "src/components/layout/Navbar.tsx",
+    "src/components/ui/NameWave.tsx",
+    "src/components/ui/Marquee.tsx",
+    "src/components/ui/MatrixRain.tsx",
+    "src/components/ui/SourcePlayToggle.tsx",
+    "src/hooks/useTheme.ts",
+    "src/hooks/useMatrixSectionDecode.ts",
+    "src/hooks/useActiveSection.ts",
+    "src/sections/Hero.tsx",
+    "src/os/components/WindowManager.tsx"
+  ],
+  "rewritten": [
+    {
+      "file": "archive/portfolio-v1/components/projects/MetaBar.tsx",
+      "from": "../../types",
+      "to": "../../../../src/os/portfolioTypes"
+    },
+    {
+      "file": "archive/portfolio-v1/components/projects/ProjectCard.tsx",
+      "from": "../../utils/projectDecisions",
+      "to": "../../../../src/os/utils/projectDecisions"
+    },
+    {
+      "file": "archive/portfolio-v1/components/projects/ProjectCard.tsx",
+      "from": "../../data/profile",
+      "to": "../../../../src/os/data/profile"
+    },
+    {
+      "file": "archive/portfolio-v1/components/projects/ProjectCard.tsx",
+      "from": "./ProjectCarousel",
+      "to": "../../../../src/os/components/projects/ProjectCarousel"
+    },
+    {
+      "file": "archive/portfolio-v1/components/projects/ProjectCard.tsx",
+      "from": "../../types",
+      "to": "../../../../src/os/portfolioTypes"
+    },
+    {
+      "file": "src/os/components/projects/ProjectCarousel.tsx",
+      "from": "../../types",
+      "to": "../../portfolioTypes"
+    },
+    {
+      "file": "archive/portfolio-v1/components/ui/EmailCopy.tsx",
+      "from": "../../utils/copyEmail",
+      "to": "../../../../src/os/utils/copyEmail"
+    },
+    {
+      "file": "archive/portfolio-v1/components/ui/EmailCopy.tsx",
+      "from": "../../data/profile",
+      "to": "../../../../src/os/data/profile"
+    },
+    {
+      "file": "src/os/data/profile.ts",
+      "from": "../types",
+      "to": "../portfolioTypes"
+    },
+    {
+      "file": "src/os/data/projects.ts",
+      "from": "../types",
+      "to": "../portfolioTypes"
+    },
+    {
+      "file": "src/os/data/skills.ts",
+      "from": "../types",
+      "to": "../portfolioTypes"
+    },
+    {
+      "file": "src/os/data/timeline.ts",
+      "from": "../types",
+      "to": "../portfolioTypes"
+    },
+    {
+      "file": "src/os/apps/AboutApp.tsx",
+      "from": "../../data/profile",
+      "to": "../data/profile"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/About.tsx",
+      "from": "../components/ui/PixelIcon",
+      "to": "../../../src/os/components/ui/PixelIcon"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/About.tsx",
+      "from": "../data/profile",
+      "to": "../../../src/os/data/profile"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/Contact.tsx",
+      "from": "../data/profile",
+      "to": "../../../src/os/data/profile"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/Portrait.tsx",
+      "from": "../data/profile",
+      "to": "../../../src/os/data/profile"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/Projects.tsx",
+      "from": "../utils/filterProjects",
+      "to": "../../../src/os/utils/filterProjects"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/Projects.tsx",
+      "from": "../data/projects",
+      "to": "../../../src/os/data/projects"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/Timeline.tsx",
+      "from": "../data/timeline",
+      "to": "../../../src/os/data/timeline"
+    },
+    {
+      "file": "archive/portfolio-v1/sections/WorkContact.tsx",
+      "from": "../data/profile",
+      "to": "../../../src/os/data/profile"
+    },
+    {
+      "file": "src/os/utils/filterProjects.ts",
+      "from": "../types",
+      "to": "../portfolioTypes"
+    },
+    {
+      "file": "archive/portfolio-v1/utils/interaction.test.ts",
+      "from": "./filterProjects",
+      "to": "../../../src/os/utils/filterProjects"
+    },
+    {
+      "file": "archive/portfolio-v1/utils/interaction.test.ts",
+      "from": "./copyEmail",
+      "to": "../../../src/os/utils/copyEmail"
+    }
+  ],
+  "graph": [
+    {
+      "file": "src/App.tsx",
+      "imported": "src/os/Desktop.tsx"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/components/ui/SourcePlayToggle.tsx"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/utils/creative.ts"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/utils/preferences.ts"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/hooks/useActiveSection.ts"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/components/projects/MetaBar.tsx",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/hooks/useStaggerReveal.ts"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/utils/projectDecisions.ts"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/components/projects/MetaBar.tsx"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/components/ui/Tag.tsx"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/components/projects/ProjectFrame.tsx"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/components/projects/ProjectCarousel.tsx"
+    },
+    {
+      "file": "src/components/projects/ProjectCard.tsx",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/components/projects/ProjectCarousel.tsx",
+      "imported": "src/components/ui/Modal.tsx"
+    },
+    {
+      "file": "src/components/projects/ProjectCarousel.tsx",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/components/ui/EmailCopy.tsx",
+      "imported": "src/utils/copyEmail.ts"
+    },
+    {
+      "file": "src/components/ui/EmailCopy.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/components/ui/Marquee.tsx",
+      "imported": "src/data/projects.ts"
+    },
+    {
+      "file": "src/components/ui/MatrixRain.tsx",
+      "imported": "src/utils/rainPolicy.ts"
+    },
+    {
+      "file": "src/components/ui/MatrixRain.tsx",
+      "imported": "src/utils/preferences.ts"
+    },
+    {
+      "file": "src/components/ui/MatrixRain.tsx",
+      "imported": "src/data/projects.ts"
+    },
+    {
+      "file": "src/components/ui/SourcePlayToggle.tsx",
+      "imported": "src/utils/creative.ts"
+    },
+    {
+      "file": "src/data/profile.ts",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/data/projects.ts",
+      "imported": "src/data/projectImageSizes.json"
+    },
+    {
+      "file": "src/data/projects.ts",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/data/skills.ts",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/data/timeline.ts",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/main.tsx",
+      "imported": "src/os/os.css"
+    },
+    {
+      "file": "src/main.tsx",
+      "imported": "src/App.tsx"
+    },
+    {
+      "file": "src/os/apps/AboutApp.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/os/components/Dock.tsx",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/components/Dock.tsx",
+      "imported": "src/os/config/applications.ts"
+    },
+    {
+      "file": "src/os/components/TopBar.tsx",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/components/TopBar.tsx",
+      "imported": "src/os/config/applications.ts"
+    },
+    {
+      "file": "src/os/components/TopBar.tsx",
+      "imported": "src/os/hooks/useClock.ts"
+    },
+    {
+      "file": "src/os/components/Wallpaper.tsx",
+      "imported": "src/os/hooks/useWallpaper.ts"
+    },
+    {
+      "file": "src/os/components/Window.tsx",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/config/applications.ts",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/config/wallpapers.test.ts",
+      "imported": "src/os/config/wallpapers.ts"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/os.css"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/hooks/useWindowManager.ts"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/components/TopBar.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/apps/CVApp.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/apps/AboutApp.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/components/Window.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/components/DesktopIcon.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/components/Wallpaper.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/components/Dock.tsx"
+    },
+    {
+      "file": "src/os/Desktop.tsx",
+      "imported": "src/os/config/applications.ts"
+    },
+    {
+      "file": "src/os/hooks/useWallpaper.ts",
+      "imported": "src/os/config/wallpapers.ts"
+    },
+    {
+      "file": "src/os/hooks/useWindowManager.ts",
+      "imported": "src/os/windowState.ts"
+    },
+    {
+      "file": "src/os/hooks/useWindowManager.ts",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/windowState.test.ts",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/os/windowState.test.ts",
+      "imported": "src/os/windowState.ts"
+    },
+    {
+      "file": "src/os/windowState.ts",
+      "imported": "src/os/types.ts"
+    },
+    {
+      "file": "src/prerender.tsx",
+      "imported": "src/App.tsx"
+    },
+    {
+      "file": "src/sections/About.tsx",
+      "imported": "src/components/ui/PixelIcon.tsx"
+    },
+    {
+      "file": "src/sections/About.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/sections/Contact.tsx",
+      "imported": "src/components/ui/MagneticAction.tsx"
+    },
+    {
+      "file": "src/sections/Contact.tsx",
+      "imported": "src/components/ui/EmailCopy.tsx"
+    },
+    {
+      "file": "src/sections/Contact.tsx",
+      "imported": "src/components/ui/ActionButton.tsx"
+    },
+    {
+      "file": "src/sections/Contact.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/sections/Hero.tsx",
+      "imported": "src/components/ui/NameWave.tsx"
+    },
+    {
+      "file": "src/sections/Hero.tsx",
+      "imported": "src/components/ui/ActionButton.tsx"
+    },
+    {
+      "file": "src/sections/Hero.tsx",
+      "imported": "src/data/projects.ts"
+    },
+    {
+      "file": "src/sections/Hero.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/sections/Portrait.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/sections/Projects.tsx",
+      "imported": "src/utils/filterProjects.ts"
+    },
+    {
+      "file": "src/sections/Projects.tsx",
+      "imported": "src/data/projects.ts"
+    },
+    {
+      "file": "src/sections/Projects.tsx",
+      "imported": "src/components/projects/ProjectCard.tsx"
+    },
+    {
+      "file": "src/sections/Timeline.tsx",
+      "imported": "src/data/timeline.ts"
+    },
+    {
+      "file": "src/sections/WorkContact.tsx",
+      "imported": "src/components/ui/MagneticAction.tsx"
+    },
+    {
+      "file": "src/sections/WorkContact.tsx",
+      "imported": "src/components/ui/EmailCopy.tsx"
+    },
+    {
+      "file": "src/sections/WorkContact.tsx",
+      "imported": "src/components/ui/ActionButton.tsx"
+    },
+    {
+      "file": "src/sections/WorkContact.tsx",
+      "imported": "src/data/profile.ts"
+    },
+    {
+      "file": "src/utils/filterProjects.ts",
+      "imported": "src/types/index.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/rainPolicy.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/preferences.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/creative.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/keyboard.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/filterProjects.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/copyEmail.ts"
+    },
+    {
+      "file": "src/utils/interaction.test.ts",
+      "imported": "src/utils/preferences.ts"
+    }
+  ],
+  "hashes": {
+    "public/CV-LylianMichel.pdf": "8f31dff6eea86c040006a2302467269145a83eadd09bbdd3d60f09477012da3c",
+    "public/cv.png": "c6e0b99cb64d95a4acf4be0c7f5c41f66b74ff8751269374767ecb0791bc8375",
+    "public/favicon.svg": "bba56521120ced03301c8f6debe08656eff5dd8549b1dc5f52bd4fc5277a610b",
+    "public/img.png": "2aa1b419dabffa56adbeb46f9e93910175e424c2d3094455c743e0a8a507496d",
+    "public/og-portfolio.png": "fdeb343f21d3427c07f3e2d0d1a6e96a3e4bf7c1b03d5c5e6ff28c436a05217e",
+    "public/portrait-lylian-michel.png": "69b8491319e8026db5327693d2b35f18a8ee9a86f1565d84d2f5bd7919aa32f3",
+    "public/project-fallback.svg": "a6efcc4728a4ee73f629344cb14bd506d7efab5e790c9ac1ff4f671863719f0c",
+    "public/projects/anivault-discovery.png": "7e0e52f74ca0c4079c2423e95a89fc8fdc370efb5acd2ae2d9a79c4192fc34b5",
+    "public/projects/anivault-home-640.webp": "23099c2c68fb74326bb3413cfcc61ac87029f520ab2557d14a626e29da62ac33",
+    "public/projects/anivault-home.webp": "eb3aab2b07c502c65abac622c9256c72299230fdedf167f0c14133b218b09195",
+    "public/projects/anivault-list.png": "1f1501bcb31f76f797cbe91905371168b1fefcf933f569ad114e9a99d5f5bb0b",
+    "public/projects/anivault-search.png": "a1b488f6933b7b3077422386a50123fa395d280e16a045fb668eae364e270e0c",
+    "public/projects/anivault-title.png": "9d0ea21818c53c4b1da37a59d89f34099043eaf8f01d5dc22a14a593bc9ab55a",
+    "public/projects/anivault.png": "f846aa0d724bd21d62bcef7fe2bb33b8a913585a6260477684bfb6c5b29ce934",
+    "public/projects/eco-repare-home-640.webp": "9029e31a3ca9f427589a662099d6c24a26ba112283eeb962cd0df7491f51669c",
+    "public/projects/eco-repare-home.webp": "5a4da9bdaba68e39af420f2a585248ceb7f0b8d430477f910fe47715d2a92263",
+    "public/projects/eco-repare-preview.svg": "8a4725147f78a8d6223ed001abf226e9d7b1711b99df568904bd3241d3d88f37",
+    "public/projects/le-temple-home-640.webp": "361473ef48f4ab54629c6dfede1462d6ba1b4d0051272d6b30619bac9fc452d7",
+    "public/projects/le-temple-home.webp": "3526b77993e05d7675454dd9ffa8b20fa010f545fb77c4baa74d4f2ba55eb5ed",
+    "public/projects/le-temple-soins-640.webp": "202c789fc4813ca8851383a045c1ff865d9b8af8f93f40ec66bcdfe7d6362038",
+    "public/projects/le-temple-soins.webp": "8162f5387b6671843c67a3d1f3c8dc74945f6fa06a9ead8a6b22153f438fa525",
+    "public/projects/le-temple-spa.webp": "20334475d233e21d9ff6606a57107232342392bd3603c97e79f9955b637d25b3",
+    "public/projects/le-temple.webp": "4b018eb7e000e9a98718c21cd006f03a725bebe52dbbbaa57efa9f9e377a52ad",
+    "public/projects/towerdefence-evolution-640.webp": "5974156a77a1686e883198f74e58ec580558154b8e59f8e2e2c9857924f932e2",
+    "public/projects/towerdefence-evolution.webp": "0d1b056a152293cccf2a8ba31e0a7a224b1ed1a3b79d964f09b7093ba5424419",
+    "public/projects/towerdefence-heroes.png": "68c38134c5b2158c09cdbc8a88ce5dc376cf8d37997f1df2de3950b16c2851e8",
+    "public/projects/towerdefence-hub-640.webp": "a7fd011f3c394b820c6732e11a2aaa46bac853a2a5f005087504ede4aa49aeb9",
+    "public/projects/towerdefence-hub.webp": "b664900b9e8d111e8ed1ab78897e549cecc760a73951e0e8d77227334307cc77",
+    "public/projects/towerdefence-menu-640.webp": "176cca0b7a6d61a05b8a3e96caf6c8622ba6367e3e99952da30cb70d4d32bc4b",
+    "public/projects/towerdefence-menu.webp": "f825ac542e13cc43ff999caf13e473ab2b26bf3916510bd0aa8d6498bf91761c",
+    "public/projects/towerdefence-personnages-640.webp": "6a5e00b648308891bc2802776afc6bf2a09aa155135adf2f247a24e730130fb1",
+    "public/projects/towerdefence-personnages.webp": "958b0a94c425e00128c896fb091dca39bdb7002046cdb269bf68e7cc2860e0ca",
+    "public/projects/towerdefence-play.png": "7343e0dc1db208106a748675bc48d82b79981a479545821283f1ffd371f4ac76",
+    "public/projects/towerdefence-progression.png": "3c7576d48f9d60734811257dce121b8cf694e8e1cab488752a51cd61baeecc35",
+    "public/projects/towerdefence-tree-640.webp": "7e28c063106f864a069bfa0de2199f78bef81543fe3abb49ab045b0009bed86b",
+    "public/projects/towerdefence-tree.png": "2b955e94515f1951d73157b4a143b705cf3e19d2f7b068f8484d9b03b9fa9178",
+    "public/projects/towerdefence.png": "77d1f8eaa5389685bcffb182cd70f22c52e2385b7221180eae25927f8b1cc48e",
+    "public/robots.txt": "bf7340c7865e3ae854f566f52ac35ac7796f77d4c7765f4915c3f01567e8d906",
+    "public/sitemap.xml": "757a6ceb4cb4b4fcbff3634c4e9367780365906be5447999b9746b00dc121730",
+    "public/wallpapers/alpine-autumn.webp": "475ab60fbe518e2fd2a417a0f7b73c5f31582cf41cf5b9b486243fe6f4f58b3e",
+    "public/wallpapers/alpine-clouds.webp": "5a14df6163fd73b4b9aa8b451f22436ea108a0b6f158e16640ccc0ed42a5cc77",
+    "public/wallpapers/alpine-day.webp": "16469a3b9ba0f9230a3e470f6026f295adfeee1ee7d8b410a8d97bbb9b10e588",
+    "public/wallpapers/alpine-night.webp": "875492230db4fe40781968c097d656bf648ed04df3e46de3cfb30a9c39b1ee5c",
+    "public/wallpapers/alpine-sunrise.webp": "b1c06d9fca29367a8bfd0bef238cda5ad81d4b512af17710ae8ec6782eb8c64f",
+    "public/wallpapers/alpine-sunset.webp": "641c349a04467f4c7f2e938fd46c4e8ece4ac89a1da2b8a529a88bba0980ea79",
+    "src/data/profile.ts": "d637126c00369b683e8e179973402bee53ad27d4a26966e6ba2c021998289797",
+    "src/data/projectImageSizes.json": "bc5b13b49a2b3c1135e6b0720212e3d69e66a387ba8993aee94e5320e1d7694b",
+    "src/data/projects.ts": "46b87b45c432da79d69950789fe81705b04c4a32137c0a43812c2eeef752a7ce",
+    "src/data/skills.ts": "5dcbd02d49e7f5cc6b387202700f91aebf8eb8cfdf90243b46d4d4c9dda52814",
+    "src/data/timeline.ts": "f6317c9887281bb9cacb8f013c2987f7a47bd87c89665afb2f3af0eae55aae10"
+  }
+}

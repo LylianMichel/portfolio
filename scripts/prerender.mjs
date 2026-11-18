@@ -6,4 +6,4 @@ const html = await readFile(path, "utf8");
 const marker = '<div id="root"></div>';
 if (!html.includes(marker)) throw new Error("Conteneur React introuvable pour le prérendu.");
 await writeFile(path, html.replace(marker, () => `<div id="root">${render()}</div>`));
-console.log("HTML du portfolio prérendu : sections et projets disponibles sans JavaScript.");
+console.log("HTML de LylianOS prérendu : bureau initial disponible avant l'hydratation.");

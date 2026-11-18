@@ -25,20 +25,35 @@
 
 .os-topbar {
     position: absolute;
-    inset: 0 0 auto;
+    top: 0;
+    left: 0;
 
+    width: 100%;
     height: 36px;
-    padding: 0 20px;
+
+    box-sizing: border-box;
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(20px);
+    gap: 10px;
+    padding: 0 12px;
+
+    background: rgba(245, 241, 250, 0.78);
+
+    backdrop-filter: blur(25px);
+
+    border-bottom: 1px solid
+    rgba(255, 255, 255, 0.6);
+
+    box-shadow: 0 2px 12px
+    rgba(0, 0, 0, 0.06);
+
+    color: #252633;
 
     z-index: 1000;
 }
-
 
 
 .os-dock {
@@ -77,11 +92,13 @@
 }
 .os-window {
     position: absolute;
+    box-sizing: border-box;
+    transform-origin: center center;
 
     display: flex;
     flex-direction: column;
 
-    max-width: calc(100% - 24px);
+    max-width: 100%;
     max-height: 100%;
 
     background: rgba(248, 245, 251, 0.88);
@@ -100,6 +117,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    flex-shrink: 0;
 
     min-height: 45px;
 
@@ -108,29 +129,6 @@
     background: rgba(220, 210, 235, 0.6);
 
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.os-window-header button {
-    display: grid;
-    place-items: center;
-
-    width: 28px;
-    height: 28px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: inherit;
-    cursor: pointer;
-
-    transition: background 150ms;
-}
-
-.os-window-header button:hover {
-    background: #ef8888;
-    color: white;
 }
 
 .os-window-content {
@@ -143,6 +141,11 @@
 .os-icons {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    max-height: 100%;
+    box-sizing: border-box;
+    width: fit-content;
 
     gap: 18px;
     padding: 20px 12px;
@@ -153,7 +156,7 @@
     flex-direction: column;
     align-items: center;
 
-    width: 85px;
+    width: 100px;
     gap: 8px;
 
     background: transparent;
@@ -189,55 +192,16 @@
 
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
-.os-window-header {
-    cursor: grab;
-    user-select: none;
-    touch-action: none;
-}
-
 .os-window-header:active {
     cursor: grabbing;
-}
-
-.os-window-header button {
-    cursor: pointer;
 }
 /* Gestion de l'espace de travail */
 
 .os-workspace {
     position: absolute;
     inset: 36px 0 90px;
-    overflow: hidden;
+    overflow: visible;
     isolation: isolate;
-}
-
-
-/* Dimensions des fenêtres */
-
-.os-window {
-    position: absolute;
-
-    box-sizing: border-box;
-
-    max-width: 100%;
-    max-height: 100%;
-    transform-origin: center center;
-}
-
-
-/* Barre de titre */
-
-.os-window-header {
-    cursor: grab;
-
-    user-select: none;
-    touch-action: none;
-
-    flex-shrink: 0;
-}
-
-.os-window-header:active {
-    cursor: grabbing;
 }
 
 
@@ -401,6 +365,21 @@
     transform-origin: bottom center;
 }
 
+/* Le calcul de distance utilise ces emplacements, jamais les boutons agrandis. */
+.os-dock-slot {
+    display: block;
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+}
+
+.os-dock::before {
+    content: "";
+    position: absolute;
+    inset: -28px 0 0;
+    z-index: -1;
+}
+
 .os-dock-indicator {
     position: absolute;
 
@@ -423,6 +402,10 @@
 }
 
 @media (max-width: 500px) {
+    .os-dock-slot {
+        width: 36px;
+        height: 36px;
+    }
     .os-dock {
         gap: 5px;
         padding: 8px 10px 12px;
@@ -436,5 +419,275 @@
     .os-dock-icon svg {
         width: 22px;
         height: 22px;
+    }
+}
+
+/* =========================
+   BARRE SYSTEME
+   ========================= */
+
+.os-topbar-left,
+.os-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.os-topbar-left {
+    min-width: 0;
+}
+
+.os-topbar-right {
+    flex-shrink: 0;
+}
+
+
+/* Logo LylianOS */
+
+.os-topbar-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+    padding: 5px 10px;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: inherit;
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.os-topbar-brand strong {
+    font-size: 13px;
+}
+
+
+/* Boutons des menus */
+
+.os-menu-button {
+    padding: 6px 10px;
+
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+
+    color: inherit;
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition: background 150ms;
+}
+
+.os-topbar-brand:hover,
+.os-menu-button:hover,
+.os-system-button:hover {
+    background: rgba(128, 116, 186, 0.18);
+}
+
+.os-topbar button[aria-expanded="true"] {
+    background: rgba(128, 116, 186, 0.25);
+}
+
+
+/* Application active */
+
+.os-active-app {
+    padding-left: 12px;
+
+    border-left: 1px solid
+    rgba(0, 0, 0, 0.12);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Boutons système */
+
+.os-system-button {
+    display: grid;
+    place-items: center;
+
+    width: 28px;
+    height: 28px;
+
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+
+    color: inherit;
+    cursor: pointer;
+
+    transition: background 150ms;
+}
+
+
+/* Horloge */
+
+.os-clock {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+    padding: 0 6px;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    font-variant-numeric: tabular-nums;
+}
+/* =========================
+   MENUS DEROULANTS
+   ========================= */
+
+.os-dropdown {
+    position: absolute;
+
+    top: calc(100% + 6px);
+    left: 12px;
+
+    width: 240px;
+    max-width: calc(100vw - 24px);
+
+    box-sizing: border-box;
+    padding: 6px;
+
+    background: rgba(248, 245, 251, 0.94);
+
+    backdrop-filter: blur(30px);
+
+    border: 1px solid
+    rgba(255, 255, 255, 0.8);
+
+    border-radius: 14px;
+
+    box-shadow: 0 12px 35px
+    rgba(0, 0, 0, 0.18);
+
+    transform-origin: top left;
+}
+
+.os-dropdown-file {
+    left: 115px;
+}
+
+.os-dropdown-apps {
+    left: 175px;
+}
+
+.os-dropdown-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+    padding: 10px 12px;
+
+    width: 100%;
+
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+
+    color: #252633;
+    font-size: 13px;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: background 150ms;
+}
+
+.os-dropdown-item:hover {
+    background: rgba(128, 116, 186, 0.15);
+}
+
+.os-topbar button:focus-visible {
+    outline: 2px solid #8074ba;
+    outline-offset: 2px;
+}
+
+.os-search-menu {
+    left: auto;
+    right: 12px;
+    width: 320px;
+}
+
+.os-search-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+}
+
+.os-search-input input {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid #8074ba;
+    border-radius: 6px;
+    padding: 8px;
+    font: inherit;
+}
+
+.os-dropdown {
+    max-height: calc(100dvh - 60px);
+    overflow-y: auto;
+}
+
+.os-desktop-icon:focus-visible,
+.os-window button:focus-visible,
+.os-cv-download:focus-visible,
+.os-search-input input:focus-visible {
+    outline: 2px solid #51468d;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .os-desktop *, .os-desktop *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+    .os-cv-download:hover, .os-cv-download:active {
+        transform: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .os-topbar {
+        padding: 0 6px;
+    }
+
+    .os-topbar-left,
+    .os-topbar-right {
+        gap: 3px;
+    }
+
+    .os-active-app,
+    .os-clock-date,
+    .os-file-menu {
+        display: none;
+    }
+
+    .os-topbar-brand {
+        padding: 4px;
+    }
+
+    .os-menu-button {
+        padding: 5px;
+    }
+
+    .os-dropdown-apps {
+        left: 8px;
     }
 }

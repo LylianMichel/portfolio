@@ -6,6 +6,7 @@ import DesktopIcon from "./components/DesktopIcon";
 import Window from "./components/Window";
 import AboutApp from "./apps/AboutApp";
 import CVApp from "./apps/CVApp";
+import TopBar from "./components/TopBar";
 
 import { useWindowManager } from "./hooks/useWindowManager";
 
@@ -28,10 +29,10 @@ export default function Desktop() {
 
             <Wallpaper />
 
-            <header className="os-topbar">
-                LylianOS
-            </header>
-
+            <TopBar
+                windows={windows}
+                onOpen={openWindow}
+            />
             <div className="os-workspace">
                 <div className="os-icons">
 
@@ -41,6 +42,7 @@ export default function Desktop() {
                             key={app.id}
                             label={app.title}
                             icon={app.icon}
+                            color={app.color}
                             onClick={() =>
                                 openWindow(app.id, app.title)
                             }

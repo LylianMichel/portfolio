@@ -56,5 +56,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/data/projects.ts src/data/projectImageSizes.json public/projects/eco-repare-*.webp
+          git add src/os/data/projects.ts src/os/data/projectImageSizes.json public/projects/eco-repare-*.webp
           git diff --cached --quiet || (git commit -m "design: actualiser les captures Laravel d'EcoRepare" && git push origin HEAD:dev)
