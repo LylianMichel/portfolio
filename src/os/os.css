@@ -39,28 +39,40 @@
     z-index: 1000;
 }
 
-.os-workspace {
-    position: absolute;
-    inset: 36px 0 90px;
-}
+
 
 .os-dock {
     position: absolute;
+
     bottom: 18px;
     left: 50%;
-
     transform: translateX(-50%);
 
-    width: 400px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    align-items: center;
+    justify-content: center;
+
+    width: max-content;
+    height: auto;
+
     max-width: calc(100% - 24px);
-    height: 65px;
+    box-sizing: border-box;
 
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.7);
+    gap: 10px;
+    padding: 10px 16px 14px;
 
-    background: rgba(255,255,255,0.55);
+    background: rgba(255, 255, 255, 0.55);
     backdrop-filter: blur(25px);
 
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 22px;
+
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+
+    overflow: visible;
     z-index: 1000;
 }
 .os-window {
@@ -209,6 +221,7 @@
 
     max-width: 100%;
     max-height: 100%;
+    transform-origin: center center;
 }
 
 
@@ -363,4 +376,65 @@
 
 .os-cv-download:active {
     transform: scale(0.96);
+}
+.os-dock-icon {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 13px;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    cursor: pointer;
+
+    box-shadow: 0 3px 8px
+    rgba(0, 0, 0, 0.08);
+
+    transform-origin: bottom center;
+}
+
+.os-dock-indicator {
+    position: absolute;
+
+    bottom: -9px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.os-dock-icon:focus-visible {
+    outline: 2px solid #51468d;
+    outline-offset: 3px;
+}
+
+@media (max-width: 500px) {
+    .os-dock {
+        gap: 5px;
+        padding: 8px 10px 12px;
+    }
+
+    .os-dock-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .os-dock-icon svg {
+        width: 22px;
+        height: 22px;
+    }
 }

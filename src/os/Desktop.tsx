@@ -1,15 +1,6 @@
-import {
-    UserRound,
-    Folder,
-    Layers,
-    FileText,
-    Mail,
-    Terminal,
-    Settings
-} from "lucide-react";
-
+import { applications } from "./config/applications";
 import { AnimatePresence } from "framer-motion";
-
+import Dock from "./components/Dock";
 import Wallpaper from "./components/Wallpaper";
 import DesktopIcon from "./components/DesktopIcon";
 import Window from "./components/Window";
@@ -44,47 +35,18 @@ export default function Desktop() {
             <div className="os-workspace">
                 <div className="os-icons">
 
-                    <DesktopIcon
-                        label="Profil"
-                        icon={UserRound}
-                        onClick={() => openWindow("about", "Profil")}
-                    />
+                    {applications.map(app => (
 
-                    <DesktopIcon
-                        label="Projets"
-                        icon={Folder}
-                        onClick={() => openWindow("projects", "Projets")}
-                    />
+                        <DesktopIcon
+                            key={app.id}
+                            label={app.title}
+                            icon={app.icon}
+                            onClick={() =>
+                                openWindow(app.id, app.title)
+                            }
+                        />
 
-                    <DesktopIcon
-                        label="Compétences"
-                        icon={Layers}
-                        onClick={() => openWindow("skills", "Compétences")}
-                    />
-
-                    <DesktopIcon
-                        label="CV"
-                        icon={FileText}
-                        onClick={() => openWindow("cv", "CV")}
-                    />
-
-                    <DesktopIcon
-                        label="Contact"
-                        icon={Mail}
-                        onClick={() => openWindow("contact", "Contact")}
-                    />
-
-                    <DesktopIcon
-                        label="Terminal"
-                        icon={Terminal}
-                        onClick={() => openWindow("terminal", "Terminal")}
-                    />
-
-                    <DesktopIcon
-                        label="Réglages"
-                        icon={Settings}
-                        onClick={() => openWindow("settings", "Réglages")}
-                    />
+                    ))}
 
                 </div>
                 <AnimatePresence>
@@ -151,9 +113,10 @@ export default function Desktop() {
                 </AnimatePresence>
             </div>
 
-            <footer className="os-dock">
-
-            </footer>
+                <Dock
+                    windows={windows}
+                    onOpen={openWindow}
+                />
 
         </main>
     );

@@ -1,5 +1,4 @@
-import { useRef } from "react";
-
+import { useRef, useState } from "react";
 import type {
     ReactNode,
     PointerEvent
@@ -49,7 +48,14 @@ export default function Window({
                                }: WindowProps) {
 
     const reducedMotion = useReducedMotion();
+    const windowRef = useRef<HTMLElement>(null);
 
+    const [minimizeTarget, setMinimizeTarget] =
+        useState({
+            x: 0,
+            y: 30,
+            scale: 0.85
+        });
     const dragStart = useRef<{
         mouseX: number;
         mouseY: number;
@@ -189,10 +195,55 @@ export default function Window({
         resizeStart.current = null;
     }
 
+    function handleMinimize() {
 
+        const windowElement = windowRef.current;
+
+        const dockIcon =
+            document.querySelector<HTMLElement>(
+                `[data-dock-app="${window.id}"]`
+            );
+
+        if (windowElement && dockIcon) {
+
+            const windowRect =
+                windowElement.getBoundingClientRect();
+
+            const dockRect =
+                dockIcon.getBoundingClientRect();
+
+            const windowCenterX =
+                windowRect.left + windowRect.width / 2;
+
+            const windowCenterY =
+                windowRect.top + windowRect.height / 2;
+
+            const dockCenterX =
+                dockRect.left + dockRect.width / 2;
+
+            const dockCenterY =
+                dockRect.top + dockRect.height / 2;
+
+            const scale = Math.min(
+                dockRect.width / windowRect.width,
+                dockRect.height / windowRect.height
+            );
+
+            setMinimizeTarget({
+                x: dockCenterX - windowCenterX,
+                y: dockCenterY - windowCenterY,
+                scale: scale
+            });
+        }
+
+        onMinimize();
+
+        dockIcon?.focus({ preventScroll: true });
+    }
     return (
 
         <motion.section
+            ref={windowRef}
             className={
                 window.maximized
                     ? "os-window os-window-maximized"
@@ -221,8 +272,21 @@ export default function Window({
 
             animate={{
                 opacity: window.minimized ? 0 : 1,
-                scale: window.minimized ? 0.85 : 1,
-                y: window.minimized ? 30 : 0
+
+                scale:
+                    window.minimized && !reducedMotion
+                        ? minimizeTarget.scale
+                        : 1,
+
+                x:
+                    window.minimized && !reducedMotion
+                        ? minimizeTarget.x
+                        : 0,
+
+                y:
+                    window.minimized && !reducedMotion
+                        ? minimizeTarget.y
+                        : 0
             }}
 
             exit={{
@@ -231,7 +295,8 @@ export default function Window({
             }}
 
             transition={{
-                duration: reducedMotion ? 0 : 0.22
+                duration: reducedMotion ? 0 : 0.3,
+                ease: "easeInOut"
             }}
 
             inert={window.minimized}
@@ -262,7 +327,7 @@ export default function Window({
                 <div className="os-window-actions">
 
                     <button
-                        onClick={onMinimize}
+                        onClick={handleMinimize}
                         aria-label="Minimiser"
                         title="Minimiser"
                     >
