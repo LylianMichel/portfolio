@@ -63,22 +63,14 @@ function text(message,x,y,scale,color){
 rect(0,0,width,height,C.bg);
 for(let x=0;x<width;x+=40)rect(x,0,1,height,[27,29,28]);
 for(let y=0;y<height;y+=40)rect(0,y,width,1,[27,29,28]);
-rect(0,0,12,height,C.pair);
-rect(56,52,12,12,C.mint);text("SOURCE / PLAY / MATRIX",84,51,3,C.mint);
-rect(58,114,625,2,C.rule);rect(661,109,12,12,C.pair);
-text("LYLIAN",59,164,13,C.ink);
-text("MICHEL.",59,289,13,C.ink);
-rect(56,441,626,2,C.rule);
-text("DEVELOPPEUR WEB & JEUX VIDEO",59,468,3,C.sub);
-text("BUT INFORMATIQUE - IUT DE LENS",59,517,2,C.sub);
-rect(56,576,626,2,C.rule);text("STAGE - 8 SEMAINES - 12 AVRIL 2027",59,593,2,C.mint);
-rect(741,115,401,385,C.rule);rect(743,117,397,381,C.panel);
-rect(760,133,364,36,C.bg);text("LM / 01",780,144,2,C.mint);
-rect(765,194,354,1,C.rule);
-for(let x=790;x<1120;x+=44){text("0101",x,199+((x*7)%6)*24,1,C.matrixDim);}
-text("SOURCE",786,253,6,C.ink);text("PLAY",786,339,8,C.pair);
-rect(765,426,354,1,C.rule);text("MATRIX / WEB / GAME",782,453,2,C.matrix);
-rect(741,517,401,58,C.bg);rect(741,575,401,4,C.pair);text("DES PROJETS CONCRETS",761,537,2,C.sub);
+rect(0,0,width,height,[244,239,230]);
+rect(56,85,1088,2,[166,160,150]);
+text("LM.",58,45,4,[167,57,37]);
+text("LYLIAN",56,135,16,[32,35,30]);
+text("MICHEL.",56,268,16,[32,35,30]);
+rect(56,426,1088,2,[166,160,150]);
+text("DEVELOPPEUR JUNIOR",60,464,4,[32,35,30]);
+text("STAGE - 12 AVRIL 2027",60,540,3,[167,57,37]);
 function crc32(bytes){
  let crc=0xffffffff;
  for(const b of bytes){crc^=b;for(let n=0;n<8;n++)crc=(crc>>>1)^(crc&1?0xedb88320:0);}
@@ -94,4 +86,4 @@ for(let y=0;y<height;y++){raw[y*(width*4+1)]=0;pixels.copy(raw,y*(width*4+1)+1,y
 const ihdr=Buffer.alloc(13);ihdr.writeUInt32BE(width,0);ihdr.writeUInt32BE(height,4);ihdr[8]=8;ihdr[9]=6;
 const png=Buffer.concat([Buffer.from([137,80,78,71,13,10,26,10]),chunk("IHDR",ihdr),chunk("IDAT",deflateSync(raw,{level:9})),chunk("IEND",Buffer.alloc(0))]);
 await writeFile(new URL("../dist/og-portfolio.png",import.meta.url),png);
-console.log("OG SOURCE / PLAY / MATRIX generated",width,height,png.length);
+console.log("Image de partage générée",width,height,png.length);

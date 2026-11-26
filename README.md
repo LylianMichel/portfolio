@@ -1,134 +1,19 @@
-# Portfolio — Lylian Michel
+# Refonte éditoriale du portfolio
 
-Portfolio personnel réalisé avec React, TypeScript, Vite et Tailwind CSS.
+Application statique en français, construite avec React 19, TypeScript et Vite. Le dépôt de travail est une copie de l’historique d’origine. La branche de refonte part de `origin/dev`.
 
-L'interface est organisée en deux espaces :
+## Exécution
 
-- **Work** : projets, compétences, parcours et présentation ;
-- **Chat** : contact, GitHub, LinkedIn et informations sur mon stage 2027.
-
-## Prérequis
-
-- Node.js 22 recommandé
-- npm
-
-## Installation
-
-```bash
-npm install
-npm run dev
-```
-
-Le serveur local est généralement disponible sur :
-
-```text
-http://localhost:5173/
-```
-
-## Vérifier la version de production
-
-```bash
+```sh
+npm ci
+npm test
 npm run build
+npm run test:e2e
 npm run preview
 ```
 
-Le build final est généré dans `dist/`.
+Les tests de navigateur utilisent Chrome installé. Le build produit dix pages HTML, y compris sept fiches, le CV et la page 404. Les contenus initiaux sont lisibles sans JavaScript. React hydrate les filtres et les domaines de compétences. Aucun service applicatif ni variable d’environnement n’est nécessaire.
 
-Pour tester le site depuis un téléphone ou un autre appareil du réseau local :
+Les projets historiques et leurs captures sont documentés dans [docs/project-captures.md](docs/project-captures.md). Les fonctionnalités privées restent décrites avec la provenance disponible. Les fiches récentes sont volontairement courtes lorsque le brief ou la branche publique constituent les seules sources.
 
-```bash
-npm run preview:network
-```
-
-## Déploiement
-
-Le projet est une application Vite statique et ne nécessite aucune variable d'environnement.
-
-### Vercel
-
-1. importer le dépôt GitHub ;
-2. Framework Preset : **Vite** ;
-3. Build Command : `npm run build` ;
-4. Output Directory : `dist`.
-
-Le fichier `vercel.json` contient déjà les réglages principaux.
-
-### Netlify
-
-Le fichier `netlify.toml` configure automatiquement :
-
-- la commande de build ;
-- le dossier `dist` ;
-- Node.js 22 ;
-- quelques en-têtes de sécurité.
-
-### GitHub Pages
-
-Le projet utilise une base relative dans Vite, il peut donc être publié dans un sous-dossier comme `/portfolio/`.
-
-Il suffit de construire le site puis de publier le contenu de `dist/` avec GitHub Pages ou une action dédiée.
-
-## Structure utile
-
-```text
-src/
-├─ components/
-├─ data/
-├─ sections/
-├─ types/
-├─ App.tsx
-└─ index.css
-
-public/
-├─ projects/
-├─ favicon.svg
-├─ project-fallback.svg
-└─ robots.txt
-```
-
-Les informations du portfolio sont principalement dans :
-
-```text
-src/data/profile.ts
-src/data/projects.ts
-src/data/skills.ts
-src/data/timeline.ts
-```
-
-## Sécurité et configuration
-
-Les fichiers suivants ne doivent pas être versionnés et sont déjà ignorés :
-
-- `.env`
-- `.env.*`
-- `node_modules/`
-- `dist/`
-- fichiers IDE et logs
-
-Le portfolio actuel n'a besoin d'aucun secret ni d'aucune clé API.
-
-## Avant de publier
-
-Vérifier simplement :
-
-```bash
-npm install
-npm run build
-npm run preview
-```
-
-Puis tester Work, Chat, GitHub, LinkedIn, e-mail et les quatre couleurs d'accent.
-
-## Liens et visibilité des projets
-
-La démo d'AniVault pointe vers `https://anivault-blush.vercel.app/`, vérifiée le 11 octobre 2026.
-
-Les quatre dépôts présentés dans `src/data/projects.ts` sont actuellement privés. Les
-cartes n'affichent donc pas de liens « Voir le code » inaccessibles aux recruteurs.
-L'interface indique simplement que le code peut être présenté sur demande.
-
-Pour rendre publiquement consultable le code d'un projet, choisir d'abord ce qui
-peut être publié dans GitHub (licence, secrets, droits des collaborateurs), puis
-passer `codeAccess: "public"` pour le projet concerné après vérification de
-l'accès anonyme à son dépôt. Ne jamais changer automatiquement la confidentialité
-d'un dépôt pour ajouter un lien sur le portfolio.
+[Maquettes et design system Figma](https://www.figma.com/design/Noq1g5n3MpxB1iYnpTnAtk) · [Suivi, audit et décisions](docs/refonte.md)

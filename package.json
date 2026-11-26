@@ -8,16 +8,19 @@
     "build": "tsc -b && vite build && vite build --ssr src/prerender.tsx --outDir .prerender && node scripts/prerender.mjs && node scripts/generate-og.mjs",
     "preview": "vite preview",
     "preview:network": "vite preview --host 0.0.0.0",
-    "test": "vitest run"
+    "test": "vitest run src",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@fontsource-variable/space-grotesk": "^5.3.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.468.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "@fontsource-variable/space-grotesk": "^5.3.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.1",
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.0",
     "@types/react": "^19.2.5",
