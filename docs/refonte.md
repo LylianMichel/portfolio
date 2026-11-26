@@ -72,7 +72,7 @@ Sur le build final local, les 75 tests Vitest et les 12 scénarios Playwright on
 
 Rapports bruts dans `docs/lighthouse`. Ces mesures proviennent de Chrome en laboratoire sur l’accueil local. L’INP sur données réelles et la conformité WCAG complète restent à établir. Les captures de l’accueil sont disponibles à 390 et 1440 px. La revue indépendante a relevé un défaut d’hydratation sur les URL se terminant par `index.html`, corrigé et couvert par Playwright.
 
-Le PDF original conservé dans l’historique contenait un numéro de téléphone, une adresse postale et une date de naissance. La copie distribuée est aplatie après suppression de ces informations. Elle est lisible visuellement et complétée par un résumé HTML. Le PDF lui-même ne possède pas de couche texte.
+La copie distribuée provient du CV à fond bleu foncé transmis par Lylian après la première revue. Le numéro de téléphone, l’adresse postale et la date de naissance ont été retirés. Le PDF reprend le visuel de la capture et ne possède pas de couche texte. La page CV fournit un résumé HTML.
 
 Le code de Yorivai a pu être consulté via l’accès Git local. Le lien public et le domaine de démonstration n’ont pas été confirmés. Le README public de [FractaLens](https://github.com/LylianMichel/FractaLens) documente la CLI Java et les sorties PNG/GIF. La frise de parcours utilise le brief et les expériences informatiques figurant sur le CV.
 

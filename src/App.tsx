@@ -120,7 +120,7 @@ export function describeRoute(path: string) {
 function Resume() {
   return <article className="case-study"><h1>CV</h1><p className="lede">Lylian Michel · Développeur junior</p>
     <a className="text-link" href={profile.cvUrl} download="CV-Lylian-Michel.pdf">Télécharger le CV (PDF) <ArrowDownToLine size={17} aria-hidden="true" /></a>
-    <figure className="resume-preview"><img src={base + "cv-public.webp"} width={1191} height={1684} alt="CV de Lylian Michel. La formation et les expériences informatiques sont résumées ci-dessous." /></figure>
+    <figure className="resume-preview"><img src={base + "cv-public.webp"} width={794} height={1123} alt="CV de Lylian Michel. La formation et les expériences informatiques sont résumées ci-dessous." /></figure>
     <div className="case-grid"><section><h2>Formation</h2><p>BUT Informatique à l’IUT de Lens depuis septembre 2025.</p></section><section><h2>Expériences informatiques</h2><p>Maintenance informatique à la mairie de Barlin en mars 2023 et à la Communauté d’agglomération de l’Artois en décembre 2022.</p></section></div>
   </article>;
 }
