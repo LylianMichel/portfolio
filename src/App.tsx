@@ -1,153 +1,136 @@
-import { useEffect, useRef, useState, lazy, Suspense } from "react";
-import { Navbar } from "./components/layout/Navbar";
-import { Hero } from "./sections/Hero";
-import { Projects } from "./sections/Projects";
-import { Skills } from "./sections/Skills";
-import { Timeline } from "./sections/Timeline";
-import { About } from "./sections/About";
-import { Contact } from "./sections/Contact";
-import { WorkContact } from "./sections/WorkContact";
-import { Footer } from "./components/layout/Footer";
-import { Marquee } from "./components/ui/Marquee";
-import { KineticDivider } from "./components/ui/KineticDivider";
-import { NotFound } from "./sections/NotFound";
-import { X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { initialAccent, initialRain, type Accent, type Appearance, type RainIntensity } from "./utils/preferences";
-import type { PortfolioMode } from "./types";
-import { appendShortcut, shortcutAction } from "./utils/keyboard";
-import { flushSync } from "react-dom";
-import { initialExperience, experienceAnnouncement, type Experience } from "./utils/creative";
-import { useMatrixSectionDecode } from "./hooks/useMatrixSectionDecode";
+import { useEffect, useState } from "react";
+import { ArrowDown, ArrowDownToLine, ArrowLeft, ArrowUpRight } from "lucide-react";
+import { projects } from "./data/projects";
+import { profile } from "./data/profile";
+import "./editorial.css";
 
-const readMode=():PortfolioMode=>typeof window!=="undefined"&&["#contact","#chat"].includes(window.location.hash)?"contact":"work";
-const readAccent=():Accent=>typeof window!=="undefined"?initialAccent(window.localStorage):"mint";
+const base = import.meta.env.BASE_URL === "./" ? "/" : import.meta.env.BASE_URL;
+const links = [["Projets", "projets"], ["Compétences", "competences"], ["Parcours", "parcours"], ["Contact", "contact"]];
+const entries = [
+  ...projects.map(project => ({
+    ...project,
+    id: project.id === "anivault" ? "yorivai" : project.id,
+    title: project.id === "anivault" ? "Yorivai" : project.title,
+    ...(project.id === "anivault" ? {
+      shortDescription: "Catalogue et bibliothèque personnelle d’animés et de lectures.",
+      description: "Yorivai reprend les besoins d’AniVault dans une nouvelle application. Le monorepo sépare l’interface React, l’API Express et la couche de données Prisma.",
+      technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Node.js", "Express", "Prisma", "PostgreSQL", "Neon", "AniList", "Zod"],
+      features: ["Catalogue importé depuis AniList", "Recherche par titre et filtres par genre ou statut", "Bibliothèque, favoris et suivi de progression"],
+      technicalApproach: "L’API Express expose le catalogue et la bibliothèque. Prisma décrit les modèles PostgreSQL et Zod valide les données à l’entrée de l’API.",
+      contribution: undefined,
+      challenge: undefined,
+      result: undefined,
+    } : {}),
+    group: ["le-temple", "eco-repare"].includes(project.id) ? "Universitaire" : "Personnel",
+    status: project.id === "anivault" ? "Anciennement AniVault" : project.id === "towerdefence" ? "Prototype Godot" : "Projet universitaire",
+    ongoing: false,
+  })),
+  ...[
+    { id: "fractalens", title: "FractaLens", group: "Universitaire", status: "SAÉ S3.A.01", shortDescription: "Génération d’images et d’animations fractales en Java.", technologies: ["Java", "Gradle", "Picocli", "JaCoCo"], context: "Projet universitaire mené en équipe à l’IUT de Lens.", technicalApproach: "Picocli valide les arguments de la ligne de commande et configure le générateur. Les paramètres couvrent les suites de Julia, Mandelbrot, Tricorn et Multibrot, les palettes et les transformations. La bibliothèque produit des images fixes et des GIF de zoom ou de rotation." },
+    { id: "ashes-of-eternity", title: "Ashes of Eternity", group: "Personnel", status: "En développement", shortDescription: "Roguelite dark fantasy en 3D isométrique.", technologies: ["Unity 6", "C#", "URP"], context: "Projet en cours de développement en équipe de deux.", technicalApproach: "La conception prévoit des donjons, des classes évolutives et une progression du personnage." },
+    { id: "lylianos", title: "LylianOS", group: "Personnel", status: "Prototype", shortDescription: "Portfolio interactif inspiré d’un système d’exploitation.", technologies: ["React", "TypeScript", "Framer Motion"], context: "Exploration d’une autre façon de présenter mes projets et mon CV.", technicalApproach: "Le prototype contient un bureau, un dock animé, un gestionnaire de fenêtres et une application CV." },
+  ].map(project => ({...project, ongoing: project.id === "ashes-of-eternity", images: [], features: [], description: project.shortDescription, contribution: undefined, challenge: undefined, result: undefined })),
+];
 
-const readExperience=():Experience=>{
- if(typeof window==="undefined")return "source";
- try{return initialExperience(window.localStorage)}catch{return "source"}
-};
-const MatrixRain=lazy(()=>import("./components/ui/MatrixRain"));
-const readRain=():RainIntensity=>{
- if(typeof window==="undefined")return "soft";
- const connection=(navigator as Navigator & {connection?:{saveData?:boolean}}).connection;
- if(window.matchMedia("(prefers-contrast: more)").matches)return "off";
- try{return initialRain(window.localStorage,Boolean(connection?.saveData))}catch{return connection?.saveData?"off":"soft"}
-};
-const App=()=>{
- useMatrixSectionDecode();
- const [mode,setMode]=useState<PortfolioMode>("work");
- const reducedMotion=useReducedMotion();
- const [mounted,setMounted]=useState(false);
- const [rainReady,setRainReady]=useState(false);
- const theme:Appearance="matrix";
- const [accent,setAccent]=useState<Accent>("mint");
- const [experience,setExperience]=useState<Experience>("source");
- const [rainIntensity,setRainIntensity]=useState<RainIntensity>("soft");
- const [notFound,setNotFound]=useState(false);
- const [help,setHelp]=useState(false);
- const [egg,setEgg]=useState("");
- const [pixel,setPixel]=useState(false);
+export const routeIds = entries.map(project => project.id);
+type Entry = (typeof entries)[number];
+const projectLabel = (project: Entry) => project.status === "Projet universitaire" ? project.group : project.group + " · " + project.status;
 
- const sequence=useRef("");
- useEffect(()=>{
-   setAccent(readAccent());setExperience(readExperience());setRainIntensity(readRain());setMounted(true);
- },[]);
- useEffect(()=>setNotFound(!["/","/index.html"].includes(window.location.pathname)),[]);
- useEffect(()=>{
-  if(!mounted)return;
-  document.documentElement.dataset.theme=theme;
-  document.documentElement.style.colorScheme="dark";
-  try{window.localStorage.setItem("portfolio-theme",theme)}catch{/* Privacy mode */}
-  const meta=document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if(meta)meta.content="#020a05";
- },[mounted]);
- useEffect(()=>{if(!mounted)return;document.documentElement.dataset.experience=experience;try{window.localStorage.setItem("portfolio-experience",experience)}catch{/* Privacy mode */}},[experience,mounted]);
- useEffect(()=>{
-  if(!mounted||theme!=="matrix"||rainIntensity==="off"){setRainReady(false);return;}
-  let cancelled=false,queued=false,raf=0,idle=0,fallback=0;
-  const scheduler=window as Window & {
-    requestIdleCallback?:(callback:()=>void,options?:{timeout:number})=>number;
-    cancelIdleCallback?:(id:number)=>void;
-  };
-  const reveal=()=>{
-    if(cancelled||queued)return;
-    queued=true;
-    // An intentional choice should react in the next frame, not after a multi-second delay.
-    const apply=()=>{if(!cancelled)setRainReady(true)};
-    if(scheduler.requestIdleCallback){
-      idle=scheduler.requestIdleCallback(apply,{timeout:350});
-    }else{
-      fallback=window.setTimeout(apply,0);
-    }
-  };
-  // On a cold visit, wait until the initial document has loaded so that
-  // the lazily imported Canvas does not compete with the hero's LCP.
-  if(document.readyState==="complete")reveal();
-  else window.addEventListener("load",reveal,{once:true});
-  // Browsers/extensions sometimes defer load indefinitely: recover after the LCP budget.
-  const watchdog=window.setTimeout(reveal,3600);
-  return()=>{
-    cancelled=true;
-    window.removeEventListener("load",reveal);
-    window.clearTimeout(watchdog);
-    window.clearTimeout(fallback);
-    window.cancelAnimationFrame(raf);
-    if(idle)scheduler.cancelIdleCallback?.(idle);
-  };
- },[mounted,rainIntensity]);
- const changeExperience=(next:Experience)=>{
-   if(next===experience)return;
-   const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-   const documentWithTransition=document as Document & {startViewTransition?:(update:()=>void)=>unknown};
-   const change=()=>flushSync(()=>setExperience(next));
-   if(!reduced&&typeof documentWithTransition.startViewTransition==="function")documentWithTransition.startViewTransition(change);
-   else change();
-   setEgg(experienceAnnouncement(next));
- };
- useEffect(()=>{if(!mounted)return;try{window.localStorage.setItem("portfolio-matrix-rain",rainIntensity)}catch{/* navigateur privé */}},[rainIntensity,mounted]);
- useEffect(()=>{if(!mounted)return;document.documentElement.dataset.accent=accent;try{window.localStorage.setItem("portfolio-accent",accent)}catch{/* Privacy mode */}},[accent,mounted]);
- useEffect(()=>{
-  if(!pixel)return;
-  document.documentElement.dataset.pixel="true";
-  const timeout=window.setTimeout(()=>{setPixel(false);},8000);
-  return()=>{window.clearTimeout(timeout);delete document.documentElement.dataset.pixel;};
- },[pixel]);
- useEffect(()=>{
-  const onHash=()=>{setMode(readMode());const hash=window.location.hash.slice(1);
-   if(hash&&hash!=="work"&&hash!=="contact"&&hash!=="chat")window.requestAnimationFrame(()=>document.getElementById(hash)?.scrollIntoView());
-  };
-  onHash();window.addEventListener("hashchange",onHash);window.addEventListener("popstate",onHash);
-  return()=>{window.removeEventListener("hashchange",onHash);window.removeEventListener("popstate",onHash)};
- },[]);
- useEffect(()=>{document.title=mode==="contact"?"Lylian Michel — Contact":"Lylian Michel — Développeur & étudiant en BUT Informatique"},[mode]);
- const changeMode=(next:PortfolioMode)=>{setMode(next);window.history.pushState(null,"",next==="work"?"#work":"#contact");window.scrollTo({top:0,behavior:"instant"})};
- 
- useEffect(()=>{
-  const onKey=(event:KeyboardEvent)=>{
-   const target=event.target;
-   if(event.ctrlKey||event.metaKey||event.altKey||event.repeat||target instanceof HTMLInputElement||target instanceof HTMLTextAreaElement||(target instanceof HTMLElement&&target.isContentEditable))return;
-   if(event.key==="Escape"){setHelp(false);sequence.current="";return;}
-   if(event.key==="?"){setHelp(state=>!state);return;}
-   const key=event.key.toLowerCase();
-   if(!/^[a-z]$/.test(key)&&!["arrowup","arrowdown","arrowleft","arrowright"].includes(key))return;
-   sequence.current=appendShortcut(sequence.current,key);
-   if(shortcutAction(sequence.current)==="projects"){setMode("work");window.history.pushState(null,"","#projets");window.requestAnimationFrame(()=>document.getElementById("projets")?.scrollIntoView());sequence.current="";}
-   if(shortcutAction(sequence.current)==="contact"){setMode("contact");window.history.pushState(null,"","#contact");window.scrollTo(0,0);sequence.current="";}
-   if(shortcutAction(sequence.current)==="pixel"){setPixel(true);setEgg(theme==="matrix"?"Mode Neo activé pour huit secondes.":"Variante rare débloquée pour huit secondes.");sequence.current="";}
-  };
-  window.addEventListener("keydown",onKey);
-  return()=>window.removeEventListener("keydown",onKey);
- },[accent]);
- return <div className="portfolio-app">
-  {mounted&&rainReady&&theme==="matrix"&&rainIntensity!=="off"&&<Suspense fallback={null}><MatrixRain intensity={rainIntensity}/></Suspense>}
-  <a href="#main-content" className="skip-link" onClick={event=>{event.preventDefault();document.getElementById("main-content")?.focus()}}>Aller au contenu</a>
-  <Navbar mode={mode} theme={theme} accent={accent} rainIntensity={rainIntensity} onRainChange={setRainIntensity} experience={experience} onExperienceChange={changeExperience} onModeChange={changeMode} onAccentChange={setAccent}/>
-  <main id="main-content" tabIndex={-1} className="lm-main"><AnimatePresence mode="wait" initial={false}><motion.div className="lm-mode-content" key={notFound?"404":mode} initial={false} animate={{opacity:1,y:0}} exit={reducedMotion?{opacity:1,y:0}:{opacity:0,y:-9}} transition={{duration:reducedMotion?0:.22}}>{notFound?<NotFound/>:mode==="work"?<div className="work-view"><Hero/><Projects/><Marquee/><Skills/><KineticDivider/><About/><Timeline/><WorkContact/></div>:<Contact/>}</motion.div></AnimatePresence></main>
-  <Footer/>
-  {pixel&&theme==="matrix"&&<div className="lm-neo-message" aria-hidden="true">NEO // SYSTEM OVERRIDE</div>}
-  <span className="sr-only" role="status" aria-live="polite">{egg}</span>
-  {help&&<aside className="lm-shortcuts" aria-label="Aide des raccourcis clavier"><button onClick={()=>setHelp(false)} aria-label="Fermer les raccourcis"><X size={17}/></button><h2>Raccourcis</h2><p>Aller aux projets <kbd>G puis P</kbd></p><p>Ouvrir le contact <kbd>G puis C</kbd></p><p>Afficher / fermer l’aide <kbd>?</kbd></p><p>Fermer l’aide <kbd>Échap</kbd></p></aside>}
- </div>;
-};
-export default App;
+function Picture({ project, index = 0 }: { project: Entry; index?: number }) {
+  const image = project.images[index];
+  return image ? <img src={image.src} srcSet={image.srcSet} sizes="(max-width: 700px) 94vw, 60vw" width={image.width} height={image.height} alt={image.alt} loading="lazy" /> : null;
+}
+
+function ProjectIndex() {
+  const [filter, setFilter] = useState("Tous");
+  const shown = entries.filter(project => filter === "Tous" || (filter === "En cours" ? project.ongoing : project.group === filter));
+  return <section className="section" id="projets">
+    <div className="section-head"><h2>Projets</h2><div className="filters" role="group" aria-label="Filtrer les projets">
+      {["Tous", "Personnel", "Universitaire", "En cours"].map(item => <button key={item} type="button" aria-pressed={filter === item} onClick={() => setFilter(item)}>{item}</button>)}
+    </div></div>
+    <span className="sr-only" role="status">{shown.length} projets affichés</span>
+    <div className="project-list">{shown.map(project => <article className="project-row" key={project.id}>
+      <a className="project-link" href={base + "projets/" + project.id + "/"}>
+        <div><p className="eyebrow">{projectLabel(project)}</p><h3>{project.title}</h3><p>{project.shortDescription}</p></div><ArrowUpRight aria-hidden="true" />
+      </a>
+      {project.images.length > 0 && <div className="project-preview"><Picture project={project} /></div>}
+    </article>)}</div>
+  </section>;
+}
+
+const domains = [
+  { title: "Applications web", projects: ["yorivai", "le-temple", "eco-repare"] },
+  { title: "Logiciel et jeux", projects: ["fractalens", "ashes-of-eternity", "towerdefence"] },
+  { title: "Interfaces interactives", projects: ["lylianos", "yorivai"] },
+];
+
+function Skills() {
+  const [active, setActive] = useState(0);
+  const domain = domains[active];
+  const examples = entries.filter(project => domain?.projects.includes(project.id));
+  const technologies = [...new Set(examples.flatMap(project => project.technologies))];
+  return <section className="section skills" id="competences"><h2>Compétences</h2>
+    <div className="filters" role="group" aria-label="Domaines techniques">{domains.map((domain, index) => <button key={domain.title} type="button" aria-pressed={active === index} onClick={() => setActive(index)}>{domain.title}</button>)}</div>
+    <ul className="tags">{technologies.map(name => <li key={name}>{name}</li>)}</ul>
+    <div className="examples">{examples.map(project => <a key={project.id} href={base + "projets/" + project.id + "/"}>{project.title} <ArrowUpRight size={15} aria-hidden="true" /></a>)}</div>
+  </section>;
+}
+
+function Home() {
+  return <>
+    <section className="hero">
+      <div className="hero-meta"><p className="eyebrow">Développeur junior · BUT Informatique</p><p className="eyebrow">Barlin, Hauts-de-France</p></div>
+      <h1>Lylian<br />Michel<span>.</span></h1>
+      <div className="hero-bottom"><p>Je développe des applications web et des logiciels, avec un intérêt particulier pour le backend et les bases de données.</p><aside className="availability"><span className="eyebrow">Recherche de stage</span><strong>8 semaines dès le<br />12 avril 2027</strong><a href="#contact">Me contacter <ArrowUpRight size={17} aria-hidden="true" /></a></aside></div>
+      <a className="jump" href="#projets">Découvrir mes projets <ArrowDown size={17} aria-hidden="true" /></a>
+    </section>
+    <ProjectIndex />
+    <Skills />
+    <section className="section split" id="parcours"><div><h2>Parcours</h2><p>J’explore le développement logiciel à travers des projets personnels et universitaires. J’aime comprendre comment une interface, une API et une base de données fonctionnent ensemble.</p></div>
+    <div><p className="eyebrow">2026–2027</p><h3>BUT Informatique · 2ᵉ année</h3><p>IUT de Lens, Université d’Artois</p><a className="text-link" href={base + "cv/"}>Consulter le CV <ArrowUpRight size={17} aria-hidden="true" /></a></div></section>
+    <section className="section contact" id="contact"><p className="eyebrow">Stage · avril 2027</p><h2>Contact</h2><a className="email" href={"mailto:" + profile.email}>{profile.email} <ArrowUpRight aria-hidden="true" /></a><div className="examples"><a href={profile.github}>GitHub <ArrowUpRight size={15} aria-hidden="true" /></a><a href={profile.linkedin}>LinkedIn <ArrowUpRight size={15} aria-hidden="true" /></a></div></section>
+  </>;
+}
+
+function CaseStudy({ project }: { project: Entry }) {
+  const sections = [["Contexte", project.context], ["Contribution", project.contribution], ["Problématique", project.challenge], ["Approche technique", project.technicalApproach], ["Résultat", project.result]];
+  return <article className="case-study">
+    <a className="text-link" href={base + "#projets"}><ArrowLeft size={17} aria-hidden="true" /> Tous les projets</a>
+    <p className="eyebrow">{projectLabel(project)}</p><h1>{project.title}</h1><p className="lede">{project.description}</p>
+    <ul className="tags">{project.technologies.map(name => <li key={name}>{name}</li>)}</ul>
+    {project.images[0] && <figure><Picture project={project} /><figcaption>{project.id === "yorivai" ? "Capture d’AniVault · " : ""}{project.images[0].label}</figcaption></figure>}
+    <div className="case-grid">{sections.filter(([, body]) => body).map(([title, body]) => <section key={title}><h2>{title}</h2><p>{body}</p></section>)}
+    {project.features.length > 0 && <section><h2>Fonctionnalités</h2><ul>{project.features.map(feature => <li key={feature}>{feature}</li>)}</ul></section>}</div>
+    {project.images.slice(1).map((image, index) => <figure key={image.src}><Picture project={project} index={index + 1} /><figcaption>{image.label}</figcaption></figure>)}
+    {"codeAccess" in project && project.codeAccess === "private" && <a className="text-link" href={`mailto:${profile.email}?subject=${encodeURIComponent("Accès au code — " + project.title)}`}>Demander l’accès au code source <ArrowUpRight size={17} aria-hidden="true" /></a>}
+    {project.id === "lylianos" && <a className="text-link" href="https://github.com/LylianMichel/portfolio/tree/feature/lylianos">Voir la branche LylianOS <ArrowUpRight size={17} aria-hidden="true" /></a>}
+    {project.id === "fractalens" && <a className="text-link" href="https://github.com/LylianMichel/FractaLens">Voir le code de FractaLens <ArrowUpRight size={17} aria-hidden="true" /></a>}
+  </article>;
+}
+
+export function describeRoute(path: string) {
+  const normalized = path.replace(/\/index\.html$/, "").replace(/\/+$/, "") || "/";
+  const project = entries.find(entry => normalized === "/projets/" + entry.id);
+  const cv = normalized === "/cv";
+  const home = normalized === "/";
+  const key = project ? "project-" + project.id : cv ? "cv" : home ? "home" : "not-found";
+  return {project, cv, home, key, title: project?.title ?? (cv ? "CV" : home ? "Développeur junior · BUT Informatique" : "Page introuvable"), description: project?.shortDescription ?? "Lylian Michel, étudiant en BUT Informatique à l’IUT de Lens, recherche un stage de 8 semaines dès le 12 avril 2027."};
+}
+
+function Resume() {
+  return <article className="case-study"><h1>CV</h1><p className="lede">Lylian Michel · Développeur junior</p>
+    <a className="text-link" href={profile.cvUrl} download="CV-Lylian-Michel.pdf">Télécharger le CV (PDF) <ArrowDownToLine size={17} aria-hidden="true" /></a>
+    <figure className="resume-preview"><img src={base + "cv-public.webp"} width={1191} height={1684} alt="CV de Lylian Michel. La formation et les expériences informatiques sont résumées ci-dessous." /></figure>
+    <div className="case-grid"><section><h2>Formation</h2><p>BUT Informatique à l’IUT de Lens depuis septembre 2025.</p></section><section><h2>Expériences informatiques</h2><p>Maintenance informatique à la mairie de Barlin en mars 2023 et à la Communauté d’agglomération de l’Artois en décembre 2022.</p></section></div>
+  </article>;
+}
+
+export default function App({ path }: { path?: string }) {
+  const route = describeRoute(path ?? (typeof window === "undefined" ? "/" : window.location.pathname));
+  useEffect(() => { document.title = route.title + " — Lylian Michel"; }, [route.title]);
+  return <><a className="skip" href="#contenu">Aller au contenu</a>
+    <header className="site-header"><a className="monogram" href={base} aria-label="LM. — Lylian Michel, accueil">LM<span>.</span></a><nav aria-label="Navigation principale">{links.map(([label, id]) => <a key={id} href={base + "#" + id}>{label}</a>)}</nav><a className="cv-link" href={base + "cv/"}>CV <ArrowUpRight size={16} aria-hidden="true" /></a></header>
+    <main id="contenu" tabIndex={-1}>{route.home ? <Home /> : route.project ? <CaseStudy project={route.project} /> : route.cv ? <Resume /> : <article className="case-study"><p className="eyebrow">404</p><h1>Page introuvable</h1><a className="text-link" href={base}><ArrowLeft size={17} aria-hidden="true" /> Retour à l’accueil</a></article>}</main>
+    <footer className="site-footer"><span>Lylian Michel</span><a href={base + "#contact"}>Contact <ArrowUpRight size={15} aria-hidden="true" /></a></footer>
+  </>;
+}

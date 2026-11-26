@@ -29,3 +29,5 @@ Thumbs.db
 
 # Temporary server bundle for static rendering
 .prerender/
+test-results/
+playwright-report/

@@ -42,18 +42,16 @@ jobs:
           mkdir -p artifacts/visual
           cp dist/og-portfolio.png artifacts/visual/og-portfolio.png
           node -e 'const fs=require("fs");const b=fs.readFileSync("dist/og-portfolio.png");if(b.readUInt32BE(16)!==1200||b.readUInt32BE(20)!==630)process.exit(1);console.log("OG dimensions 1200 x 630 verified")'
-      - name: Desktop and mobile screenshots, interaction checks and axe
-        run: node scripts/visual-audit.mjs
+      - name: Playwright and axe
+        run: npm run test:e2e
+        env:
+          CI: true
       - name: Lighthouse mobile
         run: |
           mkdir -p artifacts/lighthouse
           npx lighthouse http://127.0.0.1:4173/ --output=json --output-path=artifacts/lighthouse/mobile.json --quiet --chrome-flags="--headless --no-sandbox" --throttling-method=simulate
       - name: Lighthouse desktop
         run: npx lighthouse http://127.0.0.1:4173/ --preset=desktop --output=json --output-path=artifacts/lighthouse/desktop.json --quiet --chrome-flags="--headless --no-sandbox"
-      - name: Lighthouse Matrix mobile
-        run: npx lighthouse "http://127.0.0.1:4173/?theme=matrix" --output=json --output-path=artifacts/lighthouse/matrix-mobile.json --quiet --chrome-flags="--headless --no-sandbox" --throttling-method=simulate
-      - name: Lighthouse Matrix desktop
-        run: npx lighthouse "http://127.0.0.1:4173/?theme=matrix" --preset=desktop --output=json --output-path=artifacts/lighthouse/matrix-desktop.json --quiet --chrome-flags="--headless --no-sandbox"
       - name: Print Lighthouse scores
         if: always()
         run: |
@@ -65,5 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: portfolio-redesign-visual-audit
-          path: artifacts/
+          path: |
+            artifacts/
+            docs/captures/
           retention-days: 14
